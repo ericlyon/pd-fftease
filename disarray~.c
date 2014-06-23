@@ -1,3 +1,5 @@
+/* Pd 32-bit FFTease 3.0 */
+
 #include "fftease.h"
 
 static t_class *disarray_class;
