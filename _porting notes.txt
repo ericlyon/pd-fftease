@@ -1,0 +1,44 @@
+Port Max 6 to Pd
+
+0. add external to Makefile SOURCES
+
+1. change all t_doubles and doubles to t_float
+
+2. change t_pxobject to t_object
+
+3.  float x_f;
+
+4. add prototypes for XXX_dsp() & XXX_perform()
+
+5. write XXX-tilde_setup
+
+6. comment out main() function
+
+7. modify new() function:
+	pd_new() for object_alloc()
+	outlet_new(&x->x_obj, gensym("signal"));
+	inlet_new(&x->x_obj, &x->x_obj.ob_pd,gensym("signal"), gensym("signal"));
+	Make note of z_no_inplace issues
+	add non-signal outlets *after* signal outlets
+	add optional arguments
+		if(argc > 0){ fft->N = (int) atom_getfloatarg(0, argc, argv); }
+	x->mybang = outlet_new(&x->x_obj, gensym("bang"));
+	x->m_clock = clock_new(x,(void *)sigseq_tick);
+	
+8. modify init()
+	kill use of obj.z_disabled
+
+9. modify perform() function
+	deal with pointers
+	change sysmem_copyptr to memcpy
+	replace vectorsize with MSPVectorSize
+	remove inlet-connected conditionals
+	return w+XXX
+
+10. modify DSP method
+
+11. Remove dsp_free from free function
+
+12. add back any messages from attributes
+
+13. clean up vestigial code
