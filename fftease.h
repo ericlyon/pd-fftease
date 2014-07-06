@@ -7,7 +7,7 @@
 #include <time.h>
 #include "m_pd.h"
 
-#define MAX_N 32768
+#define MAX_N 1073741824
 #define MAX_Nw MAX_N
 
 #define FFTEASE_ANNOUNCEMENT "<[ FFTease 3.0 ]>   |  "
