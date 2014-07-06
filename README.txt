@@ -2,7 +2,8 @@ About FFTease 3.0
 
 FFTease is a collection of objects designed to facilitate spectral sound
 processing in Max. The collection was designed by Eric Lyon and
-Christopher Penrose in 1999, and has been maintained by Eric Lyon since 2003. 
+Christopher Penrose in 1999, and has been maintained by Eric Lyon since
+2003. 
 
 
 Installation 
@@ -19,16 +20,15 @@ and "fftease32-help" to a Pd-accessible location.
 Performance Considerations
 
 
-The default Pd audio buffer
-settings for both I/O vector size and signal vector size will work fine
-for FFT sizes up to around 4096 or so. For larger FFT sizes, adjusting
-the Pd signal vector size and I/O vector size upward can dramatically
-improve performance. With larger FFT sizes, the reported CPU load may
-fluctuate. This is because a large FFT is being performed only once for
-several vectors worth of samples. The default FFT size is 1024, and the
-default overlap factor is 8. The maximum FFT size is 1073741824. Let me
-know if you find a computer powerful enough to compute the maximum FFT
-size in real-time. 
+The default Pd audio buffer settings for both I/O vector size and signal
+vector size will work fine for FFT sizes up to around 4096 or so. For
+larger FFT sizes, adjusting the Pd signal vector size and I/O vector
+size upward can dramatically improve performance. With larger FFT sizes,
+the reported CPU load may fluctuate. This is because a large FFT is
+being performed only once for several vectors worth of samples. The
+default FFT size is 1024, and the default overlap factor is 8. The
+maximum FFT size is 1073741824. Let me know if you find a computer
+powerful enough to compute the maximum FFT size in real-time. 
 
 
 For Coders 
