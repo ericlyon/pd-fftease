@@ -32,8 +32,6 @@ typedef struct _centerring
 	short bypass;
 } t_centerring;
 
-/* msp function prototypes */
-
 void *centerring_new(t_symbol *s, int argc, t_atom *argv);
 t_int *centerring_perform(t_int *w);
 void centerring_dsp(t_centerring *x, t_signal **sp);

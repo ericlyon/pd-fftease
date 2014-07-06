@@ -156,7 +156,7 @@ float rrand(int *seed);
 float prand(int *seed);
 
 /*** MSP helper functions, thanks JKC! ***/
-
+/*
 void atom_arg_getfloat(float *c, long idx, long ac, t_atom *av);
 void atom_arg_getsym(t_symbol **c, long idx, long ac, t_atom *av);
 
@@ -173,4 +173,5 @@ void atom_arg_getsym(t_symbol **c, long idx, long ac, t_atom *av)
 		*c = atom_getsymbol(av+idx);
 	} 
 }
+*/
 

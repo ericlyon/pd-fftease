@@ -93,9 +93,8 @@ void cavoc27_tilde_setup(void)
 	class_addmethod(c,(t_method)cavoc27_manual,gensym("manual"),A_FLOAT,0);
 	class_addmethod(c,(t_method)cavoc27_freeze,gensym("freeze"),A_FLOAT,0);
 	class_addmethod(c,(t_method)cavoc27_trigger,gensym("trigger"),0);
-	class_addmethod(c,(t_method)cavoc27_fftinfo,gensym("fftinfo"),0);
-    class_addmethod(c,(t_method)cavoc27_density,gensym("density"),0);
-    class_addmethod(c,(t_method)cavoc27_hold_time,gensym("hold_time"),0);
+    class_addmethod(c,(t_method)cavoc27_density,gensym("density"),A_FLOAT,0);
+    class_addmethod(c,(t_method)cavoc27_hold_time,gensym("hold_time"),A_FLOAT,0);
     cavoc27_class = c;
     fftease_announce(OBJECT_NAME);
 }
@@ -123,6 +122,7 @@ void cavoc27_manual(t_cavoc27 *x, t_floatarg tog)
 {
 	x->manual_mode = (short) tog;
 }
+
 void cavoc27_trigger(t_cavoc27 *x)
 {
 	x->external_trigger = 1;
@@ -169,7 +169,8 @@ void cavoc27_interpolate(t_cavoc27 *x, t_floatarg flag)
 
 void cavoc27_capture_spectrum(t_cavoc27 *x, t_floatarg flag )
 {
-	x->capture_lock = (short)flag; 
+	x->capture_lock = (short)flag;
+    post("capture flag: %d", x->capture_lock);
 }
 
 void cavoc27_capture_lock(t_cavoc27 *x, t_floatarg flag )
@@ -221,7 +222,6 @@ t_fftease *fft;
     if(argc > 1){ fft->overlap = (int) atom_getfloatarg(1, argc, argv); }
     if(argc > 2){ x->density = atom_getfloatarg(2, argc, argv); }
     if(argc > 3){ x->hold_time = atom_getfloatarg(3, argc, argv); }
-//    cavoc27_init(x);
 	return x;
 }
 
@@ -294,7 +294,15 @@ void cavoc27_init(t_cavoc27 *x)
 		x->tmpchannel = (t_float *)realloc(x->tmpchannel,(fft->N+2)*sizeof(t_float));
 		x->last_frame = (t_float *)realloc(x->last_frame,(fft->N+2)*sizeof(t_float));
 	}
-	cavoc27_rand_set_rule(x); 
+    if(x->frame_duration != 0){
+        x->hold_frames = (int) ( (x->hold_time/1000.0) / x->frame_duration);
+    } else {
+        post("%s: zero FFT frame duration", OBJECT_NAME);
+    }
+    if( x->hold_frames < 1 )
+        x->hold_frames = 1;
+    
+	cavoc27_rand_set_rule(x);
 	cavoc27_rand_set_spectrum(x);
 	for( i = 0; i < fft->N+2; i++ ){
 		x->last_frame[i] = fft->channel[i];
@@ -430,25 +438,31 @@ t_int *cavoc27_perform(t_int *w)
 
 	////////////
 	t_cavoc27 *x = (t_cavoc27 *) (w[1]);
-	t_float *MSPOutputVector = (t_float *) (w[2]);
+    t_float *MSPInputVector = (t_float *) (w[2]);
+	t_float *MSPOutputVector = (t_float *) (w[3]);
     t_fftease *fft = x->fft;
 	int D = fft->D;
 	int Nw = fft->Nw;
+    t_float *input = fft->input;
 	t_float *output = fft->output;
-	t_float mult = fft->mult ;
+	t_float mult = fft->mult;
 	int MSPVectorSize = fft->MSPVectorSize;
+    t_float *internalInputVector = fft->internalInputVector;
 	t_float *internalOutputVector = fft->internalOutputVector;
 	int operationRepeat = fft->operationRepeat;
 	int operationCount = fft->operationCount;	
 	
+    
 	if(x->mute){
         for(i=0; i < MSPVectorSize; i++){ MSPOutputVector[i] = 0.0; }
-        return w+3;
+        return w+4;
 	}
 	if(fft->obank_flag){
 		mult *= FFTEASE_OSCBANK_SCALAR;
 	}
 	if( fft->bufferStatus == EQUAL_TO_MSP_VECTOR ){
+        memcpy(input, input + D, (Nw - D) * sizeof(t_float));
+        memcpy(input + (Nw - D), MSPInputVector, D * sizeof(t_float));
 		do_cavoc27(x);
 		for ( j = 0; j < D; j++ ){ *MSPOutputVector++ = output[j] * mult; }
         memcpy(output, output + D, (Nw-D) * sizeof(t_float));
@@ -456,6 +470,8 @@ t_int *cavoc27_perform(t_int *w)
     }
 	else if( fft->bufferStatus == SMALLER_THAN_MSP_VECTOR ) {
 		for( i = 0; i < operationRepeat; i++ ){
+            memcpy(input, input + D, (Nw - D) * sizeof(t_float));
+            memcpy(input + (Nw-D), MSPInputVector + (D*i), D * sizeof(t_float));
 			do_cavoc27(x);
 			for ( j = 0; j < D; j++ ){ *MSPOutputVector++ = output[j] * mult; }
             memcpy(output, output + D, (Nw-D) * sizeof(t_float));
@@ -463,9 +479,12 @@ t_int *cavoc27_perform(t_int *w)
 		}
 	}
 	else if( fft->bufferStatus == BIGGER_THAN_MSP_VECTOR ) {
-		memcpy(MSPOutputVector, internalOutputVector + (operationCount * MSPVectorSize), MSPVectorSize * sizeof(float));
+        memcpy(internalInputVector + (operationCount * MSPVectorSize), MSPInputVector,MSPVectorSize * sizeof(t_float));
+        memcpy(MSPOutputVector, internalOutputVector + (operationCount * MSPVectorSize),MSPVectorSize * sizeof(t_float));
 		operationCount = (operationCount + 1) % operationRepeat;
 		if( operationCount == 0 ) {
+            memcpy(input, input + D, (Nw - D) * sizeof(t_float));
+            memcpy(input + (Nw - D), internalInputVector, D * sizeof(t_float));
 			do_cavoc27(x);
 			for ( j = 0; j < D; j++ ){ internalOutputVector[j] = output[j] * mult; }
             memcpy(output, output + D, (Nw - D) * sizeof(t_float));
@@ -473,7 +492,7 @@ t_int *cavoc27_perform(t_int *w)
 		}
         fft->operationCount = operationCount;
 	}
-    return w+3;
+    return w+4;
 }		
 
 int cavoc27_apply_rule( short left, short right, short center, short *rule){
@@ -571,17 +590,19 @@ void cavoc27_density(t_cavoc27 *x, t_floatarg density)
 
 void cavoc27_hold_time(t_cavoc27 *x, t_floatarg hold_time)
 {
-    
     if(hold_time <= 0){
         post("illegal hold time %f",hold_time);
         return;
     }
-    x->hold_time = hold_time * 0.001;
+    x->hold_time = hold_time;
+    if(! x->fft->initialized){
+        return;
+    }
     if(! x->frame_duration){
         error("%s: zero frame duration",OBJECT_NAME);
-        x->frame_duration = .15;
+        return;
     }
-    x->hold_frames = (int) ( (hold_time/1000.0) / x->frame_duration);
+    x->hold_frames = (int) ( (x->hold_time/1000.0) / x->frame_duration);
     if( x->hold_frames < 1 )
         x->hold_frames = 1;    
 }
@@ -607,6 +628,6 @@ void cavoc27_dsp(t_cavoc27 *x, t_signal **sp)
     if(reset_required){
         cavoc27_init(x);
     }
-    dsp_add(cavoc27_perform, 2, x, sp[1]->s_vec);
+    dsp_add(cavoc27_perform, 3, x, sp[0]->s_vec, sp[1]->s_vec);
 }
 

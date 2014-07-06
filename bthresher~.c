@@ -61,7 +61,7 @@ void bthresher_tilde_setup(void)
 {
     t_class *c;
     c = class_new(gensym("bthresher~"), (t_newmethod)bthresher_new,
-						   (t_method)bthresher_free,sizeof(t_bthresher), 0,A_GIMME,0);
+                  (t_method)bthresher_free,sizeof(t_bthresher), 0,A_GIMME,0);
 	CLASS_MAINSIGNALIN(c, t_bthresher, x_f);
 	class_addmethod(c,(t_method)bthresher_dsp,gensym("dsp"),0);
 	class_addmethod(c,(t_method)bthresher_mute,gensym("mute"),A_FLOAT,0);
@@ -85,7 +85,7 @@ void bthresher_tilde_setup(void)
 
 void bthresher_fftinfo( t_bthresher *x )
 {
-	fftease_fftinfo( x->fft, OBJECT_NAME );	
+	fftease_fftinfo( x->fft, OBJECT_NAME );
 }
 
 void bthresher_free( t_bthresher *x ){
@@ -125,7 +125,7 @@ void bthresher_alldamp(t_bthresher *x, t_float f)
 {
 	int i;
 	t_fftease *fft = x->fft;
-
+    
 	//post("damp %f",f);
 	for(i=0;i < fft->N2+1;i++)
 		x->damping_factor[i] = f;
@@ -164,9 +164,9 @@ void bthresher_dump (t_bthresher *x) {
 	t_float *move_threshold = x->move_threshold;
 	
 	int i,j, count;
-
+    
 	for( i = 0, j = 0; i < x->fft->N2 * 3 ; i += 3, j++ ) {
-
+        
 		SETFLOAT(list_data+i,(t_float)j);
 		SETFLOAT(list_data+(i+1),damping_factor[j]);
 		SETFLOAT(list_data+(i+2),move_threshold[j]);
@@ -180,14 +180,14 @@ void bthresher_dump (t_bthresher *x) {
 
 void *bthresher_new(t_symbol *s, int argc, t_atom *argv)
 {
-t_fftease *fft;
-
+    t_fftease *fft;
+    
 	t_bthresher *x = (t_bthresher *)pd_new(bthresher_class);
     inlet_new(&x->x_obj, &x->x_obj.ob_pd,gensym("signal"), gensym("signal"));
     inlet_new(&x->x_obj, &x->x_obj.ob_pd,gensym("signal"), gensym("signal"));
     outlet_new(&x->x_obj, gensym("signal"));
     x->list_outlet = outlet_new(&x->x_obj, gensym("list"));
-
+    
 	
 	x->fft = (t_fftease *) calloc( 1, sizeof(t_fftease) );
 	
@@ -195,13 +195,13 @@ t_fftease *fft;
 	fft->initialized = 0;
 	x->init_thresh = 0.1;
 	x->init_damping = 0.99;
-
+    
 	fft->N = FFTEASE_DEFAULT_FFTSIZE;
 	fft->overlap = FFTEASE_DEFAULT_OVERLAP;
 	fft->winfac = FFTEASE_DEFAULT_WINFAC;
     if(argc > 0){ fft->N = (int) atom_getfloatarg(0, argc, argv); }
     if(argc > 1){ fft->overlap = (int) atom_getfloatarg(1, argc, argv); }
-
+    
 	return x;
 }
 
@@ -219,11 +219,11 @@ void bthresher_synthresh(t_bthresher *x, t_float thresh)
 
 void bthresher_init(t_bthresher *x)
 {
-	int i; 
+	int i;
 	t_fftease *fft = x->fft;
-
+    
 	short initialized = fft->initialized;
-	fftease_init(fft);	
+	fftease_init(fft);
 	
 	if(!initialized){
 		x->first_frame = 1;
@@ -243,7 +243,7 @@ void bthresher_init(t_bthresher *x)
 		x->list_data = (t_atom *) calloc((fft->N2 + 1) * 3, sizeof(t_atom));
 		x->move_threshold = (t_float *) calloc((fft->N2+1), sizeof(t_float));
 		x->damping_factor = (t_float *) calloc((fft->N2+1), sizeof(t_float));
-	
+        
 		for(i = 0; i < fft->N2+1; i++) {
 			x->move_threshold[i] = x->init_thresh;
 			x->damping_factor[i] = x->init_damping;
@@ -252,9 +252,9 @@ void bthresher_init(t_bthresher *x)
 		x->list_data = (t_atom *) realloc((void *)x->list_data, (fft->N2 + 1) * 3 * sizeof(t_atom));
 		x->move_threshold = (t_float *) realloc((void *)x->move_threshold, (fft->N2+1) * sizeof(t_float));
 		x->damping_factor = (t_float *) realloc((void *)x->damping_factor, (fft->N2+1) * sizeof(t_float));
-	} 
-// NEED TO HANDLE REALLOC CASE!!!
-
+	}
+    // NEED TO HANDLE REALLOC CASE!!!
+    
 	x->tadv = (t_float) fft->D / (t_float) fft->R;
 	x->max_hold_frames = x->max_hold_time / x->tadv;
 }
@@ -266,7 +266,7 @@ void bthresher_version(void)
 
 void bthresher_rdamper(t_bthresher *x,  t_float min, t_float max)
 {
-	int i;	
+	int i;
 	
 	for( i = 0; i < x->fft->N2; i++ ) {
 		x->damping_factor[i] = bthresher_boundrand(min, max);
@@ -298,9 +298,9 @@ void bthresher_bin(t_bthresher *x, t_float bin_num, t_float damper, t_float thre
 void do_bthresher(t_bthresher *x)
 {
 	t_fftease *fft = x->fft;
-
+    
 	int N = fft->N;
-
+    
 	t_float *channel = fft->channel;
 	t_float *damping_factor = x->damping_factor;
 	t_float *move_threshold = x->move_threshold;
@@ -313,15 +313,15 @@ void do_bthresher(t_bthresher *x)
 	int i, j;
 	
 	fold(fft);
-	rdft(fft,1);			
-	convert(fft);	
+	rdft(fft,1);
+	convert(fft);
 	if( x->first_frame ){
 		for ( i = 0; i < N+2; i++ ){
 			composite_frame[i] = channel[i];
 			x->frames_left[i] = max_hold_frames;
 		}
 		x->first_frame = 0;
-	} 
+	}
 	else {
 		if( thresh_scalar < .999 || thresh_scalar > 1.001 || damp_scalar < .999 || damp_scalar > 1.001 ) {
 			for(i = 0, j = 0; i < N+2; i += 2, j++ ){
@@ -329,7 +329,7 @@ void do_bthresher(t_bthresher *x)
 					composite_frame[i] = channel[i];
 					composite_frame[i+1] = channel[i+1];
 					frames_left[j] = max_hold_frames;
-				} 
+				}
 				else {
 					if(!inf_hold){
 						--(frames_left[j]);
@@ -340,7 +340,7 @@ void do_bthresher(t_bthresher *x)
 				}
 			}
 			
-		} 
+		}
 		else {
 			for( i = 0, j = 0; i < N+2; i += 2, j++ ){
 				if( fabs( composite_frame[i] - channel[i] ) > move_threshold[j] || frames_left[j] <= 0 ){
@@ -359,7 +359,7 @@ void do_bthresher(t_bthresher *x)
 			}
 		}
 	}
-// use memcopy
+    // use memcopy
 	for(i = 0; i < N+2; i++){
 		channel[i] = composite_frame[i];
 	}
@@ -378,7 +378,7 @@ void bthresher_oscbank(t_bthresher *x, t_float flag)
 }
 
 t_int *bthresher_perform(t_int *w)
-{	
+{
 	int	i,j;
     t_bthresher *x = (t_bthresher *) (w[1]);
 	t_float *MSPInputVector = (t_float *)(w[2]);
@@ -391,7 +391,7 @@ t_int *bthresher_perform(t_int *w)
 	int operationRepeat = fft->operationRepeat;
 	int operationCount = fft->operationCount;
 	t_float *internalInputVector = fft->internalInputVector;
-	t_float *internalOutputVector = fft->internalOutputVector;	
+	t_float *internalOutputVector = fft->internalOutputVector;
 	t_float *input = fft->input;
 	t_float *output = fft->output;
 	int Nw = fft->Nw;
@@ -404,11 +404,11 @@ t_int *bthresher_perform(t_int *w)
         }
         return w+6;
 	}
-
+    
     x->thresh_scalar = *inthresh;
     x->damp_scalar = *damping;
 	
-	if( fft->bufferStatus == EQUAL_TO_MSP_VECTOR ){	
+	if( fft->bufferStatus == EQUAL_TO_MSP_VECTOR ){
         memcpy(input, input + D, (Nw - D) * sizeof(t_float));
         memcpy(input + (Nw - D), MSPInputVector, D * sizeof(t_float));
         
@@ -429,7 +429,7 @@ t_int *bthresher_perform(t_int *w)
             memcpy(output, output + D, (Nw-D) * sizeof(t_float));
             for(j = (Nw-D); j < Nw; j++){ output[j] = 0.0; }
 		}
-	} 
+	}
 	else if( fft->bufferStatus == BIGGER_THAN_MSP_VECTOR ) {
         memcpy(internalInputVector + (operationCount * MSPVectorSize), MSPInputVector,MSPVectorSize * sizeof(t_float));
         memcpy(MSPOutputVector, internalOutputVector + (operationCount * MSPVectorSize),MSPVectorSize * sizeof(t_float));
@@ -438,7 +438,7 @@ t_int *bthresher_perform(t_int *w)
 		if( operationCount == 0 ) {
             memcpy(input, input + D, (Nw - D) * sizeof(t_float));
             memcpy(input + (Nw - D), internalInputVector, D * sizeof(t_float));
-
+            
 			do_bthresher(x);
 			
 			for ( j = 0; j < D; j++ ){ internalOutputVector[j] = output[j] * mult; }
@@ -483,5 +483,4 @@ t_float bthresher_boundrand( t_float min, t_float max) {
 	frand = (t_float) (rand() % 32768)/ 32768.0;
 	return (min + frand * (max-min) );
 }
-
 

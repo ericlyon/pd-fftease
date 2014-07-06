@@ -7,8 +7,11 @@ LIBRARY_NAME = fftease
 # variable, help files will be included automatically, and for GUI
 # objects, the matching .tcl file too
 SOURCES = bthresher~.c burrow~.c cavoc~.c cavoc27~.c centerring~.c \
-codepend~.c cross~.c dentist~.c disarrain~.c \
-pvoc~.c
+codepend~.c cross~.c dentist~.c disarrain~.c disarray~.c drown~.c \
+enrich~.c ether~.c leaker~.c mindwarp~.c morphine~.c multyq~.c \
+pileup~.c pvcompand~.c pvgrain~.c pvharm~.c pvoc~.c pvtuner~.c pvwarp~.c pvwarpb~.c \
+reanimator~.c resent~.c residency~.c residency_buffer~.c schmear~.c scrape~.c \
+shapee~.c swinger~.c taint~.c thresher~.c vacancy~.c xsyn~.c
 
 # list all pd objects (i.e. myobject.pd) files here, and their helpfiles will
 # be included automatically

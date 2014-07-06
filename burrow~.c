@@ -19,9 +19,6 @@ typedef struct _burrow
  	short bypass;
 } t_burrow;
 
-
-/* msp function prototypes */
-
 void *burrow_new(t_symbol *s, int argc, t_atom *argv);
 void burrow_dsp(t_burrow *x, t_signal **sp);
 t_int *burrow_perform(t_int *w);
@@ -110,12 +107,10 @@ void *burrow_new(t_symbol *s, int argc, t_atom *argv)
 {
 	t_fftease *fft, *fft2;
 	t_burrow 	*x = (t_burrow *) pd_new(burrow_class);
-	//dsp_setup((t_pxobject *)x,4);
     inlet_new(&x->x_obj, &x->x_obj.ob_pd,gensym("signal"), gensym("signal"));
     inlet_new(&x->x_obj, &x->x_obj.ob_pd,gensym("signal"), gensym("signal"));
     inlet_new(&x->x_obj, &x->x_obj.ob_pd,gensym("signal"), gensym("signal"));
     outlet_new(&x->x_obj, gensym("signal"));
-	//outlet_new((t_pxobject *)x, "signal");
 
 	x->fft = (t_fftease *) calloc(1, sizeof(t_fftease));
 	x->fft2 = (t_fftease *) calloc(1, sizeof(t_fftease));
@@ -136,7 +131,6 @@ void *burrow_new(t_symbol *s, int argc, t_atom *argv)
     if(argc > 0){ fft->N = fft2->N = (int) atom_getfloatarg(0, argc, argv); }
     if(argc > 1){ fft->overlap = fft2->overlap = (int) atom_getfloatarg(1, argc, argv); }
     
-//	burrow_init(x);
 	return x;
 }
 
@@ -361,8 +355,6 @@ void do_burrow(t_burrow *x)
 	overlapadd(fft);
 	
 }
-
-
 
 void burrow_dsp(t_burrow *x, t_signal **sp)
 {

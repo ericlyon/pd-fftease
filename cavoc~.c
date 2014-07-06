@@ -69,17 +69,14 @@ void cavoc_tilde_setup(void)
 	class_addmethod(c,(t_method)cavoc_dsp,gensym("dsp"),0);
 	class_addmethod(c,(t_method)cavoc_mute,gensym("mute"),A_FLOAT,0);
 	class_addmethod(c,(t_method)cavoc_oscbank,gensym("oscbank"),A_FLOAT,0);
-	class_addmethod(c,(t_method)cavoc_fftinfo,gensym("fftinfo"),0);
 	class_addmethod(c,(t_method)cavoc_rule,gensym("rule"),A_GIMME,0);
 	class_addmethod(c,(t_method)cavoc_external_trigger,gensym("external_trigger"),A_FLOAT,0);
 	class_addmethod(c,(t_method)cavoc_bang,gensym("bang"),0);
 	class_addmethod(c,(t_method)cavoc_retune,gensym("retune"),A_FLOAT,A_FLOAT,0);
 	class_addmethod(c,(t_method)cavoc_topfreq,gensym("topfreq"),A_FLOAT,0);
 	class_addmethod(c,(t_method)cavoc_bottomfreq,gensym("bottomfreq"),A_FLOAT,0);
-	class_addmethod(c,(t_method)cavoc_oscbank,gensym("oscbank"),A_FLOAT,0);
     class_addmethod(c,(t_method)cavoc_density,gensym("density"),A_FLOAT,0);
     class_addmethod(c,(t_method)cavoc_hold_time,gensym("hold_time"),A_FLOAT,0);
-	class_addmethod(c,(t_method)cavoc_fftinfo,gensym("fftinfo"),0);
     cavoc_class = c;
     fftease_announce(OBJECT_NAME);
 }
@@ -449,7 +446,6 @@ float cavoc_randf(float min, float max)
 	randv = (float) (rand() % 32768) / 32768.0 ;
 	return (min + ((max-min) * randv))  ;
 }
-
 
 void cavoc_dsp(t_cavoc *x, t_signal **sp)
 {

@@ -13,10 +13,9 @@ typedef struct _cross
 	t_fftease *fft;
 	t_fftease *fft2; 
 	t_float threshie;
-	short thresh_connected;
 	short mute;//flag
-	short bypass;
 	short autonorm;// for self gain regulation
+    t_float normult; // adjusted multiplier on a per-frame basis
 } t_cross;
 
 void *cross_new(t_symbol *s, int argc, t_atom *argv);
@@ -37,8 +36,7 @@ void cross_tilde_setup(void)
 	CLASS_MAINSIGNALIN(c, t_cross, x_f);
 	class_addmethod(c,(t_method)cross_dsp,gensym("dsp"),0);
 	class_addmethod(c,(t_method)cross_mute,gensym("mute"),A_FLOAT,0);
-    class_addmethod(c,(t_method)cross_fftinfo,gensym("fftinfo"),0);
-    class_addmethod(c,(t_method)cross_autonorm, gensym("autonorm"),  A_DEFFLOAT, 0);
+    class_addmethod(c,(t_method)cross_autonorm, gensym("autonorm"),  A_FLOAT, 0);
     cross_class = c;
     fftease_announce(OBJECT_NAME);
 }
@@ -53,30 +51,6 @@ void cross_fftsize(t_cross *x, t_floatarg f)
 	x->fft->N = (int) f;
 	x->fft2->N = (int) f;
 	cross_init(x);
-}
-
-void cross_overlap(t_cross *x, t_floatarg f)
-{
-	x->fft->overlap = (int) f;
-	x->fft2->overlap = (int) f;
-	cross_init(x);
-}
-
-void cross_winfac(t_cross *x, t_floatarg f)
-{
-	x->fft->winfac = (int) f;
-	x->fft2->winfac = (int) f;
-	cross_init(x);
-}
-
-void cross_fftinfo( t_cross *x )
-{
-	fftease_fftinfo(x->fft, OBJECT_NAME);
-}
-
-void cross_bypass(t_cross *x, t_floatarg toggle)
-{
-	x->bypass = (short)toggle;
 }
 
 void cross_mute(t_cross *x, t_floatarg toggle)
@@ -197,12 +171,12 @@ void do_cross(t_cross *x)
 		} else {
 			rescale = ingain / outgain;
 		} 
-		// post("ingain %f outgain %f rescale %f",ingain, outgain, rescale);
-		mymult = mult * rescale;
+		//post("ingain %f outgain %f rescale %f",ingain, outgain, rescale);
+		x->normult = mult * rescale;
 	}  else {
-		mymult = mult;
+		x->normult = mult;
+        //post("mymult: %f", mymult);
 	}
-	
 	rdft(fft, -1);
 	overlapadd(fft);
 }
@@ -245,7 +219,7 @@ t_int *cross_perform(t_int *w)
         memcpy(inputTwo + (Nw - D), MSPInputVector2, D * sizeof(t_float));
         
 		do_cross(x);
-        
+        mult = x->normult;
 		for ( j = 0; j < D; j++ ){ *MSPOutputVector++ = output[j] * mult; }
         memcpy(output, output + D, (Nw-D) * sizeof(t_float));
         for(j = (Nw-D); j < Nw; j++){ output[j] = 0.0; }
@@ -258,7 +232,7 @@ t_int *cross_perform(t_int *w)
             memcpy(inputTwo + (Nw-D), MSPInputVector2 + (D*i), D * sizeof(t_float));
             
 			do_cross(x);
-            
+            mult = x->normult;
 			for ( j = 0; j < D; j++ ){ *MSPOutputVector++ = output[j] * mult; }
             memcpy(output, output + D, (Nw-D) * sizeof(t_float));
             for(j = (Nw-D); j < Nw; j++){ output[j] = 0.0; }
@@ -278,7 +252,7 @@ t_int *cross_perform(t_int *w)
             memcpy(inputTwo + (Nw - D), internalInputVector2, D * sizeof(t_float));
             
             do_cross(x);
-            
+            mult = x->normult;
             for ( j = 0; j < D; j++ ){ internalOutputVector[j] = output[j] * mult; }
             memcpy(output, output + D, (Nw - D) * sizeof(t_float));
             for(j = (Nw-D); j < Nw; j++){ output[j] = 0.0; }

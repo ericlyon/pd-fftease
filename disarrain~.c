@@ -27,7 +27,6 @@ typedef struct _disarrain
 	t_float interpolation_duration; // duration in seconds of interpolation
 	int interpolation_frames; // number of frames to interpolate
 	int frame_countdown; // keep track of position in interpolation
-	
 	int perform_method;// 0 for lean, 1 for full conversion
 	float ival;
 	short lock;// lock for switching mapping arrays, but not used now
@@ -38,6 +37,7 @@ typedef struct _disarrain
     t_float top_frequency;// for remapping spectrum (NOW AN ATTRIBUTE)
 	short reset_flag; // call for reset 
 	short switchcount_flag; // call for switch count
+    int switchcount;
 	int new_shuffle_count; // call to change switch count
 } t_disarrain;
 
@@ -72,17 +72,14 @@ void disarrain_tilde_setup(void)
 	CLASS_MAINSIGNALIN(c, t_disarrain, x_f);
 	class_addmethod(c,(t_method)disarrain_dsp,gensym("dsp"),0);
 	class_addmethod(c,(t_method)disarrain_mute,gensym("mute"),A_FLOAT,0);
-    class_addmethod(c,(t_method)disarrain_fftinfo,gensym("fftinfo"),0);
 	class_addmethod(c,(t_method)reset_shuffle, gensym("bang"), 0);
 	class_addmethod(c,(t_method)disarrain_showstate,gensym("showstate"),0);
 	class_addmethod(c,(t_method)disarrain_setstate, gensym("setstate"), A_GIMME, 0);
 	class_addmethod(c,(t_method)disarrain_isetstate, gensym("isetstate"), A_GIMME, 0);
-	class_addmethod(c,(t_method)disarrain_mute, gensym("mute"), A_FLOAT, 0);
 	class_addmethod(c,(t_method)disarrain_topfreq, gensym("topfreq"), A_FLOAT, 0);
 	class_addmethod(c,(t_method)disarrain_fadetime, gensym("fadetime"), A_FLOAT, 0);
 	class_addmethod(c,(t_method)disarrain_switch_count, gensym("switch_count"), A_FLOAT, 0);
 	class_addmethod(c,(t_method)disarrain_killfade, gensym("killfade"), 0);
-	class_addmethod(c,(t_method)disarrain_fftinfo, gensym("fftinfo"), 0);
     disarrain_class = c;
     fftease_announce(OBJECT_NAME);
 }
@@ -158,6 +155,9 @@ void disarrain_init(t_disarrain *x)
 	x->frame_countdown = 0;
 	x->shuffle_count = 0;
 	x->last_shuffle_count = 0;
+    if(x->switchcount > 0){
+        disarrain_switch_count (x, (t_float)x->switchcount);
+    }
 }
 
 
@@ -166,47 +166,39 @@ void disarrain_force_switch(t_disarrain *x, t_floatarg f)
 	x->force_switch = (short)f;
 }
 
+
+
 void disarrain_fadetime (t_disarrain *x, t_floatarg f)
 {
 	int frames;
 	float duration;
 	
+
+    if(f > 0.0){
+        x->interpolation_duration = f * 0.001;
+    } else {
+        return;
+    }
+    if(! x->fft->initialized){
+        return;
+    }
 	if(x->frame_duration <= 0.0){
-		error("%s: frame duration %f is too low", OBJECT_NAME, x->frame_duration);
+		// error("%s: frame duration %f is too low", OBJECT_NAME, x->frame_duration);
 		return;
 	}
-	duration = f * .001;
-	frames = duration / x->frame_duration;
+	// duration = f * .001;
+	frames = x->interpolation_duration / x->frame_duration;
 	if( frames <= 1){
 		error("%s: fadetime too short",OBJECT_NAME);
 		return;
 	}
-	x->interpolation_duration = f * .001;
 	x->interpolation_frames = frames;
-	
 }
 
 void disarrain_killfade(t_disarrain *x)
 {
 	x->frame_countdown = 0;
 	
-}
-
-
-
-void disarrain_assist (t_disarrain *x, void *b, long msg, long arg, char *dst)
-{
-	if (msg==1) {
-		switch (arg) {
-			case 0: sprintf(dst,"(signal) Input"); break;
-		}
-	} else if (msg==2) {
-		switch (arg) {
-			case 0:	sprintf(dst,"(signal) Output"); break;
-			case 1: sprintf(dst,"(signal) Interpolation Sync"); break;
-			case 2: sprintf(dst,"(list) Current State"); break;
-		}
-	}
 }
 
 void *disarrain_new(t_symbol *msg, short argc, t_atom *argv)
@@ -307,7 +299,6 @@ void do_disarrain(t_disarrain *x)
 		}		
 
 		memcpy(last_shuffle_mapping, shuffle_mapping,  N2 * sizeof(int));
-//		sysmem_copyptr(shuffle_mapping, last_shuffle_mapping, N2 * sizeof(int));
         
 		x->last_shuffle_count = x->shuffle_count;
 		x->shuffle_count = new_shuffle_count;
@@ -320,15 +311,8 @@ void do_disarrain(t_disarrain *x)
 		x->reset_flag = 0;
 	}
 	else if(x->reset_flag){
-		/*
-		for(i = 0; i<N2; i++){
-			last_shuffle_mapping[i] = shuffle_mapping[i];
-		}*/
-        // void sysmem_copyptr(const void *src, void *dst, long bytes);
         
-		// memcpy(last_shuffle_mapping, shuffle_mapping,  N2 * sizeof(int));
-        sysmem_copyptr(shuffle_mapping, last_shuffle_mapping, N2 * sizeof(int));
-        
+		memcpy(last_shuffle_mapping, shuffle_mapping,  N2 * sizeof(int));
 		last_shuffle_count = shuffle_count;
 		shuffle_count = new_shuffle_count;
 		// post("%d %d %d", last_shuffle_count, shuffle_count, new_shuffle_count);
@@ -356,9 +340,8 @@ void do_disarrain(t_disarrain *x)
 		// post("in: countdown: %d, frames: %d", frame_countdown, interpolation_frames);
         // dangerous???
         
-		// memcpy(shuffle_mapping, shuffle_tmp,  N2 * sizeof(int));
-        
-		sysmem_copyptr(shuffle_tmp, shuffle_mapping, N2 * sizeof(int));
+		memcpy(shuffle_mapping, shuffle_tmp,  N2 * sizeof(int));
+
 		x->reset_flag = 0;
 	}
 	
@@ -500,7 +483,7 @@ t_int *disarrain_perform(t_int *w)
 	}
 	/* send out sync signal */
 	for(j = 0; j < MSPVectorSize; j++){
-		sync_vec[j] = x->ival;
+		sync_vec[j] = 1.0 - x->ival;
 	}
     return w+5;
 }		
@@ -548,30 +531,22 @@ void interpolate_frames_to_channel(t_disarrain *x)
 }
 
 
+
 void disarrain_switch_count (t_disarrain *x, t_floatarg f)
 {
 	int i = f;
-	// int j;
+    x->switchcount = i;
+    if(! x->fft->initialized){
+        return;
+    }
 	if( i < 0 ){
 		i = 0;
 	}
 	if( i > x->max_bin ) {
 		i = x->max_bin;
 	}
-    /*
-	for(j = 0; j < i; j++){
-		if(x->shuffle_mapping[j] < 0 || x->shuffle_mapping[j] > x->max_bin * 2 || 
-		   x->last_shuffle_mapping[j] < 0 || x->last_shuffle_mapping[j] > x->shuffle_mapping[j] > x->max_bin * 2
-			)
-        {
-			post("%d: %d %d",j, x->shuffle_mapping[j], x->last_shuffle_mapping[j] );
-		}
-	}
-	*/
 	x->reset_flag = 1;
 	x->new_shuffle_count = i;
-
-
 }
 
 
@@ -582,15 +557,10 @@ void reset_shuffle (t_disarrain *x)
 
 void copy_shuffle_array(t_disarrain *x)
 {
-//	int i;
 	int N2 = x->fft->N2;
 	int *shuffle_mapping = x->shuffle_mapping;
 	int *last_shuffle_mapping = x->last_shuffle_mapping;	
-	
-	/*
-	for(i = 0; i<N2; i++){
-		last_shuffle_mapping[i] = shuffle_mapping[i];
-	}*/
+
 	memcpy(shuffle_mapping, last_shuffle_mapping,  N2 * sizeof(int));
 	x->last_shuffle_count = x->shuffle_count;
 	
@@ -598,7 +568,6 @@ void copy_shuffle_array(t_disarrain *x)
 
 
 int rand_index(int max) {
-	
 	return (rand() % max);
 }
 
@@ -607,10 +576,15 @@ void disarrain_topfreq (t_disarrain *x, t_floatarg freq)
 {
     t_float funda = (t_float) x->fft->R / (t_float) x->fft->N;
     t_float curfreq;
-    
-    if( freq < funda || freq > 20000) {
-        freq = 1000.0 ;
+    if(freq  <= 0 || freq > 22050){
+        post("freq %f is out of range", freq);
+        return;
     }
+    x->top_frequency = freq;
+    if(! x->fft->initialized){
+        return;
+    }
+    funda = (t_float) x->fft->R / (t_float) x->fft->N;
     x->max_bin = 1;
     curfreq = 0;
     while( curfreq < freq ) {
@@ -619,114 +593,6 @@ void disarrain_topfreq (t_disarrain *x, t_floatarg freq)
     }
 }
 
-/*
-t_max_err get_maxfreq(t_disarrain *x, void *attr, long *ac, t_atom **av)
-{
-	if (ac && av) {
-		char alloc;
-		
-		if (atom_alloc(ac, av, &alloc)) {
-			return MAX_ERR_GENERIC;
-		}
-		atom_setlong(*av, x->top_frequency);
-	}
-	return MAX_ERR_NONE;
-	
-}
-
-t_max_err set_maxfreq(t_disarrain *x, void *attr, long ac, t_atom *av)
-{
-    t_float funda = (t_float) x->fft->R / (t_float) x->fft->N;
-    t_float curfreq;
-	if (ac && av) {
-		t_float val = atom_getfloat(av);
-		x->top_frequency = val;
-	}
-    if( x->top_frequency < funda || x->top_frequency > 20000) {
-        x->top_frequency = 1000.0 ;
-    }
-    x->max_bin = 1;
-    curfreq = 0;
-    while( curfreq < x->top_frequency ) {
-        ++(x->max_bin);
-        curfreq += funda ;
-    }
-	return MAX_ERR_NONE;
-}
-
-
-t_max_err get_fftsize(t_disarrain *x, void *attr, long *ac, t_atom **av)
-{
-	if (ac && av) {
-		char alloc;
-		
-		if (atom_alloc(ac, av, &alloc)) {
-			return MAX_ERR_GENERIC;
-		}
-		x->fftsize_attr = x->fft->N;
-		atom_setlong(*av, x->fftsize_attr);
-	}	
-	return MAX_ERR_NONE;
-	
-}
-
-t_max_err set_fftsize(t_disarrain *x, void *attr, long ac, t_atom *av)
-{
-	
-	if (ac && av) {
-		long val = atom_getlong(av);
-		x->fft->N = (int) val;
-		disarrain_init(x);
-	}
-	return MAX_ERR_NONE;
-}
-
-t_max_err get_overlap(t_disarrain *x, void *attr, long *ac, t_atom **av)
-{
-	if (ac && av) {
-		char alloc;
-		
-		if (atom_alloc(ac, av, &alloc)) {
-			return MAX_ERR_GENERIC;
-		}
-		x->overlap_attr = x->fft->overlap;
-		atom_setlong(*av, x->overlap_attr);
-	}	
-	return MAX_ERR_NONE;
-} 
-
-
-t_max_err set_overlap(t_disarrain *x, void *attr, long ac, t_atom *av)
-{	
-	if (ac && av) {
-		long val = atom_getlong(av);
-		x->fft->overlap = (int) val;
-		disarrain_init(x);
-	}
-	return MAX_ERR_NONE;
-}
-
-/*
-void disarrain_dsp64(t_disarrain *x, t_object *dsp64, t_float **ins,
-                     long numins, t_float **outs,long numouts, long vectorsize,
-                     long flags, void *userparam)
-{
-	t_fftease *fft = x->fft;
-	if(fft->MSPVectorSize != sp[0]->s_n){
-		fft->MSPVectorSize = sp[0]->s_n;
-		fftease_set_fft_buffers(fft);
-	}
-	
-	if(fft->R != sp[0]->s_sr){
-		fft->R = sp[0]->s_sr;
-		disarrain_init(x);
-	}
-	if(fftease_msp_sanity_check(fft,OBJECT_NAME))	
-		dsp_add(disarrain_perform, 4, x, sp[0]->s_vec, sp[1]->s_vec, sp[2]->s_vec);
-	
-}
-*/
-// ENTER STORED SHUFFLE
 void disarrain_list (t_disarrain *x, t_symbol *msg, short argc, t_atom *argv) {
 	short i;
 	int ival;
@@ -745,13 +611,9 @@ void disarrain_isetstate (t_disarrain *x, t_symbol *msg, short argc, t_atom *arg
 	short i;
 	int ival;
 	int N2 = x->fft->N2;
-	//  x->last_shuffle_count = x->shuffle_count;
 	
 	copy_shuffle_array(x);
 	x->shuffle_count = argc;
-	
-	
-	//  x->lock = 1;
     
 	for (i=0; i < argc; i++) {
 		ival = 2 * atom_getfloatarg(i,argc,argv);
@@ -762,10 +624,8 @@ void disarrain_isetstate (t_disarrain *x, t_symbol *msg, short argc, t_atom *arg
 			error("%s: %d is out of range",OBJECT_NAME, ival);
 		}
 	}
-	
-	//  x->lock = 0;
+
 	x->frame_countdown = x->interpolation_frames;
-	
 	return;
 }
 

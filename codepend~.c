@@ -23,9 +23,6 @@ typedef struct _codepend
 	t_float invert_pad;
 } t_codepend;
 
-
-/* msp function prototypes */
-
 void *codepend_new(t_symbol *s, int argc, t_atom *argv);
 void codepend_dsp(t_codepend *x, t_signal **sp);
 t_int *codepend_perform(t_int *w);

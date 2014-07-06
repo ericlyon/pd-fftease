@@ -14,7 +14,6 @@ typedef struct _pvoc
 	t_float lofreq;
 	t_float hifreq;
 	t_float topfreq;
-	int bypass;
 	short mute;
 } t_pvoc;
 
@@ -28,7 +27,6 @@ void pvoc_highfreq(t_pvoc *x, t_floatarg f);
 void do_pvoc(t_pvoc *x );
 t_int *pvoc_perform(t_int *w);
 void pvoc_dsp(t_pvoc *x, t_signal **sp);
-
 
 void pvoc_tilde_setup(void)
 {
@@ -131,7 +129,6 @@ void *pvoc_new(t_symbol *s, int argc, t_atom *argv)
 	x->lofreq = 0;
 	x->hifreq = 15000;
 	x->mute = 0;
-	x->bypass = 0;
 	fft->N = FFTEASE_DEFAULT_FFTSIZE;
 	fft->overlap = FFTEASE_DEFAULT_OVERLAP;
 	fft->winfac = FFTEASE_DEFAULT_WINFAC;
@@ -142,7 +139,6 @@ void *pvoc_new(t_symbol *s, int argc, t_atom *argv)
 	fft->initialized = 0;// prepare for init in DSP routine
 	return x;
 }
-
 
 void do_pvoc(t_pvoc *x)
 {
@@ -178,13 +174,7 @@ t_int *pvoc_perform(t_int *w)
         for(i=0; i < MSPVectorSize; i++){ MSPOutputVector[i] = 0.0; }
 		return w+6;
 	}
-	if (x->bypass) {
-		for( j = 0; j < MSPVectorSize; j++) {
-			*MSPOutputVector++ = *MSPInputVector++ * FFTEASE_BYPASS_GAIN;
-		}
-		return w+6;
-	}
-	
+
     fft->P  = *transp;
     fft->pitch_increment = fft->P*fft->L/fft->R;
     fft->synt = *synth_thresh;
