@@ -1,6 +1,6 @@
 #include "fftease.h"
 
-void oscbank( t_fftease *fft )
+void fftease_oscbank( t_fftease *fft )
 {
 	int    amp,freq,chan, n;
 	

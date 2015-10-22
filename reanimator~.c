@@ -242,9 +242,9 @@ void do_reanimator(t_reanimator *x)
 				fft->input[i] = 0.0;
 			}
 		} else {
-			fold(fft);	
-			rdft(fft,FFT_FORWARD);
-			convert(fft);
+			fftease_fold(fft);
+			fftease_rdft(fft,FFT_FORWARD);
+			fftease_convert(fft);
 			sync = (float) framecount / (float) total_frames;
 			
 			new_ampsum = ampsum = 0;
@@ -295,20 +295,20 @@ void do_reanimator(t_reanimator *x)
 			channel[i] = framebank[matchframe][i];
 		}
 		if(fft->obank_flag){
-			oscbank(fft);
+			fftease_oscbank(fft);
 		} else {
-			unconvert(fft);
-			rdft(fft,FFT_INVERSE);
-			overlapadd(fft);
+			fftease_unconvert(fft);
+			fftease_rdft(fft,FFT_INVERSE);
+			fftease_overlapadd(fft);
 		}
 		
 		
 	}
 	/* REANIMATION HERE */
 	else {
-		fold(fft);	
-		rdft(fft,FFT_FORWARD);
-		convert(fft);
+		fftease_fold(fft);
+		fftease_rdft(fft,FFT_FORWARD);
+		fftease_convert(fft);
 		ampsum = 0;
 		// NORMALIZE INPUT FRAME
 		for( i = 0; i < N; i += 2 ){
@@ -371,11 +371,11 @@ void do_reanimator(t_reanimator *x)
 			channel[i] = framebank[matchframe][i];
 		}		
 		if(fft->obank_flag){
-			oscbank(fft);
+			fftease_oscbank(fft);
 		} else {
-			unconvert(fft);
-			rdft(fft,FFT_INVERSE);
-			overlapadd(fft);
+			fftease_unconvert(fft);
+			fftease_rdft(fft,FFT_INVERSE);
+			fftease_overlapadd(fft);
 		}
 		
 		// scale back to match

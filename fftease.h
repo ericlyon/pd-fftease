@@ -109,32 +109,32 @@ typedef struct _fftease
 
 
 
-void convert(t_fftease *fft);
-void unconvert(t_fftease *fft);
-void rfft( t_float *x, int N, int forward );
-void cfft( t_float *x, int NC, int forward );
-void bitreverse( t_float *x, int N );
-void fold( t_fftease *fft );
-void init_rdft(int n, int *ip, t_float *w);
-void rdft(t_fftease *fft, int isgn);
-void bitrv2(int n, int *ip, t_float *a);
-void cftsub(int n, t_float *a, t_float *w);
-void rftsub(int n, t_float *a, int nc, t_float *c);
-void makewt(int nw, int *ip, t_float *w);
-void makect(int nc, int *ip, t_float *c);
-void leanconvert(t_fftease *fft);
-void leanunconvert(t_fftease *fft);
-void makewindows( t_float *H, t_float *A, t_float *S, int Nw, int N, int I );
-void makehamming( t_float *H, t_float *A, t_float *S, int Nw, int N, int I,int odd );
-void makehanning( t_float *H, t_float *A, t_float *S, int Nw, int N, int I,int odd );
-void overlapadd(t_fftease *fft);
-void bloscbank( t_float *S, t_float *O, int D, t_float iD, t_float *lf, t_float *la,
+void fftease_convert(t_fftease *fft);
+void fftease_unconvert(t_fftease *fft);
+void fftease_rfft( t_float *x, int N, int forward );
+void fftease_cfft( t_float *x, int NC, int forward );
+void fftease_bitreverse( t_float *x, int N );
+void fftease_fold( t_fftease *fft );
+void fftease_init_rdft(int n, int *ip, t_float *w);
+void fftease_rdft(t_fftease *fft, int isgn);
+//void fftease_bitrv2(int n, int *ip, t_float *a);
+//void fftease_cftsub(int n, t_float *a, t_float *w);
+//void rftsub(int n, t_float *a, int nc, t_float *c);
+void fftease_makewt(int nw, int *ip, t_float *w);
+void fftease_makect(int nc, int *ip, t_float *c);
+void fftease_leanconvert(t_fftease *fft);
+void fftease_leanunconvert(t_fftease *fft);
+void fftease_makewindows( t_float *H, t_float *A, t_float *S, int Nw, int N, int I );
+void fftease_makehamming( t_float *H, t_float *A, t_float *S, int Nw, int N, int I,int odd );
+void fftease_makehanning( t_float *H, t_float *A, t_float *S, int Nw, int N, int I,int odd );
+void fftease_overlapadd(t_fftease *fft);
+void fftease_bloscbank( t_float *S, t_float *O, int D, t_float iD, t_float *lf, t_float *la,
 	t_float *bindex, t_float *tab, int len, t_float synt, int lo, int hi );
-void oscbank( t_fftease *fft );
-t_float randf( t_float min, t_float max );
-int randi( int min, int max );
+void fftease_oscbank( t_fftease *fft );
+//t_float randf( t_float min, t_float max );
+//int randi( int min, int max );
 int fftease_power_of_two(int test);
-void limit_fftsize(int *N, int *Nw, char *OBJECT_NAME);
+void fftease_limit_fftsize(int *N, int *Nw, char *OBJECT_NAME);
 int fftease_fft_size(int testfft);
 void fftease_free(t_fftease *fft);
 void fftease_init(t_fftease *fft);
@@ -146,14 +146,14 @@ int fftease_msp_sanity_check(t_fftease *fft, char *oname);
 t_float fftease_randf(t_float min, t_float max);
 void fftease_noalias(t_fftease* fft, short flag);
 void fftease_oscbank_setbins(t_fftease *fft, t_float lowfreq, t_float highfreq);
-void limited_oscbank(t_fftease *fft, int osclimit, t_float framethresh);
+void fftease_limited_oscbank(t_fftease *fft, int osclimit, t_float framethresh);
 t_float fftease_randf(t_float min, t_float max);
 // Penrose extras
-t_float frequencyToIncrement( t_float samplingRate, t_float frequency, int bufferLength );
-void makeSineBuffer( t_float *buffer, int bufferLength );
-t_float bufferOscil( t_float *phase, t_float increment, t_float *buffer, int bufferLength );
-float rrand(int *seed);
-float prand(int *seed);
+t_float fftease_frequencyToIncrement( t_float samplingRate, t_float frequency, int bufferLength );
+void fftease_makeSineBuffer( t_float *buffer, int bufferLength );
+t_float fftease_bufferOscil( t_float *phase, t_float increment, t_float *buffer, int bufferLength );
+float fftease_rrand(int *seed);
+float fftease_prand(int *seed);
 
 /*** MSP helper functions, thanks JKC! ***/
 /*

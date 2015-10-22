@@ -126,9 +126,9 @@ void do_drown(t_drown *x)
 	t_float frame_peak = 0.0, local_thresh;
 	int N = fft->N;
 	
-	fold(fft);	
-	rdft(fft,1);
-	leanconvert(fft);
+	fftease_fold(fft);
+	fftease_rdft(fft,1);
+	fftease_leanconvert(fft);
 	if(x->peakflag){
 		for(i = 0; i < N; i += 2){	
 			if(frame_peak < channel[i])
@@ -142,9 +142,9 @@ void do_drown(t_drown *x)
 		if(channel[i] < local_thresh)
 			channel[i]  *= drownmult;
 	}  	
-	leanunconvert(fft);
-	rdft(fft,-1);
-	overlapadd(fft);
+	fftease_leanunconvert(fft);
+	fftease_rdft(fft,-1);
+	fftease_overlapadd(fft);
 }
 
 t_int *drown_perform(t_int *w)

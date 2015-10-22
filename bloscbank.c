@@ -1,7 +1,7 @@
 
 #include "fftease.h"
 
-void bloscbank( t_float *S, t_float *O, int D, t_float iD, t_float *lf, t_float *la, t_float *index, t_float *tab,
+void fftease_bloscbank( t_float *S, t_float *O, int D, t_float iD, t_float *lf, t_float *la, t_float *index, t_float *tab,
 			   int len, t_float synt, int lo, int hi )
 {
 	int    amp,freq,chan, i;

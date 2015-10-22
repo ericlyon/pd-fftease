@@ -288,9 +288,9 @@ void do_residency(t_residency *x)
 			}
 		}
 		else { // convert and store in one frame
-			fold(fft);
-			rdft(fft,1);
-			convert(fft);
+			fftease_fold(fft);
+			fftease_rdft(fft,1);
+			fftease_convert(fft);
 			for(i= 0; i < fft->N + 2; i++){
 				x->loveboat[x->frames_read][i] = fft->channel[i];
 			}
@@ -340,11 +340,11 @@ void do_residency(t_residency *x)
             }
         }
 		if(fft->obank_flag){
-			oscbank(fft);
+			fftease_oscbank(fft);
 		} else {
-			unconvert(fft);
-			rdft(fft,FFT_INVERSE);
-			overlapadd(fft);
+			fftease_unconvert(fft);
+			fftease_rdft(fft,FFT_INVERSE);
+			fftease_overlapadd(fft);
 		}
 	}
 	/* restore state variables */

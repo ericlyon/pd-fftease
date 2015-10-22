@@ -125,7 +125,7 @@ void centerring_init(t_centerring *x)
 		x->ringPhases = (t_float *) calloc((N2 + 1), sizeof(t_float));
 		x->ringIncrements = (t_float *) calloc((N2 + 1), sizeof(t_float));
 		x->sineBuffer = (t_float *) calloc((x->bufferLength + 1), sizeof(t_float));
-		makeSineBuffer(x->sineBuffer, x->bufferLength);
+		fftease_makeSineBuffer(x->sineBuffer, x->bufferLength);
 	} else {
 		x->ringIncrements = (t_float *)realloc((void *)x->ringIncrements, (N2 + 1) * sizeof(t_float));
 		x->ringPhases = (t_float *)realloc((void *)x->ringPhases, (N2 + 1) * sizeof(t_float));
@@ -157,9 +157,9 @@ void centerring_adjust( t_centerring *x ) {
     for (i=0; i < N2; i++) {
 
 		*(ringIncrements+i) = 
-		frequencyToIncrement( 
+		fftease_frequencyToIncrement(
 			x->frameR, 
-			x->baseFreq * ((rrand(&(x->seed)) * x->bandFreq) + x->constFreq ), 
+			x->baseFreq * ((fftease_rrand(&(x->seed)) * x->bandFreq) + x->constFreq ),
 			x->bufferLength
 		);
     }
@@ -180,7 +180,7 @@ void centerring_randphases( t_centerring *x ) {
 	int	i;
 	
 	for (i=0; i < x->fft->N2; i++)
-		*((x->ringPhases)+i) = prand(&(x->seed)) * (float) (x->bufferLength);
+		*((x->ringPhases)+i) = fftease_prand(&(x->seed)) * (float) (x->bufferLength);
 	
 }
 
@@ -204,8 +204,8 @@ void do_centerring(t_centerring *x)
 	
 	x->recalc = 0;
 	
-	fold(fft);
-	rdft(fft,1);
+	fftease_fold(fft);
+	fftease_rdft(fft,1);
 	
 	/* convert to polar coordinates from complex values */ 
 	
@@ -224,8 +224,8 @@ void do_centerring(t_centerring *x)
 	for (i=0; i < N2; i++) {
 		even = i<<1;
 		
-		*(channel + even) *= bufferOscil( ringPhases+i,
-										  *(ringIncrements+i), sineBuffer, bufferLength );
+		*(channel + even) *= fftease_bufferOscil( ringPhases+i,
+							  *(ringIncrements+i), sineBuffer, bufferLength );
 	}
 	
 	/* convert from polar to cartesian */	
@@ -239,8 +239,8 @@ void do_centerring(t_centerring *x)
 		if ( i != N2 )
 			*(buffer + odd) = (*(channel + even)) * -sin( *(channel + odd) );
 	}
-	rdft(fft,-1);
-	overlapadd(fft);
+	fftease_rdft(fft,-1);
+	fftease_overlapadd(fft);
 }
 
 t_int *centerring_perform(t_int *w)

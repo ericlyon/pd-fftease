@@ -7,7 +7,7 @@
    positive frequency spectrum arranged as before, and replaces it with
    2*N real values.  N MUST be a power of 2. */
 
-void rfft( t_float *x, int N, int forward )
+void fftease_rfft( t_float *x, int N, int forward )
 
 {
   t_float 	c1,c2,
@@ -23,7 +23,7 @@ void rfft( t_float *x, int N, int forward )
 		N2p1;
   static int 	first = 1;
 /*t_float PI, TWOPI;*/
-void cfft();
+void fftease_cfft();
 
     if ( first ) {
 
@@ -35,7 +35,7 @@ void cfft();
     c1 = 0.5;
     if ( forward ) {
 	c2 = -0.5;
-	cfft( x, N, forward );
+	fftease_cfft( x, N, forward );
 	xr = x[0];
 	xi = x[1];
     } else {
@@ -78,7 +78,7 @@ void cfft();
     if ( forward )
 	x[1] = xr;
     else
-	cfft( x, N, forward );
+	fftease_cfft( x, N, forward );
 }
 
 /* cfft replaces t_float array x containing NC complex values
@@ -88,7 +88,7 @@ void cfft();
    recursive Fast Fourier transform method due to Danielson
    and Lanczos.  NC MUST be a power of 2. */
 
-void cfft( t_float *x, int NC, int forward )
+void fftease_cfft( t_float *x, int NC, int forward )
 
 {
   t_float 	wr,wi,
@@ -101,10 +101,10 @@ void cfft( t_float *x, int NC, int forward )
 		i,j,
 		delta;
 
-void bitreverse();
+void fftease_bitreverse();
 
     ND = NC<<1;
-    bitreverse( x, ND );
+    fftease_bitreverse( x, ND );
     for ( mmax = 2; mmax < ND; mmax = delta ) {
 	delta = mmax<<1;
 	theta = TWOPI/( forward? mmax : -mmax );
@@ -140,7 +140,7 @@ void bitreverse();
 /* bitreverse places t_float array x containing N/2 complex values
    into bit-reversed order */
 
-void bitreverse( t_float *x, int N )
+void fftease_bitreverse( t_float *x, int N )
 
 {
   t_float 	rtemp,itemp;

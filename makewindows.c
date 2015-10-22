@@ -1,6 +1,6 @@
 #include "fftease.h"
 
-void makewindows( t_float *H, t_float *A, t_float *S, int Nw, int N, int I )
+void fftease_makewindows( t_float *H, t_float *A, t_float *S, int Nw, int N, int I )
 
 {
  int i ;
@@ -39,7 +39,7 @@ void makewindows( t_float *H, t_float *A, t_float *S, int Nw, int N, int I )
     }
 }
 
-void makehamming( t_float *H, t_float *A, t_float *S, int Nw, int N, int I, int odd )
+void fftease_makehamming( t_float *H, t_float *A, t_float *S, int Nw, int N, int I, int odd )
 
 {
  int i;
@@ -89,7 +89,7 @@ void makehamming( t_float *H, t_float *A, t_float *S, int Nw, int N, int I, int 
 }
 
 
-void makehanning( t_float *H, t_float *A, t_float *S, int Nw, int N, int I, int odd )
+void fftease_makehanning( t_float *H, t_float *A, t_float *S, int Nw, int N, int I, int odd )
 {
  int i;
  t_float sum ;

@@ -351,11 +351,11 @@ void do_cavoc(t_cavoc *x)
 			channel[(i*2) + 1] = freqs[i];
 			channel[i * 2] = amps[i];
 		}
-		oscbank(fft);
+		fftease_oscbank(fft);
 	} else {
-		unconvert(fft);
-		rdft(fft, -1);
-		overlapadd(fft);
+		fftease_unconvert(fft);
+		fftease_rdft(fft, -1);
+		fftease_overlapadd(fft);
 	}		
 }
 

@@ -124,9 +124,9 @@ float
 	cutoff = (t_float) N2 * .9;
 	filterMult = .00001;
 	
-	fold(fft);
-	rdft(fft,FFT_FORWARD);
-	leanconvert(fft);
+	fftease_fold(fft);
+	fftease_rdft(fft,FFT_FORWARD);
+	fftease_leanconvert(fft);
 	
 	if(warpFactor <= 0){
 		error("bad warp, resetting");
@@ -266,10 +266,10 @@ float
 			*(channelOne+bindex+j) *= factor;
 	}
 
-	leanunconvert(fft);
+	fftease_leanunconvert(fft);
 
-	rdft(fft,FFT_INVERSE);
-	overlapadd(fft);
+	fftease_rdft(fft,FFT_INVERSE);
+	fftease_overlapadd(fft);
 	
 }
 

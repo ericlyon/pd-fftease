@@ -172,11 +172,11 @@ void do_codepend(t_codepend *x)
 	if ( x->threshold != 0. )
 		threshold = x->threshold;		
 	
-	fold(fft);
-	fold(fft2);
+	fftease_fold(fft);
+	fftease_fold(fft2);
 	
-	rdft(fft, 1);
-	rdft(fft2, 1);
+	fftease_rdft(fft, 1);
+	fftease_rdft(fft2, 1);
 	
 	if (invert) {
 		
@@ -256,8 +256,8 @@ void do_codepend(t_codepend *x)
 			*(bufferOne+odd) = -(*(channelOne+even)) * sin( *(channelOne+odd) );
 	}
 	
-	rdft(fft, -1);
-	overlapadd(fft);
+	fftease_rdft(fft, -1);
+	fftease_overlapadd(fft);
 }
 
 t_int *codepend_perform(t_int *w)

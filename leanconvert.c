@@ -1,6 +1,6 @@
 #include "fftease.h"
 
-void leanconvert(t_fftease *fft)
+void fftease_leanconvert(t_fftease *fft)
 
 {
 

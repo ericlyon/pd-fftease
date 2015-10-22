@@ -271,14 +271,14 @@ void do_burrow(t_burrow *x)
 
 	/* apply hamming window and fold our window buffer into the fft buffer */ 
 	
-	fold(fft);
-	fold(fft2);
+	fftease_fold(fft);
+	fftease_fold(fft2);
 	
 	
 	/* do an fft */ 
 	
-	rdft(fft, 1);
-	rdft(fft2, 1);
+	fftease_rdft(fft, 1);
+	fftease_rdft(fft2, 1);
 	
 	if (invert) {
 		
@@ -348,11 +348,11 @@ void do_burrow(t_burrow *x)
 	
 	/* do an inverse fft */
 	
-	rdft(fft, -1);
+	fftease_rdft(fft, -1);
 	
 	/* dewindow our result */
 	
-	overlapadd(fft);
+	fftease_overlapadd(fft);
 	
 }
 

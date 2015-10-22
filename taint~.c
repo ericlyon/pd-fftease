@@ -150,13 +150,13 @@ void do_taint(t_taint *x)
 	
 	/* apply hamming window and fold our window buffer into the fft buffer */ 
 	
-	fold(fft);
-	fold(fft2);
+	fftease_fold(fft);
+	fftease_fold(fft2);
 	
 	/* do an fft */ 
 	
-	rdft(fft,FFT_FORWARD);
-	rdft(fft2,FFT_FORWARD);
+	fftease_rdft(fft,FFT_FORWARD);
+	fftease_rdft(fft2,FFT_FORWARD);
 	
 	/* convert to polar coordinates from complex values */
 	
@@ -234,9 +234,9 @@ void do_taint(t_taint *x)
 	
 	
 	
-	rdft(fft,FFT_INVERSE);
+	fftease_rdft(fft,FFT_INVERSE);
 
-	overlapadd(fft);
+	fftease_overlapadd(fft);
 	
 }
 

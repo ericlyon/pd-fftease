@@ -6,7 +6,7 @@
 
 #include "fftease.h"
 
-void overlapadd(t_fftease *fft)
+void fftease_overlapadd(t_fftease *fft)
 
 {
 	t_float *buffer = fft->buffer;

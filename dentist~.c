@@ -235,9 +235,9 @@ void do_dentist(t_dentist *x)
 	int N2 = fft->N2;
 	float sync = x->sync;
 
-	fold(fft);	
-	rdft(fft,1);
-	leanconvert(fft);
+	fftease_fold(fft);
+	fftease_rdft(fft,1);
+	fftease_leanconvert(fft);
 	
 	if(frames_left > 0 && ramp_frames > 0) {
 		// INTERPOLATE ACCORDING TO POSITION IN RAMP
@@ -271,9 +271,9 @@ void do_dentist(t_dentist *x)
 		sync = 1.0;
 	}
 	
-	leanunconvert(fft);
-	rdft(fft,-1);
-	overlapadd(fft);
+	fftease_leanunconvert(fft);
+	fftease_rdft(fft,-1);
+	fftease_overlapadd(fft);
 	x->frames_left = frames_left;
 	x->sync = sync;
 }

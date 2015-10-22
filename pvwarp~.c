@@ -278,15 +278,15 @@ void do_pvwarp(t_pvwarp *x)
 	t_float *channel = fft->channel;
 	t_float *warpfunc = x->warpfunc;
 	
-	fold(fft);   
-	rdft(fft,FFT_FORWARD);
-	convert(fft);
+	fftease_fold(fft);
+	fftease_rdft(fft,FFT_FORWARD);
+	fftease_convert(fft);
 
 	for ( chan = lo_bin; chan < hi_bin; chan++ ) {
 		freq = (chan << 1) + 1;
 		channel[freq] *= warpfunc[(chan + funcoff) % N2];
 	}
-	oscbank(fft);
+	fftease_oscbank(fft);
 }
 
 t_int *pvwarp_perform(t_int *w)

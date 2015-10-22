@@ -242,10 +242,10 @@ void do_enrich(t_enrich *x)
 	t_fftease *fft = x->fft;
     enrich_dolowfreq(x);
     enrich_dohighfreq(x);
-    fold(fft);   
-    rdft(fft,1);
-    convert(fft);
-	oscbank(fft);
+    fftease_fold(fft);
+    fftease_rdft(fft,1);
+    fftease_convert(fft);
+	fftease_oscbank(fft);
 }
 
 t_int *enrich_perform(t_int *w)

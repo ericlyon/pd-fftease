@@ -373,9 +373,9 @@ void do_resent(t_resent *x)
     
 	if(x->read_me && x->framecount > 0){
 		
-		fold(fft);	
-		rdft(fft,FFT_FORWARD);
-		convert(fft);
+		fftease_fold(fft);
+		fftease_rdft(fft,FFT_FORWARD);
+		fftease_convert(fft);
 		// use memcopy
 		for(i = 0; i < N; i++){
 			x->loveboat[x->frames_read][i] = channel[i];
@@ -429,11 +429,11 @@ void do_resent(t_resent *x)
             }
         }
 		if(fft->obank_flag){
-			oscbank(fft);
+			fftease_oscbank(fft);
 		} else {
-			unconvert(fft);
-			rdft(fft,FFT_INVERSE);
-			overlapadd(fft);
+			fftease_unconvert(fft);
+			fftease_rdft(fft,FFT_INVERSE);
+			fftease_overlapadd(fft);
 		}
 	}
 	

@@ -143,10 +143,10 @@ void *pvoc_new(t_symbol *s, int argc, t_atom *argv)
 void do_pvoc(t_pvoc *x)
 {
 	t_fftease *fft = x->fft;
-    fold(fft);   
-	rdft(fft, 1);
-	convert(fft);
-	oscbank(fft);	
+    fftease_fold(fft);
+	fftease_rdft(fft, 1);
+	fftease_convert(fft);
+	fftease_oscbank(fft);
 }
 
 t_int *pvoc_perform(t_int *w)

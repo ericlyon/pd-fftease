@@ -209,9 +209,9 @@ void do_pileup(t_pileup *x)
 	int N = fft->N;
 	t_float *channel = fft->channel;
 
-	fold(fft);
-	rdft(fft,FFT_FORWARD);
-	convert(fft);
+	fftease_fold(fft);
+	fftease_rdft(fft,FFT_FORWARD);
+	fftease_convert(fft);
 	
 	if( x->mode == 0 ){
 		for( i = 0; i < N; i += 2 ){
@@ -251,11 +251,11 @@ void do_pileup(t_pileup *x)
 	}
 
 	if(fft->obank_flag){
-		oscbank(fft);
+		fftease_oscbank(fft);
 	} else {
-	    unconvert(fft);
-		rdft(fft,FFT_INVERSE);
-		overlapadd(fft);
+	    fftease_unconvert(fft);
+		fftease_rdft(fft,FFT_INVERSE);
+		fftease_overlapadd(fft);
 	}
 }
 t_int *pileup_perform(t_int *w)

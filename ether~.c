@@ -114,10 +114,10 @@ void do_ether(t_ether *x)
 	t_float *channelOne = fft->channel;
 	t_float *channelTwo = fft2->channel;
 	
-	fold(fft);
-	fold(fft2);
-	rdft(fft,1);
-	rdft(fft2,1);
+	fftease_fold(fft);
+	fftease_fold(fft2);
+	fftease_rdft(fft,1);
+	fftease_rdft(fft2,1);
 	
 	if (invert) {	
 		
@@ -180,8 +180,8 @@ void do_ether(t_ether *x)
 		if ( i != N2 )
 			*(bufferOne+odd) = -(*(channelOne+even)) * sin( *(channelOne+odd) );
 	}
-	rdft(fft, -1);
-	overlapadd(fft);
+	fftease_rdft(fft, -1);
+	fftease_overlapadd(fft);
 }
 
 t_int *ether_perform(t_int *w)

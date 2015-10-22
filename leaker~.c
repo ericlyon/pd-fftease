@@ -157,10 +157,10 @@ void do_leaker(t_leaker *x)
 	int *sieve = x->sieve;
 	t_float fade_value = x->fade_value;
 
-	fold(fft);		
-	fold(fft2);	
-	rdft(fft,1);
-	rdft(fft2,1);
+	fftease_fold(fft);
+	fftease_fold(fft2);
+	fftease_rdft(fft,1);
+	fftease_rdft(fft2,1);
 	
 	
 	for ( i = 0; i <= N2; i++ ) {
@@ -186,8 +186,8 @@ void do_leaker(t_leaker *x)
 			}
 		}
 	}
-	rdft(fft,-1);
-	overlapadd(fft);
+	fftease_rdft(fft,-1);
+	fftease_overlapadd(fft);
 }
 
 

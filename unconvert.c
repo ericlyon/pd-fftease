@@ -2,10 +2,10 @@
 
 
 
-//void unconvert( t_float *C, t_float *S, int N2, t_float *lastphase, t_float fundamental, t_float factor )
-//	unconvert( channel, buffer, N2, c_lastphase_out, c_fundamental, c_factor_out  );
+//void fftease_unconvert( t_float *C, t_float *S, int N2, t_float *lastphase, t_float fundamental, t_float factor )
+//	fftease_unconvert( channel, buffer, N2, c_lastphase_out, c_fundamental, c_factor_out  );
 
-void unconvert(t_fftease *fft)
+void fftease_unconvert(t_fftease *fft)
 
 {
 	t_float *channel = fft->channel;

@@ -2,7 +2,7 @@
 
 extern void post(const char *fmt, ...);
 
-void limit_fftsize(int *N, int *Nw, char *OBJECT_NAME)
+void fftease_limit_fftsize(int *N, int *Nw, char *OBJECT_NAME)
 {
 	if(*N > MAX_N){
 		// post("%s: N set to maximum FFT size of %d",OBJECT_NAME,MAX_N);

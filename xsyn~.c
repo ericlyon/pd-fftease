@@ -91,14 +91,14 @@ void do_xsyn(t_xsyn *x)
     int N = fft->N;
     t_float maxamp;
     
-	fold(fft);
-	fold(fft2);
+	fftease_fold(fft);
+	fftease_fold(fft2);
     
-	rdft(fft,FFT_FORWARD);
-	rdft(fft2,FFT_FORWARD);
+	fftease_rdft(fft,FFT_FORWARD);
+	fftease_rdft(fft2,FFT_FORWARD);
     
-	leanconvert(fft);
-	leanconvert(fft2);
+	fftease_leanconvert(fft);
+	fftease_leanconvert(fft2);
 	
 	maxamp = 0;
     
@@ -114,11 +114,11 @@ void do_xsyn(t_xsyn *x)
 		}
 	}
     
-	leanunconvert(fft);
+	fftease_leanunconvert(fft);
     
-	rdft(fft,FFT_INVERSE);
+	fftease_rdft(fft,FFT_INVERSE);
     
-	overlapadd(fft);
+	fftease_overlapadd(fft);
 }
 
 t_int *xsyn_perform(t_int *w)

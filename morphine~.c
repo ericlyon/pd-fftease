@@ -142,13 +142,13 @@ void do_morphine(t_morphine *x)
 	morphIndex = x->morphIndex;
 	exponScale = x->exponScale;
 
-	fold(fft);
-	fold(fft2);
+	fftease_fold(fft);
+	fftease_fold(fft2);
 	
 	/* do an fft */ 
 	
-	rdft(fft,1);
-	rdft(fft2,1);
+	fftease_rdft(fft,1);
+	fftease_rdft(fft2,1);
 	
 	/* convert to polar coordinates from complex values */
 	
@@ -246,8 +246,8 @@ void do_morphine(t_morphine *x)
 		if ( i != N2 )
 			*(bufferOne+odd) = -(*(channelOne+even)) * sin( *(channelOne+odd) );
 	}
-	rdft(fft,-1);
-	overlapadd(fft);
+	fftease_rdft(fft,-1);
+	fftease_overlapadd(fft);
 }
 
 

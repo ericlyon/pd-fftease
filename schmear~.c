@@ -152,9 +152,9 @@ void do_schmear(t_schmear *x)
 	int spread_center = (spreadlen - 1) / 2;
 	int thisbin;
 	
-	fold(fft);	
-	rdft(fft,1);
-	convert(fft);
+	fftease_fold(fft);
+	fftease_rdft(fft,1);
+	fftease_convert(fft);
 
 	for(i = 0; i < N; i += 2){	
 		if(frame_peak < channel[i])
@@ -208,9 +208,9 @@ void do_schmear(t_schmear *x)
 	for(i = 0; i < N2; i++){
 		channel[i * 2] = newamps[i];
 	}
-	unconvert(fft);
-	rdft(fft,-1);
-	overlapadd(fft);
+	fftease_unconvert(fft);
+	fftease_rdft(fft,-1);
+	fftease_overlapadd(fft);
 
 }
 
