@@ -18,10 +18,10 @@ shapee~.c swinger~.c taint~.c thresher~.c vacancy~.c xsyn~.c
 PDOBJECTS = smap.pd
 
 # example patches and related files, in the 'examples' subfolder
-EXAMPLES = 
+EXAMPLES =
 
 # manuals and related files, in the 'manual' subfolder
-MANUAL = 
+MANUAL =
 
 # if you want to include any other files in the source and binary tarballs,
 # list them here.  This can be anything from header files, test patches,
@@ -30,10 +30,10 @@ MANUAL =
 EXTRA_DIST = MSPd.h PenroseOscil.h PenroseRand.h bashfest.h fftease.h ugens.h
 
 # unit tests and related files here, in the 'unittests' subfolder
-UNITTESTS = 
+UNITTESTS =
 
 
-SHARED_SOURCE = bloscbank.c convert.c fft.c fft4.c fftease_setup.c fftease_utilities.c fold.c leanconvert.c leanunconvert.c legacy.c limit_fftsize.c limited_oscbank.c makewindows.c oscbank.c overlapadd.c PenroseOscil.c PenroseRand.c power_of_two.c qsortE.c unconvert.c 
+SHARED_SOURCE = bloscbank.c convert.c fft.c fft4.c fftease_setup.c fftease_utilities.c fold.c leanconvert.c leanunconvert.c legacy.c limit_fftsize.c limited_oscbank.c makewindows.c oscbank.c overlapadd.c PenroseOscil.c PenroseRand.c power_of_two.c qsortE.c unconvert.c
 SHARED_LIB = lib$(LIBRARY_NAME).$(SHARED_EXTENSION)
 
 #------------------------------------------------------------------------------#
@@ -43,9 +43,9 @@ SHARED_LIB = lib$(LIBRARY_NAME).$(SHARED_EXTENSION)
 #------------------------------------------------------------------------------#
 
 ALL_CFLAGS = -I"$(PD_INCLUDE)"
-ALL_LDFLAGS =  
+ALL_LDFLAGS =
 SHARED_LDFLAGS =
-ALL_LIBS = 
+ALL_LIBS =
 
 
 #------------------------------------------------------------------------------#
@@ -111,8 +111,8 @@ ifeq ($(UNAME),Darwin)
     EXTENSION = pd_darwin
     SHARED_EXTENSION = dylib
     OS = macosx
-    PD_PATH = 
-    OPT_CFLAGS = -ftree-vectorize 
+    PD_PATH =
+    OPT_CFLAGS = -ftree-vectorize
 # build universal 32-bit on 10.4 and 32/64 on newer
     ifeq ($(shell uname -r | sed 's|\([0-9][0-9]*\)\.[0-9][0-9]*\.[0-9][0-9]*|\1|'), 8)
       FAT_FLAGS = -arch ppc -arch i386 -mmacosx-version-min=10.4
@@ -129,7 +129,7 @@ ifeq ($(UNAME),Darwin)
     # if the 'pd' binary exists, check the linking against it to aid with stripping
     BUNDLE_LOADER = $(shell test ! -e $(PD_PATH)/bin/pd || echo -bundle_loader $(PD_PATH)/bin/pd)
     ALL_LDFLAGS += $(FAT_FLAGS) -headerpad_max_install_names -bundle $(BUNDLE_LOADER) \
-	-undefined dynamic_lookup 
+	-undefined dynamic_lookup
     SHARED_LDFLAGS += $(FAT_FLAGS) -dynamiclib -undefined dynamic_lookup \
 	-install_name @loader_path/$(SHARED_LIB) -compatibility_version 1 -current_version 1.0
     ALL_LIBS += -lc $(LIBS_macosx)
@@ -155,7 +155,7 @@ ifeq ($(UNAME),ANDROID)
   NDK_TOOLCHAIN_BASE=$(NDK_BASE)/toolchains/arm-linux-androideabi-4.4.3/prebuilt/$(NDK_UNAME)-x86
   CC := $(NDK_TOOLCHAIN_BASE)/bin/arm-linux-androideabi-gcc --sysroot=$(NDK_SYSROOT)
   OPT_CFLAGS = -O6 -funroll-loops -fomit-frame-pointer
-  CFLAGS += 
+  CFLAGS +=
   LDFLAGS += -rdynamic -shared
   SHARED_LDFLAGS += -Wl,-soname,$(SHARED_LIB) -shared
   LIBS += -lc $(LIBS_android)
@@ -218,7 +218,7 @@ ifeq (CYGWIN,$(findstring CYGWIN,$(UNAME)))
   OS = cygwin
   PD_PATH = $(shell cygpath $$PROGRAMFILES)/pd
   OPT_CFLAGS = -O6 -funroll-loops -fomit-frame-pointer
-  ALL_CFLAGS += 
+  ALL_CFLAGS +=
   ALL_LDFLAGS += -rdynamic -shared -L"$(PD_PATH)/src" -L"$(PD_PATH)/bin"
   SHARED_LDFLAGS += -shared -Wl,-soname,$(SHARED_LIB)
   ALL_LIBS += -lc -lpd $(LIBS_cygwin)
