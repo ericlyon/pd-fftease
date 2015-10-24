@@ -31,27 +31,29 @@ typedef struct _dentist
 
 } t_dentist;
 
-void *dentist_new(t_symbol *msg, short argc, t_atom *argv);
-void dentist_dsp(t_dentist *x, t_signal **sp);
-t_int *dentist_perform(t_int *w);
-void set_switch_bins (t_dentist *x, int i);
-void reset_shuffle(t_dentist *x);
-void dentist_showstate(t_dentist *x);
-void dentist_direct_update(t_dentist *x, t_floatarg toggle);
-void dentist_mute(t_dentist *x, t_floatarg toggle);
-void dentist_setstate(t_dentist *x, t_symbol *msg, short argc, t_atom *argv);
-void dentist_ramptime(t_dentist *x, t_floatarg ramp_ms);
-int rand_index(int max);
-void dentist_init(t_dentist *x);
-void dentist_bins_pd (t_dentist *x, t_floatarg i);
-void dentist_topfreq(t_dentist *x, t_floatarg f);
-void dentist_free(t_dentist *x);
-void dentist_toothcount(t_dentist *x, t_floatarg newcount);
-void dentist_scramble(t_dentist *x);
-void dentist_activate_bins(t_dentist *x, t_floatarg f);
-void dentist_interpolate_singles(t_dentist *x, t_floatarg f);
-void dentist_fftinfo(t_dentist *x);
-void dentist_mute(t_dentist *x, t_floatarg toggle);
+static void *dentist_new(t_symbol *msg, short argc, t_atom *argv);
+static void dentist_dsp(t_dentist *x, t_signal **sp);
+static t_int *dentist_perform(t_int *w);
+static void reset_shuffle(t_dentist *x);
+static void dentist_showstate(t_dentist *x);
+static void dentist_mute(t_dentist *x, t_floatarg toggle);
+static void dentist_setstate(t_dentist *x, t_symbol *msg, short argc, t_atom *argv);
+static void dentist_ramptime(t_dentist *x, t_floatarg ramp_ms);
+static int rand_index(int max);
+static void dentist_init(t_dentist *x);
+static void dentist_topfreq(t_dentist *x, t_floatarg f);
+static void dentist_free(t_dentist *x);
+static void dentist_toothcount(t_dentist *x, t_floatarg newcount);
+static void dentist_scramble(t_dentist *x);
+static void dentist_interpolate_singles(t_dentist *x, t_floatarg f);
+static void dentist_fftinfo(t_dentist *x);
+static void dentist_mute(t_dentist *x, t_floatarg toggle);
+static void dentist_activate_bins(t_dentist *x, t_floatarg f);
+static void dentist_bins_pd (t_dentist *x, t_floatarg i);
+static void dentist_direct_update( t_dentist *x, t_floatarg toggle);
+static void dentist_fftsize(t_dentist *x, t_floatarg f);
+static void dentist_overlap(t_dentist *x, t_floatarg f);
+static void dentist_winfac(t_dentist *x, t_floatarg f);
 
 void dentist_tilde_setup(void)
 {
@@ -222,7 +224,7 @@ void dentist_init(t_dentist *x)
     dentist_toothcount(x, x->tooth_count);
 }
 
-void do_dentist(t_dentist *x)
+static void do_dentist(t_dentist *x)
 {
 	int	i;
 	t_float oldfrac,newfrac;

@@ -39,25 +39,25 @@ typedef struct _cavoc
     t_float hold_time; // treat as attribute
 } t_cavoc;
 
-void *cavoc_new(t_symbol *msg, short argc, t_atom *argv);
-void cavoc_dsp(t_cavoc *x, t_signal **sp);
-t_int *cavoc_perform(t_int *w);
-void cavoc_free( t_cavoc *x );
-int cavoc_apply_rule( short left, short right, short center, short *rule);
-float cavoc_randf(float min, float max);
-void cavoc_rule (t_cavoc *x, t_symbol *msg, short argc, t_atom *argv);
-void cavoc_retune (t_cavoc *x, t_floatarg min, t_floatarg max);
-void cavoc_mute (t_cavoc *x, t_floatarg toggle);
-void cavoc_external_trigger(t_cavoc *x, t_floatarg toggle);
-void cavoc_init(t_cavoc *x);
-void cavoc_fftinfo(t_cavoc *x);
-void cavoc_bang(t_cavoc *x);
-void cavoc_topfreq(t_cavoc *x, t_floatarg tf);
-void cavoc_oscbank(t_cavoc *x, t_floatarg flag);
-void cavoc_density(t_cavoc *x, t_floatarg f);
-void cavoc_hold_time(t_cavoc *x, t_floatarg f);
-void build_spectrum(t_cavoc *x, float min, float max);
-void cavoc_bottomfreq(t_cavoc *x, t_floatarg bf);
+static void *cavoc_new(t_symbol *msg, short argc, t_atom *argv);
+static void cavoc_dsp(t_cavoc *x, t_signal **sp);
+static t_int *cavoc_perform(t_int *w);
+static void cavoc_free( t_cavoc *x );
+static int cavoc_apply_rule( short left, short right, short center, short *rule);
+static float cavoc_randf(float min, float max);
+static void cavoc_rule (t_cavoc *x, t_symbol *msg, short argc, t_atom *argv);
+static void cavoc_retune (t_cavoc *x, t_floatarg min, t_floatarg max);
+static void cavoc_mute (t_cavoc *x, t_floatarg toggle);
+static void cavoc_external_trigger(t_cavoc *x, t_floatarg toggle);
+static void cavoc_init(t_cavoc *x);
+static void cavoc_bang(t_cavoc *x);
+static void cavoc_topfreq(t_cavoc *x, t_floatarg tf);
+static void cavoc_oscbank(t_cavoc *x, t_floatarg flag);
+static void cavoc_density(t_cavoc *x, t_floatarg f);
+static void cavoc_hold_time(t_cavoc *x, t_floatarg f);
+static void build_spectrum(t_cavoc *x, float min, float max);
+static void cavoc_bottomfreq(t_cavoc *x, t_floatarg bf);
+static void cavoc_fftinfo( t_cavoc *x );
 
 
 void cavoc_tilde_setup(void)
@@ -298,7 +298,7 @@ void cavoc_bottomfreq(t_cavoc *x, t_floatarg bf)
 	build_spectrum(x, 0.9, 1.1);
 }
 
-void do_cavoc(t_cavoc *x)
+static void do_cavoc(t_cavoc *x)
 {
 	int i;
 	t_fftease *fft = x->fft;

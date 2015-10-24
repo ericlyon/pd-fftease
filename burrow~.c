@@ -19,26 +19,18 @@ typedef struct _burrow
  	short bypass;
 } t_burrow;
 
-void *burrow_new(t_symbol *s, int argc, t_atom *argv);
-void burrow_dsp(t_burrow *x, t_signal **sp);
-t_int *burrow_perform(t_int *w);
-t_int *offset_perform(t_int *w);
-t_int *burrow_perform(t_int *w);
-void burrow_assist(t_burrow *x, void *b, long m, long a, char *s);
-void burrow_float(t_burrow *x, t_floatarg myFloat);
-void burrow_init(t_burrow *x);
-void burrow_free(t_burrow *x);
-void burrow_invert(t_burrow *x, t_floatarg toggle);
-void burrow_mute(t_burrow *x, t_floatarg toggle);
-void burrow_fftinfo(t_burrow *x);
-void burrow_tilde_setup(void);
-void burrow_winfac(t_burrow *x, t_floatarg f);
-void do_burrow(t_burrow *x);
-void burrow_bypass(t_burrow *x, t_floatarg toggle);
-void burrow_perform64(t_burrow *x, t_object *dsp64, t_float **ins,
-                      long numins, t_float **outs,long numouts, long vectorsize,
-                      long flags, void *userparam);
-void burrow_dsp64(t_burrow *x, t_object *dsp64, short *count, t_float samplerate, long maxvectorsize, long flags);
+static void *burrow_new(t_symbol *s, int argc, t_atom *argv);
+static void burrow_dsp(t_burrow *x, t_signal **sp);
+static t_int *burrow_perform(t_int *w);
+static t_int *burrow_perform(t_int *w);
+static void burrow_init(t_burrow *x);
+static void burrow_free(t_burrow *x);
+static void burrow_invert(t_burrow *x, t_floatarg toggle);
+static void burrow_mute(t_burrow *x, t_floatarg toggle);
+static void burrow_fftinfo(t_burrow *x);
+static void burrow_bypass(t_burrow *x, t_floatarg toggle);
+static void burrow_winfac(t_burrow *x, t_floatarg f);
+static void do_burrow(t_burrow *x);
 
 void burrow_tilde_setup(void)
 {
@@ -246,7 +238,7 @@ t_int *burrow_perform(t_int *w)
     return w+7;
 }
 
-void do_burrow(t_burrow *x)
+static void do_burrow(t_burrow *x)
 {
 	t_fftease *fft = x->fft;
 	t_fftease *fft2 = x->fft2;

@@ -36,26 +36,22 @@ typedef struct _reanimator
 	int megs;
 } t_reanimator;
 
-void reanimator_dsp(t_reanimator *x, t_signal **sp);
-t_int *reanimator_perform(t_int *w);
-void *reanimator_new(t_symbol *msg, short argc, t_atom *argv);
-void reanimator_analyze (t_reanimator *x);
-void reanimator_mute(t_reanimator *x, t_floatarg flag);
-void reanimator_inverse(t_reanimator *x, t_floatarg toggle);
-void reanimator_topbin(t_reanimator *x, t_floatarg bin);
-void reanimator_startframe(t_reanimator *x, t_floatarg start);
-void reanimator_endframe(t_reanimator *x, t_floatarg end);
-void reanimator_framerange(t_reanimator *x, t_floatarg start, t_floatarg end);
-void reanimator_size(t_reanimator *x, t_floatarg size_ms);
-void reanimator_freeze_and_march(t_reanimator *x, t_floatarg f);
-void reanimator_resume( t_reanimator *x );
-void reanimator_threshold(t_reanimator *x, t_floatarg threshold);
-void reanimator_free( t_reanimator *x );
-void reanimator_framecount ( t_reanimator *x );
-void reanimator_init(t_reanimator *x);
-void reanimator_transpose(t_reanimator *x, t_floatarg tf);
-void reanimator_synthresh(t_reanimator *x, t_floatarg thresh);
-void reanimator_oscbank(t_reanimator *x, t_floatarg flag);
+static void reanimator_dsp(t_reanimator *x, t_signal **sp);
+static t_int *reanimator_perform(t_int *w);
+static void *reanimator_new(t_symbol *msg, short argc, t_atom *argv);
+static void reanimator_analyze (t_reanimator *x);
+static void reanimator_mute(t_reanimator *x, t_floatarg flag);
+static void reanimator_inverse(t_reanimator *x, t_floatarg toggle);
+static void reanimator_topbin(t_reanimator *x, t_floatarg bin);
+static void reanimator_freeze_and_march(t_reanimator *x, t_floatarg f);
+static void reanimator_resume( t_reanimator *x );
+static void reanimator_threshold(t_reanimator *x, t_floatarg threshold);
+static void reanimator_free( t_reanimator *x );
+static void reanimator_framecount ( t_reanimator *x );
+static void reanimator_init(t_reanimator *x);
+static void reanimator_transpose(t_reanimator *x, t_floatarg tf);
+static void reanimator_synthresh(t_reanimator *x, t_floatarg thresh);
+static void reanimator_oscbank(t_reanimator *x, t_floatarg flag);
 
 void reanimator_tilde_setup(void)
 {
@@ -197,7 +193,7 @@ void reanimator_init(t_reanimator *x )
 	x->megs = sizeof(t_float) * x->framecount * (fft->N+2);
 }
 
-void do_reanimator(t_reanimator *x)
+static void do_reanimator(t_reanimator *x)
 {
 	t_float ampsum, new_ampsum, rescale;
 	t_float min_difsum, difsum;

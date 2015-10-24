@@ -49,30 +49,32 @@ typedef struct _cavoc27
     t_float hold_time; //hold time in seconds
 } t_cavoc27;
 
-void *cavoc27_new(t_symbol *s, int argc, t_atom *argv);
-void cavoc27_dsp(t_cavoc27 *x, t_signal **sp);
-t_int *cavoc27_perform(t_int *w);
-void cavoc27_assist(t_cavoc27 *x, void *b, long m, long a, char *s);
-void cavoc27_free( t_cavoc27 *x);
-int cavoc27_apply_rule( short left, short right, short center, short *rule);
-void cavoc27_rule (t_cavoc27 *x, t_symbol *msg, short argc, t_atom *argv);
-void cavoc27_density (t_cavoc27 *x, t_floatarg density);
-void cavoc27_hold_time (t_cavoc27 *x, t_floatarg hold_time);
-void cavoc27_interpolate (t_cavoc27 *x, t_floatarg interpolate);
-void cavoc27_capture_spectrum (t_cavoc27 *x, t_floatarg flag );
-void cavoc27_capture_lock (t_cavoc27 *x, t_floatarg toggle );
-void cavoc27_retune (t_cavoc27 *x, t_floatarg min, t_floatarg max);
-void cavoc27_mute (t_cavoc27 *x, t_floatarg toggle);
-void cavoc27_init(t_cavoc27 *x);
-void cavoc27_rand_set_spectrum(t_cavoc27 *x);
-void cavoc27_rand_set_rule(t_cavoc27 *x);
-void cavoc27_fftinfo(t_cavoc27 *x);
-void cavoc27_oscbank(t_cavoc27 *x, t_floatarg flag);
-void cavoc27_transpose (t_cavoc27 *x, t_floatarg pfac);
-void cavoc27_noalias(t_cavoc27 *x, t_floatarg flag);
-void cavoc27_manual(t_cavoc27 *x, t_floatarg tog);
-void cavoc27_trigger(t_cavoc27 *x);
-void cavoc27_freeze(t_cavoc27 *x, t_floatarg tog);
+static void *cavoc27_new(t_symbol *s, int argc, t_atom *argv);
+static void cavoc27_dsp(t_cavoc27 *x, t_signal **sp);
+static t_int *cavoc27_perform(t_int *w);
+static void cavoc27_free( t_cavoc27 *x);
+static int cavoc27_apply_rule( short left, short right, short center, short *rule);
+static void cavoc27_rule (t_cavoc27 *x, t_symbol *msg, short argc, t_atom *argv);
+static void cavoc27_density (t_cavoc27 *x, t_floatarg density);
+static void cavoc27_hold_time (t_cavoc27 *x, t_floatarg hold_time);
+static void cavoc27_interpolate (t_cavoc27 *x, t_floatarg interpolate);
+static void cavoc27_capture_spectrum (t_cavoc27 *x, t_floatarg flag );
+static void cavoc27_retune (t_cavoc27 *x, t_floatarg min, t_floatarg max);
+static void cavoc27_mute (t_cavoc27 *x, t_floatarg toggle);
+static void cavoc27_init(t_cavoc27 *x);
+static void cavoc27_rand_set_spectrum(t_cavoc27 *x);
+static void cavoc27_rand_set_rule(t_cavoc27 *x);
+static void cavoc27_fftinfo(t_cavoc27 *x);
+static void cavoc27_oscbank(t_cavoc27 *x, t_floatarg flag);
+static void cavoc27_transpose (t_cavoc27 *x, t_floatarg pfac);
+static void cavoc27_noalias(t_cavoc27 *x, t_floatarg flag);
+static void cavoc27_manual(t_cavoc27 *x, t_floatarg tog);
+static void cavoc27_trigger(t_cavoc27 *x);
+static void cavoc27_freeze(t_cavoc27 *x, t_floatarg tog);
+static void cavoc27_capture_lock(t_cavoc27 *x, t_floatarg flag );
+static void cavoc27_fftsize(t_cavoc27 *x, t_floatarg f);
+static void cavoc27_overlap(t_cavoc27 *x, t_floatarg f);
+static void cavoc27_winfac(t_cavoc27 *x, t_floatarg f);
 
 void cavoc27_tilde_setup(void)
 {
@@ -334,7 +336,7 @@ void cavoc27_rand_set_spectrum(t_cavoc27 *x)
 	}
 }
 
-void do_cavoc27(t_cavoc27 *x)
+static void do_cavoc27(t_cavoc27 *x)
 {
 	t_fftease *fft = x->fft;
 	int i;

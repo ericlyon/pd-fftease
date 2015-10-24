@@ -27,20 +27,19 @@ typedef struct _pvgrain
 
 } t_pvgrain;
 
-void pvgrain_dsp(t_pvgrain *x, t_signal **sp);
-t_int *pvgrain_perform(t_int *w);
-void *pvgrain_new(t_symbol *s, int argc, t_atom *argv);
-void pvgrain_mute(t_pvgrain *x, t_floatarg state);
-void pvgrain_tick(t_pvgrain *x);
-void pvgrain_printchan(t_pvgrain *x);
-void pvgrain_probability (t_pvgrain *x, t_floatarg prob);
-void pvgrain_framegrains (t_pvgrain *x, t_floatarg grains);
-void pvgrain_topfreq (t_pvgrain *x, t_floatarg top);
-void pvgrain_bottomfreq (t_pvgrain *x, t_floatarg f);
-void pvgrain_basefreq (t_pvgrain *x, t_floatarg base);
-float pvgrain_randf(float min, float max);
-void pvgrain_init(t_pvgrain *x);
-void pvgrain_free(t_pvgrain *x);
+static void pvgrain_dsp(t_pvgrain *x, t_signal **sp);
+static t_int *pvgrain_perform(t_int *w);
+static void *pvgrain_new(t_symbol *s, int argc, t_atom *argv);
+static void pvgrain_mute(t_pvgrain *x, t_floatarg state);
+static void pvgrain_tick(t_pvgrain *x);
+static void pvgrain_printchan(t_pvgrain *x);
+static void pvgrain_probability (t_pvgrain *x, t_floatarg prob);
+static void pvgrain_framegrains (t_pvgrain *x, t_floatarg grains);
+static void pvgrain_topfreq (t_pvgrain *x, t_floatarg top);
+static void pvgrain_bottomfreq (t_pvgrain *x, t_floatarg f);
+static void pvgrain_basefreq (t_pvgrain *x, t_floatarg base);
+static void pvgrain_init(t_pvgrain *x);
+static void pvgrain_free(t_pvgrain *x);
 
 void pvgrain_tilde_setup(void)
 {
@@ -188,7 +187,7 @@ void pvgrain_free(t_pvgrain *x)
     free(x->fft);
 }
 
-void do_pvgrain(t_pvgrain *x)
+static void do_pvgrain(t_pvgrain *x)
 {
 	int 	i,j;
 	t_float tmp, dice;

@@ -15,12 +15,12 @@ typedef struct _swinger
 	short mute;
 } t_swinger;
 
-void swinger_dsp(t_swinger *x, t_signal **sp);
-t_int *swinger_perform(t_int *w);
-void *swinger_new(t_symbol *s, int argc, t_atom *argv);
-void swinger_mute(t_swinger *x, t_floatarg state);
-void swinger_init(t_swinger *x);
-void swinger_free(t_swinger *x);
+static void swinger_dsp(t_swinger *x, t_signal **sp);
+static t_int *swinger_perform(t_int *w);
+static void *swinger_new(t_symbol *s, int argc, t_atom *argv);
+static void swinger_mute(t_swinger *x, t_floatarg state);
+static void swinger_init(t_swinger *x);
+static void swinger_free(t_swinger *x);
 
 void swinger_tilde_setup(void)
 {
@@ -79,7 +79,7 @@ void swinger_init(t_swinger *x)
 
 }
 
-void do_swinger(t_swinger *x)
+static void do_swinger(t_swinger *x)
 {
 	t_fftease *fft = x->fft;
 	t_fftease *fft2 = x->fft2;

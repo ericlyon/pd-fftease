@@ -35,27 +35,28 @@ typedef struct _bthresher
 } t_bthresher;
 
 
-void *bthresher_new(t_symbol *s, int argc, t_atom *argv);
-void bthresher_dsp(t_bthresher *x, t_signal **sp);
-t_int *bthresher_perform(t_int *w);
-void bthresher_mute(t_bthresher *x, t_float f);
-void bthresher_fftinfo(t_bthresher *x);
-void bthresher_free(t_bthresher *x);
-void bthresher_bin(t_bthresher *x, t_float bin_num, t_float threshold, t_float damper);
-void bthresher_rdamper(t_bthresher *x, t_float min, t_float max );
-void bthresher_rthreshold(t_bthresher *x, t_float min, t_float max);
-void bthresher_dump(t_bthresher *x );
-void bthresher_list (t_bthresher *x, t_symbol *msg, short argc, t_atom *argv);
-void bthresher_init(t_bthresher *x);
-t_float bthresher_boundrand(t_float min, t_float max);
-void bthresher_allthresh(t_bthresher *x, t_float f);
-void bthresher_alldamp(t_bthresher *x, t_float f);
-void bthresher_inf_hold(t_bthresher *x, t_float f);
-void bthresher_max_hold(t_bthresher *x, t_float f);
-void do_bthresher(t_bthresher *x);
-void bthresher_oscbank(t_bthresher *x, t_float flag);
-void bthresher_synthresh(t_bthresher *x, t_float thresh);
-void bthresher_transpose(t_bthresher *x, t_float tf);
+static void *bthresher_new(t_symbol *s, int argc, t_atom *argv);
+static void bthresher_dsp(t_bthresher *x, t_signal **sp);
+static t_int *bthresher_perform(t_int *w);
+static void bthresher_mute(t_bthresher *x, t_float f);
+static void bthresher_fftinfo(t_bthresher *x);
+static void bthresher_free(t_bthresher *x);
+static void bthresher_bin(t_bthresher *x, t_float bin_num, t_float threshold, t_float damper);
+static void bthresher_rdamper(t_bthresher *x, t_float min, t_float max );
+static void bthresher_rthreshold(t_bthresher *x, t_float min, t_float max);
+static void bthresher_dump(t_bthresher *x );
+static void bthresher_list (t_bthresher *x, t_symbol *msg, short argc, t_atom *argv);
+static void bthresher_init(t_bthresher *x);
+static t_float bthresher_boundrand(t_float min, t_float max);
+static void bthresher_allthresh(t_bthresher *x, t_float f);
+static void bthresher_alldamp(t_bthresher *x, t_float f);
+static void bthresher_inf_hold(t_bthresher *x, t_float f);
+static void bthresher_max_hold(t_bthresher *x, t_float f);
+static void do_bthresher(t_bthresher *x);
+static void bthresher_oscbank(t_bthresher *x, t_float flag);
+static void bthresher_synthresh(t_bthresher *x, t_float thresh);
+static void bthresher_transpose(t_bthresher *x, t_float tf);
+static void bthresher_version(void);
 
 void bthresher_tilde_setup(void)
 {
@@ -295,7 +296,7 @@ void bthresher_bin(t_bthresher *x, t_float bin_num, t_float damper, t_float thre
 }
 
 
-void do_bthresher(t_bthresher *x)
+static void do_bthresher(t_bthresher *x)
 {
 	t_fftease *fft = x->fft;
     

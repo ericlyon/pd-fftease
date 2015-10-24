@@ -19,12 +19,13 @@ typedef struct _shapee
 
 /* msp function prototypes */
 
-void *shapee_new(t_symbol *s, int argc, t_atom *argv);
-void shapee_init(t_shapee *x);
-void shapee_mute(t_shapee *x, t_floatarg state);
-void shapee_free(t_shapee *x);
-void shapee_dsp(t_shapee *x, t_signal **sp);
-t_int *shapee_perform(t_int *w);
+static void *shapee_new(t_symbol *s, int argc, t_atom *argv);
+static void shapee_init(t_shapee *x);
+static void shapee_mute(t_shapee *x, t_floatarg state);
+static void shapee_free(t_shapee *x);
+static void shapee_dsp(t_shapee *x, t_signal **sp);
+static t_int *shapee_perform(t_int *w);
+
 void shapee_tilde_setup(void)
 {
     t_class *c;
@@ -86,7 +87,7 @@ void shapee_mute(t_shapee *x, t_floatarg state)
 	x->mute = (short)state;
 }
 
-void do_shapee(t_shapee *x)
+static void do_shapee(t_shapee *x)
 {
 	t_fftease *fft = x->fft;
 	t_fftease *fft2 = x->fft2;

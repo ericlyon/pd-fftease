@@ -22,16 +22,15 @@ typedef struct _vacancy
 
 /* msp function prototypes */
 
-void vacancy_dsp(t_vacancy *x, t_signal **sp);
-t_int *vacancy_perform(t_int *w);
-void *vacancy_new(t_symbol *s, int argc, t_atom *argv);
-void vacancy_rms(t_vacancy *x, t_floatarg f);
-void vacancy_invert(t_vacancy *x, t_floatarg f);
-void vacancy_swapphase(t_vacancy *x, t_floatarg f);
-void vacancy_free(t_vacancy *x);
-void vacancy_mute(t_vacancy *x, t_floatarg toggle);
-void vacancy_tilde_setup(void);
-void vacancy_init(t_vacancy *x);
+static void vacancy_dsp(t_vacancy *x, t_signal **sp);
+static t_int *vacancy_perform(t_int *w);
+static void *vacancy_new(t_symbol *s, int argc, t_atom *argv);
+static void vacancy_rms(t_vacancy *x, t_floatarg f);
+static void vacancy_invert(t_vacancy *x, t_floatarg f);
+static void vacancy_swapphase(t_vacancy *x, t_floatarg f);
+static void vacancy_free(t_vacancy *x);
+static void vacancy_mute(t_vacancy *x, t_floatarg toggle);
+static void vacancy_init(t_vacancy *x);
 
 void vacancy_tilde_setup(void)
 {
@@ -122,7 +121,7 @@ void vacancy_free(t_vacancy *x)
     free(x->fft2);
 }
 
-void do_vacancy(t_vacancy *x)
+static void do_vacancy(t_vacancy *x)
 {
 	t_fftease *fft = x->fft;
 	t_fftease *fft2 = x->fft2;

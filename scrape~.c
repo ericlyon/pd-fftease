@@ -20,15 +20,14 @@ typedef struct _scrape
 	short mute;
 } t_scrape;
 
-void scrape_dsp(t_scrape *x, t_signal **sp);
-t_int *scrape_perform(t_int *w);
-void *scrape_new(t_symbol *msg, short argc, t_atom *argv);
-void update_thresh_function( t_scrape *x );
-void scrape_frowned( float *S, float *C, float *threshfunc, float fmult, int N2 );
-void scrape_mute(t_scrape *x, t_floatarg toggle);
-void scrape_free( t_scrape *x );
-void update_thresh_function( t_scrape *x );
-void scrape_init(t_scrape *x);
+static void scrape_dsp(t_scrape *x, t_signal **sp);
+static t_int *scrape_perform(t_int *w);
+static void *scrape_new(t_symbol *msg, short argc, t_atom *argv);
+static void update_thresh_function( t_scrape *x );
+static void scrape_mute(t_scrape *x, t_floatarg toggle);
+static void scrape_free( t_scrape *x );
+static void update_thresh_function( t_scrape *x );
+static void scrape_init(t_scrape *x);
 
 void scrape_tilde_setup(void)
 {
@@ -128,7 +127,7 @@ void scrape_mute(t_scrape *x, t_floatarg toggle)
 	x->mute = (short)toggle;	
 }
 
-void do_scrape(t_scrape *x)
+static void do_scrape(t_scrape *x)
 {
 	int real, imag, amp, phase;
 	t_float a, b;

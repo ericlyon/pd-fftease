@@ -25,21 +25,21 @@ typedef struct _pileup
 	t_float lo_freq;
 } t_pileup;
 
-void pileup_dsp(t_pileup *x, t_signal **sp);
-t_int *pileup_perform(t_int *w);
-void *pileup_new(t_symbol *s, int argc, t_atom *argv);
-void pileup_mute(t_pileup *x, t_floatarg f);
-void pileup_free( t_pileup *x );
-void pileup_clear( t_pileup *x );
-void pileup_init(t_pileup *x);
-void pileup_mode(t_pileup *x, t_floatarg mode);
-void pileup_inverse_gain(t_pileup *x, t_floatarg gain);
-void pileup_persistence(t_pileup *x, t_floatarg persistence);
-void pileup_transpose(t_pileup *x, t_floatarg tf);
-void pileup_synthresh(t_pileup *x, t_floatarg thresh);
-void pileup_oscbank(t_pileup *x, t_floatarg flag);
-void pileup_highfreq(t_pileup *x, t_floatarg f);
-void pileup_lowfreq(t_pileup *x, t_floatarg f);
+static void pileup_dsp(t_pileup *x, t_signal **sp);
+static t_int *pileup_perform(t_int *w);
+static void *pileup_new(t_symbol *s, int argc, t_atom *argv);
+static void pileup_mute(t_pileup *x, t_floatarg f);
+static void pileup_free( t_pileup *x );
+static void pileup_clear( t_pileup *x );
+static void pileup_init(t_pileup *x);
+static void pileup_mode(t_pileup *x, t_floatarg mode);
+static void pileup_inverse_gain(t_pileup *x, t_floatarg gain);
+static void pileup_persistence(t_pileup *x, t_floatarg persistence);
+static void pileup_transpose(t_pileup *x, t_floatarg tf);
+static void pileup_synthresh(t_pileup *x, t_floatarg thresh);
+static void pileup_oscbank(t_pileup *x, t_floatarg flag);
+static void pileup_highfreq(t_pileup *x, t_floatarg f);
+static void pileup_lowfreq(t_pileup *x, t_floatarg f);
 
 void pileup_tilde_setup(void)
 {
@@ -200,7 +200,7 @@ void pileup_init(t_pileup *x)
 	x->tadv = (t_float) fft->D / (t_float)fft->R ;
 }
 
-void do_pileup(t_pileup *x)
+static void do_pileup(t_pileup *x)
 {
 	int i;
 	t_fftease *fft = x->fft;

@@ -17,16 +17,16 @@ typedef struct _pvoc
 	short mute;
 } t_pvoc;
 
-void *pvoc_new(t_symbol *s, int argc, t_atom *argv);
-void pvoc_free(t_pvoc *x);
-void pvoc_mute(t_pvoc *x, t_floatarg tog);
-void pvoc_init(t_pvoc *x);
-void pvoc_fftinfo(t_pvoc *x);
-void pvoc_lowfreq(t_pvoc *x, t_floatarg f);
-void pvoc_highfreq(t_pvoc *x, t_floatarg f);
-void do_pvoc(t_pvoc *x );
-t_int *pvoc_perform(t_int *w);
-void pvoc_dsp(t_pvoc *x, t_signal **sp);
+static void *pvoc_new(t_symbol *s, int argc, t_atom *argv);
+static void pvoc_free(t_pvoc *x);
+static void pvoc_mute(t_pvoc *x, t_floatarg tog);
+static void pvoc_init(t_pvoc *x);
+static void pvoc_fftinfo(t_pvoc *x);
+static void pvoc_lowfreq(t_pvoc *x, t_floatarg f);
+static void pvoc_highfreq(t_pvoc *x, t_floatarg f);
+static void do_pvoc(t_pvoc *x );
+static t_int *pvoc_perform(t_int *w);
+static void pvoc_dsp(t_pvoc *x, t_signal **sp);
 
 void pvoc_tilde_setup(void)
 {
@@ -140,7 +140,7 @@ void *pvoc_new(t_symbol *s, int argc, t_atom *argv)
 	return x;
 }
 
-void do_pvoc(t_pvoc *x)
+static void do_pvoc(t_pvoc *x)
 {
 	t_fftease *fft = x->fft;
     fftease_fold(fft);

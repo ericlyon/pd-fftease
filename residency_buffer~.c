@@ -36,22 +36,21 @@ typedef struct _residency_buffer
     
 } t_residency_buffer;
 
-void residency_buffer_dsp(t_residency_buffer *x, t_signal **sp);
-t_int *residency_buffer_perform(t_int *w);
-void *residency_buffer_new(t_symbol *msg, short argc, t_atom *argv);
-void residency_buffer_acquire_sample ( t_residency_buffer *x ) ;
-void residency_buffer_meminfo( t_residency_buffer *x ) ;
-void residency_buffer_mute(t_residency_buffer *x, t_floatarg toggle);
-void residency_buffer_interpolation(t_residency_buffer *x, t_floatarg toggle);
-void residency_buffer_calcbuf(t_residency_buffer *x, t_floatarg desired_duration);
-void residency_buffer_free( t_residency_buffer *x );
-void residency_buffer_playthrough(t_residency_buffer *x, t_floatarg f);
-void residency_buffer_init(t_residency_buffer *x);
-void residency_buffer_transpose(t_residency_buffer *x, t_floatarg tf);
-void residency_buffer_synthresh(t_residency_buffer *x, t_floatarg thresh);
-void residency_buffer_oscbank(t_residency_buffer *x, t_floatarg flag);
-void residency_buffer_attachbuf(t_residency_buffer *x);
-void residency_buffer_redraw(t_residency_buffer *x);
+static void residency_buffer_dsp(t_residency_buffer *x, t_signal **sp);
+static t_int *residency_buffer_perform(t_int *w);
+static void *residency_buffer_new(t_symbol *msg, short argc, t_atom *argv);
+static void residency_buffer_acquire_sample ( t_residency_buffer *x ) ;
+static void residency_buffer_mute(t_residency_buffer *x, t_floatarg toggle);
+static void residency_buffer_interpolation(t_residency_buffer *x, t_floatarg toggle);
+static void residency_buffer_calcbuf(t_residency_buffer *x, t_floatarg desired_duration);
+static void residency_buffer_free( t_residency_buffer *x );
+static void residency_buffer_playthrough(t_residency_buffer *x, t_floatarg f);
+static void residency_buffer_init(t_residency_buffer *x);
+static void residency_buffer_transpose(t_residency_buffer *x, t_floatarg tf);
+static void residency_buffer_synthresh(t_residency_buffer *x, t_floatarg thresh);
+static void residency_buffer_oscbank(t_residency_buffer *x, t_floatarg flag);
+static void residency_buffer_attachbuf(t_residency_buffer *x);
+static void residency_buffer_redraw(t_residency_buffer *x);
 
 void residency_buffer_tilde_setup(void)
 {
@@ -154,7 +153,7 @@ void residency_buffer_init(t_residency_buffer *x)
 	}
 }
 
-void do_residency_buffer(t_residency_buffer *x)
+static void do_residency_buffer(t_residency_buffer *x)
 {
 	t_fftease *fft = x->fft;
 	int N = x->fft->N;
