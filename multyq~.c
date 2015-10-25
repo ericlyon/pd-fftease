@@ -145,8 +145,8 @@ void do_multyq(t_multyq *x)
 	t_float *C = fft->channel;
 	t_float *filtfunc = x->filt;
 	int N2 = fft->N2;
-	fold(fft);   
-	rdft(fft,1);
+	fftease_fold(fft);
+	fftease_rdft(fft,1);
 	for ( i = 0; i <= N2; i++ ) {
 		imag = phase = ( real = amp = i<<1 ) + 1;
 		a = ( i == N2 ? S[1] : S[real] );
@@ -161,8 +161,8 @@ void do_multyq(t_multyq *x)
 		if ( i != N2 )
 			S[imag] = -*(C+amp) * sin( *(C+phase) );
 	}
-	rdft(fft,-1);
-	overlapadd(fft);
+	fftease_rdft(fft,-1);
+	fftease_overlapadd(fft);
 }
 
 

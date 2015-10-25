@@ -210,8 +210,8 @@ void fftease_init(t_fftease *fft)
 		fft->table[i] = (t_float) fft->N * cos((t_float)i * TWOPI / (t_float)fft->L);
 	}
 	fft->table[fft->L] = fft->table[fft->L - 1]; // guard point
-	makewindows( fft->Hwin, fft->Wanal, fft->Wsyn, fft->Nw, fft->N, fft->D);
-	init_rdft( fft->N, fft->bitshuffle, fft->trigland);
+	fftease_makewindows( fft->Hwin, fft->Wanal, fft->Wsyn, fft->Nw, fft->N, fft->D);
+	fftease_init_rdft( fft->N, fft->bitshuffle, fft->trigland);
 	fftease_set_fft_buffers(fft);
 	fftease_oscbank_setbins(fft,0,fft->nyquist);
 	fft->init_status = 1;

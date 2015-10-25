@@ -333,9 +333,9 @@ void do_pvwarpb(t_pvwarpb *x)
     long b_frames;
     float *b_samples;
 
-	fold(fft);   
-	rdft(fft,FFT_FORWARD);
-	convert(fft);
+	fftease_fold(fft);
+	fftease_rdft(fft,FFT_FORWARD);
+	fftease_convert(fft);
 
     b_samples = x->b_samples;
     if(! b_samples){
@@ -354,7 +354,7 @@ void do_pvwarpb(t_pvwarpb *x)
 	}
 panic1: ;
 panic2: ;
-	oscbank(fft);
+	fftease_oscbank(fft);
 }
 
 t_int *pvwarpb_perform(t_int *w)

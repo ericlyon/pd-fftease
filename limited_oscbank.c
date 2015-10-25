@@ -2,7 +2,7 @@
 // extern void post(const char *fmt, ...);
 #define PARANOID 0
 
-void limited_oscbank( t_fftease *fft, int osclimit, t_float framethresh)
+void fftease_limited_oscbank( t_fftease *fft, int osclimit, t_float framethresh)
 {
 	int    amp,freq,chan, n;
 	

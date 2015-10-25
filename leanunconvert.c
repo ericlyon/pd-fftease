@@ -1,7 +1,7 @@
 #include "fftease.h"
 
 
-void leanunconvert(t_fftease *fft)
+void fftease_leanunconvert(t_fftease *fft)
 
 {
 	int		real, imag, amp, phase;

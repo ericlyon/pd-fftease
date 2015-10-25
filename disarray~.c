@@ -219,17 +219,17 @@ void do_disarray(t_disarray *x)
     int *shuffle_in = x->shuffle_in;
     int *shuffle_out = x->shuffle_out;
   	
-	fold(fft);
-	rdft(fft,1);
-	leanconvert(fft);
+	fftease_fold(fft);
+	fftease_rdft(fft,1);
+	fftease_leanconvert(fft);
 	for( i = 0; i < shuffle_count ; i++){
 		tmp = channel[ shuffle_in[ i ] * 2 ];
 		channel[ shuffle_in[ i ] * 2]  = channel[ shuffle_out[ i ] * 2];
 		channel[ shuffle_out[ i ] * 2]  = tmp;
 	}
-	leanunconvert(fft);
-	rdft(fft,-1);
-	overlapadd(fft);
+	fftease_leanunconvert(fft);
+	fftease_rdft(fft,-1);
+	fftease_overlapadd(fft);
 }
 
 

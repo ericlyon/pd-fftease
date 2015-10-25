@@ -141,8 +141,8 @@ void do_scrape(t_scrape *x)
 	t_float *buffer = fft->buffer;
 	t_float *threshfunc = x->threshfunc;
 	
-	fold(fft);	
-	rdft(fft,FFT_FORWARD);
+	fftease_fold(fft);
+	fftease_rdft(fft,FFT_FORWARD);
 	
 	for( i = 0; i <= N2; i++ ){
 		amp = i<<1;
@@ -170,8 +170,8 @@ void do_scrape(t_scrape *x)
 			buffer[imag] = -*(channel+amp) * sin( *(channel+phase) );
 	}
 
-	rdft(fft, FFT_INVERSE);
-	overlapadd(fft);
+	fftease_rdft(fft, FFT_INVERSE);
+	fftease_overlapadd(fft);
 }
 
 t_int *scrape_perform(t_int *w)

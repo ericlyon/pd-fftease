@@ -12,7 +12,7 @@
  to render these frequency values directly in Hz. */
 
 
-void convert(t_fftease *fft)
+void fftease_convert(t_fftease *fft)
 {
 	t_float *buffer = fft->buffer;
 	t_float *channel = fft->channel;

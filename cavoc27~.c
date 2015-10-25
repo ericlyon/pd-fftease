@@ -364,9 +364,9 @@ void do_cavoc27(t_cavoc27 *x)
 	
 	if( x->capture_flag || (x->capture_lock && ! x->freeze)) {
 		
-		fold(fft);
-		rdft(fft,1);
-		convert(fft);
+		fftease_fold(fft);
+		fftease_rdft(fft,1);
+		fftease_convert(fft);
 		for( i = 1; i < fft->N+1; i += 2){
 			tmpchannel[i] = channel[i];
 		}
@@ -421,11 +421,11 @@ void do_cavoc27(t_cavoc27 *x)
 	}
 	
 	if(fft->obank_flag){
-		oscbank(fft);
+		fftease_oscbank(fft);
 	} else {
-		unconvert(fft);
-		rdft(fft, -1);
-		overlapadd(fft);
+		fftease_unconvert(fft);
+		fftease_rdft(fft, -1);
+		fftease_overlapadd(fft);
 	}
 
 	x->frames_left = frames_left;

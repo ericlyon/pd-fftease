@@ -2,12 +2,12 @@
 #include "PenroseOscil.h"
 
 
-t_float frequencyToIncrement( t_float samplingRate, t_float frequency, int bufferLength ) {
+t_float fftease_frequencyToIncrement( t_float samplingRate, t_float frequency, int bufferLength ) {
 
   return (frequency / samplingRate) * (t_float) bufferLength;
 } 
 
-void makeSineBuffer( t_float *buffer, int bufferLength ) {
+void fftease_makeSineBuffer( t_float *buffer, int bufferLength ) {
   
   int   i;
 
@@ -20,7 +20,7 @@ void makeSineBuffer( t_float *buffer, int bufferLength ) {
 }
 
 
-t_float bufferOscil( t_float *phase, t_float increment, t_float *buffer,
+t_float fftease_bufferOscil( t_float *phase, t_float increment, t_float *buffer,
                    int bufferLength )
 {
 

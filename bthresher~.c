@@ -312,9 +312,9 @@ void do_bthresher(t_bthresher *x)
 	short inf_hold = x->inf_hold;
 	int i, j;
 	
-	fold(fft);
-	rdft(fft,1);
-	convert(fft);
+	fftease_fold(fft);
+	fftease_rdft(fft,1);
+	fftease_convert(fft);
 	if( x->first_frame ){
 		for ( i = 0; i < N+2; i++ ){
 			composite_frame[i] = channel[i];
@@ -364,11 +364,11 @@ void do_bthresher(t_bthresher *x)
 		channel[i] = composite_frame[i];
 	}
 	if(fft->obank_flag){
-		oscbank(fft);
+		fftease_oscbank(fft);
 	} else {
-		unconvert(fft);
-		rdft(fft,-1);
-		overlapadd(fft);
+		fftease_unconvert(fft);
+		fftease_rdft(fft,-1);
+		fftease_overlapadd(fft);
 	}
 }
 

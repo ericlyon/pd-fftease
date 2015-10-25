@@ -137,9 +137,9 @@ void do_thresher(t_thresher *x)
 	int N = fft->N;
 	t_float move_threshold = x->move_threshold;
 
-	fold(fft);
-	rdft(fft,FFT_FORWARD);
-	convert(fft);
+	fftease_fold(fft);
+	fftease_rdft(fft,FFT_FORWARD);
+	fftease_convert(fft);
 	
 	if( x->first_frame ){
 		for ( i = 0; i < N+2; i++ ){
@@ -164,11 +164,11 @@ void do_thresher(t_thresher *x)
 		channel[i] = composite_frame[i];
 	}
 	if(fft->obank_flag){
-		oscbank(fft);
+		fftease_oscbank(fft);
 	} else {
-		unconvert(fft);
-		rdft(fft,FFT_INVERSE);
-		overlapadd(fft);
+		fftease_unconvert(fft);
+		fftease_rdft(fft,FFT_INVERSE);
+		fftease_overlapadd(fft);
 	}	
 }
 

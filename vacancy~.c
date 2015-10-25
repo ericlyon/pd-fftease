@@ -167,11 +167,11 @@ void do_vacancy(t_vacancy *x)
 	else
 		useme = x->threshold;
 	
-	fold(fft);
-	fold(fft2);
+	fftease_fold(fft);
+	fftease_fold(fft2);
 	
-	rdft(fft,FFT_FORWARD);
-	rdft(fft2,FFT_FORWARD);
+	fftease_rdft(fft,FFT_FORWARD);
+	fftease_rdft(fft2,FFT_FORWARD);
 	
 
 	for ( i = 0; i <= N2; i++ ) {
@@ -259,8 +259,8 @@ void do_vacancy(t_vacancy *x)
 	
 
 	
-	rdft(fft,FFT_INVERSE);
-	overlapadd(fft);
+	fftease_rdft(fft,FFT_INVERSE);
+	fftease_overlapadd(fft);
 	
 }
 

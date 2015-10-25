@@ -166,9 +166,9 @@ void do_pvcompand(t_pvcompand *x)
 	t_float cutoff;
 	t_float avr, new_avr, rescale;
 	
-	fold(fft);	
-	rdft(fft,FFT_FORWARD);
-	leanconvert(fft);
+	fftease_fold(fft);
+	fftease_rdft(fft,FFT_FORWARD);
+	fftease_leanconvert(fft);
 
 	maxamp = 0.;
 	avr = 0;
@@ -215,9 +215,9 @@ void do_pvcompand(t_pvcompand *x)
 		channel[i] *= rescale;
 	} 
 	
-	leanunconvert(fft);
-	rdft(fft, FFT_INVERSE);
-	overlapadd(fft);
+	fftease_leanunconvert(fft);
+	fftease_rdft(fft, FFT_INVERSE);
+	fftease_overlapadd(fft);
 }
 
 t_int *pvcompand_perform(t_int *w)

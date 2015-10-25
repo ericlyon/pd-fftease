@@ -183,9 +183,9 @@ void do_residency_buffer(t_residency_buffer *x)
         return;
     }
 	if( x->read_me ) {
-		fold(fft);	
-		rdft(fft, FFT_FORWARD);
-		convert(fft);
+		fftease_fold(fft);
+		fftease_rdft(fft, FFT_FORWARD);
+		fftease_convert(fft);
 		
 		index_offset = (N+2) * frames_read;
 		
@@ -255,12 +255,12 @@ void do_residency_buffer(t_residency_buffer *x)
 		x->sync = fframe / (t_float) buffer_frame_count;
 		// REPLACE loveboat with buffer
 		if(fft->obank_flag){
-			oscbank(fft);
+			fftease_oscbank(fft);
 		}
         else {
-			unconvert(fft);
-			rdft(fft, FFT_INVERSE);
-			overlapadd(fft);
+			fftease_unconvert(fft);
+			fftease_rdft(fft, FFT_INVERSE);
+			fftease_overlapadd(fft);
 		}
         
 	}

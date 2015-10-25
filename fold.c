@@ -7,7 +7,7 @@
  * input time n
  */
 
-void fold( t_fftease *fft )
+void fftease_fold( t_fftease *fft )
 {
 	int Nw = fft->Nw;
 	int N = fft->N;

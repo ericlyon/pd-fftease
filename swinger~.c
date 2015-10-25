@@ -114,13 +114,13 @@ void do_swinger(t_swinger *x)
 	
 	/* apply hamming window and fold our window buffer into the fft buffer */ 
 	
-	fold(fft);
-	fold(fft2);
+	fftease_fold(fft);
+	fftease_fold(fft2);
 	
 	/* do an fft */ 
 	
-	rdft(fft,FFT_FORWARD);
-	rdft(fft2,FFT_FORWARD);
+	fftease_rdft(fft,FFT_FORWARD);
+	fftease_rdft(fft2,FFT_FORWARD);
 	
 	/* use redundant coding for speed, even though moving the invert variable
 	 comparison outside of the for loop will give us only a minimal performance
@@ -158,13 +158,13 @@ void do_swinger(t_swinger *x)
 	
 	/* do an inverse fft */
 	
-	rdft(fft,FFT_INVERSE);
+	fftease_rdft(fft,FFT_INVERSE);
 	
 	
 	
 	/* dewindow our result */
 	
-	overlapadd(fft);
+	fftease_overlapadd(fft);
 	
 	/* set our output and adjust our retaining output buffer */
 	

@@ -204,9 +204,9 @@ void do_pvgrain(t_pvgrain *x)
 		
 	x->list_count = 0;
 	
-	fold(fft);   
-	rdft(fft,FFT_FORWARD);
-	convert(fft);
+	fftease_fold(fft);
+	fftease_rdft(fft,FFT_FORWARD);
+	fftease_convert(fft);
 	if( grains_per_frame > hi_bin - lo_bin )
 		grains_per_frame = hi_bin - lo_bin;
 	//  binsort[0] = 0;

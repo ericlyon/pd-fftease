@@ -309,9 +309,9 @@ void do_pvtuner(t_pvtuner *x)
 	long scale_interpolation = x->scale_interpolation;
 	t_float ip = x->ip;
 	t_float freq_this, freq_last;
-	fold(fft);   
-	rdft(fft, 1);
-	convert(fft);
+	fftease_fold(fft);
+	fftease_rdft(fft, 1);
+	fftease_convert(fft);
 	// static case
 	if( scale_interpolation == 0) {
 		for ( chan = lo_bin; chan < hi_bin; chan++ ) {
@@ -356,7 +356,7 @@ void do_pvtuner(t_pvtuner *x)
 			}
 		}
 	}
-	oscbank(fft);
+	fftease_oscbank(fft);
 }
 
 

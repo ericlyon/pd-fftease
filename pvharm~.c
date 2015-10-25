@@ -182,9 +182,9 @@ void do_pvharm(t_pvharm *x)
 	int lo_bin = fft->lo_bin;
 	int hi_bin = fft->hi_bin;
 
-	fold(fft);
-	rdft(fft,FFT_FORWARD);
-	convert(fft);
+	fftease_fold(fft);
+	fftease_rdft(fft,FFT_FORWARD);
+	fftease_convert(fft);
 	
 	if(x->compressor){
 		framesum = 0.0;
@@ -208,8 +208,8 @@ void do_pvharm(t_pvharm *x)
 		channel2[amp] = channel[amp];
 		channel2[freq] = channel[freq];
 	} 
-	limited_oscbank(fft, osclimit, framethresh);
-	limited_oscbank(fft2, osclimit, framethresh);
+	fftease_limited_oscbank(fft, osclimit, framethresh);
+	fftease_limited_oscbank(fft2, osclimit, framethresh);
 	for(i = 0; i < D; i++){
 		output[i] += output2[i];
 	}

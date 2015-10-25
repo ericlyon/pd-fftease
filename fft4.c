@@ -1,26 +1,30 @@
 #include <math.h>
 #include "fftease.h"
 
-void init_rdft(int n, int *ip, t_float *w)
+/* forward declarations */
+static void rftsub(int n, t_float *a, int nc, t_float *c);
+static void fftease_bitrv2(int n, int *ip, t_float *a);
+static void fftease_cftsub(int n, t_float *a, t_float *w);
+
+void fftease_init_rdft(int n, int *ip, t_float *w)
 {
 	
 	int	nw,
 	nc;
 	
-	void	makewt(int nw, int *ip, t_float *w);
-	void	makect(int nc, int *ip, t_float *c);
-	
+	void	fftease_makewt(int nw, int *ip, t_float *w);
+	void	fftease_makect(int nc, int *ip, t_float *c);
 	nw = n >> 2;
-	makewt(nw, ip, w);
+	fftease_makewt(nw, ip, w);
 	
 	nc = n >> 2;
-	makect(nc, ip, w + nw);
+	fftease_makect(nc, ip, w + nw);
 	
 	return;
 }
 
 
-void rdft(t_fftease *fft, int isgn)
+void fftease_rdft(t_fftease *fft, int isgn)
 {
 	int n = fft->N;
 	t_float *a = fft->buffer;
@@ -45,10 +49,10 @@ void rdft(t_fftease *fft, int isgn)
 		
 		if (n > 4) {
 			rftsub(n, a, nc, w + nw);
-			bitrv2(n, ip + 2, a);
+			fftease_bitrv2(n, ip + 2, a);
 		}
 		
-		cftsub(n, a, w);
+		fftease_cftsub(n, a, w);
 		
 		for (j = 1; j <= n - 1; j += 2) {
 			a[j] = -a[j];
@@ -58,10 +62,10 @@ void rdft(t_fftease *fft, int isgn)
 	else {
 		
 		if (n > 4) {
-			bitrv2(n, ip + 2, a);
+			fftease_bitrv2(n, ip + 2, a);
 		}
 		
-		cftsub(n, a, w);
+		fftease_cftsub(n, a, w);
 		
 		if (n > 4) {
 			rftsub(n, a, nc, w + nw);
@@ -74,7 +78,7 @@ void rdft(t_fftease *fft, int isgn)
 }
 
 
-void bitrv2(int n, int *ip, t_float *a)
+void fftease_bitrv2(int n, int *ip, t_float *a)
 {
 	int j, j1, k, k1, l, m, m2;
 	t_float xr, xi;
@@ -136,7 +140,7 @@ void bitrv2(int n, int *ip, t_float *a)
 }
 
 
-void cftsub(int n, t_float *a, t_float *w)
+void fftease_cftsub(int n, t_float *a, t_float *w)
 {
 	int j, j1, j2, j3, k, k1, ks, l, m;
 	t_float wk1r, wk1i, wk2r, wk2i, wk3r, wk3i;
@@ -259,7 +263,7 @@ void cftsub(int n, t_float *a, t_float *w)
 }
 
 
-void rftsub(int n, t_float *a, int nc, t_float *c)
+static void rftsub(int n, t_float *a, int nc, t_float *c)
 {
 	int j, k, kk, ks;
 	t_float wkr, wki, xr, xi, yr, yi;
@@ -284,9 +288,9 @@ void rftsub(int n, t_float *a, int nc, t_float *c)
 }
 
 
-void makewt(int nw, int *ip, t_float *w)
+void fftease_makewt(int nw, int *ip, t_float *w)
 {
-    void bitrv2(int n, int *ip, t_float *a);
+    void fftease_bitrv2(int n, int *ip, t_float *a);
     int nwh, j;
     t_float delta, x, y;
     
@@ -307,12 +311,12 @@ void makewt(int nw, int *ip, t_float *w)
             w[nw - j] = y;
             w[nw - j + 1] = x;
         }
-        bitrv2(nw, ip + 2, w);
+        fftease_bitrv2(nw, ip + 2, w);
     }
 }
 
 
-void makect(int nc, int *ip, t_float *c)
+void fftease_makect(int nc, int *ip, t_float *c)
 {
     int nch, j;
     t_float delta;

@@ -345,9 +345,9 @@ void do_disarrain(t_disarrain *x)
 		x->reset_flag = 0;
 	}
 	
-	fold(fft);	
-	rdft(fft,1);
-	leanconvert(fft);
+	fftease_fold(fft);
+	fftease_rdft(fft,1);
+	fftease_leanconvert(fft);
 	
 	// first time for interpolation, just do last frame 
 	
@@ -404,9 +404,9 @@ void do_disarrain(t_disarrain *x)
 		ival = 0.0;
 	}
 	
-	leanunconvert(fft);
-	rdft(fft,-1);
-	overlapadd(fft);
+	fftease_leanunconvert(fft);
+	fftease_rdft(fft,-1);
+	fftease_overlapadd(fft);
 
 
 	

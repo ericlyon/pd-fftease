@@ -130,12 +130,12 @@ void do_cross(t_cross *x)
 	t_float ingain = 0;
 	t_float outgain, rescale;
 	t_float mymult;
-		
-	fold(fft);		
-	fold(fft2);	
-	rdft(fft,1);
-	rdft(fft2,1);
-	
+
+	fftease_fold(fft);
+	fftease_fold(fft2);
+	fftease_rdft(fft,1);
+	fftease_rdft(fft2,1);
+
 	/* changing algorithm for window flexibility */
 	if(autonorm){
 		ingain = 0;
@@ -177,8 +177,8 @@ void do_cross(t_cross *x)
 		x->normult = mult;
         //post("mymult: %f", mymult);
 	}
-	rdft(fft, -1);
-	overlapadd(fft);
+	fftease_rdft(fft, -1);
+	fftease_overlapadd(fft);
 }
 
 t_int *cross_perform(t_int *w)
