@@ -27,13 +27,13 @@ MANUAL =
 # list them here.  This can be anything from header files, test patches,
 # documentation, etc.  README.txt and LICENSE.txt are required and therefore
 # automatically included
-EXTRA_DIST = MSPd.h PenroseOscil.h PenroseRand.h bashfest.h fftease.h ugens.h
+EXTRA_DIST = MSPd.h PenroseOscil.h PenroseRand.h bashfest.h fftease.h ugens.h legacy.c
 
 # unit tests and related files here, in the 'unittests' subfolder
 UNITTESTS =
 
 
-SHARED_SOURCE = bloscbank.c convert.c fft.c fft4.c fftease_setup.c fftease_utilities.c fold.c leanconvert.c leanunconvert.c legacy.c limit_fftsize.c limited_oscbank.c makewindows.c oscbank.c overlapadd.c PenroseOscil.c PenroseRand.c power_of_two.c qsortE.c unconvert.c
+SHARED_SOURCE = bloscbank.c convert.c fft.c fft4.c fftease_setup.c fftease_utilities.c fold.c leanconvert.c leanunconvert.c limit_fftsize.c limited_oscbank.c makewindows.c oscbank.c overlapadd.c PenroseOscil.c PenroseRand.c power_of_two.c qsortE.c unconvert.c
 SHARED_LIB = lib$(LIBRARY_NAME).$(SHARED_EXTENSION)
 
 #------------------------------------------------------------------------------#
