@@ -26,19 +26,19 @@ typedef struct _pvharm
 	t_float framestop; /* amplitude below which compressor is turned off */
 } t_pvharm;
 
-void pvharm_dsp(t_pvharm *x, t_signal **sp);
-t_int *pvharm_perform(t_int *w);
-void *pvharm_new(t_symbol *s, int argc, t_atom *argv);
-void pvharm_mute(t_pvharm *x, t_floatarg f);
-void pvharm_init(t_pvharm *x);
-void pvharm_rel2peak(t_pvharm *x, t_floatarg toggle);
-void pvharm_free(t_pvharm *x);
-void pvharm_oscnt(t_pvharm *x);
-void pvharm_osclimit(t_pvharm *x, t_floatarg f);
-void pvharm_compressor(t_pvharm *x, t_floatarg state);
-void pvharm_framestop(t_pvharm *x, t_floatarg state);
-void pvharm_lowfreq(t_pvharm *x, t_floatarg f);
-void pvharm_highfreq(t_pvharm *x, t_floatarg f);
+static void pvharm_dsp(t_pvharm *x, t_signal **sp);
+static t_int *pvharm_perform(t_int *w);
+static void *pvharm_new(t_symbol *s, int argc, t_atom *argv);
+static void pvharm_mute(t_pvharm *x, t_floatarg f);
+static void pvharm_init(t_pvharm *x);
+static void pvharm_free(t_pvharm *x);
+static void pvharm_oscnt(t_pvharm *x);
+static void pvharm_osclimit(t_pvharm *x, t_floatarg f);
+static void pvharm_compressor(t_pvharm *x, t_floatarg state);
+static void pvharm_framestop(t_pvharm *x, t_floatarg state);
+static void pvharm_lowfreq(t_pvharm *x, t_floatarg f);
+static void pvharm_highfreq(t_pvharm *x, t_floatarg f);
+static void pvharm_rel2peak(t_pvharm *x, t_floatarg toggle);
 
 void pvharm_tilde_setup(void)
 {
@@ -164,7 +164,7 @@ void pvharm_init(t_pvharm *x)
 	fftease_oscbank_setbins(fft2, x->lofreq, x->hifreq);
 }
 
-void do_pvharm(t_pvharm *x)
+static void do_pvharm(t_pvharm *x)
 {
 	t_float framethresh = x->framethresh;
 	int osclimit = x->osclimit;

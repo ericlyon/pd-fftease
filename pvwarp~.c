@@ -35,19 +35,19 @@ typedef struct _pvwarp
 	long overlap_attr;
 } t_pvwarp;
 
-void pvwarp_dsp(t_pvwarp *x, t_signal **sp);
-t_int *pvwarp_perform(t_int *w);
-void *pvwarp_new(t_symbol *s, int argc, t_atom *argv);
-void pvwarp_mute(t_pvwarp *x, t_floatarg state);
-void pvwarp_automate(t_pvwarp *x, t_floatarg state);
-void pvwarp_autofunc(t_pvwarp *x, t_floatarg minval, t_floatarg maxval);
-void pvwarp_free( t_pvwarp *x );
-float closestf(float test, float *arr) ;
-int freq_to_bin( float target, float fundamental );
-void update_warp_function( t_pvwarp *x ) ;
-void pvwarp_init(t_pvwarp *x);
-void pvwarp_bottomfreq(t_pvwarp *x, t_floatarg f);
-void pvwarp_topfreq(t_pvwarp *x, t_floatarg f);
+static void pvwarp_dsp(t_pvwarp *x, t_signal **sp);
+static t_int *pvwarp_perform(t_int *w);
+static void *pvwarp_new(t_symbol *s, int argc, t_atom *argv);
+static void pvwarp_mute(t_pvwarp *x, t_floatarg state);
+static void pvwarp_autofunc(t_pvwarp *x, t_floatarg minval, t_floatarg maxval);
+static void pvwarp_free( t_pvwarp *x );
+static int freq_to_bin( float target, float fundamental );
+static void update_warp_function( t_pvwarp *x ) ;
+static void pvwarp_init(t_pvwarp *x);
+static void pvwarp_bottomfreq(t_pvwarp *x, t_floatarg f);
+static void pvwarp_topfreq(t_pvwarp *x, t_floatarg f);
+static void pvwarp_automate(t_pvwarp *x, t_floatarg state);
+
 void pvwarp_tilde_setup(void)
 {
     t_class *c;
@@ -267,7 +267,7 @@ void pvwarp_topfreq(t_pvwarp *x, t_floatarg f)
 	fftease_oscbank_setbins(x->fft, x->lofreq, x->hifreq);		
 }
 
-void do_pvwarp(t_pvwarp *x)
+static void do_pvwarp(t_pvwarp *x)
 {
 	t_fftease *fft = x->fft;
 	int lo_bin = fft->lo_bin;

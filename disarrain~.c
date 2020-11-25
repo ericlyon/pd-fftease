@@ -42,27 +42,29 @@ typedef struct _disarrain
 } t_disarrain;
 
 
-void *disarrain_new(t_symbol *msg, short argc, t_atom *argv);
-void disarrain_dsp(t_disarrain *x, t_signal **sp);
-t_int *disarrain_perform(t_int *w);
-void disarrain_switch_count(t_disarrain *x, t_floatarg i);
-void disarrain_fadetime(t_disarrain *x, t_floatarg f);
-void disarrain_topfreq(t_disarrain *x, t_floatarg f);
-void reset_shuffle( t_disarrain *x );
-void disarrain_showstate( t_disarrain *x );
-void disarrain_list (t_disarrain *x, t_symbol *msg, short argc, t_atom *argv);
-void disarrain_setstate (t_disarrain *x, t_symbol *msg, short argc, t_atom *argv);
-void disarrain_isetstate (t_disarrain *x, t_symbol *msg, short argc, t_atom *argv);
-int rand_index(int max);
-void disarrain_mute(t_disarrain *x, t_floatarg toggle);
-void copy_shuffle_array(t_disarrain *x);
-void interpolate_frames_to_channel(t_disarrain *x);
-void disarrain_killfade(t_disarrain *x);
-void disarrain_forcefade(t_disarrain *x, t_floatarg toggle);
-void disarrain_init(t_disarrain *x);
-void disarrain_free(t_disarrain *x);
-void disarrain_fftinfo(t_disarrain *x);
-void disarrain_force_switch(t_disarrain *x, t_floatarg toggle);
+static void *disarrain_new(t_symbol *msg, short argc, t_atom *argv);
+static void disarrain_dsp(t_disarrain *x, t_signal **sp);
+static t_int *disarrain_perform(t_int *w);
+static void disarrain_switch_count(t_disarrain *x, t_floatarg i);
+static void disarrain_fadetime(t_disarrain *x, t_floatarg f);
+static void disarrain_topfreq(t_disarrain *x, t_floatarg f);
+static void reset_shuffle( t_disarrain *x );
+static void disarrain_showstate( t_disarrain *x );
+static void disarrain_setstate (t_disarrain *x, t_symbol *msg, short argc, t_atom *argv);
+static void disarrain_isetstate (t_disarrain *x, t_symbol *msg, short argc, t_atom *argv);
+static void disarrain_mute(t_disarrain *x, t_floatarg toggle);
+static void copy_shuffle_array(t_disarrain *x);
+static void disarrain_killfade(t_disarrain *x);
+static void disarrain_init(t_disarrain *x);
+static void disarrain_free(t_disarrain *x);
+static void disarrain_bypass(t_disarrain *x, t_floatarg toggle);
+static void disarrain_fftinfo( t_disarrain *x );
+static void disarrain_fftsize(t_disarrain *x, t_floatarg f);
+static void disarrain_forcefade(t_disarrain *x, t_floatarg toggle);
+static void disarrain_force_switch(t_disarrain *x, t_floatarg f);
+static void disarrain_list (t_disarrain *x, t_symbol *msg, short argc, t_atom *argv);
+static void disarrain_overlap(t_disarrain *x, t_floatarg f);
+static void disarrain_winfac(t_disarrain *x, t_floatarg f);
 
 void disarrain_tilde_setup(void)
 {
@@ -263,7 +265,7 @@ void disarrain_fftinfo( t_disarrain *x )
 	fftease_fftinfo( x->fft, OBJECT_NAME );
 }
 
-void do_disarrain(t_disarrain *x)
+static void do_disarrain(t_disarrain *x)
 {
 	t_fftease *fft = x->fft;
 	t_float *channel = fft->channel;

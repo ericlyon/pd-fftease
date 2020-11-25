@@ -18,15 +18,15 @@ typedef struct _cross
     t_float normult; // adjusted multiplier on a per-frame basis
 } t_cross;
 
-void *cross_new(t_symbol *s, int argc, t_atom *argv);
-t_int *cross_perform(t_int *w);
-void cross_dsp(t_cross *x, t_signal **sp);
-void *cross_new(t_symbol *s, int argc, t_atom *argv);
-void cross_init(t_cross *x);
-void cross_fftinfo(t_cross *x);
-void cross_mute(t_cross *x, t_floatarg toggle);
-void cross_autonorm(t_cross *x, t_floatarg toggle);
-void cross_free(t_cross *x);
+static void *cross_new(t_symbol *s, int argc, t_atom *argv);
+static t_int *cross_perform(t_int *w);
+static void cross_dsp(t_cross *x, t_signal **sp);
+static void *cross_new(t_symbol *s, int argc, t_atom *argv);
+static void cross_init(t_cross *x);
+static void cross_mute(t_cross *x, t_floatarg toggle);
+static void cross_autonorm(t_cross *x, t_floatarg toggle);
+static void cross_free(t_cross *x);
+static void cross_fftsize(t_cross *x, t_floatarg f);
 
 void cross_tilde_setup(void)
 {
@@ -111,7 +111,7 @@ void cross_init(t_cross *x)
 	}
 }
 
-void do_cross(t_cross *x)
+static void do_cross(t_cross *x)
 {
 	t_fftease *fft = x->fft;
 	t_fftease *fft2 = x->fft2;

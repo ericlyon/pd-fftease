@@ -18,16 +18,18 @@ typedef struct _drown
 	short peakflag;
 } t_drown;
 
-t_int *bthresher_perform(t_int *w);
-void drown_dsp(t_drown *x, t_signal **sp);
-void *drown_new(t_symbol *s, int argc, t_atom *argv);
-void drown_mute(t_drown *x, t_floatarg toggle);
-void drown_adaptive(t_drown *x, t_floatarg toggle);
-void drown_float(t_drown *x, t_float f);
-void drown_overlap(t_drown *x, t_floatarg o);
-void drown_free(t_drown *x);
-void drown_init(t_drown *x);
-void drown_fftinfo(t_drown *x);
+static t_int *drown_perform(t_int *w);
+static void drown_dsp(t_drown *x, t_signal **sp);
+static void *drown_new(t_symbol *s, int argc, t_atom *argv);
+static void drown_mute(t_drown *x, t_floatarg toggle);
+static void drown_adaptive(t_drown *x, t_floatarg toggle);
+static void drown_free(t_drown *x);
+static void drown_init(t_drown *x);
+static void drown_fftinfo(t_drown *x);
+static void drown_bypass(t_drown *x, t_floatarg toggle);
+static void drown_fftsize(t_drown *x, t_floatarg f);
+static void drown_overlap(t_drown *x, t_floatarg f);
+static void drown_winfac(t_drown *x, t_floatarg f);
 
 void drown_tilde_setup(void)
 {
@@ -116,7 +118,7 @@ void drown_free(t_drown *x)
     free(x->fft);
 }
 
-void do_drown(t_drown *x)
+static void do_drown(t_drown *x)
 {
 	int i;
 	t_fftease *fft = x->fft;

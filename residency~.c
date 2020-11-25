@@ -37,26 +37,24 @@ typedef struct _residency
     short interpolation_attr;
 } t_residency;
 
-void residency_dsp(t_residency *x, t_signal **sp);
-t_int *residency_perform(t_int *w);
-void *residency_new(t_symbol *s, int argc, t_atom *argv);
-void residency_bangname(t_residency *x) ;
-void residency_fftinfo(t_residency *x) ;
-void residency_playthrough( t_residency *x, t_floatarg tog) ;
-void residency_mute(t_residency *x, t_floatarg tog);
-void residency_interpolation(t_residency *x, t_floatarg tog);
-void residency_free(t_residency *x);
-void residency_init(t_residency *x);
-void residency_size(t_residency *x, t_floatarg newsize);
-void residency_verbose(t_residency *x, t_floatarg t);
-void residency_force_position(t_residency *x, t_floatarg position);
-void residency_acquire_sample(t_residency *x);
-void residency_meminfo( t_residency *x );
-void residency_acquire_stop(t_residency *x);
-void residency_transpose(t_residency *x, t_floatarg tf);
-void residency_synthresh(t_residency *x, t_floatarg thresh);
-void residency_oscbank(t_residency *x, t_floatarg flag);
-void do_residency(t_residency *x);
+static void residency_dsp(t_residency *x, t_signal **sp);
+static t_int *residency_perform(t_int *w);
+static void *residency_new(t_symbol *s, int argc, t_atom *argv);
+static void residency_playthrough( t_residency *x, t_floatarg tog) ;
+static void residency_mute(t_residency *x, t_floatarg tog);
+static void residency_interpolation(t_residency *x, t_floatarg tog);
+static void residency_free(t_residency *x);
+static void residency_init(t_residency *x);
+static void residency_force_position(t_residency *x, t_floatarg position);
+static void residency_acquire_sample(t_residency *x);
+static void residency_acquire_stop(t_residency *x);
+static void residency_transpose(t_residency *x, t_floatarg tf);
+static void residency_synthresh(t_residency *x, t_floatarg thresh);
+static void residency_oscbank(t_residency *x, t_floatarg flag);
+static void residency_meminfo( t_residency *x );
+static void residency_size( t_residency *x, t_floatarg newsize);
+static void residency_verbose( t_residency *x, t_floatarg t);
+static void do_residency(t_residency *x);
 
 void residency_tilde_setup(void)
 {
@@ -257,7 +255,7 @@ void residency_init(t_residency *x)
     x->last_framecount = x->framecount;
 }
 
-void do_residency(t_residency *x)
+static void do_residency(t_residency *x)
 {
 	int i;
 	t_float fframe = x->current_frame ;

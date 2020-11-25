@@ -32,18 +32,21 @@ typedef struct _centerring
 	short bypass;
 } t_centerring;
 
-void *centerring_new(t_symbol *s, int argc, t_atom *argv);
-t_int *centerring_perform(t_int *w);
-void centerring_dsp(t_centerring *x, t_signal **sp);
-void centerring_dest(t_centerring *x, t_float f);
-void centerring_messages(t_centerring *x, t_symbol *s, short argc, t_atom *argv);
-void centerring_adjust( t_centerring *x );
-void centerring_zerophases( t_centerring *x );
-void centerring_randphases( t_centerring *x );
-void centerring_free(t_centerring *x);
-void centerring_init(t_centerring *x);
-void centerring_mute(t_centerring *x, t_floatarg toggle);
-void centerring_fftinfo( t_centerring *x );
+static void *centerring_new(t_symbol *s, int argc, t_atom *argv);
+static t_int *centerring_perform(t_int *w);
+static void centerring_dsp(t_centerring *x, t_signal **sp);
+static void centerring_messages(t_centerring *x, t_symbol *s, short argc, t_atom *argv);
+static void centerring_adjust( t_centerring *x );
+static void centerring_zerophases( t_centerring *x );
+static void centerring_randphases( t_centerring *x );
+static void centerring_free(t_centerring *x);
+static void centerring_init(t_centerring *x);
+static void centerring_mute(t_centerring *x, t_floatarg toggle);
+static void centerring_fftinfo( t_centerring *x );
+static void centerring_bypass(t_centerring *x, t_floatarg toggle);
+static void centerring_fftsize(t_centerring *x, t_floatarg f);
+static void centerring_overlap(t_centerring *x, t_floatarg f);
+static void centerring_winfac(t_centerring *x, t_floatarg f);
 
 void centerring_tilde_setup(void)
 {
@@ -184,7 +187,7 @@ void centerring_randphases( t_centerring *x ) {
 	
 }
 
-void do_centerring(t_centerring *x)
+static void do_centerring(t_centerring *x)
 {
 	t_fftease *fft = x->fft;
 	t_float *buffer = fft->buffer;

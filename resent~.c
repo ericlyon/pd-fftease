@@ -36,34 +36,32 @@ typedef struct _resent
     long interpolation_attr;
 } t_resent;
 
-void resent_dsp(t_resent *x, t_signal **sp);
-t_int *resent_perform(t_int *w);
-void *resent_new(t_symbol *msg, short argc, t_atom *argv);
-void resent_assist(t_resent *x, void *b, long m, long a, char *s);
-void resent_acquire_sample (t_resent *x) ;
-void resent_mute(t_resent *x, t_floatarg tog);
-void resent_bin(t_resent *x, t_floatarg fbin, t_floatarg speed);
-void resent_setphase(t_resent *x, t_floatarg phase);
-void resent_addphase(t_resent *x, t_floatarg phase);
-void resent_setspeed( t_resent *x,  t_floatarg speed );
-void resent_addspeed( t_resent *x,  t_floatarg speed );
-void resent_size( t_resent *x,  t_floatarg size_ms );
-void resent_free( t_resent *x );
-void resent_store_incr( t_resent *x );
-void resent_setspeed_and_phase( t_resent *x,  t_floatarg speed, t_floatarg phase );
-void resent_tick(t_resent *x);
-void resent_fftinfo(t_resent *x);
-void resent_init(t_resent *x);
-void resent_linephase(t_resent *x, t_symbol *msg, short argc, t_atom *argv);
-void resent_linespeed(t_resent *x, t_symbol *msg, short argc, t_atom *argv);
-void resent_randphase(t_resent *x, t_symbol *msg, short argc, t_atom *argv);
-void resent_randspeed(t_resent *x, t_symbol *msg, short argc, t_atom *argv);
-void resent_playthrough(t_resent *x, t_floatarg state);
-void resent_interpolation(t_resent *x,  t_floatarg tog);
+static void resent_dsp(t_resent *x, t_signal **sp);
+static t_int *resent_perform(t_int *w);
+static void *resent_new(t_symbol *msg, short argc, t_atom *argv);
+static void resent_acquire_sample (t_resent *x) ;
+static void resent_mute(t_resent *x, t_floatarg tog);
+static void resent_bin(t_resent *x, t_floatarg fbin, t_floatarg speed);
+static void resent_setphase(t_resent *x, t_floatarg phase);
+static void resent_addphase(t_resent *x, t_floatarg phase);
+static void resent_setspeed( t_resent *x,  t_floatarg speed );
+static void resent_addspeed( t_resent *x,  t_floatarg speed );
+static void resent_free( t_resent *x );
+static void resent_store_incr( t_resent *x );
+static void resent_setspeed_and_phase( t_resent *x,  t_floatarg speed, t_floatarg phase );
+static void resent_init(t_resent *x);
+static void resent_linephase(t_resent *x, t_symbol *msg, short argc, t_atom *argv);
+static void resent_linespeed(t_resent *x, t_symbol *msg, short argc, t_atom *argv);
+static void resent_randphase(t_resent *x, t_symbol *msg, short argc, t_atom *argv);
+static void resent_randspeed(t_resent *x, t_symbol *msg, short argc, t_atom *argv);
+static void resent_playthrough(t_resent *x, t_floatarg state);
+static void resent_interpolation(t_resent *x,  t_floatarg tog);
 t_float fftease_randf(t_float min, t_float max);
-void resent_transpose(t_resent *x, t_floatarg tf);
-void resent_synthresh(t_resent *x, t_floatarg thresh);
-void resent_oscbank(t_resent *x, t_floatarg flag);
+static void resent_transpose(t_resent *x, t_floatarg tf);
+static void resent_synthresh(t_resent *x, t_floatarg thresh);
+static void resent_oscbank(t_resent *x, t_floatarg flag);
+static void resent_assist (t_resent *x, void *b, long msg, long arg, char *dst);
+static void resent_tick(t_resent *x);
 
 void resent_tilde_setup(void)
 {
@@ -355,7 +353,7 @@ t_fftease *fft;
 	return x;
 }
 
-void do_resent(t_resent *x)
+static void do_resent(t_resent *x)
 {
 	t_fftease *fft = x->fft;
 	

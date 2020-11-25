@@ -20,14 +20,13 @@ typedef struct _ether
 	short mute;
 } t_ether;
 
-void ether_dsp(t_ether *x, t_signal **sp);
-t_int *ether_perform(t_int *w);
-void *ether_new(t_symbol *s, int argc, t_atom *argv);
-void ether_invert(t_ether *x, t_floatarg toggle);
-void ether_init(t_ether *x);
-void ether_free(t_ether *x);
-void ether_mute(t_ether *x, t_floatarg toggle);
-void ether_tilde_setup(void);
+static void ether_dsp(t_ether *x, t_signal **sp);
+static t_int *ether_perform(t_int *w);
+static void *ether_new(t_symbol *s, int argc, t_atom *argv);
+static void ether_invert(t_ether *x, t_floatarg toggle);
+static void ether_init(t_ether *x);
+static void ether_free(t_ether *x);
+static void ether_mute(t_ether *x, t_floatarg toggle);
 
 void ether_tilde_setup(void)
 {
@@ -99,7 +98,7 @@ void ether_init(t_ether *x)
 	}
 }
 
-void do_ether(t_ether *x)
+static void do_ether(t_ether *x)
 {
 	t_fftease *fft = x->fft;
 	t_fftease *fft2 = x->fft2;

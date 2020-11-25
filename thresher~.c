@@ -25,15 +25,15 @@ typedef struct _thresher
 	t_float tadv;
 } t_thresher;
 
-void thresher_dsp(t_thresher *x, t_signal **sp);
-t_int *thresher_perform(t_int *w);
-void *thresher_new(t_symbol *s, int argc, t_atom *argv);
-void thresher_mute(t_thresher *x, t_floatarg f);
-void thresher_free( t_thresher *x );
-void thresher_init(t_thresher *x);
-void thresher_transpose(t_thresher *x, t_floatarg tf);
-void thresher_synthresh(t_thresher *x, t_floatarg thresh);
-void thresher_oscbank(t_thresher *x, t_floatarg flag);
+static void thresher_dsp(t_thresher *x, t_signal **sp);
+static t_int *thresher_perform(t_int *w);
+static void *thresher_new(t_symbol *s, int argc, t_atom *argv);
+static void thresher_mute(t_thresher *x, t_floatarg f);
+static void thresher_free( t_thresher *x );
+static void thresher_init(t_thresher *x);
+static void thresher_transpose(t_thresher *x, t_floatarg tf);
+static void thresher_synthresh(t_thresher *x, t_floatarg thresh);
+static void thresher_oscbank(t_thresher *x, t_floatarg flag);
 
 void thresher_tilde_setup(void)
 {
@@ -124,7 +124,7 @@ void thresher_init(t_thresher *x)
 	}
 }
 
-void do_thresher(t_thresher *x)
+static void do_thresher(t_thresher *x)
 {
 	int i;
 	

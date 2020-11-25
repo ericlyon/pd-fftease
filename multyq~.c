@@ -32,14 +32,15 @@ typedef struct _multyq
 	short mute;
 } t_multyq;
 
-void multyq_dsp(t_multyq *x, t_signal **sp);
-t_int *multyq_perform(t_int *w);
-void *multyq_new(t_symbol *s, int argc, t_atom *argv);
-void multyq_mute(t_multyq *x, t_floatarg state);
-void update_filter_function(t_multyq *x);
-void filtyQ( float *S, float *C, float *filtfunc, int N2 );
-void multyq_init(t_multyq *x);
-void multyq_free(t_multyq *x);
+static void multyq_dsp(t_multyq *x, t_signal **sp);
+static t_int *multyq_perform(t_int *w);
+static void *multyq_new(t_symbol *s, int argc, t_atom *argv);
+static void multyq_mute(t_multyq *x, t_floatarg state);
+static void update_filter_function(t_multyq *x);
+static void multyq_init(t_multyq *x);
+static void multyq_free(t_multyq *x);
+static void filtyQ( float *S, float *C, float *filtfunc, int N2 );
+
 void multyq_tilde_setup(void)
 {
     t_class *c;
@@ -135,7 +136,7 @@ void multyq_init(t_multyq *x)
 	update_filter_function(x);
 }
 
-void do_multyq(t_multyq *x)
+static void do_multyq(t_multyq *x)
 {
 	int real, imag, amp, phase;
 	t_float a, b;

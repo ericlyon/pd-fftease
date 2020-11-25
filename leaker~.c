@@ -17,15 +17,15 @@ typedef struct _leaker
 	t_float fade_value;
 } t_leaker;
 
-void leaker_dsp(t_leaker *x, t_signal **sp);
-t_int *leaker_perform(t_int *w);
+static void leaker_dsp(t_leaker *x, t_signal **sp);
+static t_int *leaker_perform(t_int *w);
 static void leaker_free(t_leaker *x);
-void *leaker_new(t_symbol *msg, short argc, t_atom *argv);
-void leaker_upsieve(t_leaker *x) ;
-void leaker_downsieve(t_leaker *x) ;
-void leaker_randsieve(t_leaker *x) ;
-void leaker_mute(t_leaker *x, t_floatarg state);
-void leaker_init(t_leaker *x);
+static void *leaker_new(t_symbol *msg, short argc, t_atom *argv);
+static void leaker_upsieve(t_leaker *x) ;
+static void leaker_downsieve(t_leaker *x) ;
+static void leaker_randsieve(t_leaker *x) ;
+static void leaker_mute(t_leaker *x, t_floatarg state);
+static void leaker_init(t_leaker *x);
 
 void leaker_tilde_setup(void)
 {
@@ -144,7 +144,7 @@ void leaker_init(t_leaker *x)
 	}
 }
 
-void do_leaker(t_leaker *x)
+static void do_leaker(t_leaker *x)
 {
 	int i,odd,even;
 	t_float a1,a2,b1,b2;
