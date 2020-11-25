@@ -30,16 +30,15 @@ typedef struct _morphine
 	short mute;
 } t_morphine;
 
-void morphine_dsp(t_morphine *x, t_signal **sp);
-t_int *morphine_perform(t_int *w);
-void *morphine_new(t_symbol *s, int argc, t_atom *argv);
-int sortIncreasing( const void *a, const void *b );
+static void morphine_dsp(t_morphine *x, t_signal **sp);
+static t_int *morphine_perform(t_int *w);
+static void *morphine_new(t_symbol *s, int argc, t_atom *argv);
+static int sortIncreasing( const void *a, const void *b );
 int qsortE (char *base_ptr, int total_elems, int size, int (*cmp)(const void *a, const void *b));
-void morphine_transition(t_morphine *x, t_floatarg f);
-void morphine_free(t_morphine *x);
-void morphine_mute(t_morphine *x, t_floatarg toggle);
-void morphine_tilde_setup(void);
-void morphine_init(t_morphine *x);
+static void morphine_transition(t_morphine *x, t_floatarg f);
+static void morphine_free(t_morphine *x);
+static void morphine_mute(t_morphine *x, t_floatarg toggle);
+static void morphine_init(t_morphine *x);
 
 int sortIncreasing( const void *a, const void *b )
 {
@@ -119,7 +118,7 @@ void morphine_init(t_morphine *x)
 	}
 }
 
-void do_morphine(t_morphine *x)
+static void do_morphine(t_morphine *x)
 {
 	t_fftease *fft = x->fft;
 	t_fftease *fft2 = x->fft2;

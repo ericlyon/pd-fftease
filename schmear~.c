@@ -22,17 +22,17 @@ typedef struct _schmear
 	int shift;
 } t_schmear;
 
-void schmear_dsp(t_schmear *x, t_signal **sp);
-t_int *schmear_perform(t_int *w);
-void *schmear_new(t_symbol *s, int argc, t_atom *argv);
-void schmear_mute(t_schmear *x, t_floatarg toggle);
-void schmear_rel2peak(t_schmear *x, t_floatarg toggle);
-void schmear_free(t_schmear *x);
-void schmear_init(t_schmear *x);
-void schmear_threshold(t_schmear *x, t_floatarg f);
-void schmear_schmimp(t_schmear *x, t_symbol *msg, short argc, t_atom *argv);
-void schmear_shift(t_schmear *x, t_floatarg f);
-void schmear_oscbank(t_schmear *x, t_floatarg flag);
+static void schmear_dsp(t_schmear *x, t_signal **sp);
+static t_int *schmear_perform(t_int *w);
+static void *schmear_new(t_symbol *s, int argc, t_atom *argv);
+static void schmear_mute(t_schmear *x, t_floatarg toggle);
+static void schmear_free(t_schmear *x);
+static void schmear_init(t_schmear *x);
+static void schmear_threshold(t_schmear *x, t_floatarg f);
+static void schmear_schmimp(t_schmear *x, t_symbol *msg, short argc, t_atom *argv);
+static void schmear_shift(t_schmear *x, t_floatarg f);
+static void schmear_oscbank(t_schmear *x, t_floatarg flag);
+static void do_schmear(t_schmear *x);
 
 void schmear_tilde_setup(void)
 {
@@ -135,7 +135,7 @@ void schmear_free(t_schmear *x)
     free(x->fft);
 }
 
-void do_schmear(t_schmear *x)
+static void do_schmear(t_schmear *x)
 {
 	int i, j;
 	t_fftease *fft = x->fft;
@@ -307,3 +307,4 @@ void schmear_dsp(t_schmear *x, t_signal **sp)
         dsp_add(schmear_perform, 3, x, sp[0]->s_vec, sp[1]->s_vec);
     }
 }
+

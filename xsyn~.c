@@ -15,13 +15,12 @@ typedef struct _xsyn
 	short mute;
 } t_xsyn;
 
-void xsyn_dsp(t_xsyn *x, t_signal **sp);
-t_int *xsyn_perform(t_int *w);
-void *xsyn_new(t_symbol *s, int argc, t_atom *argv);
-t_int *offset_perform(t_int *w);
-void xsyn_free( t_xsyn *x );
-void xsyn_init(t_xsyn *x);
-void xsyn_mute(t_xsyn *x, t_floatarg toggle);
+static void xsyn_dsp(t_xsyn *x, t_signal **sp);
+static t_int *xsyn_perform(t_int *w);
+static void *xsyn_new(t_symbol *s, int argc, t_atom *argv);
+static void xsyn_free( t_xsyn *x );
+static void xsyn_init(t_xsyn *x);
+static void xsyn_mute(t_xsyn *x, t_floatarg toggle);
 
 void xsyn_tilde_setup(void)
 {
@@ -80,7 +79,7 @@ void xsyn_init(t_xsyn *x)
 	fftease_init(x->fft2);
 }
 
-void do_xsyn(t_xsyn *x)
+static void do_xsyn(t_xsyn *x)
 {
     
     int i;

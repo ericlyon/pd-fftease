@@ -34,23 +34,22 @@ typedef struct _pvwarpb
     int b_valid;
 } t_pvwarpb;
 
-void pvwarpb_dsp(t_pvwarpb *x, t_signal **sp);
-t_int *pvwarpb_perform(t_int *w);
-void *pvwarpb_new(t_symbol *s, int argc, t_atom *argv);
-void pvwarpb_mute(t_pvwarpb *x, t_floatarg state);
-void pvwarpb_automate(t_pvwarpb *x, t_floatarg state);
-void pvwarpb_autofunc(t_pvwarpb *x, t_floatarg minval, t_floatarg maxval);
-void pvwarpb_free( t_pvwarpb *x );
+static void pvwarpb_dsp(t_pvwarpb *x, t_signal **sp);
+static t_int *pvwarpb_perform(t_int *w);
+static void *pvwarpb_new(t_symbol *s, int argc, t_atom *argv);
+static void pvwarpb_mute(t_pvwarpb *x, t_floatarg state);
+static void pvwarpb_autofunc(t_pvwarpb *x, t_floatarg minval, t_floatarg maxval);
+static void pvwarpb_free( t_pvwarpb *x );
 t_float fftease_randf( t_float min, t_float max );
-t_float closestf(t_float test, t_float *arr) ;
-int freq_to_bin(t_float target, t_float fundamental);
-void update_warp_function( t_pvwarpb *x ) ;
-void pvwarpb_init(t_pvwarpb *x);
-void pvwarpb_bottomfreq(t_pvwarpb *x, t_floatarg f);
-void pvwarpb_topfreq(t_pvwarpb *x, t_floatarg f);
-void pvwarpb_attachbuf(t_pvwarpb *x);
-void pvwarpb_setbuf(t_pvwarpb *x, t_symbol *wavename);
-void pvwarpb_redraw(t_pvwarpb *x);
+static int freq_to_bin(t_float target, t_float fundamental);
+static void pvwarpb_init(t_pvwarpb *x);
+static void pvwarpb_bottomfreq(t_pvwarpb *x, t_floatarg f);
+static void pvwarpb_topfreq(t_pvwarpb *x, t_floatarg f);
+static void pvwarpb_attachbuf(t_pvwarpb *x);
+static void pvwarpb_redraw(t_pvwarpb *x);
+static void pvwarpb_automate(t_pvwarpb *x, t_floatarg state);
+static void pvwarpb_setbuf(t_pvwarpb *x, t_symbol *wavename);
+static void pvwarpb_verbose(t_pvwarpb *x, t_floatarg state);
 
 void pvwarpb_tilde_setup(void)
 {
@@ -321,7 +320,7 @@ void pvwarpb_topfreq(t_pvwarpb *x, t_floatarg f)
 	fftease_oscbank_setbins(x->fft, x->lofreq, x->hifreq);	
 }
 
-void do_pvwarpb(t_pvwarpb *x)
+static void do_pvwarpb(t_pvwarpb *x)
 {
 	t_fftease *fft = x->fft;
 	int lo_bin = fft->lo_bin;

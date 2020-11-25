@@ -23,15 +23,15 @@ typedef struct _codepend
 	t_float invert_pad;
 } t_codepend;
 
-void *codepend_new(t_symbol *s, int argc, t_atom *argv);
-void codepend_dsp(t_codepend *x, t_signal **sp);
-t_int *codepend_perform(t_int *w);
-void codepend_invert(t_codepend *x, t_floatarg toggle);
-void codepend_free(t_codepend *x);
-void codepend_mute(t_codepend *x, t_floatarg toggle);
-void codepend_fftinfo(t_codepend *x);
-void codepend_init(t_codepend *x);
-void codepend_pad(t_codepend *x, t_floatarg pad);
+static void *codepend_new(t_symbol *s, int argc, t_atom *argv);
+static void codepend_dsp(t_codepend *x, t_signal **sp);
+static t_int *codepend_perform(t_int *w);
+static void codepend_invert(t_codepend *x, t_floatarg toggle);
+static void codepend_free(t_codepend *x);
+static void codepend_mute(t_codepend *x, t_floatarg toggle);
+static void codepend_fftinfo(t_codepend *x);
+static void codepend_init(t_codepend *x);
+static void codepend_pad(t_codepend *x, t_floatarg pad);
 
 void codepend_tilde_setup(void)
 {
@@ -140,7 +140,7 @@ void codepend_init(t_codepend *x )
     }
 }
 
-void do_codepend(t_codepend *x)
+static void do_codepend(t_codepend *x)
 {
 	t_fftease *fft = x->fft;
 	t_fftease *fft2 = x->fft2;

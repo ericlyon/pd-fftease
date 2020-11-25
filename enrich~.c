@@ -25,19 +25,24 @@ typedef struct _enrich
     t_float *b_samples;
 } t_enrich;
 
-void enrich_dsp(t_enrich *x, t_signal **sp);
-t_int *enrich_perform(t_int *w);
-void *enrich_new(t_symbol *s, int argc, t_atom *argv);
-void enrich_free(t_enrich *x);
-void enrich_mute(t_enrich *x, t_floatarg tog);
-void enrich_init(t_enrich *x);
-void enrich_lowfreq(t_enrich *x, t_floatarg f);
-void enrich_highfreq(t_enrich *x, t_floatarg f);
-void enrich_fftinfo(t_enrich *x);
-void enrich_setbuf(t_enrich *x, t_symbol *newbufname);
-void enrich_dolowfreq(t_enrich *x);
-void enrich_dohighfreq(t_enrich *x);
-void enrich_binstats(t_enrich *x);
+static void enrich_dsp(t_enrich *x, t_signal **sp);
+static t_int *enrich_perform(t_int *w);
+static void *enrich_new(t_symbol *s, int argc, t_atom *argv);
+static void enrich_free(t_enrich *x);
+static void enrich_mute(t_enrich *x, t_floatarg tog);
+static void enrich_init(t_enrich *x);
+static void enrich_lowfreq(t_enrich *x, t_floatarg f);
+static void enrich_highfreq(t_enrich *x, t_floatarg f);
+static void enrich_dolowfreq(t_enrich *x);
+static void enrich_dohighfreq(t_enrich *x);
+static void enrich_attachbuf(t_enrich *x);
+static void enrich_binstats(t_enrich *x);
+static void enrich_fftinfo(t_enrich *x);
+static void enrich_fftsize(t_enrich *x, t_floatarg f);
+static void enrich_overlap(t_enrich *x, t_floatarg f);
+static void enrich_setbuf(t_enrich *x, t_symbol *newbufname);
+static void enrich_winfac(t_enrich *x, t_floatarg f);
+
 void enrich_tilde_setup(void)
 {
     t_class *c;
@@ -237,7 +242,7 @@ void enrich_binstats(t_enrich *x)
     post("lo freq %f hi freq %f lo bin %d hi bin %d",x->lofreq, x->fft->lo_bin,x->hifreq,x->fft->hi_bin);
 }
 
-void do_enrich(t_enrich *x)
+static void do_enrich(t_enrich *x)
 {
 	t_fftease *fft = x->fft;
     enrich_dolowfreq(x);

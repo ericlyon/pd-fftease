@@ -68,39 +68,39 @@ typedef struct _pvtuner
 } t_pvtuner;
 
 
-void pvtuner_dsp(t_pvtuner *x, t_signal **sp);
-t_int *pvtuner_perform(t_int *w);
-t_float closestf(t_float test, t_float *arr) ;
-void pvtuner_diatonic( t_pvtuner *x );
-void pvtuner_eastern( t_pvtuner *x );
-void pvtuner_minor( t_pvtuner *x );
-void pvtuner_eq12( t_pvtuner *x );
-void pvtuner_pentatonic( t_pvtuner *x );
-void pvtuner_major_added_sixth( t_pvtuner *x );
-void pvtuner_minor_added_sixth( t_pvtuner *x );
-void pvtuner_major_seventh_chord( t_pvtuner *x );
-void pvtuner_minor_seventh_chord( t_pvtuner *x );
-void pvtuner_dominant_seventh_chord( t_pvtuner *x );
-void pvtuner_eq8( t_pvtuner *x );
-void pvtuner_pentaclust( t_pvtuner *x );
-void pvtuner_quarterclust( t_pvtuner *x );
-void pvtuner_eq5( t_pvtuner *x );
-void pvtuner_slendro( t_pvtuner *x );
-void pvtuner_pelog( t_pvtuner *x );
-void pvtuner_update_imported( t_pvtuner *x );
-void pvtuner_init(t_pvtuner *x);
-void *pvtuner_new(t_symbol *s, int argc, t_atom *argv);
-void pvtuner_import_scale(t_pvtuner *x, t_symbol *filename);
-void pvtuner_list (t_pvtuner *x, t_symbol *msg, short argc, t_atom *argv);
-void pvtuner_toptune( t_pvtuner *x, t_floatarg f );
-void pvtuner_frequency_range(t_pvtuner *x, t_floatarg lo, t_floatarg hi);
-void pvtuner_basefreq( t_pvtuner *x, t_floatarg bassfreq);
-void pvtuner_free(t_pvtuner *x);
-void pvtuner_mute(t_pvtuner *x, t_floatarg state);
-void pvtuner_list (t_pvtuner *x, t_symbol *msg, short argc, t_atom *argv);
-void pvtuner_binfo(t_pvtuner *x);
-void pvtuner_eqn(t_pvtuner *x, t_floatarg steps);
-void pvtuner_interpolation(t_pvtuner *x, t_floatarg state);
+static void pvtuner_dsp(t_pvtuner *x, t_signal **sp);
+static t_int *pvtuner_perform(t_int *w);
+static t_float closestf(t_float test, t_float *arr) ;
+static void pvtuner_diatonic( t_pvtuner *x );
+static void pvtuner_eastern( t_pvtuner *x );
+static void pvtuner_minor( t_pvtuner *x );
+static void pvtuner_eq12( t_pvtuner *x );
+static void pvtuner_pentatonic( t_pvtuner *x );
+static void pvtuner_major_added_sixth( t_pvtuner *x );
+static void pvtuner_minor_added_sixth( t_pvtuner *x );
+static void pvtuner_major_seventh_chord( t_pvtuner *x );
+static void pvtuner_minor_seventh_chord( t_pvtuner *x );
+static void pvtuner_dominant_seventh_chord( t_pvtuner *x );
+static void pvtuner_eq8( t_pvtuner *x );
+static void pvtuner_pentaclust( t_pvtuner *x );
+static void pvtuner_quarterclust( t_pvtuner *x );
+static void pvtuner_eq5( t_pvtuner *x );
+static void pvtuner_slendro( t_pvtuner *x );
+static void pvtuner_pelog( t_pvtuner *x );
+static void pvtuner_update_imported( t_pvtuner *x );
+static void pvtuner_init(t_pvtuner *x);
+static void *pvtuner_new(t_symbol *s, int argc, t_atom *argv);
+static void pvtuner_list (t_pvtuner *x, t_symbol *msg, short argc, t_atom *argv);
+static void pvtuner_frequency_range(t_pvtuner *x, t_floatarg lo, t_floatarg hi);
+static void pvtuner_basefreq( t_pvtuner *x, t_floatarg bassfreq);
+static void pvtuner_free(t_pvtuner *x);
+static void pvtuner_mute(t_pvtuner *x, t_floatarg state);
+static void pvtuner_list (t_pvtuner *x, t_symbol *msg, short argc, t_atom *argv);
+static void pvtuner_eqn(t_pvtuner *x, t_floatarg steps);
+static void pvtuner_interpolation(t_pvtuner *x, t_floatarg state);
+static void pvtuner_binfo(t_pvtuner *x);
+static void pvtuner_copy_scale(t_pvtuner *x);
+static void pvtuner_toptune(t_pvtuner *x, t_floatarg f);
 
 void pvtuner_tilde_setup(void)
 {
@@ -296,7 +296,7 @@ void pvtuner_frequency_range(t_pvtuner *x, t_floatarg lo, t_floatarg hi)
 	}
 }
 
-void do_pvtuner(t_pvtuner *x)
+static void do_pvtuner(t_pvtuner *x)
 {
 	t_fftease *fft = x->fft;
 	int freq,chan;

@@ -26,16 +26,15 @@ typedef struct _pvcompand
 	short mute;
 } t_pvcompand;
 
-void pvcompand_dsp(t_pvcompand *x, t_signal **sp);
-t_int *pvcompand_perform(t_int *w);
-void *pvcompand_new(t_symbol *s, int argc, t_atom *argv);
-void update_thresholds(t_pvcompand *x);
-void pvcompand_normalize(t_pvcompand *x, t_floatarg val);
-void pvcompand_float(t_pvcompand *x, t_float f);
-void pvcompand_free(t_pvcompand *x);
-float pvcompand_ampdb(float db);
-void pvcompand_init(t_pvcompand *x);
-void pvcompand_mute(t_pvcompand *x, t_floatarg f);
+static void pvcompand_dsp(t_pvcompand *x, t_signal **sp);
+static t_int *pvcompand_perform(t_int *w);
+static void *pvcompand_new(t_symbol *s, int argc, t_atom *argv);
+static void update_thresholds(t_pvcompand *x);
+static void pvcompand_normalize(t_pvcompand *x, t_floatarg val);
+static void pvcompand_free(t_pvcompand *x);
+static float pvcompand_ampdb(float db);
+static void pvcompand_init(t_pvcompand *x);
+static void pvcompand_mute(t_pvcompand *x, t_floatarg f);
 
 void pvcompand_tilde_setup(void)
 {
@@ -151,7 +150,7 @@ void pvcompand_normalize(t_pvcompand *x, t_floatarg val)
 	x->norml = (short)val;
 }
 
-void do_pvcompand(t_pvcompand *x)
+static void do_pvcompand(t_pvcompand *x)
 {
 	t_fftease *fft = x->fft;
 	t_float *channel = fft->channel;

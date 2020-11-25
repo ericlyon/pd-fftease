@@ -20,13 +20,12 @@ typedef struct _mindwarp
 	short mute;
 } t_mindwarp;
 
-void mindwarp_dsp(t_mindwarp *x, t_signal **sp);
-t_int *mindwarp_perform(t_int *w);
-void *mindwarp_new(t_symbol *s, int argc, t_atom *argv);
-void mindwarp_dest(t_mindwarp *x, t_float f);
-void mindwarp_init(t_mindwarp *x);
-void mindwarp_free(t_mindwarp *x);
-void mindwarp_mute(t_mindwarp *x, t_floatarg toggle);
+static void mindwarp_dsp(t_mindwarp *x, t_signal **sp);
+static t_int *mindwarp_perform(t_int *w);
+static void *mindwarp_new(t_symbol *s, int argc, t_atom *argv);
+static void mindwarp_init(t_mindwarp *x);
+static void mindwarp_free(t_mindwarp *x);
+static void mindwarp_mute(t_mindwarp *x, t_floatarg toggle);
 
 void mindwarp_tilde_setup(void)
 {
@@ -94,7 +93,7 @@ void mindwarp_free(t_mindwarp *x)
     }
 }
 
-void do_mindwarp(t_mindwarp *x)
+static void do_mindwarp(t_mindwarp *x)
 {
 	t_float *newChannel = x->newChannel;
 	

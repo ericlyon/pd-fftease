@@ -24,15 +24,14 @@ typedef struct _taint
 
 /* msp function prototypes */
 
-void taint_dsp(t_taint *x, t_signal **sp);
-t_int *taint_perform(t_int *w);
-void *taint_new(t_symbol *s, int argc, t_atom *argv);
-void taint_invert(t_taint *x, t_floatarg toggle);
-void taint_free(t_taint *x);
-void taint_mute(t_taint *x, t_floatarg toggle);
-void taint_tilde_setup(void);
-void taint_init(t_taint *x);
-void taint_pad(t_taint *x, t_floatarg pad);
+static void taint_dsp(t_taint *x, t_signal **sp);
+static t_int *taint_perform(t_int *w);
+static void *taint_new(t_symbol *s, int argc, t_atom *argv);
+static void taint_invert(t_taint *x, t_floatarg toggle);
+static void taint_free(t_taint *x);
+static void taint_mute(t_taint *x, t_floatarg toggle);
+static void taint_init(t_taint *x);
+static void taint_pad(t_taint *x, t_floatarg pad);
 
 void taint_tilde_setup(void)
 {
@@ -131,7 +130,7 @@ void taint_init(t_taint *x)
     }
 }
 
-void do_taint(t_taint *x)
+static void do_taint(t_taint *x)
 {
 	t_fftease *fft = x->fft;
 	t_fftease *fft2 = x->fft2;
