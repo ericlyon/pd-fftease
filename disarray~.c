@@ -37,7 +37,7 @@ static void disarray_mute(t_disarray *x, t_floatarg toggle);
 static void disarray_init(t_disarray *x);
 static void disarray_free(t_disarray *x);
 static void switch_count (t_disarray *x, t_floatarg i);
-static void iswitch_count(t_disarray *x, t_int i);
+static void iswitch_count(t_disarray *x, int i);
 static void disarray_bypass(t_disarray *x, t_floatarg toggle);
 static void disarray_fftinfo( t_disarray *x );
 static void disarray_fftsize(t_disarray *x, t_floatarg f);
@@ -62,7 +62,7 @@ void disarray_tilde_setup(void)
     fftease_announce(OBJECT_NAME);
 }
 
-void iswitch_count(t_disarray *x, t_int i)
+void iswitch_count(t_disarray *x, int i)
 {
 	switch_count(x,(t_floatarg)i);
 }
