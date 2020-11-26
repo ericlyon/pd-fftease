@@ -47,7 +47,7 @@ void pileup_tilde_setup(void)
     c = class_new(gensym("pileup~"), (t_newmethod)pileup_new,
                   (t_method)pileup_free,sizeof(t_pileup), 0,A_GIMME,0);
     CLASS_MAINSIGNALIN(c, t_pileup, x_f);
-    class_addmethod(c,(t_method)pileup_dsp,gensym("dsp"),0);
+    class_addmethod(c,(t_method)pileup_dsp,gensym("dsp"), A_CANT, 0);
     class_addmethod(c,(t_method)pileup_mute,gensym("mute"),A_FLOAT,0);
     class_addmethod(c,(t_method)pileup_oscbank,gensym("oscbank"),A_FLOAT,0);
     class_addmethod(c,(t_method)pileup_transpose,gensym("transpose"),A_FLOAT,0);

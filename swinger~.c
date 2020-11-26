@@ -28,7 +28,7 @@ void swinger_tilde_setup(void)
     c = class_new(gensym("swinger~"), (t_newmethod)swinger_new,
                   (t_method)swinger_free,sizeof(t_swinger), 0,A_GIMME,0);
     CLASS_MAINSIGNALIN(c, t_swinger, x_f);
-    class_addmethod(c,(t_method)swinger_dsp,gensym("dsp"),0);
+    class_addmethod(c,(t_method)swinger_dsp,gensym("dsp"), A_CANT, 0);
     class_addmethod(c,(t_method)swinger_mute,gensym("mute"),A_FLOAT,0);
     swinger_class = c;
     fftease_announce(OBJECT_NAME);

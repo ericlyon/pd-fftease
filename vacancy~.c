@@ -38,7 +38,7 @@ void vacancy_tilde_setup(void)
     c = class_new(gensym("vacancy~"), (t_newmethod)vacancy_new,
                   (t_method)vacancy_free,sizeof(t_vacancy), 0,A_GIMME,0);
     CLASS_MAINSIGNALIN(c, t_vacancy, x_f);
-    class_addmethod(c,(t_method)vacancy_dsp,gensym("dsp"),0);
+    class_addmethod(c,(t_method)vacancy_dsp,gensym("dsp"), A_CANT, 0);
     class_addmethod(c,(t_method)vacancy_mute,gensym("mute"),A_FLOAT,0);
 
     class_addmethod(c,(t_method)vacancy_rms,gensym("rms"), A_FLOAT, 0);

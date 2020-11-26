@@ -58,7 +58,7 @@ void residency_buffer_tilde_setup(void)
     c = class_new(gensym("residency_buffer~"), (t_newmethod)residency_buffer_new,
                   (t_method)residency_buffer_free,sizeof(t_residency_buffer), 0,A_GIMME,0);
     CLASS_MAINSIGNALIN(c, t_residency_buffer, x_f);
-    class_addmethod(c,(t_method)residency_buffer_dsp,gensym("dsp"),0);
+    class_addmethod(c,(t_method)residency_buffer_dsp,gensym("dsp"), A_CANT, 0);
     class_addmethod(c,(t_method)residency_buffer_mute,gensym("mute"),A_FLOAT,0);
     class_addmethod(c,(t_method)residency_buffer_interpolation,gensym("interpolation"),A_FLOAT,0);
     class_addmethod(c,(t_method)residency_buffer_oscbank,gensym("oscbank"),A_FLOAT,0);

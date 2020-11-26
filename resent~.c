@@ -69,7 +69,7 @@ void resent_tilde_setup(void)
     c = class_new(gensym("resent~"), (t_newmethod)resent_new,
                   (t_method)resent_free,sizeof(t_resent), 0,A_GIMME,0);
     CLASS_MAINSIGNALIN(c, t_resent, x_f);
-    class_addmethod(c,(t_method)resent_dsp,gensym("dsp"),0);
+    class_addmethod(c,(t_method)resent_dsp,gensym("dsp"), A_CANT, 0);
     class_addmethod(c,(t_method)resent_mute,gensym("mute"),A_FLOAT,0);
     class_addmethod(c,(t_method)resent_oscbank,gensym("oscbank"),A_FLOAT,0);
     class_addmethod(c,(t_method)resent_transpose,gensym("transpose"),A_FLOAT,0);

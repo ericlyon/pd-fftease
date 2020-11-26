@@ -64,7 +64,7 @@ void bthresher_tilde_setup(void)
     c = class_new(gensym("bthresher~"), (t_newmethod)bthresher_new,
                   (t_method)bthresher_free,sizeof(t_bthresher), 0,A_GIMME,0);
     CLASS_MAINSIGNALIN(c, t_bthresher, x_f);
-    class_addmethod(c,(t_method)bthresher_dsp,gensym("dsp"),0);
+    class_addmethod(c,(t_method)bthresher_dsp,gensym("dsp"), A_CANT, 0);
     class_addmethod(c,(t_method)bthresher_mute,gensym("mute"),A_FLOAT,0);
     class_addmethod(c,(t_method)bthresher_fftinfo,gensym("fftinfo"),0);
     class_addmethod(c,(t_method)bthresher_oscbank,gensym("oscbank"),A_FLOAT,0);

@@ -42,7 +42,7 @@ void pvcompand_tilde_setup(void)
     c = class_new(gensym("pvcompand~"), (t_newmethod)pvcompand_new,
                   (t_method)pvcompand_free,sizeof(t_pvcompand), 0,A_GIMME,0);
     CLASS_MAINSIGNALIN(c, t_pvcompand, x_f);
-    class_addmethod(c,(t_method)pvcompand_dsp,gensym("dsp"),0);
+    class_addmethod(c,(t_method)pvcompand_dsp,gensym("dsp"), A_CANT, 0);
     class_addmethod(c,(t_method)pvcompand_mute,gensym("mute"),A_FLOAT,0);
     class_addmethod(c,(t_method)pvcompand_normalize,gensym("normalize"), A_FLOAT, 0);
     pvcompand_class = c;

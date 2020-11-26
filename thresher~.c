@@ -41,7 +41,7 @@ void thresher_tilde_setup(void)
     c = class_new(gensym("thresher~"), (t_newmethod)thresher_new,
                   (t_method)thresher_free,sizeof(t_thresher), 0,A_GIMME,0);
     CLASS_MAINSIGNALIN(c, t_thresher, x_f);
-    class_addmethod(c,(t_method)thresher_dsp,gensym("dsp"),0);
+    class_addmethod(c,(t_method)thresher_dsp,gensym("dsp"), A_CANT, 0);
     class_addmethod(c,(t_method)thresher_mute,gensym("mute"),A_FLOAT,0);
     class_addmethod(c,(t_method)thresher_oscbank,gensym("oscbank"),A_FLOAT,0);
     class_addmethod(c,(t_method)thresher_transpose,gensym("transpose"),A_FLOAT,0);

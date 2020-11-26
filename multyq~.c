@@ -47,7 +47,7 @@ void multyq_tilde_setup(void)
     c = class_new(gensym("multyq~"), (t_newmethod)multyq_new,
                   (t_method)multyq_free,sizeof(t_multyq), 0,A_GIMME,0);
     CLASS_MAINSIGNALIN(c, t_multyq, x_f);
-    class_addmethod(c,(t_method)multyq_dsp,gensym("dsp"),0);
+    class_addmethod(c,(t_method)multyq_dsp,gensym("dsp"), A_CANT, 0);
     class_addmethod(c,(t_method)multyq_mute,gensym("mute"),A_FLOAT,0);
     multyq_class = c;
     fftease_announce(OBJECT_NAME);

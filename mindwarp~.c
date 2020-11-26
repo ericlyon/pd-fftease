@@ -33,7 +33,7 @@ void mindwarp_tilde_setup(void)
     c = class_new(gensym("mindwarp~"), (t_newmethod)mindwarp_new,
                   (t_method)mindwarp_free,sizeof(t_mindwarp), 0,A_GIMME,0);
     CLASS_MAINSIGNALIN(c, t_mindwarp, x_f);
-    class_addmethod(c,(t_method)mindwarp_dsp,gensym("dsp"),0);
+    class_addmethod(c,(t_method)mindwarp_dsp,gensym("dsp"), A_CANT, 0);
     class_addmethod(c,(t_method)mindwarp_mute,gensym("mute"),A_FLOAT,0);
     mindwarp_class = c;
     fftease_announce(OBJECT_NAME);

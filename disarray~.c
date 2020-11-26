@@ -51,7 +51,7 @@ void disarray_tilde_setup(void)
     c = class_new(gensym("disarray~"), (t_newmethod)disarray_new,
                   (t_method)disarray_free,sizeof(t_disarray), 0,A_GIMME,0);
     CLASS_MAINSIGNALIN(c, t_disarray, x_f);
-    class_addmethod(c,(t_method)disarray_dsp,gensym("dsp"),0);
+    class_addmethod(c,(t_method)disarray_dsp,gensym("dsp"), A_CANT, 0);
     class_addmethod(c,(t_method)disarray_mute,gensym("mute"),A_FLOAT,0);
     class_addmethod(c,(t_method)reset_shuffle, gensym("bang"), 0);
     class_addmethod(c,(t_method)disarray_showstate,gensym("showstate"),0);

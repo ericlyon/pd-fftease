@@ -39,7 +39,7 @@ void codepend_tilde_setup(void)
     c = class_new(gensym("codepend~"), (t_newmethod)codepend_new,
                   (t_method)codepend_free,sizeof(t_codepend), 0,A_GIMME,0);
     CLASS_MAINSIGNALIN(c, t_codepend, x_f);
-    class_addmethod(c,(t_method)codepend_dsp,gensym("dsp"),0);
+    class_addmethod(c,(t_method)codepend_dsp,gensym("dsp"), A_CANT, 0);
     class_addmethod(c,(t_method)codepend_mute,gensym("mute"),A_FLOAT,0);
     class_addmethod(c,(t_method)codepend_fftinfo,gensym("fftinfo"),0);
     class_addmethod(c,(t_method)codepend_invert,gensym("invert"), A_FLOAT, 0);

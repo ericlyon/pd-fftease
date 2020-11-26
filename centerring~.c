@@ -54,7 +54,7 @@ void centerring_tilde_setup(void)
     c = class_new(gensym("centerring~"), (t_newmethod)centerring_new,
                   (t_method)centerring_free,sizeof(t_centerring), 0,A_GIMME,0);
     CLASS_MAINSIGNALIN(c, t_centerring, x_f);
-    class_addmethod(c,(t_method)centerring_dsp,gensym("dsp"),0);
+    class_addmethod(c,(t_method)centerring_dsp,gensym("dsp"), A_CANT, 0);
     class_addmethod(c,(t_method)centerring_mute,gensym("mute"),A_FLOAT,0);
     class_addmethod(c,(t_method)centerring_fftinfo,gensym("fftinfo"),0);
     class_addmethod(c,(t_method)centerring_messages,gensym("seed"), A_GIMME, 0);

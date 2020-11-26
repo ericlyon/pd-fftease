@@ -33,7 +33,7 @@ void leaker_tilde_setup(void)
     c = class_new(gensym("leaker~"), (t_newmethod)leaker_new,
                   (t_method)leaker_free,sizeof(t_leaker), 0,A_GIMME,0);
     CLASS_MAINSIGNALIN(c, t_leaker, x_f);
-    class_addmethod(c,(t_method)leaker_dsp,gensym("dsp"),0);
+    class_addmethod(c,(t_method)leaker_dsp,gensym("dsp"), A_CANT, 0);
     class_addmethod(c,(t_method)leaker_mute,gensym("mute"),A_FLOAT,0);
     class_addmethod(c,(t_method)leaker_upsieve,gensym("upsieve"), 0);
     class_addmethod(c,(t_method)leaker_downsieve,gensym("downsieve"), 0);

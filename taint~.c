@@ -39,7 +39,7 @@ void taint_tilde_setup(void)
     c = class_new(gensym("taint~"), (t_newmethod)taint_new,
                   (t_method)taint_free,sizeof(t_taint), 0,A_GIMME,0);
     CLASS_MAINSIGNALIN(c, t_taint, x_f);
-    class_addmethod(c,(t_method)taint_dsp,gensym("dsp"),0);
+    class_addmethod(c,(t_method)taint_dsp,gensym("dsp"), A_CANT, 0);
     class_addmethod(c,(t_method)taint_mute,gensym("mute"),A_FLOAT,0);
     class_addmethod(c,(t_method)taint_invert,gensym("invert"), A_FLOAT, 0);
     class_addmethod(c,(t_method)taint_pad,gensym("pad"), A_FLOAT, 0);

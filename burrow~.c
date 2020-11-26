@@ -38,7 +38,7 @@ void burrow_tilde_setup(void)
     c = class_new(gensym("burrow~"), (t_newmethod)burrow_new,
                   (t_method)burrow_free,sizeof(t_burrow), 0,A_GIMME,0);
     CLASS_MAINSIGNALIN(c, t_burrow, x_f);
-    class_addmethod(c,(t_method)burrow_dsp,gensym("dsp"),0);
+    class_addmethod(c,(t_method)burrow_dsp,gensym("dsp"), A_CANT, 0);
     class_addmethod(c,(t_method)burrow_mute,gensym("mute"),A_FLOAT,0);
     class_addmethod(c,(t_method)burrow_fftinfo,gensym("fftinfo"),0);
     class_addmethod(c,(t_method)burrow_invert,gensym("invert"), A_FLOAT, 0);

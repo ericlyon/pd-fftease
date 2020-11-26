@@ -62,7 +62,7 @@ void residency_tilde_setup(void)
     c = class_new(gensym("residency~"), (t_newmethod)residency_new,
                   (t_method)residency_free,sizeof(t_residency), 0,A_GIMME,0);
     CLASS_MAINSIGNALIN(c, t_residency, x_f);
-    class_addmethod(c,(t_method)residency_dsp,gensym("dsp"),0);
+    class_addmethod(c,(t_method)residency_dsp,gensym("dsp"), A_CANT, 0);
     class_addmethod(c,(t_method)residency_mute,gensym("mute"),A_FLOAT,0);
     class_addmethod(c,(t_method)residency_interpolation,gensym("interpolation"),A_FLOAT,0);
     class_addmethod(c,(t_method)residency_oscbank,gensym("oscbank"),A_FLOAT,0);

@@ -46,7 +46,7 @@ void pvharm_tilde_setup(void)
     c = class_new(gensym("pvharm~"), (t_newmethod)pvharm_new,
                   (t_method)pvharm_free,sizeof(t_pvharm), 0,A_GIMME,0);
     CLASS_MAINSIGNALIN(c, t_pvharm, x_f);
-    class_addmethod(c,(t_method)pvharm_dsp,gensym("dsp"),0);
+    class_addmethod(c,(t_method)pvharm_dsp,gensym("dsp"), A_CANT, 0);
     class_addmethod(c,(t_method)pvharm_mute,gensym("mute"),A_FLOAT,0);
 
     class_addmethod(c,(t_method)pvharm_osclimit,gensym("osclimit"),A_FLOAT,0);

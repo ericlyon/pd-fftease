@@ -34,7 +34,7 @@ void cross_tilde_setup(void)
     c = class_new(gensym("cross~"), (t_newmethod)cross_new,
                   (t_method)cross_free,sizeof(t_cross), 0,A_GIMME,0);
     CLASS_MAINSIGNALIN(c, t_cross, x_f);
-    class_addmethod(c,(t_method)cross_dsp,gensym("dsp"),0);
+    class_addmethod(c,(t_method)cross_dsp,gensym("dsp"), A_CANT, 0);
     class_addmethod(c,(t_method)cross_mute,gensym("mute"),A_FLOAT,0);
     class_addmethod(c,(t_method)cross_autonorm, gensym("autonorm"),  A_FLOAT, 0);
     cross_class = c;

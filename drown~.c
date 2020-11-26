@@ -37,7 +37,7 @@ void drown_tilde_setup(void)
     c = class_new(gensym("drown~"), (t_newmethod)drown_new,
                   (t_method)drown_free,sizeof(t_drown), 0,A_GIMME,0);
     CLASS_MAINSIGNALIN(c, t_drown, x_f);
-    class_addmethod(c,(t_method)drown_dsp,gensym("dsp"),0);
+    class_addmethod(c,(t_method)drown_dsp,gensym("dsp"), A_CANT, 0);
     class_addmethod(c,(t_method)drown_mute,gensym("mute"),A_FLOAT,0);
     class_addmethod(c,(t_method)drown_fftinfo,gensym("fftinfo"),0);
     class_addmethod(c,(t_method)drown_adaptive,gensym("adaptive"),A_FLOAT,0);

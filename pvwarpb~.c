@@ -57,7 +57,7 @@ void pvwarpb_tilde_setup(void)
     c = class_new(gensym("pvwarpb~"), (t_newmethod)pvwarpb_new,
                   (t_method)pvwarpb_free,sizeof(t_pvwarpb), 0,A_GIMME,0);
     CLASS_MAINSIGNALIN(c, t_pvwarpb, x_f);
-    class_addmethod(c,(t_method)pvwarpb_dsp,gensym("dsp"),0);
+    class_addmethod(c,(t_method)pvwarpb_dsp,gensym("dsp"), A_CANT, 0);
     class_addmethod(c,(t_method)pvwarpb_mute,gensym("mute"),A_FLOAT,0);
     class_addmethod(c,(t_method)pvwarpb_bottomfreq,gensym("bottomfreq"),A_FLOAT,0);
     class_addmethod(c,(t_method)pvwarpb_topfreq,gensym("topfreq"),A_FLOAT,0);
