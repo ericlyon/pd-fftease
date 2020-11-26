@@ -30,7 +30,7 @@ typedef struct _pvwarpb
     t_float *warpfunc; // workspace to create a new function
     short initialized; // state for object
     int b_frames;
-    t_float *b_samples;
+    t_word *b_samples;
     int b_valid;
 } t_pvwarpb;
 
@@ -79,7 +79,7 @@ void update_warp_function( t_pvwarpb *x )
     t_float warpfac2 = x->warpfac2;
     long b_frames;
     t_float *warpfunc = x->warpfunc;
-    float *b_samples;
+    t_word *b_samples;
     t_float cf1 = x->cf1;
     t_float cf2 = x->cf2;
     t_float bw1 = x->bw1;
@@ -158,7 +158,7 @@ void update_warp_function( t_pvwarpb *x )
     // buffer stuffer
     b_samples = x->b_samples;
     for(i = 0; i < N2; i++){
-        b_samples[i] = warpfunc[i];
+        b_samples[i].w_float = warpfunc[i];
     }
     x->please_update = 0;
     pvwarpb_redraw(x);
@@ -189,7 +189,7 @@ void pvwarpb_autofunc(t_pvwarpb *x, t_floatarg minval, t_floatarg maxval)
     int N2 = x->fft->N2;
     long b_frames;
     t_float *warpfunc = x->warpfunc;
-    float *b_samples;
+    t_word *b_samples;
 
     pvwarpb_attachbuf(x);
 
@@ -227,7 +227,7 @@ void pvwarpb_autofunc(t_pvwarpb *x, t_floatarg minval, t_floatarg maxval)
     // buffer stuffer
     b_samples = x->b_samples;
     for(i = 0; i < N2; i++){
-        b_samples[i] = warpfunc[i];
+        b_samples[i].w_float = warpfunc[i];
     }
     pvwarpb_redraw(x);
 }
@@ -330,7 +330,7 @@ static void do_pvwarpb(t_pvwarpb *x)
     int N2 = fft->N2;
     t_float *channel = fft->channel;
     long b_frames;
-    float *b_samples;
+    t_word *b_samples;
 
     fftease_fold(fft);
     fftease_rdft(fft,FFT_FORWARD);
@@ -349,7 +349,7 @@ static void do_pvwarpb(t_pvwarpb *x)
 
     for ( chan = lo_bin; chan < hi_bin; chan++ ) {
         freq = (chan << 1) + 1;
-        channel[freq] *= b_samples[(chan + funcoff) % N2];
+        channel[freq] *= b_samples[(chan + funcoff) % N2].w_float;
     }
 panic1: ;
 panic2: ;
@@ -469,7 +469,7 @@ void pvwarpb_attachbuf(t_pvwarpb *x)
         if (*buffername->s_name) pd_error(x, "player~: %s: no such array",
                                           buffername->s_name);
     }
-    else if (!garray_getfloatarray(a, &frames, &x->b_samples))
+    else if (!garray_getfloatwords(a, &frames, &x->b_samples))
     {
         pd_error(x, "%s: bad template for player~", buffername->s_name);
     }

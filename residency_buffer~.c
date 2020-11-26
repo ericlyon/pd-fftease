@@ -13,7 +13,7 @@ typedef struct _residency_buffer
     t_fftease *fft;
     long b_frames;
     long b_valid;
-    t_float *b_samples;
+    t_word *b_samples;
     t_float current_frame;
     int framecount;
     //
@@ -163,7 +163,7 @@ static void do_residency_buffer(t_residency_buffer *x)
     t_float fpos = x->fpos;
     t_float last_fpos = x->last_fpos ;
     t_float *channel = fft->channel;
-    float *b_samples;
+    t_word *b_samples;
     long b_frames = x->b_frames;
     long b_valid = x->b_valid;
     int frames_read = x->frames_read;
@@ -194,7 +194,7 @@ static void do_residency_buffer(t_residency_buffer *x)
                 post("hit end of buffer on frame %d", frames_read);
                 goto escape;
             }
-            b_samples[i] = channel[j];
+            b_samples[i].w_float = channel[j];
         }
 
         ++frames_read;
@@ -238,7 +238,7 @@ static void do_residency_buffer(t_residency_buffer *x)
                     post("hit end of buffer on frame %d, index %d %d", index1,i,j);
                     goto escape;
                 }
-                channel[k] = b_samples[i] + frak * (b_samples[j] - b_samples[i]);
+                channel[k] = b_samples[i].w_float + frak * (b_samples[j].w_float - b_samples[i].w_float);
             }
         }
         else {
@@ -248,7 +248,7 @@ static void do_residency_buffer(t_residency_buffer *x)
                     post("hit end of buffer on frame %d, index %d", index_offset,i);
                     goto escape;
                 }
-                channel[j] = b_samples[i];
+                channel[j] = b_samples[i].w_float;
             }
         }
         x->sync = fframe / (t_float) buffer_frame_count;
@@ -298,7 +298,7 @@ void residency_buffer_attachbuf(t_residency_buffer *x)
         if (*buffername->s_name) pd_error(x, "player~: %s: no such array",
                                           buffername->s_name);
     }
-    else if (!garray_getfloatarray(a, &frames, &x->b_samples))
+    else if (!garray_getfloatwords(a, &frames, &x->b_samples))
     {
         pd_error(x, "%s: bad template for player~", buffername->s_name);
     }

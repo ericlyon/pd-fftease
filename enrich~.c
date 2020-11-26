@@ -22,7 +22,7 @@ typedef struct _enrich
     short mute;
     int b_valid;
     long b_frames;
-    t_float *b_samples;
+    t_word *b_samples;
 } t_enrich;
 
 static void enrich_dsp(t_enrich *x, t_signal **sp);
@@ -226,7 +226,7 @@ void enrich_attachbuf(t_enrich *x)
         if (*buffername->s_name) pd_error(x, "player~: %s: no such array",
                                         buffername->s_name);
     }
-    else if (!garray_getfloatarray(a, &frames, &x->b_samples))
+    else if (!garray_getfloatwords(a, &frames, &x->b_samples))
     {
         pd_error(x, "%s: bad template for player~", buffername->s_name);
     }
@@ -272,7 +272,7 @@ t_int *enrich_perform(t_int *w)
     int operationCount = fft->operationCount;
     t_float *internalInputVector = fft->internalInputVector;
     t_float *internalOutputVector = fft->internalOutputVector;
-    float *b_samples;
+    t_word *b_samples;
 
     enrich_attachbuf(x);
     if(x->mute || ! x->b_valid){
@@ -289,7 +289,7 @@ t_int *enrich_perform(t_int *w)
 
     // copy buffer to internal table (try more efficient means later)
     for(i = 0; i < fft->L; i++){
-        fft->table[i] = b_samples[i];
+        fft->table[i] = b_samples[i].w_float;
     }
 
 
