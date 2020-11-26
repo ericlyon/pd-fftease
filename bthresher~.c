@@ -9,7 +9,7 @@ static t_class *bthresher_class;
 typedef struct _bthresher
 {
     t_object x_obj;
-    float x_f;
+    t_float x_f;
     t_fftease *fft;
     /* bthresher vars */
     t_float *move_threshold;
@@ -382,10 +382,10 @@ t_int *bthresher_perform(t_int *w)
 {
     int i,j;
     t_bthresher *x = (t_bthresher *) (w[1]);
-    t_float *MSPInputVector = (t_float *)(w[2]);
-    t_float *inthresh = (t_float *)(w[3]);
-    t_float *damping = (t_float *)(w[4]);
-    t_float *MSPOutputVector = (t_float *)(w[5]);
+    t_sample *MSPInputVector = (t_sample *)(w[2]);
+    t_sample *inthresh = (t_sample *)(w[3]);
+    t_sample *damping = (t_sample *)(w[4]);
+    t_sample *MSPOutputVector = (t_sample *)(w[5]);
     t_fftease *fft = x->fft;
 
     int MSPVectorSize = fft->MSPVectorSize;

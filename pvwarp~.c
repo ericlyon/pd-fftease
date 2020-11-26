@@ -295,17 +295,17 @@ t_int *pvwarp_perform(t_int *w)
 
     t_float f;
     t_pvwarp *x = (t_pvwarp *) (w[1]);
-    t_float *MSPInputVector = (t_float *)(w[2]);
-    t_float *in1 = (t_float *)(w[3]);
-    t_float *in2 = (t_float *)(w[4]);
-    t_float *in3 = (t_float *)(w[5]);
-    t_float *in4 = (t_float *)(w[6]);
-    t_float *in5 = (t_float *)(w[7]);
-    t_float *in6 = (t_float *)(w[8]);
-    t_float *in7 = (t_float *)(w[9]);
-    t_float *in8 = (t_float *)(w[10]);
-    t_float *in9 = (t_float *)(w[11]);
-    t_float *MSPOutputVector = (t_float *)(w[12]);
+    t_sample *MSPInputVector = (t_sample *)(w[2]);
+    t_sample *in1 = (t_sample *)(w[3]);
+    t_sample *in2 = (t_sample *)(w[4]);
+    t_sample *in3 = (t_sample *)(w[5]);
+    t_sample *in4 = (t_sample *)(w[6]);
+    t_sample *in5 = (t_sample *)(w[7]);
+    t_sample *in6 = (t_sample *)(w[8]);
+    t_sample *in7 = (t_sample *)(w[9]);
+    t_sample *in8 = (t_sample *)(w[10]);
+    t_sample *in9 = (t_sample *)(w[11]);
+    t_sample *MSPOutputVector = (t_sample *)(w[12]);
 
     t_fftease *fft = x->fft;
     int D = fft->D;
