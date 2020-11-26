@@ -1,4 +1,4 @@
-#N canvas 892 417 468 461 10;
+#N canvas 600 60 468 461 10;
 #X obj 148 169 reanimator~ 2000;
 #X obj 148 324 *~ 0.05;
 #X obj 148 355 dac~;

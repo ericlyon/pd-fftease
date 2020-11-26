@@ -1,4 +1,4 @@
-#N canvas 802 314 518 484 10;
+#N canvas 600 60 518 484 10;
 #X obj 197 210 leaker~;
 #X floatatom 298 188 5 0 0 0 - - -;
 #X obj 358 162 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -262144

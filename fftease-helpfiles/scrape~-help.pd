@@ -1,4 +1,4 @@
-#N canvas 764 423 510 389 10;
+#N canvas 600 60 510 389 10;
 #X obj 50 150 scrape~, f 33;
 #X obj 50 227 *~ 0.05;
 #X obj 50 258 dac~;

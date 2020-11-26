@@ -1,4 +1,4 @@
-#N canvas 812 597 450 300 10;
+#N canvas 600 60 450 300 10;
 #X obj 182 111 drown~;
 #X obj 182 189 *~ 0.05;
 #X obj 182 220 dac~;

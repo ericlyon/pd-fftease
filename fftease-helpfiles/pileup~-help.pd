@@ -1,4 +1,4 @@
-#N canvas 1256 420 532 415 10;
+#N canvas 600 60 532 415 10;
 #X obj 112 222 pileup~;
 #X msg 39 167 mode \$1;
 #X obj 112 299 *~ 0.05;

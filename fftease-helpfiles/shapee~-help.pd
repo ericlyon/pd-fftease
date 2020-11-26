@@ -1,4 +1,4 @@
-#N canvas 736 486 451 368 10;
+#N canvas 600 60 451 368 10;
 #X floatatom 355 113 5 1 511 2 shape-width - -;
 #X obj 27 247 *~ 0.05;
 #X obj 27 278 dac~;
