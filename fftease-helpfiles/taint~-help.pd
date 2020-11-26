@@ -1,4 +1,4 @@
-#N canvas 638 328 720 564 10;
+#N canvas 461 56 720 564 10;
 #X obj 153 253 taint~, f 18;
 #X obj 301 112 expr pow(10 \, $f1/20);
 #X floatatom 301 55 5 -180 0 0 - taint-invthresh -;

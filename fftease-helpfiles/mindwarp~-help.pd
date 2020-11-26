@@ -1,4 +1,4 @@
-#N canvas 750 306 571 646 10;
+#N canvas 600 60 571 646 10;
 #X obj 208 215 mindwarp~;
 #X obj 146 168 pvoc~;
 #N canvas 402 529 480 401 selector 0;

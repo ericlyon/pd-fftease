@@ -1,4 +1,4 @@
-#N canvas 1282 501 452 406 10;
+#N canvas 600 60 452 406 10;
 #X obj 126 116 centerring~;
 #X obj 126 198 *~ 0.05;
 #X obj 126 256 dac~;

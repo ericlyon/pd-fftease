@@ -1,4 +1,4 @@
-#N canvas 713 398 517 445 10;
+#N canvas 600 60 517 445 10;
 #X obj 152 182 vacancy~;
 #X obj 183 227 *~ 0.05;
 #X obj 183 258 dac~;

@@ -1,4 +1,4 @@
-#N canvas 663 510 451 371 10;
+#N canvas 600 60 451 371 10;
 #X obj 152 146 schmear~;
 #X obj 152 234 *~ 0.05;
 #X obj 152 265 dac~;

@@ -1,10 +1,10 @@
-#N canvas 1082 165 576 304 10;
+#N canvas 600 60 576 304 10;
 #X obj 160 156 cavoc27~;
 #X obj 193 199 *~ 0.05;
 #X obj 193 257 dac~;
 #X obj 235 157 hsl 128 15 0 1 0 0 empty cavoc27-gain Gain -2 -8 0 10
--262144 -1 -1 0 1;
-#X floatatom 232 179 5 0 0 0 - - -, f 5;
+-262144 -1 -1 254 1;
+#X floatatom 232 179 5 0 0 0 - - -;
 #X obj 229 110 r fftz.cavoc27.msgs;
 #N canvas 1379 450 450 300 rules 0;
 #X obj 65 222 s fftz.cavoc27.msgs;
@@ -26,8 +26,8 @@
 -1 -1 0 1;
 #X obj 65 128 metro 250;
 #X obj 64 72 tgl 15 0 empty cavoc27-metro-tog empty 17 7 0 10 -262144
--1 -1 0 1;
-#X floatatom 103 99 5 0 0 0 - - -, f 5;
+-1 -1 1 1;
+#X floatatom 103 99 5 0 0 0 - - -;
 #X connect 1 0 0 0;
 #X connect 2 0 0 0;
 #X connect 3 0 2 0;
@@ -43,10 +43,10 @@
 #X restore 35 178 pd init;
 #X text 228 250 cavoc27~ generates spectra with a 27 rule cellular
 automaton. Start with very low gain.;
-#N canvas 1167 563 450 300 sample-input-spectrum 1;
+#N canvas 722 391 450 300 sample-input-spectrum 1;
 #X msg 237 101 capture_spectrum \$1;
 #X obj 237 70 inlet;
-#X floatatom 22 31 5 0 0 0 - cavoc27-infreq -, f 5;
+#X floatatom 22 31 5 0 0 0 - cavoc27-infreq -;
 #X obj 20 111 phasor~;
 #X obj 20 137 -~ 0.5;
 #X obj 73 111 phasor~;
@@ -73,28 +73,28 @@ automaton. Start with very low gain.;
 #X connect 11 0 5 0;
 #X connect 12 0 7 0;
 #X restore 160 82 pd sample-input-spectrum;
-#X obj 160 41 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+#X obj 160 41 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #N canvas 637 695 517 307 more-msgs 0;
 #X obj 31 268 s fftz.cavoc27.msgs;
 #X msg 43 184 density \$1;
-#X floatatom 43 154 5 0 0 0 - - -, f 5;
+#X floatatom 43 154 5 0 0 0 - - -;
 #X msg 31 99 oscbank \$1;
-#X obj 31 60 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1 1
+#X obj 31 60 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0 1
 ;
 #X obj 215 66 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #X msg 215 103 interpolate \$1;
 #X msg 317 180 transpose \$1;
-#X floatatom 317 151 5 0 0 0 - - -, f 5;
+#X floatatom 317 151 5 0 0 0 - - -;
 #X obj 320 102 hsl 128 15 0.5 2 0 0 empty empty empty -2 -8 0 10 -262144
--1 -1 8300 1;
+-1 -1 0 1;
 #X msg 221 226 retune 0.5 2;
 #X msg 351 247 freeze \$1;
 #X obj 351 219 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #X msg 158 178 hold_time \$1;
-#X floatatom 193 151 5 0 0 0 - cavoc27-holdtime -, f 5;
+#X floatatom 193 151 5 0 0 0 - cavoc27-holdtime -;
 #X connect 1 0 0 0;
 #X connect 2 0 1 0;
 #X connect 3 0 0 0;

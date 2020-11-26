@@ -1,4 +1,4 @@
-#N canvas 823 457 841 518 10;
+#N canvas 395 55 841 518 10;
 #X obj 172 215 cross~;
 #X obj 172 335 *~ 0.05;
 #X obj 172 366 dac~;
@@ -6,7 +6,7 @@
 -1 -1 0 1;
 #X floatatom 211 315 5 0 0 0 - - -;
 #X floatatom 297 176 5 0 0 0 - - -;
-#X msg 297 131 1e-06;
+#X msg 297 131 1e-006;
 #X obj 443 338 vu 15 120 empty empty -1 -8 0 10 -66577 -1 1 0;
 #N canvas 0 22 450 300 meter 0;
 #X obj 110 164 snapshot~;
