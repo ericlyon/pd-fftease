@@ -16,7 +16,6 @@ fftease_utilities.c \
 fold.c \
 leanconvert.c \
 leanunconvert.c \
-legacy.c \
 limit_fftsize.c \
 limited_oscbank.c \
 makewindows.c \
