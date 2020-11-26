@@ -25,7 +25,7 @@
 #define FFTEASE_DEFAULT_FFTSIZE 1024
 #define FFTEASE_DEFAULT_OVERLAP 8
 #define FFTEASE_DEFAULT_WINFAC 1
-	
+
 #define DEFAULT_FFTEASE_FFTSIZE 1024
 #define FFTEASE_MAX_FFTSIZE 1073741824
 
@@ -48,63 +48,63 @@
 
 typedef struct _fftease
 {
-	int R;
-	int	N;
-	int	N2;
-	int	Nw;
-	int	Nw2; 
-	int	D; 
-	int	in_count;
-	int out_count;
-	t_float *Wanal;
-	t_float *Wsyn;
-	t_float *input;
-	t_float *Hwin;
-	t_float *buffer;
-	t_float *channel;
-	t_float *output;
-	// for convert
-	t_float *c_lastphase_in;
-	t_float *c_lastphase_out;
-	t_float c_fundamental;
-	t_float c_factor_in;
-	t_float c_factor_out;
-	// for oscbank
-	int NP;
-	t_float P;
-	int L;
-	int first;
-	t_float Iinv;
-	t_float *lastamp;
-	t_float *lastfreq;
-	t_float *bindex;
-	t_float *table;
-	t_float pitch_increment;
-	t_float ffac;
-	int hi_bin;
-	int lo_bin;
-	// for fast fft
-	t_float mult;
-	t_float *trigland;
-	int *bitshuffle;
-	int overlap;
-	int winfac;
+    int R;
+    int N;
+    int N2;
+    int Nw;
+    int Nw2;
+    int D;
+    int in_count;
+    int out_count;
+    t_float *Wanal;
+    t_float *Wsyn;
+    t_float *input;
+    t_float *Hwin;
+    t_float *buffer;
+    t_float *channel;
+    t_float *output;
+    // for convert
+    t_float *c_lastphase_in;
+    t_float *c_lastphase_out;
+    t_float c_fundamental;
+    t_float c_factor_in;
+    t_float c_factor_out;
+    // for oscbank
+    int NP;
+    t_float P;
+    int L;
+    int first;
+    t_float Iinv;
+    t_float *lastamp;
+    t_float *lastfreq;
+    t_float *bindex;
+    t_float *table;
+    t_float pitch_increment;
+    t_float ffac;
+    int hi_bin;
+    int lo_bin;
+    // for fast fft
+    t_float mult;
+    t_float *trigland;
+    int *bitshuffle;
+    int overlap;
+    int winfac;
     int last_overlap; // save values to test if memory reallocation needed
     int last_winfac;
     int last_N;
     int last_R;
-	t_float synt;
-	t_float *internalInputVector; // hold input data from smaller MSP buffers
-	t_float *internalOutputVector; // hold output data for smaller MSP buffers
-	int operationRepeat; // how many times to do whatever on each perform call
-	int operationCount; // keep track of where we are in buffer operation
-	int bufferStatus; // relations between MSP vector size and internal buffer size
-	int MSPVectorSize; // what it says
-	short obank_flag; // resynthesis method flag
-	short init_status; // whether initialization has successfully occurred
-	short noalias; // inhibit aliasing in oscbank mode
-	t_float nyquist; // nyquest frequency == R/2
-	short initialized; // set to 0 for the first time in new(); after that it will be 1
+    t_float synt;
+    t_float *internalInputVector; // hold input data from smaller MSP buffers
+    t_float *internalOutputVector; // hold output data for smaller MSP buffers
+    int operationRepeat; // how many times to do whatever on each perform call
+    int operationCount; // keep track of where we are in buffer operation
+    int bufferStatus; // relations between MSP vector size and internal buffer size
+    int MSPVectorSize; // what it says
+    short obank_flag; // resynthesis method flag
+    short init_status; // whether initialization has successfully occurred
+    short noalias; // inhibit aliasing in oscbank mode
+    t_float nyquist; // nyquest frequency == R/2
+    short initialized; // set to 0 for the first time in new(); after that it will be 1
 } t_fftease;
 
 
@@ -129,7 +129,7 @@ void fftease_makehamming( t_float *H, t_float *A, t_float *S, int Nw, int N, int
 void fftease_makehanning( t_float *H, t_float *A, t_float *S, int Nw, int N, int I,int odd );
 void fftease_overlapadd(t_fftease *fft);
 void fftease_bloscbank( t_float *S, t_float *O, int D, t_float iD, t_float *lf, t_float *la,
-	t_float *bindex, t_float *tab, int len, t_float synt, int lo, int hi );
+    t_float *bindex, t_float *tab, int len, t_float synt, int lo, int hi );
 void fftease_oscbank( t_fftease *fft );
 //t_float randf( t_float min, t_float max );
 //int randi( int min, int max );
@@ -169,9 +169,8 @@ void atom_arg_getfloat(float *c, long idx, long ac, t_atom *av)
 
 void atom_arg_getsym(t_symbol **c, long idx, long ac, t_atom *av)
 {
-	if (c&&ac&&av&&(idx<ac)) {
-		*c = atom_getsymbol(av+idx);
-	} 
+    if (c&&ac&&av&&(idx<ac)) {
+        *c = atom_getsymbol(av+idx);
+    }
 }
 */
-
