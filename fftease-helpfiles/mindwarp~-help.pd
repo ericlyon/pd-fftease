@@ -11,8 +11,8 @@
 #X obj 48 105 sel 0 1;
 #X msg 48 139 1 0;
 #X msg 94 139 0 1;
-#X floatatom 170 225 5 0 0 0 - - -, f 5;
-#X floatatom 246 223 5 0 0 0 - - -, f 5;
+#X floatatom 170 225 5 0 0 0 - - -;
+#X floatatom 246 223 5 0 0 0 - - -;
 #X obj 48 173 unpack f f;
 #X connect 0 0 4 0;
 #X connect 1 0 5 0;
@@ -33,19 +33,12 @@
 #X obj 173 364 *~ 0.05;
 #X obj 173 395 dac~;
 #X obj 215 324 hsl 128 15 0 1 0 0 empty empty Gain -2 -8 0 10 -262144
--1 -1 4900 1;
-#X floatatom 212 344 5 0 0 0 - - -, f 5;
-#X obj 146 134 readsf~;
-#X obj 146 78 openpanel;
-#X msg 146 103 open \$1;
-#X msg 146 51 bang;
-#X msg 214 103 1;
-#X text 182 55 load sf;
-#X text 247 103 play it;
-#X floatatom 229 136 5 0 0 0 - mindwarp-tfac -, f 5;
-#X floatatom 305 168 5 0 0 0 - mindwarp-wfac -, f 5;
+-1 -1 0 1;
+#X floatatom 212 344 5 0 0 0 - - -;
+#X floatatom 229 136 5 0 0 0 - mindwarp-tfac -;
+#X floatatom 305 168 5 0 0 0 - mindwarp-wfac -;
 #X obj 235 157 sig~ 0.001;
-#X floatatom 343 194 5 0 0 0 - mindwarp-shapew -, f 5;
+#X floatatom 343 194 5 0 0 0 - mindwarp-shapew -;
 #X text 50 221 0 - raw pvoc;
 #X text 49 237 1 - mindwarp;
 #N canvas 0 22 450 300 init 0;
@@ -55,7 +48,7 @@
 #X connect 0 0 1 0;
 #X restore 422 262 pd init;
 #X obj 353 117 hsl 128 15 0.5 2 0 0 empty mindwarp-tfac&warpfac tfac&warpfac
--2 -8 0 10 -262144 -1 -1 533 1;
+-2 -8 0 10 -262144 -1 -1 4233 1;
 #X obj 350 137 s mindwarp-tfac;
 #X obj 383 162 s mindwarp-wfac;
 #X text 27 423 mindwarp~ performs spectral envelope warping. It can
@@ -71,6 +64,7 @@ the range [1/16 ... 16.]. mindwarp~ utilizes frequency shaping to perform
 its duty. You may need to fiddle with the shape width to best catch
 the formants. It can be fun to decorrelate the warp factor from the
 transposition factor.;
+#X obj 145 70 sfplayer~ sf1;
 #X connect 0 0 2 2;
 #X connect 1 0 0 0;
 #X connect 1 0 2 1;
@@ -80,14 +74,10 @@ transposition factor.;
 #X connect 4 0 5 1;
 #X connect 6 0 7 0;
 #X connect 7 0 4 1;
-#X connect 8 0 1 0;
-#X connect 9 0 10 0;
-#X connect 10 0 8 0;
-#X connect 11 0 9 0;
-#X connect 12 0 8 0;
-#X connect 15 0 1 1;
-#X connect 16 0 0 1;
-#X connect 17 0 1 2;
-#X connect 18 0 0 2;
-#X connect 22 0 23 0;
-#X connect 22 0 24 0;
+#X connect 8 0 1 1;
+#X connect 9 0 0 1;
+#X connect 10 0 1 2;
+#X connect 11 0 0 2;
+#X connect 15 0 16 0;
+#X connect 15 0 17 0;
+#X connect 19 0 1 0;
