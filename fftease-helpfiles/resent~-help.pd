@@ -1,10 +1,4 @@
 #N canvas 932 503 426 468 10;
-#X obj 162 102 readsf~;
-#X obj 162 46 openpanel;
-#X msg 162 71 open \$1;
-#X msg 162 19 bang;
-#X msg 230 71 1;
-#X text 198 23 load sf;
 #X obj 162 149 resent~ 6000;
 #N canvas 404 737 450 300 showsync 0;
 #X obj 205 102 inlet~;
@@ -22,25 +16,25 @@
 #X connect 4 0 5 0;
 #X connect 5 0 3 0;
 #X restore 239 178 pd showsync;
-#X floatatom 239 203 5 0 0 0 - - -, f 5;
+#X floatatom 239 203 5 0 0 0 - - -;
 #X obj 162 296 *~ 0.05;
 #X obj 162 327 dac~;
 #X obj 204 256 hsl 128 15 0 1 0 0 empty empty Gain -2 -8 0 10 -262144
 -1 -1 0 1;
-#X floatatom 201 276 5 0 0 0 - - -, f 5;
+#X floatatom 201 276 5 0 0 0 - - -;
 #X msg 24 42 acquire_sample;
 #X obj 26 119 r resent-msgs;
 #N canvas 1044 90 450 300 speed-and-phase 0;
 #X obj 124 236 s resent-msgs;
 #X msg 23 139 setspeed \$1;
-#X floatatom 23 113 5 0 0 0 - - -, f 5;
+#X floatatom 23 113 5 0 0 0 - - -;
 #X obj 26 84 hsl 128 15 -2 2 0 0 empty empty empty -2 -8 0 10 -262144
 -1 -1 0 1;
 #X msg 267 189 addphase \$1;
-#X floatatom 267 167 5 0 0 0 - - -, f 5;
+#X floatatom 267 167 5 0 0 0 - - -;
 #X obj 270 138 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -262144
 -1 -1 0 1;
-#X floatatom 122 168 5 0 0 0 - - -, f 5;
+#X floatatom 122 168 5 0 0 0 - - -;
 #X obj 125 139 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -262144
 -1 -1 0 1;
 #X msg 122 190 setphase \$1;
@@ -68,7 +62,7 @@
 #X obj 103 96 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #X msg 190 140 transpose \$1;
-#X floatatom 192 110 5 0 0 0 - - -, f 5;
+#X floatatom 192 110 5 0 0 0 - - -;
 #X obj 197 66 hsl 128 15 0.1 2 0 0 empty empty empty -2 -8 0 10 -262144
 -1 -1 0 1;
 #X msg 312 184 synthresh \$1;
@@ -91,8 +85,8 @@
 #X text 369 274 first freeze sound to hear effects;
 #X msg 32 174 bin \$1 \$2;
 #X obj 32 126 pack f f;
-#X floatatom 87 69 5 0 0 0 - - -, f 5;
-#X floatatom 26 44 5 0 511 0 - - -, f 5;
+#X floatatom 87 69 5 0 0 0 - - -;
+#X floatatom 26 44 5 0 511 0 - - -;
 #X text 128 69 speed;
 #X text 70 47 bin number;
 #X text 108 119 terminal value limited by FFT size / 2;
@@ -113,17 +107,14 @@ size of 1024.);
 #X text 28 394 resent~ follows the model of residency~ but allows independent
 control over each bin. It is recommended that you familiarize yourself
 with residency~ before working with the more complicated resent~;
-#X connect 0 0 6 0;
+#X obj 163 70 sfplayer~ sf1;
+#X connect 0 0 3 0;
+#X connect 0 1 1 0;
 #X connect 1 0 2 0;
-#X connect 2 0 0 0;
-#X connect 3 0 1 0;
-#X connect 4 0 0 0;
-#X connect 6 0 9 0;
-#X connect 6 1 7 0;
-#X connect 7 0 8 0;
-#X connect 9 0 10 0;
-#X connect 9 0 10 1;
-#X connect 11 0 12 0;
-#X connect 12 0 9 1;
-#X connect 13 0 6 0;
-#X connect 14 0 6 0;
+#X connect 3 0 4 0;
+#X connect 3 0 4 1;
+#X connect 5 0 6 0;
+#X connect 6 0 3 1;
+#X connect 7 0 0 0;
+#X connect 8 0 0 0;
+#X connect 13 0 0 0;

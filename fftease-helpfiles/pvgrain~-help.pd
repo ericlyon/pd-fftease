@@ -1,18 +1,12 @@
 #N canvas 986 280 572 436 10;
 #X obj 144 173 pvgrain~;
-#X obj 53 121 readsf~;
-#X obj 53 65 openpanel;
-#X msg 53 90 open \$1;
-#X msg 53 38 bang;
-#X msg 121 90 1;
-#X text 89 42 load sf;
 #X obj 53 213 *~;
-#X floatatom 68 180 5 0 0 0 - mix-in-orig -, f 5;
+#X floatatom 68 180 5 0 0 0 - mix-in-orig -;
 #X obj 53 305 *~ 0.05;
 #X obj 53 336 dac~;
 #X obj 126 263 hsl 128 15 0 1 0 0 empty empty Gain -2 -8 0 10 -262144
 -1 -1 0 1;
-#X floatatom 123 283 5 0 0 0 - - -, f 5;
+#X floatatom 123 283 5 0 0 0 - - -;
 #N canvas 0 22 450 278 (subpatch) 0;
 #X array pvgrain-pf 46379 float 2;
 #X coords 0 1 46379 -1 200 140 1;
@@ -23,14 +17,14 @@
 #N canvas 1172 705 632 335 control 0;
 #X obj 143 143 s pvgrain-msgs;
 #X msg 143 106 probability \$1;
-#X floatatom 143 73 7 0 0 0 - - -, f 7;
+#X floatatom 143 73 7 0 0 0 - - -;
 #X obj 146 38 hsl 128 15 0.0001 0.1 0 0 empty pvgrain-prob empty -2
 -8 0 10 -262144 -1 -1 2530 1;
 #X msg 276 106 framegrains \$1;
-#X floatatom 276 73 5 1 60 0 - pvgrain-fgr -, f 5;
+#X floatatom 276 73 5 1 60 0 - pvgrain-fgr -;
 #X msg 437 110 topfreq \$1;
-#X floatatom 437 75 7 50 20000 0 - pvgrain-topf -, f 7;
-#X floatatom 355 190 5 0 0 0 - base-freq -, f 5;
+#X floatatom 437 75 7 50 20000 0 - pvgrain-topf -;
+#X floatatom 355 190 5 0 0 0 - base-freq -;
 #X obj 355 209 s base-frequency;
 #X obj 121 206 hsl 128 15 0 1 0 0 mix-in-orig empty mix-in-orig -2
 -8 0 10 -262144 -1 -1 0 1;
@@ -135,7 +129,7 @@
 #X obj 65 407 line~;
 #X obj 65 444 tabread4~ pvgrain-pf;
 #X obj 65 499 *~ 0.1;
-#X floatatom 257 164 5 0 0 0 - - -, f 5;
+#X floatatom 257 164 5 0 0 0 - - -;
 #X msg 20 375 1;
 #X msg 65 279 1051;
 #X obj 65 317 /;
@@ -170,7 +164,7 @@
 #X obj 65 407 line~;
 #X obj 65 444 tabread4~ pvgrain-pf;
 #X obj 65 499 *~ 0.1;
-#X floatatom 257 164 5 0 0 0 - - -, f 5;
+#X floatatom 257 164 5 0 0 0 - - -;
 #X msg 20 375 1;
 #X msg 65 279 1051;
 #X obj 65 317 /;
@@ -203,7 +197,7 @@
 #X obj 65 407 line~;
 #X obj 65 444 tabread4~ pvgrain-pf;
 #X obj 65 499 *~ 0.1;
-#X floatatom 257 164 5 0 0 0 - - -, f 5;
+#X floatatom 257 164 5 0 0 0 - - -;
 #X msg 20 375 1;
 #X msg 65 279 1051;
 #X obj 65 317 /;
@@ -236,7 +230,7 @@
 #X obj 65 407 line~;
 #X obj 65 444 tabread4~ pvgrain-pf;
 #X obj 65 499 *~ 0.1;
-#X floatatom 257 164 5 0 0 0 - - -, f 5;
+#X floatatom 257 164 5 0 0 0 - - -;
 #X msg 20 375 1;
 #X msg 65 279 1051;
 #X obj 65 317 /;
@@ -269,7 +263,7 @@
 #X obj 65 407 line~;
 #X obj 65 444 tabread4~ pvgrain-pf;
 #X obj 65 499 *~ 0.1;
-#X floatatom 257 164 5 0 0 0 - - -, f 5;
+#X floatatom 257 164 5 0 0 0 - - -;
 #X msg 20 375 1;
 #X msg 65 279 1051;
 #X obj 65 317 /;
@@ -302,7 +296,7 @@
 #X obj 65 407 line~;
 #X obj 65 444 tabread4~ pvgrain-pf;
 #X obj 65 499 *~ 0.1;
-#X floatatom 257 164 5 0 0 0 - - -, f 5;
+#X floatatom 257 164 5 0 0 0 - - -;
 #X msg 20 375 1;
 #X msg 65 279 1051;
 #X obj 65 317 /;
@@ -335,7 +329,7 @@
 #X obj 65 407 line~;
 #X obj 65 444 tabread4~ pvgrain-pf;
 #X obj 65 499 *~ 0.1;
-#X floatatom 257 164 5 0 0 0 - - -, f 5;
+#X floatatom 257 164 5 0 0 0 - - -;
 #X msg 20 375 1;
 #X msg 65 279 1051;
 #X obj 65 317 /;
@@ -368,7 +362,7 @@
 #X obj 65 407 line~;
 #X obj 65 444 tabread4~ pvgrain-pf;
 #X obj 65 499 *~ 0.1;
-#X floatatom 257 164 5 0 0 0 - - -, f 5;
+#X floatatom 257 164 5 0 0 0 - - -;
 #X msg 20 375 1;
 #X msg 65 279 1051;
 #X obj 65 317 /;
@@ -421,20 +415,17 @@
 #X text 49 379 pvgrain~ tracks an input sound and outputs control data
 that can be used to play notes on a synthesizer or sampler.;
 #X msg 275 243 read -resize sound/Piano.aif pvgrain-pf;
-#X connect 0 0 19 0;
-#X connect 1 0 0 0;
-#X connect 1 0 7 0;
-#X connect 2 0 3 0;
-#X connect 3 0 1 0;
-#X connect 4 0 2 0;
-#X connect 5 0 1 0;
-#X connect 7 0 9 0;
-#X connect 8 0 7 1;
-#X connect 9 0 10 0;
-#X connect 9 0 10 1;
-#X connect 11 0 12 0;
-#X connect 12 0 9 1;
-#X connect 15 0 21 0;
+#X obj 53 90 sfplayer~ sf1;
+#X connect 0 0 13 0;
+#X connect 1 0 3 0;
+#X connect 2 0 1 1;
+#X connect 3 0 4 0;
+#X connect 3 0 4 1;
+#X connect 5 0 6 0;
+#X connect 6 0 3 1;
+#X connect 9 0 15 0;
+#X connect 10 0 0 0;
+#X connect 13 0 3 0;
+#X connect 15 0 8 0;
+#X connect 16 0 1 0;
 #X connect 16 0 0 0;
-#X connect 19 0 9 0;
-#X connect 21 0 14 0;

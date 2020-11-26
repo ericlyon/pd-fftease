@@ -1,7 +1,11 @@
 *.o
+*.pd_*
 # Mac OS X
 *.dylib
+*.d_*
 # GNU/Linux
 *.so
+*.l_*
 # Windows
-
+*.dll
+*.m_*

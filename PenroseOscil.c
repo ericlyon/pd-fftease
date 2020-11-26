@@ -5,10 +5,10 @@
 t_float fftease_frequencyToIncrement( t_float samplingRate, t_float frequency, int bufferLength ) {
 
   return (frequency / samplingRate) * (t_float) bufferLength;
-} 
+}
 
 void fftease_makeSineBuffer( t_float *buffer, int bufferLength ) {
-  
+
   int   i;
 
   float myTwoPi = 8. * atan(1.);
