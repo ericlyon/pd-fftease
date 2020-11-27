@@ -61,7 +61,7 @@ void *mindwarp_new(t_symbol *s, int argc, t_atom *argv)
 
     if(argc > 0){ fft->N = (int) atom_getfloatarg(0, argc, argv); }
     if(argc > 1){ fft->overlap = (int) atom_getfloatarg(1, argc, argv); }
-	fft->initialized = 0;// prepare for init in DSP routine
+    fft->initialized = 0;// prepare for init in DSP routine
     return x;
 
 }
