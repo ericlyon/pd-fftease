@@ -61,6 +61,7 @@ void *mindwarp_new(t_symbol *s, int argc, t_atom *argv)
 
     if(argc > 0){ fft->N = (int) atom_getfloatarg(0, argc, argv); }
     if(argc > 1){ fft->overlap = (int) atom_getfloatarg(1, argc, argv); }
+    fft->initialized = 0;// prepare for init in DSP routine
     return x;
 
 }
@@ -77,7 +78,7 @@ void mindwarp_init(t_mindwarp *x)
         x->newChannel = (t_float *)calloc ((x->fft->N + 1), sizeof(t_float));
     }
     else if(initialized == 1) {
-        x->newAmplitudes = (t_float *)realloc(x->newAmplitudes, ((x->fft->N2 + 1) * 16) * sizeof(float));
+        x->newAmplitudes = (t_float *)realloc(x->newAmplitudes, ((x->fft->N2 + 1) * 16) * sizeof(t_float));
         x->newChannel = (t_float *)realloc(x->newChannel, (x->fft->N + 1) * sizeof(t_float));
     }
 }
