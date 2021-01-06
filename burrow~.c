@@ -54,12 +54,12 @@ void burrow_free(t_burrow *x)
 
 void burrow_invert(t_burrow *x, t_floatarg toggle)
 {
-    x->invert = (short)toggle;
+    x->invert = (int)toggle;
 }
 
 void burrow_mute(t_burrow *x, t_floatarg toggle)
 {
-    x->mute = (short)toggle;
+    x->mute = (int)toggle;
 }
 
 void burrow_bypass(t_burrow *x, t_floatarg toggle)
@@ -90,8 +90,8 @@ void burrow_init(t_burrow *x)
     fftease_init(fft2);
 
     if(!initialized){
-        x->mute = 0;
-        x->invert = 0;
+    //    x->mute = 0;
+    //    x->invert = 0;
     }
 }
 
@@ -119,7 +119,9 @@ void *burrow_new(t_symbol *s, int argc, t_atom *argv)
     fft2->N = FFTEASE_DEFAULT_FFTSIZE;
     fft2->overlap = FFTEASE_DEFAULT_OVERLAP;
     fft2->winfac = FFTEASE_DEFAULT_WINFAC;
-
+    x->mute = 0;
+    x->invert = 0;
+    post("initialized invert\n");
     if(argc > 0){ fft->N = fft2->N = (int) atom_getfloatarg(0, argc, argv); }
     if(argc > 1){ fft->overlap = fft2->overlap = (int) atom_getfloatarg(1, argc, argv); }
 
