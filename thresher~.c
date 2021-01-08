@@ -1,4 +1,4 @@
-/* Pd 32-bit FFTease 3.0 */
+/* Pd FFTease 3.0 */
 
 #include "fftease.h"
 
@@ -34,6 +34,8 @@ static void thresher_init(t_thresher *x);
 static void thresher_transpose(t_thresher *x, t_floatarg tf);
 static void thresher_synthresh(t_thresher *x, t_floatarg thresh);
 static void thresher_oscbank(t_thresher *x, t_floatarg flag);
+static void thresher_fftinfo(t_thresher *x);
+
 
 void thresher_tilde_setup(void)
 {
@@ -46,6 +48,7 @@ void thresher_tilde_setup(void)
     class_addmethod(c,(t_method)thresher_oscbank,gensym("oscbank"),A_FLOAT,0);
     class_addmethod(c,(t_method)thresher_transpose,gensym("transpose"),A_FLOAT,0);
     class_addmethod(c,(t_method)thresher_synthresh,gensym("synthresh"),A_FLOAT,0);
+    class_addmethod(c,(t_method)thresher_fftinfo,gensym("fftinfo"),0);
     thresher_class = c;
     fftease_announce(OBJECT_NAME);
 }
@@ -122,6 +125,11 @@ void thresher_init(t_thresher *x)
         x->composite_frame = (t_float *) realloc(x->composite_frame, (fft->N+2) * sizeof(t_float) );
         x->frames_left = (int *) realloc(x->frames_left, (fft->N+2) * sizeof(int) );
     }
+}
+
+void thresher_fftinfo( t_thresher *x )
+{
+    fftease_fftinfo(x->fft, OBJECT_NAME);
 }
 
 static void do_thresher(t_thresher *x)
