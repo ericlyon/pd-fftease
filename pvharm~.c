@@ -319,7 +319,7 @@ void pvharm_dsp(t_pvharm *x, t_signal **sp)
 {
     int reset_required = 0;
     int maxvectorsize = sp[0]->s_n;
-    int samplerate = sys_getsr();
+    int samplerate = sp[0]->s_sr;
 
     t_fftease *fft = x->fft;
     t_fftease *fft2 = x->fft2;

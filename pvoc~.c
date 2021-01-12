@@ -228,7 +228,7 @@ void pvoc_dsp(t_pvoc *x, t_signal **sp)
 {
     int reset_required = 0;
     int maxvectorsize = sp[0]->s_n;
-    int samplerate = sys_getsr();
+    int samplerate = sp[0]->s_sr;
     if(!samplerate)
         return;
     t_fftease *fft = x->fft;

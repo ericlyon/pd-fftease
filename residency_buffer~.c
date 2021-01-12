@@ -444,7 +444,7 @@ void residency_buffer_dsp(t_residency_buffer *x, t_signal **sp)
 {
     int reset_required = 0;
     int maxvectorsize = sp[0]->s_n;
-    int samplerate = sys_getsr();
+    int samplerate = sp[0]->s_sr;
 
     if(!samplerate)
         return;

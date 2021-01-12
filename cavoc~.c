@@ -451,7 +451,7 @@ void cavoc_dsp(t_cavoc *x, t_signal **sp)
 {
     int reset_required = 0;
     int maxvectorsize = sp[0]->s_n;
-    int samplerate = sys_getsr();
+    int samplerate = sp[0]->s_sr;
     t_fftease *fft = x->fft;
     if(fft->R != samplerate || fft->MSPVectorSize != maxvectorsize || fft->initialized == 0){
         reset_required = 1;
