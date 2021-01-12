@@ -1,4 +1,4 @@
-/* Pd 32-bit FFTease 3.0 */
+/* FFTease for Pd */
 
 #include "fftease.h"
 
@@ -9,7 +9,7 @@ static t_class *burrow_class;
 typedef struct _burrow
 {
     t_object x_obj;
-    float x_f;
+    t_float x_f;
     t_fftease *fft;
     t_fftease *fft2; // for cross synthesis use
     int invert;
@@ -21,7 +21,6 @@ typedef struct _burrow
 
 static void *burrow_new(t_symbol *s, int argc, t_atom *argv);
 static void burrow_dsp(t_burrow *x, t_signal **sp);
-static t_int *burrow_perform(t_int *w);
 static t_int *burrow_perform(t_int *w);
 static void burrow_init(t_burrow *x);
 static void burrow_free(t_burrow *x);
@@ -132,11 +131,11 @@ t_int *burrow_perform(t_int *w)
 {
     /* get our inlets and outlets */
     t_burrow *x = (t_burrow *) (w[1]);
-    t_float *MSPInputVector1 = (t_float *)(w[2]);
-    t_float *MSPInputVector2 = (t_float *)(w[3]);
-    t_float *flt_threshold = (t_float *)(w[4]);
-    t_float *flt_multiplier = (t_float *)(w[5]);
-    t_float *MSPOutputVector = (t_float *)(w[6]);
+    t_sample *MSPInputVector1 = (t_sample *)(w[2]);
+    t_sample *MSPInputVector2 = (t_sample *)(w[3]);
+    t_sample *flt_threshold = (t_sample *)(w[4]);
+    t_sample *flt_multiplier = (t_sample *)(w[5]);
+    t_sample *MSPOutputVector = (t_sample *)(w[6]);
     t_fftease *fft = x->fft;
     t_fftease *fft2 = x->fft2;
     int MSPVectorSize = fft->MSPVectorSize;
@@ -246,7 +245,7 @@ static void do_burrow(t_burrow *x)
     t_fftease *fft2 = x->fft2;
     int i;
     int N2 = fft->N2;
-    float a1, b1,
+    t_float a1, b1,
     a2, b2;
     int even, odd;
 
@@ -353,8 +352,8 @@ static void do_burrow(t_burrow *x)
 void burrow_dsp(t_burrow *x, t_signal **sp)
 {
     int reset_required = 0;
-    int maxvectorsize = sys_getblksize();
-    int samplerate = sys_getsr();
+    int maxvectorsize = sp[0]->s_n;
+    int samplerate = sp[0]->s_sr;
 
     t_fftease *fft = x->fft;
     t_fftease *fft2 = x->fft2;

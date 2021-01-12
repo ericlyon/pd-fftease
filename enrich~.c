@@ -1,4 +1,4 @@
-/* Pd 32-bit FFTease 3.0 */
+/* FFTease for Pd */
 
 /* STILL NEEDS Pd Array code installed */
 
@@ -342,8 +342,8 @@ t_int *enrich_perform(t_int *w)
 void enrich_dsp(t_enrich *x, t_signal **sp)
 {
     int reset_required = 0;
-    int maxvectorsize = sys_getblksize();
-    int samplerate = sys_getsr();
+    int maxvectorsize = sp[0]->s_n;
+    int samplerate = sp[0]->s_sr;
 
     if(!samplerate)
         return;

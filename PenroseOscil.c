@@ -11,7 +11,7 @@ void fftease_makeSineBuffer( t_float *buffer, int bufferLength ) {
 
   int   i;
 
-  float myTwoPi = 8. * atan(1.);
+  t_float myTwoPi = 8. * atan(1.);
 
   for ( i=0; i <= bufferLength; i++ )
     *(buffer+i) = sin( myTwoPi * ((t_float) i / (t_float) bufferLength) );

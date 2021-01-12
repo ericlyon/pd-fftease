@@ -1,4 +1,4 @@
-/* Pd 32-bit FFTease 3.0 */
+/* FFTease for Pd */
 
 #include "fftease.h"
 
@@ -443,8 +443,8 @@ void residency_buffer_oscbank(t_residency_buffer *x, t_floatarg flag)
 void residency_buffer_dsp(t_residency_buffer *x, t_signal **sp)
 {
     int reset_required = 0;
-    int maxvectorsize = sys_getblksize();
-    int samplerate = sys_getsr();
+    int maxvectorsize = sp[0]->s_n;
+    int samplerate = sp[0]->s_sr;
 
     if(!samplerate)
         return;

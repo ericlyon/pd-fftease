@@ -1,4 +1,4 @@
-/* Pd 32-bit FFTease 3.0 */
+/* FFTease for Pd */
 
 #include "fftease.h"
 
@@ -120,12 +120,12 @@ void update_warp_function( t_pvwarpb *x )
     diff = warpfac1 - 1.0 ;
     bin_extent = hibin - midbin ;
     for( i = midbin, j = 0; i < hibin; i++, j++ ){
-        deviation = diff * ((float)(bin_extent - j) / (float) bin_extent );
+        deviation = diff * ((t_float)(bin_extent - j) / (t_float) bin_extent );
         warpfunc[ i ] += deviation ;
     }
     bin_extent = midbin - lobin ;
     for( i = midbin, j = 0; i > lobin; i--, j++ ){
-        deviation = diff * ((float)(bin_extent - j) / (float) bin_extent );
+        deviation = diff * ((t_float)(bin_extent - j) / (t_float) bin_extent );
         warpfunc[ i ] += deviation ;
     }
 
@@ -147,12 +147,12 @@ void update_warp_function( t_pvwarpb *x )
     diff = warpfac2 - 1.0 ;
     bin_extent = hibin - midbin ;
     for( i = midbin, j = 0; i < hibin; i++, j++ ){
-        deviation = diff * ((float)(bin_extent - j) / (float) bin_extent );
+        deviation = diff * ((t_float)(bin_extent - j) / (t_float) bin_extent );
         warpfunc[ i ] += deviation ;
     }
     bin_extent = midbin - lobin ;
     for( i = midbin, j = 0; i > lobin; i--, j++ ){
-        deviation = diff * ((float)(bin_extent - j) / (float) bin_extent );
+        deviation = diff * ((t_float)(bin_extent - j) / (t_float) bin_extent );
         warpfunc[ i ] += deviation ;
     }
     // buffer stuffer
@@ -199,8 +199,8 @@ void pvwarpb_autofunc(t_pvwarpb *x, t_floatarg minval, t_floatarg maxval)
         return;
     }
 
-    minpoints = 0.05 * (float) N2;
-    maxpoints = 0.25 * (float) N2;
+    minpoints = 0.05 * (t_float) N2;
+    maxpoints = 0.25 * (t_float) N2;
     if( minval > 1000.0 || minval < .001 ){
         minval = 0.5;
     }
@@ -217,7 +217,7 @@ void pvwarpb_autofunc(t_pvwarpb *x, t_floatarg minval, t_floatarg maxval)
             segpoints = N2 - pointcount;
         }
         for( i = 0; i < segpoints; i++ ){
-            m2 = (float)i / (float) segpoints ;
+            m2 = (t_float)i / (t_float) segpoints ;
             m1 = 1.0 - m2;
             warpfunc[ pointcount + i ] = m1 * lastval + m2 * target;
         }
@@ -362,11 +362,11 @@ t_int *pvwarpb_perform(t_int *w)
 
     t_float f;
     t_pvwarpb *x = (t_pvwarpb *) (w[1]);
-    t_float *MSPInputVector = (t_float *)(w[2]);
-    t_float *in7 = (t_float *)(w[3]);
-    t_float *in8 = (t_float *)(w[4]);
-    t_float *in9 = (t_float *)(w[5]);
-    t_float *MSPOutputVector = (t_float *)(w[6]);
+    t_sample *MSPInputVector = (t_sample *)(w[2]);
+    t_sample *in7 = (t_sample *)(w[3]);
+    t_sample *in8 = (t_sample *)(w[4]);
+    t_sample *in9 = (t_sample *)(w[5]);
+    t_sample *MSPOutputVector = (t_sample *)(w[6]);
     t_fftease *fft = x->fft;
     int D = fft->D;
     int Nw = fft->Nw;
@@ -440,8 +440,8 @@ t_int *pvwarpb_perform(t_int *w)
 
 
 int freq_to_bin( t_float target, t_float fundamental ){
-    float lastf = 0.0;
-    float testf = 0.0;
+    t_float lastf = 0.0;
+    t_float testf = 0.0;
     int thebin = 0;
     while( testf < target ){
         ++thebin;
@@ -488,8 +488,8 @@ void pvwarpb_setbuf(t_pvwarpb *x, t_symbol *wavename)
 void pvwarpb_dsp(t_pvwarpb *x, t_signal **sp)
 {
     int reset_required = 0;
-    int maxvectorsize = sys_getblksize();
-    int samplerate = sys_getsr();
+    int maxvectorsize = sp[0]->s_n;
+    int samplerate = sp[0]->s_sr;
 
     if(!samplerate)
         return;

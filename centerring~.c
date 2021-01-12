@@ -1,4 +1,4 @@
-/* Pd 32-bit FFTease 3.0 */
+/* FFTease for Pd */
 
 #include "fftease.h"
 
@@ -355,8 +355,8 @@ void centerring_fftinfo( t_centerring *x )
 void centerring_dsp(t_centerring *x, t_signal **sp)
 {
     int reset_required = 0;
-    int maxvectorsize = sys_getblksize();
-    int samplerate = sys_getsr();
+    int maxvectorsize = sp[0]->s_n;
+    int samplerate = sp[0]->s_sr;
 
     if(!samplerate)
         return;

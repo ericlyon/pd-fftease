@@ -1,4 +1,4 @@
-/* Pd 32-bit FFTease 3.0 */
+/* FFTease for Pd */
 
 #include "fftease.h"
 
@@ -16,6 +16,7 @@ typedef struct _mindwarp
     t_float warpFactor;
     t_float shapeWidth;
     t_float *newChannel;
+    t_float *channelOne;
     t_float *newAmplitudes;
     short mute;
 } t_mindwarp;
@@ -50,7 +51,7 @@ void *mindwarp_new(t_symbol *s, int argc, t_atom *argv)
     x->fft = (t_fftease *) calloc(1,sizeof(t_fftease));
     fft = x->fft;
 
-    /* args: warpfactor, shape width, overlap, window factor */
+        /* args: warpfactor, shape width, overlap, window factor */
 
     x->warpFactor = 1.0;
     x->shapeWidth = 3.0;
@@ -75,11 +76,13 @@ void mindwarp_init(t_mindwarp *x)
     if(!initialized){
         x->mute = 0;
         x->newAmplitudes = (t_float *)calloc(((x->fft->N2 + 1) * 16), sizeof(t_float));
-        x->newChannel = (t_float *)calloc ((x->fft->N + 1), sizeof(t_float));
+        x->newChannel = (t_float *)calloc (2*(x->fft->N + 1), sizeof(t_float));
+        x->channelOne = (t_float *)calloc (2*(x->fft->N + 1), sizeof(t_float));
     }
     else if(initialized == 1) {
         x->newAmplitudes = (t_float *)realloc(x->newAmplitudes, ((x->fft->N2 + 1) * 16) * sizeof(t_float));
-        x->newChannel = (t_float *)realloc(x->newChannel, (x->fft->N + 1) * sizeof(t_float));
+        x->newChannel = (t_float *)realloc(x->newChannel, 2*(x->fft->N + 1) * sizeof(t_float));
+        x->channelOne = (t_float *)realloc(x->newChannel, 2*(x->fft->N + 1) * sizeof(t_float));
     }
 }
 
@@ -91,134 +94,112 @@ void mindwarp_free(t_mindwarp *x)
     if(initialized){
         free(x->newAmplitudes);
         free(x->newChannel);
+        free(x->channelOne);
     }
+}
+
+static void copyArray(t_float*src, t_float*dst, size_t size, size_t zerosize) {
+    size_t i;
+    for(i=0; i<size; i++)
+        *dst++=*src++;
+    for(i=0; i<zerosize; i++)
+        *dst++=1.;
 }
 
 static void do_mindwarp(t_mindwarp *x)
 {
     t_float *newChannel = x->newChannel;
-
-    int
-    i,j,
-    bindex,
-    N,
-    N2,
-    Nw,
-    shapeWidth = (int) x->shapeWidth,
-    remainingWidth,
-    newLength;
-float
-    cutoff,
-    filterMult,
-    interpIncr,
-    interpPhase;
-    t_float warpFactor;
     t_fftease *fft = x->fft;
     t_float *newAmplitudes = x->newAmplitudes;
-    t_float *channelOne = fft->channel;
+    t_float *channelOne = x->channelOne;
 
-    N = fft->N;
-    N2 = fft->N2;
-    Nw = fft->Nw;
-    warpFactor = x->warpFactor;
-    cutoff = (t_float) N2 * .9;
-    filterMult = .00001;
+    int
+        i,j,
+        bindex,
+        N = fft->N,
+        N2 = fft->N2,
+        Nw = fft->Nw,
+        shapeWidth = (int) x->shapeWidth,
+        remainingWidth,
+        newLength;
+    float
+        cutoff = N2 * .9,
+        filterMult = .00001,
+        interpIncr,
+        interpPhase;
+    t_float warpFactor;
 
     fftease_fold(fft);
     fftease_rdft(fft,FFT_FORWARD);
     fftease_leanconvert(fft);
 
+    warpFactor = x->warpFactor;
     if(warpFactor <= 0){
         error("bad warp, resetting");
         warpFactor = 1.0;
     }
 
     newLength = (int) ((t_float) N2 / warpFactor);
-
     if(newLength <= 0){
         error("bad length: resetting");
         newLength = 1.0;
     }
 
     interpIncr = (t_float) N2 / (t_float) newLength;
-
     interpPhase = 0.;
 
+    copyArray(fft->channel, channelOne, N+2, N);
 
-    // do simple linear interpolation on magnitudes
-
+        // do simple linear interpolation on magnitudes
     for ( bindex=0; bindex < newLength; bindex++ ) {
-
         int     localbindex = ((int) interpPhase) << 1;
-
         t_float lower = *(channelOne + localbindex),
-        upper = *(channelOne + localbindex + 2),
-        diff = interpPhase - ( (t_float) ( (int) interpPhase ) );
+            upper = *(channelOne + localbindex + 2),
+            diff = interpPhase - ( (t_float) ( (int) interpPhase ) );
 
         *(newAmplitudes+bindex) = lower + ( ( upper - lower ) * diff );
-
         interpPhase += interpIncr;
     }
 
-
-
-    // replace magnitudes with warped values
-
+        // replace magnitudes with warped values
     if (warpFactor > 1.) {
-
         int until = (int) ( cutoff / warpFactor );
-
         for ( bindex=0; bindex < until; bindex++ ) {
             register int    amp = bindex<<1;
-
             *(newChannel+amp) = *(newAmplitudes+bindex);
         }
 
-
-        // filter remaining spectrum as spectral envelope has shrunk
-
+            // filter remaining spectrum as spectral envelope has shrunk
         for ( bindex=until; bindex < N2; bindex++ ) {
             register int    amp = bindex<<1;
-
             *(newChannel+amp) *= filterMult;
         }
     }
 
-
-    //OK
-
-    // spectral envelope has enlarged, no post filtering is necessary
+        //OK
+        // spectral envelope has enlarged, no post filtering is necessary
 
     else {
-
         for ( bindex=0; bindex <= N2; bindex++ ) {
             register int    amp = bindex<<1;
-
             *(newChannel+amp) = *(newAmplitudes+bindex);
         }
     }
 
 
-
-    // constrain our shapeWidth value
-
+        // constrain our shapeWidth value
     if ( shapeWidth > N2 )
         shapeWidth = N2;
-
     if ( shapeWidth < 1 )
         shapeWidth = 1;
 
-    // lets just shape the entire signal by the shape width
-
-
+        // lets just shape the entire signal by the shape width
     for ( i=0; i < N; i += shapeWidth << 1 ) {
-
         t_float       amplSum = 0.,
-        freqSum = 0.,
-        factor = 1.0;
+            freqSum = 0.,
+            factor = 1.0;
 
         for ( j = 0; j < shapeWidth << 1; j += 2 ) {
-
             amplSum += *(newChannel+i+j);
             freqSum += *(channelOne+i+j);
         }
@@ -226,10 +207,9 @@ float
         if (amplSum < 0.000000001)
             factor = 0.000000001;
 
-        // this can happen, crashing external; now fixed.
-
-        if( freqSum <= 0 ){
-            //      error("bad freq sum, resetting");
+            // this can happen, crashing external; now fixed.
+        if( freqSum <= 0 ) {
+                //      error("bad freq sum, resetting");
             freqSum = 1.0;
         }
         else
@@ -239,26 +219,21 @@ float
             *(channelOne+i+j) *= factor;
     }
 
-    // copy remaining magnitudes (fixed shadowed variable warning by renaming bindex)
+        // copy remaining magnitudes (fixed shadowed variable warning by renaming bindex)
 
     if ( (remainingWidth = N2 % shapeWidth) ) {
-
-        int         lbindex = (N2 - remainingWidth) << 1;
-
-
-        t_float       amplSum = 0.,
-        freqSum = 0.,
-        factor;
+        int     lbindex = (N2 - remainingWidth) << 1;
+        t_float amplSum = 0.,
+            freqSum = 0.,
+            factor;
 
         for ( j = 0; j < remainingWidth << 1; j += 2 ) {
-
             amplSum += *(newChannel+lbindex+j);
             freqSum += *(channelOne+lbindex+j);
         }
 
         if (amplSum < 0.000000001)
             factor = 0.000000001;
-
         else
             factor = amplSum / freqSum;
 
@@ -266,11 +241,13 @@ float
             *(channelOne+bindex+j) *= factor;
     }
 
+    copyArray(channelOne, fft->channel, N+2, 0);
+
+
     fftease_leanunconvert(fft);
 
     fftease_rdft(fft,FFT_INVERSE);
     fftease_overlapadd(fft);
-
 }
 
 
@@ -357,8 +334,8 @@ void mindwarp_mute(t_mindwarp *x, t_floatarg toggle)
 void mindwarp_dsp(t_mindwarp *x, t_signal **sp)
 {
     int reset_required = 0;
-    int maxvectorsize = sys_getblksize();
-    int samplerate = sys_getsr();
+    int maxvectorsize = sp[0]->s_n;
+    int samplerate = sp[0]->s_sr;
 
     if(!samplerate)
         return;
