@@ -1,4 +1,4 @@
-#N canvas 824 345 505 512 10;
+#N canvas 600 60 505 512 10;
 #X obj 100 243 thresher~;
 #X floatatom 164 186 5 0 0 0 - - -;
 #X floatatom 290 187 5 0 0 0 - - -;

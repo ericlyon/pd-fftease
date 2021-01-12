@@ -1,4 +1,4 @@
-#N canvas 1099 521 568 422 10;
+#N canvas 600 60 568 422 10;
 #X obj 52 50 noise~;
 #X obj 52 261 *~ 0.05;
 #X obj 52 292 dac~;

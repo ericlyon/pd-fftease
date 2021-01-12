@@ -1,4 +1,4 @@
-#N canvas 945 525 525 499 10;
+#N canvas 600 60 525 499 10;
 #X obj 143 202 ether~;
 #X floatatom 292 178 5 0 512 0 - - -;
 #X obj 160 283 *~ 0.05;

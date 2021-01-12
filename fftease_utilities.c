@@ -1,5 +1,5 @@
 #include "fftease.h"
-#define FFTEASE_LIB_VERSION "FFTease library 3.0 Pd 32-bit version"
+#define FFTEASE_LIB_VERSION "FFTease library 3.0"
 
 void fftease_noalias(t_fftease* fft, short flag)
 {
@@ -250,9 +250,9 @@ void fftease_fftinfo(t_fftease *fft, char *object_name)
         post("%s: zero overlap!", object_name);
         return;
     }
-    post("%s: FFT size %d, hopsize %d, windowsize %d, MSP Vector Size %d", object_name,
+    post("%s: FFT size %d, hop size %d, window size %d, signal vector size %d", object_name,
     fft->N, fft->N/fft->overlap, fft->Nw, fft->MSPVectorSize);
-    post("%s\n", FFTEASE_LIB_VERSION);
+    // post("%s\n", FFTEASE_LIB_VERSION);
 }
 
 int fftease_msp_sanity_check(t_fftease *fft, char *oname)

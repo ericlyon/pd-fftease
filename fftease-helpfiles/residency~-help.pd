@@ -1,4 +1,4 @@
-#N canvas 759 530 540 383 10;
+#N canvas 600 60 540 383 10;
 #X obj 109 147 residency~ 5000;
 #X obj 109 239 *~ 0.05;
 #X obj 109 270 dac~;

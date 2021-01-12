@@ -1,4 +1,4 @@
-#N canvas 986 280 572 436 10;
+#N canvas 600 60 572 436 10;
 #X obj 144 173 pvgrain~;
 #X obj 53 213 *~;
 #X floatatom 68 180 5 0 0 0 - mix-in-orig -;

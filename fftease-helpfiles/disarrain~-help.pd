@@ -1,4 +1,4 @@
-#N canvas 889 356 642 531 10;
+#N canvas 600 60 642 531 10;
 #X obj 142 209 disarrain~;
 #X obj 98 101 phasor~ 261;
 #X obj 98 129 -~ 0.5;

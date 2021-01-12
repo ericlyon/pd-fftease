@@ -1,4 +1,4 @@
-#N canvas 1205 620 541 378 10;
+#N canvas 600 60 541 378 10;
 #X obj 43 149 pvcompand~;
 #X floatatom 192 96 5 0 0 0 - - -;
 #X text 189 74 threshold factor;

@@ -1,4 +1,4 @@
-#N canvas 803 561 465 402 10;
+#N canvas 600 60 465 402 10;
 #X obj 113 188 swinger~;
 #X obj 156 241 *~ 0.05;
 #X obj 156 272 dac~;

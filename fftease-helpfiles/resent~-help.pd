@@ -1,4 +1,4 @@
-#N canvas 932 503 426 468 10;
+#N canvas 600 60 426 468 10;
 #X obj 162 149 resent~ 6000;
 #N canvas 404 737 450 300 showsync 0;
 #X obj 205 102 inlet~;

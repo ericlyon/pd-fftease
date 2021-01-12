@@ -1,4 +1,4 @@
-#N canvas 579 460 937 510 10;
+#N canvas 312 55 937 510 10;
 #X obj 246 254 burrow~;
 #X obj 246 336 *~ 0.05;
 #X obj 246 394 dac~;
@@ -6,15 +6,15 @@
 #X obj 350 347 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #X obj 288 294 hsl 128 15 0 1 0 0 empty empty Gain -2 -8 0 10 -262144
--1 -1 8200 1;
-#X floatatom 285 316 5 0 0 0 - - -, f 5;
-#X floatatom 436 79 5 -90 0 0 - - -, f 5;
+-1 -1 0 1;
+#X floatatom 285 316 5 0 0 0 - - -;
+#X floatatom 436 79 5 -90 0 0 - - -;
 #X obj 424 183 pow;
 #X msg 424 154 10;
 #X obj 436 103 * 0.05;
 #X obj 436 131 t b f;
 #X text 430 60 filtering threshold (dB);
-#X floatatom 609 82 5 0 0 0 - - -, f 5;
+#X floatatom 609 82 5 0 0 0 - - -;
 #X obj 597 186 pow;
 #X msg 597 157 10;
 #X obj 609 106 * 0.05;
@@ -27,7 +27,7 @@
 #X obj 77 129 -~ 0.5;
 #X obj 193 101 noise~;
 #X obj 235 165 bp~ 600 30;
-#X floatatom 270 110 5 0 0 0 - - -, f 5;
+#X floatatom 270 110 5 0 0 0 - - -;
 #X text 194 77 filtering sound;
 #X text 508 233 burrow~ filters the sound in the left input by utlizing
 a second signal input as a filter threshold reference. The threshold

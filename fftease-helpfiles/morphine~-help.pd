@@ -1,4 +1,4 @@
-#N canvas 808 479 612 478 10;
+#N canvas 600 60 612 478 10;
 #X msg 60 135 transition \$1;
 #X floatatom 60 104 5 0 0 0 - morphine-trans -;
 #X obj 192 265 *~ 0.05;
