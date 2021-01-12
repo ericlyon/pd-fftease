@@ -120,7 +120,6 @@ void *burrow_new(t_symbol *s, int argc, t_atom *argv)
     fft2->winfac = FFTEASE_DEFAULT_WINFAC;
     x->mute = 0;
     x->invert = 0;
-    post("initialized invert\n");
     if(argc > 0){ fft->N = fft2->N = (int) atom_getfloatarg(0, argc, argv); }
     if(argc > 1){ fft->overlap = fft2->overlap = (int) atom_getfloatarg(1, argc, argv); }
 
