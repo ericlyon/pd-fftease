@@ -211,12 +211,13 @@ void *pvwarp_new(t_symbol *s, int argc, t_atom *argv)
     fft->initialized = 0;
     x->lofreq = 0.0;
     x->hifreq = 18000.0;
-
+    fft->R = sys_getsr();
     fft->N = FFTEASE_DEFAULT_FFTSIZE;
     fft->overlap = FFTEASE_DEFAULT_OVERLAP;
     fft->winfac = FFTEASE_DEFAULT_WINFAC;
     if(argc > 0){ fft->N = (int) atom_getfloatarg(0, argc, argv); }
     if(argc > 1){ fft->overlap = (int) atom_getfloatarg(1, argc, argv); }
+    pvwarp_init(x);
     return x;
 }
 
