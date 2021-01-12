@@ -10,13 +10,19 @@
 #define MAX_N 1073741824
 #define MAX_Nw MAX_N
 
-#define FFTEASE_ANNOUNCEMENT "<[ FFTease 3.0 ]>   |  "
-#define FFTEASE_VERSION "FFTease 3.0 for Pd"
-#define FFTEASE_COMPILE_DATE "January 11, 2021"
+#ifndef FFTEASE_VERSION
+# define FFTEASE_VERSION "3.0"
+#endif
+#ifndef FFTEASE_COMPILE_DATE
+# define FFTEASE_COMPILE_DATE __DATE__
+#endif
+
+#define FFTEASE_ANNOUNCEMENT "<[ FFTease " FFTEASE_VERSION " ]>   |  "
+#define FFTEASE_VERSION4PD "FFTease " FFTEASE_VERSION " for Pd"
 
 #define fftease_announce(objname)  post("%s ( %s )",FFTEASE_ANNOUNCEMENT,objname)
 
-#define fftease_version(objectname) post("%s: version %s compiled %s",objectname,FFTEASE_VERSION,FFTEASE_COMPILE_DATE);
+#define fftease_version(objectname) post("%s: version %s compiled %s",objectname,FFTEASE_VERSION4PD,FFTEASE_COMPILE_DATE);
 
 #define BIGGER_THAN_MSP_VECTOR 0
 #define SMALLER_THAN_MSP_VECTOR 1
