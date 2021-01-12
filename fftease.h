@@ -1,4 +1,4 @@
-/* 32-bit version for Pd */
+/* FFTease 3.0 for Pd */
 
 #include <stdio.h>
 #include <math.h>
@@ -11,8 +11,8 @@
 #define MAX_Nw MAX_N
 
 #define FFTEASE_ANNOUNCEMENT "<[ FFTease 3.0 ]>   |  "
-#define FFTEASE_VERSION "FFTease 3.0 for Pd 32-bit version"
-#define FFTEASE_COMPILE_DATE "June 20, 2014"
+#define FFTEASE_VERSION "FFTease 3.0 for Pd"
+#define FFTEASE_COMPILE_DATE "January 11, 2021"
 
 #define fftease_announce(objname)  post("%s ( %s )",FFTEASE_ANNOUNCEMENT,objname)
 
@@ -117,9 +117,6 @@ void fftease_bitreverse( t_float *x, int N );
 void fftease_fold( t_fftease *fft );
 void fftease_init_rdft(int n, int *ip, t_float *w);
 void fftease_rdft(t_fftease *fft, int isgn);
-//void fftease_bitrv2(int n, int *ip, t_float *a);
-//void fftease_cftsub(int n, t_float *a, t_float *w);
-//void rftsub(int n, t_float *a, int nc, t_float *c);
 void fftease_makewt(int nw, int *ip, t_float *w);
 void fftease_makect(int nc, int *ip, t_float *c);
 void fftease_leanconvert(t_fftease *fft);
@@ -131,8 +128,6 @@ void fftease_overlapadd(t_fftease *fft);
 void fftease_bloscbank( t_float *S, t_float *O, int D, t_float iD, t_float *lf, t_float *la,
     t_float *bindex, t_float *tab, int len, t_float synt, int lo, int hi );
 void fftease_oscbank( t_fftease *fft );
-//t_float randf( t_float min, t_float max );
-//int randi( int min, int max );
 int fftease_power_of_two(int test);
 void fftease_limit_fftsize(int *N, int *Nw, char *OBJECT_NAME);
 int fftease_fft_size(int testfft);
@@ -154,23 +149,3 @@ void fftease_makeSineBuffer( t_float *buffer, int bufferLength );
 t_float fftease_bufferOscil( t_float *phase, t_float increment, t_float *buffer, int bufferLength );
 float fftease_rrand(int *seed);
 float fftease_prand(int *seed);
-
-/*** MSP helper functions, thanks JKC! ***/
-/*
-void atom_arg_getfloat(float *c, long idx, long ac, t_atom *av);
-void atom_arg_getsym(t_symbol **c, long idx, long ac, t_atom *av);
-
-void atom_arg_getfloat(float *c, long idx, long ac, t_atom *av)
-{
-    if (c&&ac&&av&&(idx<ac)) {
-        *c = atom_getfloat(av+idx);
-    }
-}
-
-void atom_arg_getsym(t_symbol **c, long idx, long ac, t_atom *av)
-{
-    if (c&&ac&&av&&(idx<ac)) {
-        *c = atom_getsymbol(av+idx);
-    }
-}
-*/
