@@ -263,7 +263,7 @@ void swinger_free( t_swinger *x )
 void swinger_dsp(t_swinger *x, t_signal **sp)
 {
     int reset_required = 0;
-    int maxvectorsize = sys_getblksize();
+    int maxvectorsize = sp[0]->s_n;
     int samplerate = sys_getsr();
 
     t_fftease *fft = x->fft;

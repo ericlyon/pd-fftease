@@ -284,7 +284,7 @@ t_int *schmear_perform(t_int *w)
 void schmear_dsp(t_schmear *x, t_signal **sp)
 {
     int reset_required = 0;
-    int maxvectorsize = sys_getblksize();
+    int maxvectorsize = sp[0]->s_n;
     int samplerate = sys_getsr();
 
     if(!samplerate)

@@ -612,7 +612,7 @@ void cavoc27_hold_time(t_cavoc27 *x, t_floatarg hold_time)
 void cavoc27_dsp(t_cavoc27 *x, t_signal **sp)
 {
     int reset_required = 0;
-    int maxvectorsize = sys_getblksize();
+    int maxvectorsize = sp[0]->s_n;
     int samplerate = sys_getsr();
     t_fftease *fft = x->fft;
     if(fft->R != samplerate || fft->MSPVectorSize != maxvectorsize || fft->initialized == 0){

@@ -346,7 +346,7 @@ t_int *codepend_perform(t_int *w)
 void codepend_dsp(t_codepend *x, t_signal **sp)
 {
     int reset_required = 0;
-    int maxvectorsize = sys_getblksize();
+    int maxvectorsize = sp[0]->s_n;
     int samplerate = sys_getsr();
 
     t_fftease *fft = x->fft;

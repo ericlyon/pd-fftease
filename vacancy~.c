@@ -350,7 +350,7 @@ t_int *vacancy_perform(t_int *w)
 void vacancy_dsp(t_vacancy *x, t_signal **sp)
 {
     int reset_required = 0;
-    int maxvectorsize = sys_getblksize();
+    int maxvectorsize = sp[0]->s_n;
     int samplerate = sys_getsr();
 
     t_fftease *fft = x->fft;

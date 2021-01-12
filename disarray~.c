@@ -373,7 +373,7 @@ void disarray_showstate (t_disarray *x ) {
 void disarray_dsp(t_disarray *x, t_signal **sp)
 {
     int reset_required = 0;
-    int maxvectorsize = sys_getblksize();
+    int maxvectorsize = sp[0]->s_n;
     int samplerate = sys_getsr();
 
     if(!samplerate)

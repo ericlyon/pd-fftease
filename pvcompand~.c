@@ -301,7 +301,7 @@ float pvcompand_ampdb(float db)
 void pvcompand_dsp(t_pvcompand *x, t_signal **sp)
 {
     int reset_required = 0;
-    int maxvectorsize = sys_getblksize();
+    int maxvectorsize = sp[0]->s_n;
     int samplerate = sys_getsr();
 
     if(!samplerate)

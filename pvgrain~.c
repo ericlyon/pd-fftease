@@ -292,7 +292,7 @@ void pvgrain_mute(t_pvgrain *x, t_floatarg state)
 void pvgrain_dsp(t_pvgrain *x, t_signal **sp)
 {
     int reset_required = 0;
-    int maxvectorsize = sys_getblksize();
+    int maxvectorsize = sp[0]->s_n;
     int samplerate = sys_getsr();
 
     if(!samplerate)

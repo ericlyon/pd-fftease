@@ -352,7 +352,7 @@ static void do_burrow(t_burrow *x)
 void burrow_dsp(t_burrow *x, t_signal **sp)
 {
     int reset_required = 0;
-    int maxvectorsize = sys_getblksize();
+    int maxvectorsize = sp[0]->s_n;
     int samplerate = sys_getsr();
 
     t_fftease *fft = x->fft;
