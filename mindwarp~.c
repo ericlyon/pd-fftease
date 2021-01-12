@@ -16,6 +16,7 @@ typedef struct _mindwarp
     t_float warpFactor;
     t_float shapeWidth;
     t_float *newChannel;
+    t_float *channelOne;
     t_float *newAmplitudes;
     short mute;
 } t_mindwarp;
@@ -75,11 +76,13 @@ void mindwarp_init(t_mindwarp *x)
     if(!initialized){
         x->mute = 0;
         x->newAmplitudes = (t_float *)calloc(((x->fft->N2 + 1) * 16), sizeof(t_float));
-        x->newChannel = (t_float *)calloc ((x->fft->N + 1), sizeof(t_float));
+        x->newChannel = (t_float *)calloc (2*(x->fft->N + 1), sizeof(t_float));
+        x->channelOne = (t_float *)calloc (2*(x->fft->N + 1), sizeof(t_float));
     }
     else if(initialized == 1) {
         x->newAmplitudes = (t_float *)realloc(x->newAmplitudes, ((x->fft->N2 + 1) * 16) * sizeof(t_float));
-        x->newChannel = (t_float *)realloc(x->newChannel, (x->fft->N + 1) * sizeof(t_float));
+        x->newChannel = (t_float *)realloc(x->newChannel, 2*(x->fft->N + 1) * sizeof(t_float));
+        x->channelOne = (t_float *)realloc(x->newChannel, 2*(x->fft->N + 1) * sizeof(t_float));
     }
 }
 
@@ -91,7 +94,16 @@ void mindwarp_free(t_mindwarp *x)
     if(initialized){
         free(x->newAmplitudes);
         free(x->newChannel);
+        free(x->channelOne);
     }
+}
+
+static void copyArray(t_float*src, t_float*dst, size_t size, size_t zerosize) {
+    size_t i;
+    for(i=0; i<size; i++)
+        *dst++=*src++;
+    for(i=0; i<zerosize; i++)
+        *dst++=1.;
 }
 
 static void do_mindwarp(t_mindwarp *x)
@@ -115,7 +127,7 @@ float
     t_float warpFactor;
     t_fftease *fft = x->fft;
     t_float *newAmplitudes = x->newAmplitudes;
-    t_float *channelOne = fft->channel;
+    t_float *channelOne = x->channelOne;
 
     N = fft->N;
     N2 = fft->N2;
@@ -145,8 +157,9 @@ float
     interpPhase = 0.;
 
 
-    // do simple linear interpolation on magnitudes
+    copyArray(fft->channel, channelOne, N+2, N);
 
+    // do simple linear interpolation on magnitudes
     for ( bindex=0; bindex < newLength; bindex++ ) {
 
         int     localbindex = ((int) interpPhase) << 1;
@@ -265,6 +278,9 @@ float
         for ( j = 0; j < remainingWidth << 1; j += 2 )
             *(channelOne+bindex+j) *= factor;
     }
+
+    copyArray(channelOne, fft->channel, N+2, 0);
+
 
     fftease_leanunconvert(fft);
 
