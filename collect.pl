@@ -1,6 +1,9 @@
+if(! -e fftease){
+    mkdir("fftease");
+}
 while(<*>){
     chomp;
-    if(/darwin$/ || /libfftease.dylib/){
-	`mv $_ fftease32-externals`;
+    if(/darwin$/ || /libfftease.pd_darwin.dylib/){
+	`mv $_ fftease`;
     }
 }
