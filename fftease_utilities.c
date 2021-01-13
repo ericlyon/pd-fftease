@@ -250,8 +250,8 @@ void fftease_fftinfo(t_fftease *fft, char *object_name)
         post("%s: zero overlap!", object_name);
         return;
     }
-    post("%s: FFT size %d, hop size %d, window size %d, signal vector size %d", object_name,
-    fft->N, fft->N/fft->overlap, fft->Nw, fft->MSPVectorSize);
+    post("%s: FFT size %d, hop size %d, signal vector size %d, sample rate %d", object_name,
+    fft->N, fft->N/fft->overlap, fft->MSPVectorSize, fft->R);
     // post("%s\n", FFTEASE_LIB_VERSION);
 }
 
