@@ -11,9 +11,9 @@ static t_class *morphine_class;
 typedef struct _pickme {
 
     int     bin;
-    float       value;
+    float   value;
 
-} pickme;
+} t_pickme;
 
 
 typedef struct _morphine
@@ -23,8 +23,8 @@ typedef struct _morphine
     t_float x_f;
     t_fftease *fft;
     t_fftease *fft2;
-    pickme *picks;
-    pickme *mirror;
+    t_pickme *picks;
+    t_pickme *mirror;
     t_float morphIndex;
     t_float exponScale;
     short mute;
@@ -33,24 +33,11 @@ typedef struct _morphine
 static void morphine_dsp(t_morphine *x, t_signal **sp);
 static t_int *morphine_perform(t_int *w);
 static void *morphine_new(t_symbol *s, int argc, t_atom *argv);
-static int sortIncreasing( const void *a, const void *b );
-int qsortE (char *base_ptr, int total_elems, int size, int (*cmp)(const void *a, const void *b));
 static void morphine_transition(t_morphine *x, t_floatarg f);
 static void morphine_free(t_morphine *x);
 static void morphine_mute(t_morphine *x, t_floatarg toggle);
 static void morphine_init(t_morphine *x);
-
-int sortIncreasing( const void *a, const void *b )
-{
-
-    if ( ((pickme *) a)->value > ((pickme *) b)->value )
-        return 1;
-
-    if ( ((pickme *) a)->value < ((pickme *) b)->value )
-        return -1;
-
-    return 0;
-}
+void quicksort(t_pickme *a,int first,int last);
 
 void morphine_tilde_setup(void)
 {
@@ -98,6 +85,34 @@ void *morphine_new(t_symbol *s, int argc, t_atom *argv)
     return x;
 }
 
+void quicksort(t_pickme *a,int first,int last)
+{
+    int i, j, pivot;
+    t_pickme tmp_pick;
+    if(first<last){
+        pivot=first;
+        i=first;
+        j=last;
+        
+        while(i<j){
+            while(a[i].value <= a[pivot].value && i < last)
+                i++;
+            while(a[j].value > a[pivot].value)
+                j--;
+            if(i<j){
+                tmp_pick = a[i];
+                a[i] = a[j];
+                a[j] = tmp_pick;
+            }
+        }
+        tmp_pick = a[pivot];
+        a[pivot] = a[j];
+        a[j] = tmp_pick;
+        quicksort(a,first,j-1);
+        quicksort(a,j+1,last);
+    }
+}
+
 void morphine_init(t_morphine *x)
 {
     t_fftease *fft = x->fft;
@@ -110,11 +125,11 @@ void morphine_init(t_morphine *x)
     if(!initialized){
         x->morphIndex = 0.;
         x->mute = 0;
-        x->picks = (pickme *) calloc((fft->N2+1), sizeof(pickme));
-        x->mirror = (pickme *) calloc((fft->N2+1), sizeof(pickme));
+        x->picks = (t_pickme *) calloc((fft->N2+1), sizeof(t_pickme));
+        x->mirror = (t_pickme *) calloc((fft->N2+1), sizeof(t_pickme));
     } else if(x->fft->initialized == 1) {
-        x->picks = (pickme *) realloc(x->picks, (fft->N2+1) * sizeof(pickme));
-        x->mirror = (pickme *) realloc(x->mirror, (fft->N2+1) * sizeof(pickme));
+        x->picks = (t_pickme *) realloc(x->picks, (fft->N2+1) * sizeof(t_pickme));
+        x->mirror = (t_pickme *) realloc(x->mirror, (fft->N2+1) * sizeof(t_pickme));
     }
 }
 
@@ -135,8 +150,8 @@ static void do_morphine(t_morphine *x)
     t_float *channelOne = fft->channel;
     t_float *channelTwo = fft2->channel;
     int N2 = fft->N2;
-    pickme  *picks = x->picks;
-    pickme *mirror = x->mirror;
+    t_pickme *picks = x->picks;
+    t_pickme *mirror = x->mirror;
     mult = fft->mult;
     morphIndex = x->morphIndex;
     exponScale = x->exponScale;
@@ -174,11 +189,9 @@ static void do_morphine(t_morphine *x)
         (picks+i)->bin = i;
     }
 
-    /* sort our differences in ascending order */
+    /* implement quick sort, low to high, on picks */
 
-
-    qsortE( (char *) picks, (int) N2+1, (int) sizeof(pickme),
-           sortIncreasing );
+    quicksort(picks, 0, N2);
 
     /* now we create an effective mirror of the sorted distribution.
      we will assure that the initial transition will be made from
