@@ -147,8 +147,16 @@ static void do_mindwarp(t_mindwarp *x)
 
     interpIncr = (t_float) N2 / (t_float) newLength;
     interpPhase = 0.;
+    
+    // copy from incoming FFT channel to a larger channel, allowing for spectral spread
+    
+    memcpy(channelOne, fft->channel, (N+2) * sizeof(t_float));
+    
+    // zero pad the larger channel
 
-    copyArray(fft->channel, channelOne, N+2, N);
+    for(i = N + 2; i < (2 * N) + 2; i++){
+        channelOne[i] = 0.0;
+    }
 
         // do simple linear interpolation on magnitudes
     for ( bindex=0; bindex < newLength; bindex++ ) {
@@ -176,7 +184,6 @@ static void do_mindwarp(t_mindwarp *x)
         }
     }
 
-        //OK
         // spectral envelope has enlarged, no post filtering is necessary
 
     else {
@@ -241,7 +248,9 @@ static void do_mindwarp(t_mindwarp *x)
             *(channelOne+bindex+j) *= factor;
     }
 
-    copyArray(channelOne, fft->channel, N+2, 0);
+    // copy from temporary channel back to working FFT channel
+    
+    memcpy(fft->channel, channelOne, (N+2) * sizeof(t_float));
 
 
     fftease_leanunconvert(fft);
@@ -280,9 +289,9 @@ t_int *mindwarp_perform(t_int *w)
     x->warpFactor = *vec_warpFactor;
     x->shapeWidth =  *vec_shapeWidth;
 
-    if(x->warpFactor <= 0.0){
-        x->warpFactor = 0.1;
-        error("%s: zero warp factor is illegal",OBJECT_NAME);
+    if(x->warpFactor <= 0.0625){
+        x->warpFactor = 1.0;
+    //     error("%s: zero warp factor is illegal",OBJECT_NAME);
     }
     if( fft->bufferStatus == EQUAL_TO_MSP_VECTOR ){
         memcpy(input, input + D, (Nw - D) * sizeof(t_float));
