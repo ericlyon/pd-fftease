@@ -30,8 +30,7 @@
 from a Pd array \, which can contain any user-specified waveform. Useful
 for distortion., f 53;
 #X obj 51 30 ./icon;
-#X obj 256 43 fftease/enrich~ buf;
-#X text 400 44 - Additive synthesis with arbitrary waveform;
+#X text 473 44 - Additive synthesis with arbitrary waveform;
 #X text 379 379 try drawing directly into the array for lots of harmonics
 , f 29;
 #X obj 39 443 ./gain.dsp~;
@@ -39,15 +38,16 @@ for distortion., f 53;
 #X floatatom 74 168 5 0 0 0 - enrich-hfr -;
 #X floatatom 94 218 5 0 0 0 - enrich-lofr -;
 #X msg 94 244 lowfreq \$1;
+#X obj 256 43 fftease/enrich~ enrich-buffer;
 #X connect 2 0 14 1;
 #X connect 3 0 14 2;
 #X connect 8 0 1 0;
 #X connect 9 0 10 0;
 #X connect 10 0 2 0;
 #X connect 12 0 14 0;
-#X connect 14 0 22 0;
+#X connect 14 0 21 0;
 #X connect 15 0 14 0;
-#X connect 23 0 14 0;
-#X connect 24 0 23 0;
-#X connect 25 0 26 0;
-#X connect 26 0 14 0;
+#X connect 22 0 14 0;
+#X connect 23 0 22 0;
+#X connect 24 0 25 0;
+#X connect 25 0 14 0;

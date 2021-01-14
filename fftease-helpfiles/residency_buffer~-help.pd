@@ -44,11 +44,11 @@ way down before attempting this)., f 91;
 #X obj 138 289 ./sfplay~;
 #X obj 138 493 ./gain.dsp~;
 #X obj 87 26 ./icon;
-#X obj 298 41 fftease/residency_buffer~ buf;
-#X text 517 41 - Spectral sample buffer;
+#X text 600 42 - Spectral sample buffer;
 #X text 172 205 Find out required size of storage buffer for a desired
 number of milliseconds. Then size the buffer to at least the recommended
 size., f 28;
+#X obj 298 41 fftease/residency_buffer~ analysis-array1;
 #X connect 1 0 9 0;
 #X connect 2 0 10 0;
 #X connect 3 0 2 0;
