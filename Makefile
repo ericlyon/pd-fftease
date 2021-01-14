@@ -24,7 +24,6 @@ shared.sources = \
 	PenroseOscil.c \
 	PenroseRand.c \
 	power_of_two.c \
-	qsortE.c \
 	unconvert.c \
 	$(empty)
 
