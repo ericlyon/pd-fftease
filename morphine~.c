@@ -1,24 +1,18 @@
 /* FFTease for Pd */
 
 #include "fftease.h"
-/*
- This external links to qsortE, so unlike others in this collection, morphine~ is covered under the GNU GPL.
- */
+
 static t_class *morphine_class;
 
 #define OBJECT_NAME "morphine~"
 
 typedef struct _pickme {
-
     int     bin;
     float   value;
-
 } t_pickme;
-
 
 typedef struct _morphine
 {
-
     t_object x_obj;
     t_float x_f;
     t_fftease *fft;
