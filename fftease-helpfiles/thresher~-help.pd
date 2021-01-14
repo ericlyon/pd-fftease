@@ -1,36 +1,75 @@
-#N canvas 600 60 505 512 10;
-#X obj 100 243 thresher~;
-#X floatatom 164 186 5 0 0 0 - - -;
-#X floatatom 290 187 5 0 0 0 - - -;
-#X obj 294 31 vsl 15 128 0.7 1 0 0 empty thresher-damp empty 0 -9 0
-10 -262144 -1 -1 8467 1;
-#X obj 164 31 vsl 15 128 0 0.5 0 0 empty thresher-thresh empty 0 -9
-0 10 -262144 -1 -1 1270 1;
-#X obj 108 323 *~ 0.05;
-#X obj 108 354 dac~;
-#X obj 150 283 hsl 128 15 0 1 0 0 empty empty Gain -2 -8 0 10 -262144
--1 -1 0 1;
-#X floatatom 147 303 5 0 0 0 - - -;
-#X text 46 380 thresher~ sustains the amplitude and frequency in lower-energy
-FFT bins. The extent of this effect is controlled by the threshold
-parameter: at 0 all frames pass \, at higher values more frames are
-sustained. The damping factor controls the decay time. A value of 1
-gives an infinite freeze.;
-#X text 329 187 damping factor;
-#X text 201 189 threshold;
-#N canvas 0 22 450 300 init 0;
-#X msg 164 150 \; thresher-thresh 0.05 \; thresher-damp 0.9;
-#X obj 214 82 loadbang;
+#N canvas 778 70 745 467 12;
+#X floatatom 289 323 6 0 0 0 - - -;
+#X floatatom 368 323 6 0 0 0 - - -;
+#N canvas 649 312 208 179 init 0;
+#X msg 51 95 \; \$1-thresh 0.075 \; \$1-damp 0.95;
+#X obj 51 67 f \$0;
+#X obj 51 39 loadbang;
 #X connect 1 0 0 0;
-#X restore 334 261 pd init;
-#X obj 63 120 sfplayer~ sf1;
-#X connect 0 0 5 0;
-#X connect 1 0 0 1;
-#X connect 2 0 0 2;
-#X connect 3 0 2 0;
+#X connect 2 0 1 0;
+#X restore 136 381 pd init;
+#X obj 210 395 ./gain.dsp~;
+#X obj 371 298 hsl 128 15 0.5 1 0 0 \$0-dummy \$0-damp empty -2 -8
+0 10 -228856 -1 -1 11430 1;
+#X obj 292 267 hsl 128 15 0 0.5 0 0 \$0-dummy \$0-thresh empty -2 -8
+0 10 -228856 -1 -1 1905 1;
+#X text 390 297 damping factor;
+#X text 316 266 threshold;
+#X msg 127 243 mute \$1;
+#X obj 127 212 tgl 17 0 empty empty empty 17 7 0 10 -228856 -1 -1 0
+1;
+#X obj 28 55 ./icon;
+#X text 507 150 see also:;
+#X text 377 32 - Damped bin-level feedback;
+#X obj 584 150 bthresher~;
+#X text 243 65 [thresher~] sustains the amplitude and frequency in
+lower-energy FFT bins. The extent of this effect is controlled by the
+threshold parameter: at 0 all frames pass \, at higher values more
+frames are sustained. The feedback damping factor controls the decay
+time. A value of 1 results in an infinite freeze., f 66;
+#N canvas 937 252 509 414 oscbank 0;
+#X msg 79 64 oscbank \$1;
+#X msg 144 289 transpose \$1;
+#X obj 147 187 hsl 128 15 -1200 1200 0 0 empty empty empty -2 -8 0
+10 -228856 -1 -1 0 1;
+#X msg 116 147 synthresh \$1;
+#X floatatom 116 122 5 0 0 0 - - -;
+#X obj 79 39 tgl 17 0 empty empty empty 17 7 0 10 -228856 -1 -1 0 1
+;
+#X obj 119 100 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -228856
+-1 -1 0 1;
+#X obj 144 235 expr pow(2 \, ($f1/1200));
+#X floatatom 144 210 7 0 0 0 - - -;
+#X floatatom 144 263 7 0 0 0 - - -;
+#X text 198 211 cents;
+#X text 202 264 ratio;
+#X obj 116 331 outlet;
+#X text 108 39 comment;
+#X connect 0 0 12 0;
+#X connect 1 0 12 0;
+#X connect 2 0 8 0;
+#X connect 3 0 12 0;
+#X connect 4 0 3 0;
+#X connect 5 0 0 0;
+#X connect 6 0 4 0;
+#X connect 7 0 9 0;
+#X connect 8 0 7 0;
+#X connect 9 0 1 0;
+#X restore 244 221 pd oscbank;
+#X obj 210 175 noise~;
+#X text 427 265 (frames above are sustained);
+#X text 509 291 (the higher the factor \, the more sustain), f 23
+;
+#X msg 81 303 fftinfo;
+#X obj 210 355 fftease/thresher~ 512 4;
+#X obj 249 32 fftease/thresher~;
+#X connect 0 0 20 1;
+#X connect 1 0 20 2;
 #X connect 4 0 1 0;
-#X connect 5 0 6 0;
-#X connect 5 0 6 1;
-#X connect 7 0 8 0;
-#X connect 8 0 5 1;
-#X connect 13 0 0 0;
+#X connect 5 0 0 0;
+#X connect 8 0 20 0;
+#X connect 9 0 8 0;
+#X connect 15 0 20 0;
+#X connect 16 0 20 0;
+#X connect 19 0 20 0;
+#X connect 20 0 3 0;

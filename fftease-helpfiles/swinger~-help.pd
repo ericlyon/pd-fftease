@@ -1,26 +1,17 @@
-#N canvas 600 60 465 402 10;
-#X obj 113 188 swinger~;
-#X obj 156 241 *~ 0.05;
-#X obj 156 272 dac~;
-#X obj 198 201 hsl 128 15 0 1 0 0 empty empty Gain -2 -8 0 10 -262144
--1 -1 0 1;
-#X floatatom 195 221 5 0 0 0 - - -;
-#X text 48 309 swinger~ replaces the phases of one signal (left) with
-those from another (right). The result often sounds like victory. A
-swinging trick: Don't connect any signal to the right inlet and listen
+#N canvas 600 60 579 426 12;
+#X obj 187 227 ./sfplay~;
+#X obj 296 227 ./sfplay~;
+#X obj 187 292 fftease/swinger~;
+#X obj 187 338 ./gain.dsp~;
+#X text 75 110 [swinger~] replaces the phases of one signal (left)
+with those from another (right). The result often sounds like victory.
+A swinging trick: Don't connect any signal to the right inlet and listen
 to the result.;
-#X obj 176 45 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
-1;
-#X obj 176 65 t f f;
-#X obj 63 90 sfplayer~ amplitude;
-#X obj 203 90 sfplayer~ phase;
-#X connect 0 0 1 0;
-#X connect 1 0 2 0;
+#X obj 249 53 fftease/swinger~;
+#X obj 51 37 ./icon;
+#X text 383 53 - Cross synthesis;
+#X text 131 202 amplitude source;
+#X text 294 202 phase source;
+#X connect 0 0 2 0;
 #X connect 1 0 2 1;
-#X connect 3 0 4 0;
-#X connect 4 0 1 1;
-#X connect 6 0 7 0;
-#X connect 7 0 8 0;
-#X connect 7 1 9 0;
-#X connect 8 0 0 0;
-#X connect 9 0 0 1;
+#X connect 2 0 3 0;

@@ -1,0 +1,38 @@
+#N canvas 869 385 456 434 12;
+#X obj 49 22 inlet;
+#X obj 103 123 bng 16 250 50 0 \$0-bang \$0-dummy empty 17 7 0 10 -228856
+-1 -1;
+#X obj 49 62 route bang float;
+#X obj 103 104 tgl 16 0 \$0-tgl \$0-dummy empty 17 7 0 10 -228856 -1
+-1 0 1;
+#X obj 103 185 openpanel;
+#X msg 103 296 open \$1 \, 1;
+#X obj 215 332 readsf~;
+#X obj 317 215 spigot;
+#X obj 215 382 outlet~;
+#X obj 184 172 != 0;
+#X text 120 122 Choose;
+#X text 120 103 Play, f 6;
+#X obj 184 143 trigger float float, f 25;
+#X obj 184 201 sel 1;
+#X text 195 52 Helper abstraction used in the documentation of FFTease
+to play sound files., f 30;
+#X obj 184 115 r \$0-tgl;
+#X obj 103 271 symbol \$1;
+#X connect 0 0 2 0;
+#X connect 1 0 4 0;
+#X connect 2 0 1 0;
+#X connect 2 1 3 0;
+#X connect 4 0 16 0;
+#X connect 5 0 6 0;
+#X connect 6 0 8 0;
+#X connect 6 1 7 0;
+#X connect 7 0 16 0;
+#X connect 9 0 13 0;
+#X connect 12 0 9 0;
+#X connect 12 1 7 1;
+#X connect 13 0 16 0;
+#X connect 13 1 6 0;
+#X connect 15 0 12 0;
+#X connect 16 0 5 0;
+#X coords 0 -1 1 1 67 43 2 100 100;

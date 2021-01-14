@@ -1,32 +1,24 @@
-#N canvas 600 60 572 436 10;
-#X obj 144 173 pvgrain~;
-#X obj 53 213 *~;
-#X floatatom 68 180 5 0 0 0 - mix-in-orig -;
-#X obj 53 305 *~ 0.05;
-#X obj 53 336 dac~;
-#X obj 126 263 hsl 128 15 0 1 0 0 empty empty Gain -2 -8 0 10 -262144
--1 -1 0 1;
-#X floatatom 123 283 5 0 0 0 - - -;
+#N canvas 600 60 572 436 12;
+#X obj 71 291 *~;
+#X floatatom 89 258 5 0 0 0 - mix-in-orig -;
 #N canvas 0 22 450 278 (subpatch) 0;
 #X array pvgrain-pf 46379 float 2;
 #X coords 0 1 46379 -1 200 140 1;
-#X restore 255 28 graph;
-#X obj 275 273 soundfiler;
-#X obj 275 207 loadbang;
-#X obj 144 137 r pvgrain-msgs;
-#N canvas 1172 705 632 335 control 0;
-#X obj 143 143 s pvgrain-msgs;
-#X msg 143 106 probability \$1;
-#X floatatom 143 73 7 0 0 0 - - -;
-#X obj 146 38 hsl 128 15 0.0001 0.1 0 0 empty pvgrain-prob empty -2
+#X restore 316 207 graph;
+#X obj 162 215 r pvgrain-msgs;
+#N canvas 778 105 802 276 control 0;
+#X obj 242 180 s pvgrain-msgs;
+#X msg 109 123 probability \$1;
+#X floatatom 109 90 7 0 0 0 - - -;
+#X obj 112 55 hsl 128 15 0.0001 0.1 0 0 empty pvgrain-prob empty -2
 -8 0 10 -262144 -1 -1 2530 1;
-#X msg 276 106 framegrains \$1;
-#X floatatom 276 73 5 1 60 0 - pvgrain-fgr -;
-#X msg 437 110 topfreq \$1;
-#X floatatom 437 75 7 50 20000 0 - pvgrain-topf -;
-#X floatatom 355 190 5 0 0 0 - base-freq -;
-#X obj 355 209 s base-frequency;
-#X obj 121 206 hsl 128 15 0 1 0 0 mix-in-orig empty mix-in-orig -2
+#X msg 242 123 framegrains \$1;
+#X floatatom 242 90 5 1 60 0 - pvgrain-fgr -;
+#X msg 403 127 topfreq \$1;
+#X floatatom 403 92 7 50 20000 0 - pvgrain-topf -;
+#X floatatom 537 70 5 0 0 0 - base-freq -;
+#X obj 537 99 s base-frequency;
+#X obj 547 152 hsl 128 15 0 1 0 0 mix-in-orig empty mix-in-orig -2
 -8 0 10 -262144 -1 -1 0 1;
 #X connect 1 0 0 0;
 #X connect 2 0 1 0;
@@ -36,13 +28,17 @@
 #X connect 6 0 0 0;
 #X connect 7 0 6 0;
 #X connect 8 0 9 0;
-#X restore 275 301 pd control;
-#N canvas 857 534 450 300 init 0;
-#X obj 39 78 loadbang;
-#X msg 39 114 \; base-freq 261 \; pvgrain-topf 4000 \; pvgrain-fgr
+#X restore 165 172 pd control;
+#N canvas 857 534 404 268 init 0;
+#X obj 86 34 loadbang;
+#X msg 113 67 \; base-freq 261 \; pvgrain-topf 4000 \; pvgrain-fgr
 20 \; pvgrain-prob 0.02;
+#X obj 86 197 soundfiler;
+#X msg 86 167 read -resize sound/Piano.aif pvgrain-pf;
 #X connect 0 0 1 0;
-#X restore 274 326 pd init;
+#X connect 0 0 3 0;
+#X connect 3 0 2 0;
+#X restore 180 319 pd init;
 #N canvas 610 230 689 382 playback 0;
 #X obj 51 29 inlet;
 #X obj 92 104 + 1;
@@ -411,21 +407,19 @@
 #X connect 12 0 6 0;
 #X connect 13 0 6 0;
 #X connect 14 0 6 0;
-#X restore 126 220 pd playback;
-#X text 49 379 pvgrain~ tracks an input sound and outputs control data
-that can be used to play notes on a synthesizer or sampler.;
-#X msg 275 243 read -resize sound/Piano.aif pvgrain-pf;
-#X obj 53 90 sfplayer~ sf1;
-#X connect 0 0 13 0;
-#X connect 1 0 3 0;
-#X connect 2 0 1 1;
-#X connect 3 0 4 0;
-#X connect 3 0 4 1;
-#X connect 5 0 6 0;
-#X connect 6 0 3 1;
-#X connect 9 0 15 0;
-#X connect 10 0 0 0;
-#X connect 13 0 3 0;
-#X connect 15 0 8 0;
-#X connect 16 0 1 0;
-#X connect 16 0 0 0;
+#X restore 161 288 pd playback;
+#X obj 71 168 ./sfplay~;
+#X obj 162 251 fftease/pvgrain~;
+#X obj 71 363 ./gain.dsp~;
+#X text 65 101 [pvgrain~] tracks an input sound and outputs control
+data that can be used to play notes on a synthesizer or sampler.;
+#X obj 39 31 ./icon;
+#X obj 231 45 fftease/pvgrain~;
+#X text 356 47 - Spectral granulator;
+#X connect 0 0 9 0;
+#X connect 1 0 0 1;
+#X connect 3 0 8 0;
+#X connect 6 0 9 0;
+#X connect 7 0 0 0;
+#X connect 7 0 8 0;
+#X connect 8 0 6 0;

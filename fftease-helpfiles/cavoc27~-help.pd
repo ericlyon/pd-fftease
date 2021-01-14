@@ -1,120 +1,124 @@
-#N canvas 600 60 576 304 10;
-#X obj 160 156 cavoc27~;
-#X obj 193 199 *~ 0.05;
-#X obj 193 257 dac~;
-#X obj 235 157 hsl 128 15 0 1 0 0 empty cavoc27-gain Gain -2 -8 0 10
--262144 -1 -1 254 1;
-#X floatatom 232 179 5 0 0 0 - - -;
-#X obj 229 110 r fftz.cavoc27.msgs;
-#N canvas 1379 450 450 300 rules 0;
-#X obj 65 222 s fftz.cavoc27.msgs;
-#X msg 29 88 rule 1 0 1 0 0 0 1 0 0 1 2 1 0 2 0 2 0 0 1 0 2 0 2 1 2
+#N canvas 639 60 695 446 12;
+#N canvas 909 209 455 228 rules 0;
+#X msg 34 61 rule 1 0 1 0 0 0 1 0 0 1 2 1 0 2 0 2 0 0 1 0 2 0 2 1 2
 1 1;
-#X msg 51 115 rule 0 2 1 0 0 1 0 0 0 1 1 2 0 1 2 1 1 1 1 0 0 0 1 1
-0 1 1;
-#X msg 73 143 rule 2 2 0 1 0 2 1 1 0 2 1 2 0 1 1 2 0 2 2 1 2 1 1 2
+#X msg 56 88 rule 0 2 1 0 0 1 0 0 0 1 1 2 0 1 2 1 1 1 1 0 0 0 1 1 0
+1 1;
+#X msg 78 116 rule 2 2 0 1 0 2 1 1 0 2 1 2 0 1 1 2 0 2 2 1 2 1 1 2
 0 0 0;
-#X connect 1 0 0 0;
-#X connect 2 0 0 0;
-#X connect 3 0 0 0;
-#X restore 36 132 pd rules;
-#N canvas 1371 522 450 300 triggering 0;
-#X obj 65 222 s fftz.cavoc27.msgs;
-#X msg 65 163 trigger;
-#X msg 204 160 manual \$1;
-#X obj 204 128 tgl 15 0 empty cavoc27-triggertog empty 17 7 0 10 -262144
--1 -1 0 1;
-#X obj 65 128 metro 250;
-#X obj 64 72 tgl 15 0 empty cavoc27-metro-tog empty 17 7 0 10 -262144
--1 -1 1 1;
-#X floatatom 103 99 5 0 0 0 - - -;
-#X connect 1 0 0 0;
-#X connect 2 0 0 0;
-#X connect 3 0 2 0;
-#X connect 4 0 1 0;
-#X connect 5 0 4 0;
-#X connect 6 0 4 1;
-#X restore 35 156 pd triggering;
-#N canvas 221 259 450 300 init 0;
-#X obj 28 34 loadbang;
-#X msg 28 62 \; cavoc27-triggertog 0 \; cavoc27-metro-tog 1 \; cavoc27-infreq
-133 \; cavoc27-gain 0.02 \; cavoc27-holdtime 250 \;;
-#X connect 0 0 1 0;
-#X restore 35 178 pd init;
-#X text 228 250 cavoc27~ generates spectra with a 27 rule cellular
-automaton. Start with very low gain.;
-#N canvas 722 391 450 300 sample-input-spectrum 1;
-#X msg 237 101 capture_spectrum \$1;
-#X obj 237 70 inlet;
-#X floatatom 22 31 5 0 0 0 - cavoc27-infreq -;
-#X obj 20 111 phasor~;
-#X obj 20 137 -~ 0.5;
-#X obj 73 111 phasor~;
-#X obj 73 137 -~ 0.5;
-#X obj 128 112 phasor~;
-#X obj 128 138 -~ 0.5;
-#X obj 36 185 *~ 0.5;
-#X obj 35 236 outlet~;
-#X obj 60 73 * 1.25;
-#X obj 126 74 * 1.5;
-#X obj 237 133 s fftz.cavoc27.msgs;
-#X connect 0 0 13 0;
-#X connect 1 0 0 0;
+#X obj 64 156 outlet;
+#X connect 0 0 3 0;
+#X connect 1 0 3 0;
 #X connect 2 0 3 0;
-#X connect 2 0 11 0;
-#X connect 2 0 12 0;
-#X connect 3 0 4 0;
-#X connect 4 0 9 0;
-#X connect 5 0 6 0;
-#X connect 6 0 9 0;
-#X connect 7 0 8 0;
-#X connect 8 0 9 0;
-#X connect 9 0 10 0;
-#X connect 11 0 5 0;
-#X connect 12 0 7 0;
-#X restore 160 82 pd sample-input-spectrum;
-#X obj 160 41 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
-1;
-#N canvas 637 695 517 307 more-msgs 0;
-#X obj 31 268 s fftz.cavoc27.msgs;
+#X restore 284 247 pd rules;
+#N canvas 1001 280 275 331 triggering 0;
+#X msg 87 140 trigger;
+#X msg 119 206 manual \$1;
+#X obj 87 84 metro 250;
+#X obj 87 52 tgl 17 0 \$0-dummy \$0-metro-tog empty 17 7 0 10 -228856
+-1 -1 1 1;
+#X floatatom 138 55 5 0 0 0 - - -;
+#X obj 119 174 tgl 17 0 \$0-dummy \$0-triggertog empty 17 7 0 10 -228856
+-1 -1 0 1;
+#X obj 87 247 outlet;
+#X obj 87 111 bng 18 250 50 0 empty empty empty 17 7 0 10 -228856 -1
+-1;
+#X connect 0 0 6 0;
+#X connect 1 0 6 0;
+#X connect 2 0 7 0;
+#X connect 3 0 2 0;
+#X connect 4 0 2 1;
+#X connect 5 0 1 0;
+#X connect 7 0 0 0;
+#X restore 273 219 pd triggering;
+#N canvas 467 193 247 209 init 0;
+#X obj 62 69 f \$0;
+#X obj 62 41 loadbang;
+#X msg 62 94 \; \$1-metro-tog 1 \; \$1-infreq 133 \; \$1-holdtime 250
+;
+#X connect 0 0 2 0;
+#X connect 1 0 0 0;
+#X restore 333 325 pd init;
+#N canvas 923 247 476 393 more-msgs 0;
 #X msg 43 184 density \$1;
 #X floatatom 43 154 5 0 0 0 - - -;
 #X msg 31 99 oscbank \$1;
-#X obj 31 60 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0 1
-;
-#X obj 215 66 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 215 66 tgl 17 0 empty empty empty 17 7 0 10 -228856 -1 -1 0
 1;
 #X msg 215 103 interpolate \$1;
 #X msg 317 180 transpose \$1;
 #X floatatom 317 151 5 0 0 0 - - -;
-#X obj 320 102 hsl 128 15 0.5 2 0 0 empty empty empty -2 -8 0 10 -262144
+#X obj 320 126 hsl 128 15 0.5 2 0 0 empty empty empty -2 -8 0 10 -228856
 -1 -1 0 1;
 #X msg 221 226 retune 0.5 2;
 #X msg 351 247 freeze \$1;
-#X obj 351 219 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X msg 193 178 hold_time \$1;
+#X floatatom 193 151 5 0 0 0 - #0-holdtime -;
+#X obj 132 350 outlet;
+#X obj 31 70 tgl 17 0 empty empty empty 17 7 0 10 -228856 -1 -1 0 1
+;
+#X obj 351 219 tgl 17 0 empty empty empty 17 7 0 10 -228856 -1 -1 0
 1;
-#X msg 158 178 hold_time \$1;
-#X floatatom 193 151 5 0 0 0 - cavoc27-holdtime -;
+#X connect 0 0 12 0;
 #X connect 1 0 0 0;
-#X connect 2 0 1 0;
-#X connect 3 0 0 0;
-#X connect 4 0 3 0;
-#X connect 5 0 6 0;
-#X connect 6 0 0 0;
-#X connect 7 0 0 0;
-#X connect 8 0 7 0;
-#X connect 9 0 8 0;
-#X connect 10 0 0 0;
-#X connect 11 0 0 0;
-#X connect 12 0 11 0;
-#X connect 13 0 0 0;
-#X connect 14 0 13 0;
-#X restore 35 215 pd more-msgs;
-#X connect 0 0 1 0;
-#X connect 1 0 2 0;
-#X connect 1 0 2 1;
+#X connect 2 0 12 0;
 #X connect 3 0 4 0;
-#X connect 4 0 1 1;
-#X connect 5 0 0 0;
-#X connect 10 0 0 0;
+#X connect 4 0 12 0;
+#X connect 5 0 12 0;
+#X connect 6 0 5 0;
+#X connect 7 0 6 0;
+#X connect 8 0 12 0;
+#X connect 9 0 12 0;
+#X connect 10 0 12 0;
 #X connect 11 0 10 0;
+#X connect 13 0 2 0;
+#X connect 14 0 9 0;
+#X restore 296 278 pd more-msgs;
+#X msg 262 189 capture_spectrum \$1;
+#X obj 262 161 tgl 17 0 empty empty empty 17 7 0 10 -228856 -1 -1 0
+1;
+#N canvas 722 391 266 269 input 0;
+#X obj 42 104 phasor~;
+#X obj 42 137 -~ 0.5;
+#X obj 95 104 phasor~;
+#X obj 95 137 -~ 0.5;
+#X obj 150 104 phasor~;
+#X obj 150 137 -~ 0.5;
+#X obj 95 231 outlet~;
+#X obj 95 71 * 1.25;
+#X obj 150 71 * 1.5;
+#X obj 95 26 inlet;
+#X obj 95 190 *~ 0.333;
+#X connect 0 0 1 0;
+#X connect 1 0 10 0;
+#X connect 2 0 3 0;
+#X connect 3 0 10 0;
+#X connect 4 0 5 0;
+#X connect 5 0 10 0;
+#X connect 7 0 2 0;
+#X connect 8 0 4 0;
+#X connect 9 0 0 0;
+#X connect 9 0 7 0;
+#X connect 9 0 8 0;
+#X connect 10 0 6 0;
+#X restore 184 189 pd input;
+#X text 159 160 hz;
+#X obj 184 337 fftease/cavoc27~;
+#X obj 184 372 ./gain.dsp~;
+#X obj 45 51 ./icon;
+#X text 378 40 - Cellular Automata-generated spectra;
+#X text 250 73 [cavoc27~] generates spectra with a 27 rule cellular
+automaton. Start with very low gain.;
+#X obj 184 160 nbx 5 14 -1e+37 1e+37 0 0 \$0-dummy \$0-infreq empty
+0 -8 0 10 -228856 -1 -1 133 256;
+#X obj 256 40 fftease/cavoc27~;
+#X text 485 193 see also:;
+#X obj 484 222 fftease/cavoc~;
+#X connect 0 0 8 0;
+#X connect 1 0 8 0;
+#X connect 3 0 8 0;
+#X connect 4 0 8 0;
+#X connect 5 0 4 0;
+#X connect 6 0 8 0;
+#X connect 8 0 9 0;
+#X connect 13 0 6 0;

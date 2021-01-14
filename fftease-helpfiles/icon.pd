@@ -1,0 +1,11 @@
+#N canvas 1047 86 416 319 12;
+#X obj 101 101 cnv 15 175 40 empty \$0-header FFTease\ 3.0 7 19 1 27
+-191407 -4160 0;
+#X obj 110 228 s \$0-header;
+#X msg 110 198 label FFTease\ 3.0;
+#X obj 111 169 loadbang;
+#X text 85 36 A helper abstraction used in the documentation of FFTease.
+, f 29;
+#X connect 2 0 1 0;
+#X connect 3 0 2 0;
+#X coords 0 -1 1 1 177 42 2 100 100;

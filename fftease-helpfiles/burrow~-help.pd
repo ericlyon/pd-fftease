@@ -1,86 +1,80 @@
-#N canvas 312 55 937 510 10;
-#X obj 246 254 burrow~;
-#X obj 246 336 *~ 0.05;
-#X obj 246 394 dac~;
-#X msg 350 378 \; pd dsp \$1;
-#X obj 350 347 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#N canvas 674 23 796 659 12;
+#X msg 223 385 invert \$1;
+#X obj 223 358 tgl 17 0 empty empty empty 17 7 0 10 -228856 -1 -1 0
 1;
-#X obj 288 294 hsl 128 15 0 1 0 0 empty empty Gain -2 -8 0 10 -262144
--1 -1 0 1;
-#X floatatom 285 316 5 0 0 0 - - -;
-#X floatatom 436 79 5 -90 0 0 - - -;
-#X obj 424 183 pow;
-#X msg 424 154 10;
-#X obj 436 103 * 0.05;
-#X obj 436 131 t b f;
-#X text 430 60 filtering threshold (dB);
-#X floatatom 609 82 5 0 0 0 - - -;
-#X obj 597 186 pow;
-#X msg 597 157 10;
-#X obj 609 106 * 0.05;
-#X obj 609 134 t b f;
-#X text 603 63 filtering multiplier (dB);
-#X msg 63 270 invert \$1;
-#X obj 63 237 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+#X obj 329 382 noise~;
+#X floatatom 381 382 5 0 0 0 - - -;
+#X text 204 308 source sound;
+#X msg 170 431 mute \$1;
+#X obj 182 26 ./icon;
+#X obj 298 598 ./gain.dsp~;
+#X text 509 43 - Cross filtering;
+#X obj 441 415 expr pow(10 \, $f1/20);
+#X obj 449 499 expr pow(10 \, $f1/20);
+#X obj 170 404 tgl 17 0 empty empty empty 17 7 0 10 -228856 -1 -1 0
 1;
-#X obj 77 100 phasor~ 200;
-#X obj 77 129 -~ 0.5;
-#X obj 193 101 noise~;
-#X obj 235 165 bp~ 600 30;
-#X floatatom 270 110 5 0 0 0 - - -;
-#X text 194 77 filtering sound;
-#X text 508 233 burrow~ filters the sound in the left input by utlizing
-a second signal input as a filter threshold reference. The threshold
-controls the extent of the filtering. Threshold inversion is available
-via the invert message. Since the spectral shape of the second sound
-is *subtracted* from the first \, the normal behavior of burrow~ is
-inverse to more familiar filtering. When the "inverse" flag is set
-\, the second sound becomes a positive (and perhaps more intuitively
-understandable) filter.;
-#X msg 63 212 1;
-#X obj 63 181 loadbang;
-#X obj 320 28 loadbang;
-#X msg 320 50 600;
-#X obj 797 61 loadbang;
-#X msg 797 83 -20;
-#X obj 506 12 loadbang;
-#X msg 506 34 -45;
-#X text 73 78 source sound;
-#X msg 112 355 mute \$1;
-#X obj 112 328 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
-1;
-#X connect 0 0 1 0;
-#X connect 1 0 2 0;
-#X connect 1 0 2 1;
-#X connect 4 0 3 0;
-#X connect 5 0 6 0;
-#X connect 6 0 1 1;
-#X connect 7 0 10 0;
-#X connect 8 0 0 2;
-#X connect 9 0 8 0;
-#X connect 10 0 11 0;
-#X connect 11 0 9 0;
-#X connect 11 1 8 1;
-#X connect 13 0 16 0;
-#X connect 14 0 0 3;
-#X connect 15 0 14 0;
-#X connect 16 0 17 0;
-#X connect 17 0 15 0;
-#X connect 17 1 14 1;
-#X connect 19 0 0 0;
-#X connect 20 0 19 0;
-#X connect 21 0 22 0;
-#X connect 22 0 0 0;
-#X connect 23 0 24 0;
-#X connect 24 0 0 1;
-#X connect 25 0 24 1;
-#X connect 28 0 20 0;
-#X connect 29 0 28 0;
-#X connect 30 0 31 0;
-#X connect 31 0 25 0;
-#X connect 32 0 33 0;
-#X connect 33 0 13 0;
-#X connect 34 0 35 0;
-#X connect 35 0 7 0;
-#X connect 37 0 0 0;
-#X connect 38 0 37 0;
+#X obj 298 560 fftease/burrow~ 2048 4;
+#X obj 348 420 bp~ 600 30;
+#X obj 298 308 noise~;
+#X msg 103 448 fftinfo;
+#X obj 384 356 hsl 128 15 100 1000 0 0 empty \$0-freq empty -2 -8 0
+10 -228856 -1 -1 7056 1;
+#X text 414 355 frequency;
+#X text 598 407 below (if inverted);
+#X text 115 91 [burrow~] filters the sound in the left input by utilizing
+a second signal input as a filter threshold reference. When the bins
+of second signal are above the threshold \, the same bins of the first
+signal are affected by the multiplier (so you can attenuate or boost
+them). Threshold inversion is available via the invert message. This
+way \, [burrow~] acts when the bins of the second sound are below the
+threshold., f 81;
+#X obj 441 393 nbx 5 14 -1e+37 1e+37 0 0 \$0-dummy \$0-threshold empty
+0 -8 0 10 -228856 -1 -1 -45 256;
+#X obj 449 479 nbx 5 14 -1e+37 1e+37 0 0 \$0-dummy \$0-multiplier empty
+0 -8 0 10 -228856 -1 -1 -35 256;
+#X floatatom 449 522 7 0 0 0 - - -;
+#X text 500 390 <= threshold (dB) - acts above or;
+#X text 510 476 <= multiplier factor (dB);
+#X floatatom 441 439 7 0 0 0 - - -;
+#X text 494 439 (linear);
+#X text 506 522 (linear);
+#X text 115 185 Here we have a noise input and a bandpass filtered
+noise as the filtering sound. With the initial settings (in dB) \,
+the input signal gets attenuated when the bins of the second input
+are above the threshold. This acts sort of like a notch filter. With
+the invert message on \, it's more like a bandpass. But if you have
+a positive dB multiplier \, it boosts the bins above the threshold
+(sort of like a peak filter) or boosts the bins below the threshold
+if inverted., f 81;
+#X text 65 432 Get FFT info, f 7;
+#X text 51 386 turn off the object \, saving CPU power, f 20;
+#X text 70 357 set to invert mode =>;
+#X text 461 559 <= arguments: window size and;
+#X text 482 574 overlap (default: 1024 \, 8);
+#X text 325 345 filter sound, f 6;
+#X obj 394 41 fftease/burrow~;
+#N canvas 1429 76 277 215 init 0;
+#X msg 72 96 \; \$1-freq 600 \; \$1-threshold -45 \; \$1-multiplier
+-35;
+#X obj 72 69 f \$0;
+#X obj 72 41 loadbang;
+#X connect 1 0 0 0;
+#X connect 2 0 1 0;
+#X restore 225 583 pd init;
+#X connect 0 0 12 0;
+#X connect 1 0 0 0;
+#X connect 2 0 13 0;
+#X connect 3 0 13 1;
+#X connect 5 0 12 0;
+#X connect 9 0 25 0;
+#X connect 10 0 22 0;
+#X connect 11 0 5 0;
+#X connect 12 0 7 0;
+#X connect 13 0 12 1;
+#X connect 14 0 12 0;
+#X connect 15 0 12 0;
+#X connect 16 0 3 0;
+#X connect 20 0 9 0;
+#X connect 21 0 10 0;
+#X connect 22 0 12 3;
+#X connect 25 0 12 2;

@@ -1,24 +1,13 @@
-#N canvas 600 60 472 383 10;
-#X obj 149 181 xsyn~;
-#X obj 152 234 *~ 0.05;
-#X obj 152 265 dac~;
-#X obj 194 194 hsl 128 15 0 1 0 0 empty empty Gain -2 -8 0 10 -262144
--1 -1 0 1;
-#X floatatom 191 214 5 0 0 0 - - -;
-#X text 34 320 xsyn~ filters the first input with the second input
+#N canvas 709 57 534 358 12;
+#X obj 166 295 ./gain.dsp~;
+#X obj 166 175 ./sfplay~;
+#X obj 261 176 ./sfplay~;
+#X obj 166 249 fftease/xsyn~, f 14;
+#X text 77 109 [xsyn~] filters the first input with the second input
 \, creating a spectral cross synthesis effect.;
-#X obj 103 70 sfplayer~ sf1;
-#X obj 203 70 sfplayer~ sf2;
-#X obj 176 25 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
-1;
-#X obj 176 45 t f f;
-#X connect 0 0 1 0;
-#X connect 1 0 2 0;
-#X connect 1 0 2 1;
-#X connect 3 0 4 0;
-#X connect 4 0 1 1;
-#X connect 6 0 0 0;
-#X connect 7 0 0 1;
-#X connect 8 0 9 0;
-#X connect 9 0 6 0;
-#X connect 9 1 7 0;
+#X obj 54 29 ./icon;
+#X obj 262 46 fftease/xsyn~;
+#X text 367 46 - Cross synthesis;
+#X connect 1 0 3 0;
+#X connect 2 0 3 1;
+#X connect 3 0 0 0;
