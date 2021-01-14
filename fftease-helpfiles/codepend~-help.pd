@@ -1,61 +1,59 @@
-#N canvas 481 59 707 429 10;
-#X obj 126 162 codepend~;
-#X obj 126 199 *~ 0.05;
-#X obj 126 230 dac~;
-#X obj 225 163 hsl 128 15 0 1 0 0 empty empty Gain -2 -8 0 10 -262144
--1 -1 0 1;
-#X floatatom 222 183 5 0 0 0 - - -;
-#X text 15 258 codepend~ is a classic "block convolution" processor.
-It performs a complex multiply upon the spectra of two input signals.
-Multiplication of spectra can cause significant drops in the amplitude
-of the output signal. The invert message causes codepend~ to perform
-complex division of the input spectra rather than multiplication. Be
-careful! This can cause huge amplitude gains. A "pad" message is provided
-to allow for empirical amplitude balancing between the normal and "invert"
-states. Experiment at low volume levels while getting a feel for this
-external.;
-#X floatatom 320 18 5 0 0 0 - codepend-scalingexp -;
-#X floatatom 381 92 5 0 0 0 - - -;
-#X obj 381 70 expr pow(10. \, $f1 * 0.05);
-#X floatatom 381 48 5 -120 0 1 inverse-threshold - -;
-#X text 360 17 scaling exponent (lower values increase distortion)
-;
+#N canvas 689 67 688 657 12;
+#X floatatom 317 420 5 0 0 0 - codepend-scalingexp -;
+#X floatatom 372 522 5 0 0 0 - - -;
+#X floatatom 372 471 5 -120 0 1 inverse-threshold - -;
+#X text 361 414 scaling exponent (lower values increase distortion)
+, f 27;
 #N canvas 516 425 450 300 init 0;
 #X msg 124 172 \; codepend-scalingexp 0.2 \; codepend-invertscale -36
 ;
-#X restore 413 380 pd init;
-#X obj 14 127 r fftz.codepend.msgs;
-#X obj 413 345 s fftz.codepend.msgs;
-#X msg 413 309 invert \$1;
-#X obj 413 273 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X restore 110 573 pd init;
+#X msg 122 336 invert \$1;
+#X obj 122 311 tgl 17 0 empty empty empty 17 7 0 10 -228856 -1 -1 0
 1;
-#X msg 534 307 pad \$1;
-#X floatatom 534 284 5 0 0 0 - - -;
-#X obj 534 262 expr pow(10. \, $f1 * 0.05);
-#X floatatom 534 235 5 0 0 0 - codepend-invertscale -;
-#X obj 31 59 sfplayer~ sf1;
-#X obj 131 59 sfplayer~ sf2;
-#X obj 104 18 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X msg 52 316 pad \$1;
+#X floatatom 52 293 5 0 0 0 - - -;
+#X floatatom 52 237 5 0 0 0 - codepend-invertscale -;
+#X obj 262 335 tgl 17 0 empty empty empty 17 7 0 10 -228856 -1 -1 0
 1;
-#X obj 104 38 t f f;
-#X connect 0 0 1 0;
-#X connect 1 0 2 0;
-#X connect 1 0 2 1;
-#X connect 3 0 4 0;
-#X connect 4 0 1 1;
-#X connect 6 0 0 2;
-#X connect 7 0 0 3;
+#X obj 207 604 ./gain.dsp~;
+#X obj 372 497 expr pow(10 \, $f1/20);
+#X obj 52 268 expr pow(10 \, $f1/20);
+#X obj 80 19 ./icon;
+#X text 426 31 - Block convolution;
+#X text 48 81 [codepend~] is a classic "block convolution" processor.
+It performs a complex multiply upon the spectra of two input signals.
+Multiplication of spectra can cause significant drops in the amplitude
+of the output signal., f 78;
+#X text 48 133 The invert message causes [codepend~] to perform complex
+division of the input spectra rather than multiplication. Be careful!
+This can cause huge amplitude gains. A "pad" message is provided to
+allow for empirical amplitude balancing between the normal and "invert"
+states. Experiment at low volume levels while getting a feel for this
+external., f 78;
+#X text 417 525 (lower values intensify effect but only when "invert"
+is turned on), f 34;
+#X text 209 236 pad only affects the gain when "invert" is turned on
+\, thus it may be used to balance levels between the two states of
+[codepend~]., f 27;
+#X obj 170 371 sfplay~;
+#X obj 262 371 sfplay~;
+#X obj 207 568 fftease/codepend~ 1028 8;
+#X text 284 335 play both;
+#X obj 295 31 fftease/codepend~;
+#X text 96 237 <==============;
+#X connect 0 0 22 2;
+#X connect 1 0 22 3;
+#X connect 2 0 12 0;
+#X connect 5 0 22 0;
+#X connect 6 0 5 0;
+#X connect 7 0 22 0;
 #X connect 8 0 7 0;
-#X connect 9 0 8 0;
-#X connect 12 0 0 0;
-#X connect 14 0 13 0;
-#X connect 15 0 14 0;
-#X connect 16 0 13 0;
-#X connect 17 0 16 0;
-#X connect 18 0 17 0;
-#X connect 19 0 18 0;
-#X connect 20 0 0 0;
-#X connect 21 0 0 1;
-#X connect 22 0 23 0;
-#X connect 23 0 20 0;
-#X connect 23 1 21 0;
+#X connect 9 0 13 0;
+#X connect 10 0 20 0;
+#X connect 10 0 21 0;
+#X connect 12 0 1 0;
+#X connect 13 0 8 0;
+#X connect 20 0 22 0;
+#X connect 21 0 22 1;
+#X connect 22 0 11 0;

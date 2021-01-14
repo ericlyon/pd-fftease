@@ -1,12 +1,6 @@
-#N canvas 600 60 468 461 10;
-#X obj 148 169 reanimator~ 2000;
-#X obj 148 324 *~ 0.05;
-#X obj 148 355 dac~;
-#X obj 190 284 hsl 128 15 0 1 0 0 empty empty Gain -2 -8 0 10 -262144
--1 -1 0 1;
-#X floatatom 187 304 5 0 0 0 - - -;
-#X floatatom 274 232 5 0 0 0 - - -;
-#X floatatom 183 232 5 0 0 0 - - -;
+#N canvas 600 60 620 491 12;
+#X floatatom 361 365 5 0 0 0 - - -;
+#X floatatom 264 365 5 0 0 0 - - -;
 #N canvas 404 737 450 300 showframe 0;
 #X obj 205 102 inlet~;
 #X obj 205 159 snapshot~;
@@ -22,11 +16,8 @@
 #X connect 3 0 2 0;
 #X connect 4 0 5 0;
 #X connect 5 0 3 0;
-#X restore 183 208 pd showframe;
-#X msg 37 122 analyze;
-#X text 26 385 reanimator~ first analyzes a "texture" sound \, and
-then resynthesizes a "driver" sound by finding the spectral frame in
-the texture sound that is closest to the current driver frame.;
+#X restore 264 331 pd showframe;
+#X msg 197 256 analyze;
 #N canvas 404 737 450 300 show-analysis-progress 0;
 #X obj 205 102 inlet~;
 #X obj 205 159 snapshot~;
@@ -42,24 +33,22 @@ the texture sound that is closest to the current driver frame.;
 #X connect 3 0 2 0;
 #X connect 4 0 5 0;
 #X connect 5 0 3 0;
-#X restore 274 208 pd show-analysis-progress;
-#X obj 242 25 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
-1;
-#X obj 242 45 t f f;
-#X obj 269 70 sfplayer~ texture;
-#X obj 147 70 sfplayer~ driver;
-#X connect 0 0 1 0;
-#X connect 0 1 7 0;
-#X connect 0 2 10 0;
-#X connect 1 0 2 0;
-#X connect 1 0 2 1;
-#X connect 3 0 4 0;
-#X connect 4 0 1 1;
-#X connect 7 0 6 0;
-#X connect 8 0 0 0;
-#X connect 10 0 5 0;
-#X connect 11 0 12 0;
-#X connect 12 0 14 0;
-#X connect 12 1 13 0;
-#X connect 13 0 0 1;
-#X connect 14 0 0 0;
+#X restore 361 331 pd show-analysis-progress;
+#X text 73 108 [reanimator~] first analyzes a "texture" sound \, and
+then resynthesizes a "driver" sound by finding the spectral frame in
+the texture sound that is closest to the current driver frame.;
+#X obj 169 292 fftease/reanimator~ 2000, f 28;
+#X obj 169 416 ./gain.dsp~;
+#X obj 362 198 ./sfplay~;
+#X obj 169 192 ./sfplay~;
+#X obj 38 33 ./icon;
+#X obj 229 46 fftease/reanimator~ 0, f 22;
+#X text 398 47 - Audio texture mapping;
+#X connect 2 0 1 0;
+#X connect 3 0 6 0;
+#X connect 4 0 0 0;
+#X connect 6 0 7 0;
+#X connect 6 1 2 0;
+#X connect 6 2 4 0;
+#X connect 8 0 6 1;
+#X connect 9 0 6 0;

@@ -1,51 +1,60 @@
-#N canvas 600 60 450 300 10;
-#X obj 182 111 drown~;
-#X obj 182 189 *~ 0.05;
-#X obj 182 220 dac~;
-#X obj 224 149 hsl 128 15 0 1 0 0 empty empty Gain -2 -8 0 10 -262144
+#N canvas 527 64 841 551 12;
+#X floatatom 334 367 5 0 0 0 - - -;
+#X obj 337 343 hsl 128 15 0.01 4 1 0 empty empty empty -2 -8 0 10 -228856
 -1 -1 0 1;
-#X floatatom 221 169 5 0 0 0 - - -;
-#X obj 100 58 osc~ 440;
-#X floatatom 215 88 5 0 0 0 - - -;
-#X obj 218 64 hsl 128 15 0 1 0 0 empty empty noise-reduction-factor
--2 -8 0 10 -262144 -1 -1 0 1;
-#X floatatom 171 51 5 0 0 0 - - -;
-#X obj 174 27 hsl 128 15 0 1 0 0 empty empty noise-threshold -2 -8
-0 10 -262144 -1 -1 0 1;
-#N canvas 1336 367 450 300 add-noise 0;
-#X obj 89 109 noise~;
-#X obj 135 169 *~;
-#X obj 190 77 inlet;
-#X obj 130 227 outlet~;
-#X connect 0 0 1 0;
-#X connect 1 0 3 0;
-#X connect 2 0 1 1;
-#X restore 90 143 pd add-noise;
-#X obj 90 117 tgl 15 0 empty drown-noisetog empty 17 7 0 10 -262144
--1 -1 1 1;
-#X msg 21 57 adaptive \$1;
-#X obj 21 27 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0 1
-;
-#X text 24 242 drown~ reduces the energy of low energy bins for noise
-reduction. Or you could use a factor > 1 to increase the noise in the
-signal. In adaptive mode \, the threshold is determined relative to
-each FFT frame peak.;
-#N canvas 285 462 450 300 init 0;
-#X msg 141 120 \; drown-noisetog 1 \;;
-#X obj 142 84 loadbang;
+#X floatatom 262 334 5 0 0 0 - - -;
+#X obj 265 304 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 12 -228856
+-1 -1 0 1;
+#X msg 168 234 adaptive \$1;
+#X obj 168 205 tgl 17 0 empty empty empty 17 7 0 10 -228856 -1 -1 0
+1;
+#X msg 190 291 mute \$1;
+#X obj 190 265 tgl 17 0 empty empty empty 17 7 0 10 -228856 -1 -1 0
+1;
+#X obj 145 165 noise~;
+#X obj 66 165 osc~ 440;
+#X msg 78 354 fftinfo;
+#X text 44 334 Get FFT info, f 7;
+#X text 348 438 <= arguments: window size and overlap (default: 1024
+\, 8);
+#X obj 190 438 fftease/drown~ 2048 4;
+#X obj 60 66 ./icon;
+#X obj 190 481 ./gain.dsp~;
+#X text 293 302 Threshold;
+#X text 362 342 Gain factor;
+#X text 190 205 <= adaptive mode;
+#X text 215 265 <= turns off the object (saving CPU power);
+#X text 396 22 - Reduce/increase spectral noise floor;
+#X obj 126 281 +~;
+#X text 407 296 Per-bin noise floor amplitude threshold. Higher values
+result in greater noise reduction., f 47;
+#X text 283 56 [drown~] changes the energy of FFT bins whose level
+are below a given threshold (or "noise floor"). You can then perform
+noise reduction with a gain factor less than 1 \, or increase it with
+a factor greater than 1! In adaptive mode \, instead of an absolute
+value \, the threshold is determined relative to each FFT frame peak.
+, f 73;
+#X text 283 135 This example has a sine wave with white noise added
+to it so you can check to remove the noise and just keep the sine wave.
+, f 73;
+#X text 324 195 (Adaptive noise reduction can be more effective than
+non-adaptive NR \, especially when the input signal has a varying amplitude
+envelope such as in white noise), f 53;
+#X text 383 365 Gain factor applied to bin amplitudes below threshold.
+A gain of 1 leaves the bin amplitude unchanged. Values above 1 increase
+the noise in the signal. Lower values result in more noise reduction
+and 0 completely removes that bin., f 58;
+#X obj 290 22 fftease/drown~;
+#X connect 0 0 13 2;
 #X connect 1 0 0 0;
-#X restore 300 207 pd init;
-#X connect 0 0 1 0;
-#X connect 1 0 2 0;
-#X connect 1 0 2 1;
-#X connect 3 0 4 0;
-#X connect 4 0 1 1;
-#X connect 5 0 0 0;
-#X connect 6 0 0 2;
+#X connect 2 0 13 1;
+#X connect 3 0 2 0;
+#X connect 4 0 13 0;
+#X connect 5 0 4 0;
+#X connect 6 0 13 0;
 #X connect 7 0 6 0;
-#X connect 8 0 0 1;
-#X connect 9 0 8 0;
-#X connect 10 0 0 0;
-#X connect 11 0 10 0;
-#X connect 12 0 0 0;
-#X connect 13 0 12 0;
+#X connect 8 0 21 1;
+#X connect 9 0 21 0;
+#X connect 10 0 13 0;
+#X connect 13 0 15 0;
+#X connect 21 0 13 0;

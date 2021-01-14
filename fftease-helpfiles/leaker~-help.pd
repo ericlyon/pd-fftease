@@ -1,39 +1,31 @@
-#N canvas 600 60 518 484 10;
-#X obj 197 210 leaker~;
-#X floatatom 298 188 5 0 0 0 - - -;
-#X obj 358 162 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -262144
--1 -1 0 1;
-#X obj 197 301 *~ 0.05;
-#X obj 197 332 dac~;
-#X obj 239 261 hsl 128 15 0 1 0 0 empty empty Gain -2 -8 0 10 -262144
--1 -1 0 1;
-#X floatatom 236 281 5 0 0 0 - - -;
-#X msg 22 96 upsieve;
-#X msg 23 122 downsieve;
-#X msg 23 155 randsieve;
-#X text 33 360 leaker~ combines two input sounds \, with the spectral
+#N canvas 600 60 549 452 12;
+#X floatatom 315 339 5 0 0 0 - - -;
+#X obj 318 317 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -228856
+-1 -1 12700 1;
+#X msg 96 209 upsieve;
+#X msg 117 235 downsieve;
+#X msg 126 261 randsieve;
+#X obj 115 366 fftease/leaker~, f 29;
+#X obj 136 299 ./sfplay~;
+#X obj 215 299 ./sfplay~;
+#X obj 115 400 ./gain.dsp~;
+#X obj 50 25 ./icon;
+#X obj 243 37 fftease/leaker~;
+#X text 363 37 - Spectral crossfade;
+#X text 31 91 [leaker~] combines two input sounds \, with the spectral
 contribution of each sound determined by an internally maintained sieve
 and a threshold selection value. At value 0 \, only sound 1 is heard
 and at value 1 \, only sound 2 is heard. At intermediate values \,
 parts of each spectrum are aggregated according to the sieve structure
-which may be specified as upsieve \, downsieve or randsieve.;
-#X obj 93 70 sfplayer~ sf1;
-#X obj 193 70 sfplayer~ sf2;
-#X obj 166 25 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
-1;
-#X obj 166 45 t f f;
-#X connect 0 0 3 0;
-#X connect 1 0 0 2;
-#X connect 2 0 1 0;
-#X connect 3 0 4 0;
-#X connect 3 0 4 1;
-#X connect 5 0 6 0;
-#X connect 6 0 3 1;
-#X connect 7 0 0 0;
-#X connect 8 0 0 0;
-#X connect 9 0 0 0;
-#X connect 11 0 0 0;
-#X connect 12 0 0 1;
-#X connect 13 0 14 0;
-#X connect 14 0 11 0;
-#X connect 14 1 12 0;
+which may be specified as upsieve \, downsieve or randsieve., f 69
+;
+#X text 324 290 slide to crossfade;
+#X text 222 242 select 2 sounds to crossfade;
+#X connect 0 0 5 2;
+#X connect 1 0 0 0;
+#X connect 2 0 5 0;
+#X connect 3 0 5 0;
+#X connect 4 0 5 0;
+#X connect 5 0 8 0;
+#X connect 6 0 5 0;
+#X connect 7 0 5 1;

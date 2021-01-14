@@ -1,5 +1,4 @@
-#N canvas 600 60 426 468 10;
-#X obj 162 149 resent~ 6000;
+#N canvas 605 33 588 499 12;
 #N canvas 404 737 450 300 showsync 0;
 #X obj 205 102 inlet~;
 #X obj 205 159 snapshot~;
@@ -15,15 +14,10 @@
 #X connect 3 0 2 0;
 #X connect 4 0 5 0;
 #X connect 5 0 3 0;
-#X restore 239 178 pd showsync;
-#X floatatom 239 203 5 0 0 0 - - -;
-#X obj 162 296 *~ 0.05;
-#X obj 162 327 dac~;
-#X obj 204 256 hsl 128 15 0 1 0 0 empty empty Gain -2 -8 0 10 -262144
--1 -1 0 1;
-#X floatatom 201 276 5 0 0 0 - - -;
-#X msg 24 42 acquire_sample;
-#X obj 26 119 r resent-msgs;
+#X restore 308 376 pd showsync;
+#X floatatom 308 401 5 0 0 0 - - -;
+#X msg 103 205 acquire_sample;
+#X obj 188 296 r resent-msgs;
 #N canvas 1044 90 450 300 speed-and-phase 0;
 #X obj 124 236 s resent-msgs;
 #X msg 23 139 setspeed \$1;
@@ -55,7 +49,7 @@
 #X connect 11 0 10 0;
 #X connect 12 0 10 0;
 #X connect 13 0 10 0;
-#X restore 242 322 pd speed-and-phase;
+#X restore 304 248 pd speed-and-phase;
 #N canvas 133 590 450 300 oscbank 0;
 #X obj 124 236 s resent-msgs;
 #X msg 103 144 oscbank \$1;
@@ -74,7 +68,7 @@
 #X connect 5 0 4 0;
 #X connect 6 0 0 0;
 #X connect 7 0 6 0;
-#X restore 241 351 pd oscbank;
+#X restore 303 277 pd oscbank;
 #N canvas 775 566 719 379 individual-bin-control 0;
 #X obj 34 343 s resent-msgs;
 #X msg 115 152 linespeed 0 -1 511 1;
@@ -103,18 +97,20 @@ size of 1024.);
 #X connect 8 0 7 0;
 #X connect 9 0 8 1;
 #X connect 10 0 8 0;
-#X restore 242 294 pd individual-bin-control;
-#X text 28 394 resent~ follows the model of residency~ but allows independent
-control over each bin. It is recommended that you familiarize yourself
-with residency~ before working with the more complicated resent~;
-#X obj 163 70 sfplayer~ sf1;
-#X connect 0 0 3 0;
-#X connect 0 1 1 0;
-#X connect 1 0 2 0;
-#X connect 3 0 4 0;
-#X connect 3 0 4 1;
-#X connect 5 0 6 0;
-#X connect 6 0 3 1;
-#X connect 7 0 0 0;
-#X connect 8 0 0 0;
-#X connect 13 0 0 0;
+#X restore 304 220 pd individual-bin-control;
+#X obj 171 337 fftease/resent~ 6000;
+#X obj 171 237 ./sfplay~;
+#X text 103 106 [resent~] follows the model of residency~ but allows
+independent control over each bin. It is recommended that you familiarize
+yourself with residency~ before working with the more complicated resent~
+, f 52;
+#X obj 171 436 ./gain.dsp~;
+#X obj 48 33 ./icon;
+#X text 378 49 - Spectral sample buffer;
+#X obj 244 49 fftease/resent~ 0;
+#X connect 0 0 1 0;
+#X connect 2 0 7 0;
+#X connect 3 0 7 0;
+#X connect 7 0 10 0;
+#X connect 7 1 0 0;
+#X connect 8 0 7 0;

@@ -1,36 +1,31 @@
-#N canvas 600 60 510 389 10;
-#X obj 50 150 scrape~, f 33;
-#X obj 50 227 *~ 0.05;
-#X obj 50 258 dac~;
-#X obj 92 187 hsl 128 15 0 1 0 0 empty empty Gain -2 -8 0 10 -262144
--1 -1 0 1;
-#X floatatom 89 207 5 0 0 0 - - -;
-#X floatatom 284 19 5 0 0 1 knee scrape-knee -;
-#X floatatom 285 39 5 0 0 1 cutoff scrape-cutoff -;
-#X floatatom 284 62 5 0 0 1 thresh1 scrape-t1 -;
-#X floatatom 285 82 5 0 0 1 thresh2 scrape-t2 -;
-#X floatatom 285 104 5 0 0 1 weak-bin-multiplier scrape-wbm -;
+#N canvas 600 60 590 465 12;
+#X floatatom 321 227 5 0 0 1 knee scrape-knee -;
+#X floatatom 322 251 5 0 0 1 cutoff scrape-cutoff -;
+#X floatatom 322 277 5 0 0 1 thresh1 scrape-t1 -;
+#X floatatom 323 300 5 0 0 1 thresh2 scrape-t2 -;
+#X floatatom 323 325 5 0 0 1 weak-bin-multiplier scrape-wbm -;
 #N canvas 1271 554 450 300 init 0;
 #X msg 72 99 \; scrape-knee 1000 \; scrape-cutoff 4000 \; scrape-t1
 0.001 \; scrape-t2 0.05 \; scrape-wbm 0.1;
 #X obj 72 65 loadbang;
 #X connect 1 0 0 0;
-#X restore 284 147 pd init;
-#X text 39 280 scrape~ is like drown~ except that it only operates
+#X restore 348 359 pd init;
+#X text 88 109 scrape~ is like drown~ except that it only operates
 between the frequencies specified by knee and cutoff to the Nyquist.
 Between knee and cutoff is a transition range to gradually increase
 the noise reduction. This is good if you just want to scrape some noise
 off the upper frequency range without affecting lower parts of the
 spectrum (much).;
-#X obj 50 70 sfplayer~ sf1;
-#X connect 0 0 1 0;
-#X connect 1 0 2 0;
-#X connect 1 0 2 1;
-#X connect 3 0 4 0;
-#X connect 4 0 1 1;
-#X connect 5 0 0 1;
-#X connect 6 0 0 2;
-#X connect 7 0 0 3;
-#X connect 8 0 0 4;
-#X connect 9 0 0 5;
-#X connect 12 0 0 0;
+#X obj 95 360 fftease/scrape~, f 33;
+#X obj 95 280 ./sfplay~;
+#X obj 95 395 ./gain.dsp~;
+#X obj 49 36 ./icon;
+#X obj 252 49 fftease/scrape~;
+#X text 370 50 - Shaped noise reduction;
+#X connect 0 0 7 1;
+#X connect 1 0 7 2;
+#X connect 2 0 7 3;
+#X connect 3 0 7 4;
+#X connect 4 0 7 5;
+#X connect 7 0 9 0;
+#X connect 8 0 7 0;

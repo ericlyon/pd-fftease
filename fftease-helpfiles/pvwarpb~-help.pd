@@ -1,6 +1,6 @@
-#N canvas 563 63 692 533 10;
+#N canvas 563 63 711 414 12;
 #N canvas 495 165 450 278 (subpatch) 0;
-#X array pvwarpb-array 512 float 3;
+#X array pvwarpb-array 512 float 1;
 #A 0 0.203754 0.219606 0.235459 0.251311 0.267164 0.283017 0.298869
 0.314722 0.330575 0.346427 0.36228 0.378132 0.393985 0.409838 0.42569
 0.441543 0.457395 0.473248 0.489101 0.504953 0.520806 0.536658 0.552511
@@ -63,34 +63,29 @@
 0.506885 0.493683 0.480481 0.467279 0.454077 0.440875 0.427673 0.414471
 0.401269 0.388068 0.374866 0.361664 0.348462 0.33526 0.322058;
 #X coords 0 2 511 0 200 140 1 0 0;
-#X restore 300 285 graph;
-#X obj 55 234 pvwarpb~ pvwarpb-array, f 72;
-#X obj 486 199 sig~ 0.0001;
-#X obj 55 329 *~ 0.05;
-#X obj 55 360 dac~;
-#X obj 97 289 hsl 128 15 0 1 0 0 empty empty Gain -2 -8 0 10 -262144
--1 -1 0 1;
-#X floatatom 94 309 5 0 0 0 - - -;
-#X msg 201 158 autofunc 0.2 1.7;
-#X obj 436 190 sig~ 1;
-#X floatatom 386 150 5 0 0 0 - - -;
-#X obj 389 115 hsl 128 15 0 1 0 0 empty empty function-read-offset
+#X restore 456 201 graph;
+#X obj 357 271 sig~ 0.0001;
+#X msg 52 143 autofunc 0.2 1.7;
+#X obj 274 264 sig~ 1;
+#X floatatom 191 238 5 0 0 0 - - -;
+#X obj 194 203 hsl 128 15 0 1 0 0 empty empty function-read-offset
 -2 -8 0 10 -262144 -1 -1 0 1;
-#X obj 439 149 hsl 128 15 0.2 2 0 0 empty empty transposition -2 -8
+#X obj 277 243 hsl 128 15 0.2 2 0 0 empty empty transposition -2 -8
 0 10 -262144 -1 -1 0 1;
-#X text 42 446 Spectrum warper. An internal frequency warping function
+#X text 246 101 Spectrum warper. An internal frequency warping function
 is created either with the autofunc message. Try it on vocal sounds.
 In this version \, the warp function is read from a Pd array;
-#X obj 54 80 sfplayer~ sf1;
-#X connect 1 0 3 0;
-#X connect 2 0 1 3;
-#X connect 3 0 4 0;
-#X connect 3 0 4 1;
-#X connect 5 0 6 0;
-#X connect 6 0 3 1;
-#X connect 7 0 1 0;
-#X connect 8 0 1 2;
-#X connect 9 0 1 1;
-#X connect 10 0 9 0;
-#X connect 11 0 8 0;
-#X connect 13 0 1 0;
+#X obj 108 303 fftease/pvwarpb~ pvwarpb-array, f 36;
+#X obj 107 180 ./sfplay~;
+#X obj 108 356 ./gain.dsp~;
+#X obj 95 30 ./icon;
+#X obj 293 44 fftease/pvwarpb~ buf;
+#X text 447 44 - Spectral Warp;
+#X connect 1 0 8 3;
+#X connect 2 0 8 0;
+#X connect 3 0 8 2;
+#X connect 4 0 8 1;
+#X connect 5 0 4 0;
+#X connect 6 0 3 0;
+#X connect 8 0 10 0;
+#X connect 9 0 8 0;
