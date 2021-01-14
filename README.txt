@@ -6,15 +6,19 @@ Christopher Penrose in 1999, and has been maintained by Eric Lyon since
 2003. 
 
 
-Installation 
+Compilation and Installation 
 
 
-The contents of "fftease32-externals" were compiled on Mac OSX 10.9.3
-and should work on Intel-based Mac computers. For other Unix-based
-computers, just type 'make' to build executables appropriate for your
-computer. Then type 'perl collect.pl' to collect all the externals to
-the "fftease32-externals" folder. Finally, move "fftease32-externals"
-and "fftease32-help" to a Pd-accessible location.
+This distribution comes with pre-compiled externals for Linux, macOS,
+and Windows. These externals should reside in a folder called "fftease"
+and be referenced in Pd patches prepended by "fftease/" to avoid name clashes
+with other third-party externals. On macOS, the fftease folder should
+be placed in the user folder "~/Documents/Pd/" to make the externals
+available to Pd.
+
+On Linux, "fftease" should be installed in directory [???]
+
+On Windows, "fftease" should be installed in directory [???]
 
 
 Performance Considerations
@@ -27,23 +31,28 @@ size upward can dramatically improve performance. With larger FFT sizes,
 the reported CPU load may fluctuate. This is because a large FFT is
 being performed only once for several vectors worth of samples. The
 default FFT size is 1024, and the default overlap factor is 8. The
-maximum FFT size is 1073741824. Let me know if you find a computer
-powerful enough to compute the maximum FFT size in real-time. 
+maximum FFT size is 1073741824. 
 
 
 For Coders 
 
 
-Full source code is included, so that intrepid coders may extend
-FFTease, or even code up a 64-bit version. (Note that current 64-bit
-versions of Pd compute all DSP with 32-bit resolution, thus a 64-bit
-port does not yet seem advisable.) The FFTease code is distributed under
-the MIT license to facilitate deployment to any combination of free,
-open-source, commercial, or closed-source projects.
+Full source code is included, so that intrepid coders can extend FFTease. 
+The FFTease code is distributed under the MIT license to facilitate deployment 
+to any combination of free, open-source, commercial, or closed-source projects.
 
-Have fun!
+
+Acknowledgements
+
+
+This update of FFTease was motivated and supported by essential contributions
+in coding, advice, and bug reports from @porres, @umlaeute, and @Lucarda. It would
+not have been possible without their sustained contributions to the project. 
+
+
+Happy sonic exploration!
 
 Eric Lyon
 ericlyon@vt.edu
 Blacksburg, Virginia
-July, 2014
+January, 2021
