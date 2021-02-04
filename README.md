@@ -6,7 +6,7 @@ Christopher Penrose in 1999, and has been maintained by Eric Lyon since
 2003. 
 
 
-Compilation and Installation 
+**Compilation and Installation** 
 
 
 This distribution comes with pre-compiled externals for Linux, macOS,
@@ -17,7 +17,7 @@ be placed in the user folder "~/Documents/Pd/" to make the externals
 available to Pd.
 
 
-Performance Considerations
+**Performance Considerations**
 
 
 The default Pd audio buffer settings for both I/O vector size and signal
@@ -30,7 +30,7 @@ default FFT size is 1024, and the default overlap factor is 8. The
 maximum FFT size is 1073741824. 
 
 
-For Coders 
+**For Coders**
 
 
 Full source code is included, so that intrepid coders can extend FFTease. 
@@ -38,7 +38,7 @@ The FFTease code is distributed under the MIT license to facilitate deployment
 to any combination of free, open-source, commercial, or closed-source projects.
 
 
-Acknowledgements
+**Acknowledgements**
 
 
 This update of FFTease was motivated and supported by essential contributions
