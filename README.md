@@ -43,7 +43,7 @@ to any combination of free, open-source, commercial, or closed-source projects.
 
 This update of FFTease was supported by coding, advice, and bug reports from @porres, @umlaeute, and @Lucarda. 
 
-Happy sonic exploration!
+Happy sonic explorations!
 
 Eric Lyon
 ericlyon@vt.edu
