@@ -46,9 +46,6 @@ This update of FFTease was supported by coding, advice, and bug reports from @po
 Happy sonic explorations!
 
 Eric Lyon
-
 ericlyon@vt.edu
-
 Blacksburg, Virginia
-
 January, 2021
