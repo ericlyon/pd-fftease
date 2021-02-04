@@ -46,9 +46,7 @@ Acknowledgements
 
 
 This update of FFTease was motivated and supported by essential contributions
-in coding, advice, and bug reports from @porres, @umlaeute, and @Lucarda. It would
-not have been possible without their sustained contributions to the project. 
-
+in coding, advice, and bug reports from @porres, @umlaeute, and @Lucarda. 
 
 Happy sonic exploration!
 
