@@ -29,6 +29,7 @@ typedef struct _pvwarpb
     short automate;
     t_float *warpfunc; // workspace to create a new function
     short initialized; // state for object
+    int b_errorstatus; // check if error msg has been sent due to a bad buffer
     int b_frames;
     t_word *b_samples;
     int b_valid;
@@ -258,6 +259,7 @@ void *pvwarpb_new(t_symbol *s, int argc, t_atom *argv)
     fft = x->fft;
     fft->initialized = 0; // for FFTease package
     x->initialized = 0; // for object
+    x->b_errorstatus = 0;
     x->lofreq = 0.0;
     x->hifreq = 10000.0;
     fft->N = FFTEASE_DEFAULT_FFTSIZE;
@@ -466,16 +468,24 @@ void pvwarpb_attachbuf(t_pvwarpb *x)
     x->b_valid = 0;
     if (!(a = (t_garray *)pd_findbyclass(buffername, garray_class)))
     {
-        if (*buffername->s_name) pd_error(x, "player~: %s: no such array",
-                                          buffername->s_name);
+        if (*buffername->s_name) {
+            if(x->b_errorstatus == 0) {
+                pd_error(x, "pvwarpb~: %s: no such array", buffername->s_name);
+                x->b_errorstatus = 1;
+            }
+        }
     }
     else if (!garray_getfloatwords(a, &frames, &x->b_samples))
     {
-        pd_error(x, "%s: bad template for player~", buffername->s_name);
+        if(x->b_errorstatus == 0) {
+            pd_error(x, "%s: bad template for pvwarpb~", buffername->s_name);
+            x->b_errorstatus = 1;
+        }
     }
     else  {
         x->b_frames = frames;
         x->b_valid = 1;
+        x->b_errorstatus = 0;
         garray_usedindsp(a);
     }
 }

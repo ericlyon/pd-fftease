@@ -13,6 +13,7 @@ typedef struct _residency_buffer
     t_fftease *fft;
     long b_frames;
     long b_valid;
+    long b_errorstatus;
     t_word *b_samples;
     t_float current_frame;
     int framecount;
@@ -121,6 +122,7 @@ void *residency_buffer_new(t_symbol *msg, short argc, t_atom *argv)
     fft->N = FFTEASE_DEFAULT_FFTSIZE;
     fft->overlap = FFTEASE_DEFAULT_OVERLAP;
     fft->winfac = FFTEASE_DEFAULT_WINFAC;
+    x->b_errorstatus = 0;
     if(argc > 0){ x->buffername = atom_getsymbolarg(0, argc, argv); }
     else { post("%s: Must specify array name", OBJECT_NAME); return NULL; }
     if(argc > 1){ fft->N = (int) atom_getfloatarg(1, argc, argv); }
@@ -295,16 +297,24 @@ void residency_buffer_attachbuf(t_residency_buffer *x)
     x->b_valid = 0;
     if (!(a = (t_garray *)pd_findbyclass(buffername, garray_class)))
     {
-        if (*buffername->s_name) pd_error(x, "player~: %s: no such array",
-                                          buffername->s_name);
+        if (*buffername->s_name) {
+            if(x->b_errorstatus == 0) {
+                pd_error(x, "residency_buffer~: %s: no such array", buffername->s_name);
+                x->b_errorstatus = 1;
+            }
+        }
     }
     else if (!garray_getfloatwords(a, &frames, &x->b_samples))
     {
-        pd_error(x, "%s: bad template for player~", buffername->s_name);
+        if(x->b_errorstatus == 0) {
+            pd_error(x, "%s: bad template for residency_buffer~", buffername->s_name);
+            x->b_errorstatus = 1;
+        }
     }
     else  {
         x->b_frames = frames;
         x->b_valid = 1;
+        x->b_errorstatus = 0;
         garray_usedindsp(a);
     }
 }
