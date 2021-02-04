@@ -16,10 +16,6 @@ with other third-party externals. On macOS, the fftease folder should
 be placed in the user folder "~/Documents/Pd/" to make the externals
 available to Pd.
 
-On Linux, "fftease" should be installed in directory [???]
-
-On Windows, "fftease" should be installed in directory [???]
-
 
 Performance Considerations
 
