@@ -41,7 +41,7 @@ to any combination of free, open-source, commercial, or closed-source projects.
 **Acknowledgements**
 
 
-This update of FFTease was motivated and supported by essential contributions
+This update of FFTease was motivated and supported by contributions
 in coding, advice, and bug reports from @porres, @umlaeute, and @Lucarda. 
 
 Happy sonic exploration!
