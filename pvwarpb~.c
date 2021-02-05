@@ -11,7 +11,7 @@ typedef struct _pvwarpb
     t_object x_obj;
     t_float x_f;
     t_symbol *buffername;
-    t_float lofreq;/* user speficied lowest synthfreq */
+    t_float lofreq;/* user specified lowest synthfreq */
     t_float hifreq;/* user specified highest synthfreq */
     t_float topfreq;
     t_fftease *fft;

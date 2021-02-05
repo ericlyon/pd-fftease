@@ -12,7 +12,7 @@ typedef struct _pvwarp
     t_float x_f;
     t_fftease *fft;
     t_float hifreq; // user specified highest synthfreq
-    t_float lofreq;//user speficied lowest synthfreq
+    t_float lofreq;//user specified lowest synthfreq
     t_float topfreq;
     short *connections;
     short mute;
