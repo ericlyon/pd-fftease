@@ -1,53 +1,54 @@
-#N canvas 657 52 612 653 12;
-#X floatatom 308 509 5 0 0 0 - - -;
-#X obj 311 483 hsl 128 15 0.25 1 0 0 empty \$0-damping empty -2 -8
+#N canvas 732 79 628 653 12;
+#X floatatom 318 507 5 0 0 0 - - -;
+#X obj 321 481 hsl 128 15 0.25 1 0 0 empty \$0-damping empty -2 -8
 0 10 -228856 -1 -1 11853 1;
-#X floatatom 222 472 5 0 0 0 - - -;
-#X obj 225 446 hsl 128 15 0.5 1.25 0 0 empty \$0-threshold empty -2
+#X floatatom 232 470 5 0 0 0 - - -;
+#X obj 235 444 hsl 128 15 0.5 1.25 0 0 empty \$0-threshold empty -2
 -8 0 10 -228856 -1 -1 4233 1;
-#X msg 138 322 oscbank \$1;
-#X obj 138 296 tgl 17 0 empty empty empty 17 7 0 10 -228856 -1 -1 0
+#X msg 148 320 oscbank \$1;
+#X obj 148 294 tgl 17 0 empty empty empty 17 7 0 10 -228856 -1 -1 0
 1;
-#X msg 99 263 max_hold 100000;
-#X msg 172 405 transpose \$1;
-#X floatatom 172 379 5 0 0 0 - - -;
-#X obj 175 357 hsl 128 15 0.25 1.1 0 0 empty empty empty -2 -8 0 10
+#X msg 109 261 max_hold 100000;
+#X msg 182 403 transpose \$1;
+#X floatatom 182 377 5 0 0 0 - - -;
+#X obj 185 355 hsl 128 15 0.25 1.1 0 0 empty empty empty -2 -8 0 10
 -228856 -1 -1 0 1;
-#X obj 136 586 ./gain.dsp~;
-#X text 53 88 [bthresher~] extends the thresher~ model to allow independent
+#X obj 146 584 ./gain.dsp~;
+#X text 48 87 [bthresher~] extends the thresher~ model to allow independent
 control over the parameters of each individual bin. You can also randomly
 set damping and threshold values \, and can dump the current values
 (to possibly send as input to another bthresher~ unit). It is recommended
 that you familiarize yourself with [thresher~] before exploring the
-more complicated [bthresher~]., f 61;
-#X obj 338 204 fftease/thresher~;
-#X text 261 206 see also:;
-#X text 359 437 threshold factor for all bins, f 17;
-#X text 358 503 damping factor for all bins, f 14;
-#X obj 55 216 noise~;
-#X text 238 57 - Bin level feedback;
-#X text 268 394 (only for oscbank), f 9;
-#X text 166 296 oscbank mode;
-#X text 319 548 <= arguments: window size and;
-#X text 340 563 overlap (default: 1024 \, 8);
-#X obj 136 549 fftease/bthresher~ 2048 8;
+more complicated [bthresher~]., f 74;
+#X obj 415 207 fftease/thresher~;
+#X text 338 209 see also:;
+#X text 369 435 threshold factor for all bins, f 17;
+#X text 368 501 damping factor for all bins, f 14;
+#X obj 65 214 noise~;
+#X text 278 392 (only for oscbank), f 9;
+#X text 176 294 oscbank mode;
+#X text 329 546 <= arguments: window size and;
+#X text 350 561 overlap (default: 1024 \, 8);
+#X obj 146 547 fftease/bthresher~ 2048 8;
 #N canvas 1429 76 277 215 init 0;
 #X obj 72 69 f \$0;
 #X msg 72 96 \; \$1-threshold 0.75 \; \$1-damping 0.95;
 #X obj 72 41 loadbang;
 #X connect 0 0 1 0;
 #X connect 2 0 0 0;
-#X restore 63 567 pd init;
-#X obj 58 15 ./icon bthresher~;
-#X connect 0 0 22 2;
+#X restore 73 565 pd init;
+#X obj 57 22 ./icon bthresher~;
+#X obj 263 34 fftease/bthresher~;
+#X text 406 33 - Bin level feedback;
+#X connect 0 0 21 2;
 #X connect 1 0 0 0;
-#X connect 2 0 22 1;
+#X connect 2 0 21 1;
 #X connect 3 0 2 0;
-#X connect 4 0 22 0;
+#X connect 4 0 21 0;
 #X connect 5 0 4 0;
-#X connect 6 0 22 0;
-#X connect 7 0 22 0;
+#X connect 6 0 21 0;
+#X connect 7 0 21 0;
 #X connect 8 0 7 0;
 #X connect 9 0 8 0;
-#X connect 16 0 22 0;
-#X connect 22 0 10 0;
+#X connect 16 0 21 0;
+#X connect 21 0 10 0;
