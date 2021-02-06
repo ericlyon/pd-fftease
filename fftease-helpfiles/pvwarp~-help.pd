@@ -1,33 +1,33 @@
-#N canvas 927 56 646 503 10;
-#X obj 481 368 sig~ 0.0001;
-#X floatatom 439 343 5 0 0 0 - - -;
-#X floatatom 397 343 5 0 0 0 - - -;
+#N canvas 692 38 689 510 12;
+#X obj 495 368 sig~ 0.0001;
+#X floatatom 451 343 5 0 0 0 - - -;
+#X floatatom 408 343 5 0 0 0 - - -;
 #X msg 146 320 autofunc 0.1 2;
-#X obj 442 319 hsl 128 15 0.25 2 0 0 empty empty Transposition -2 -8
+#X obj 454 319 hsl 128 15 0.25 2 0 0 empty empty Transposition -2 -8
 0 10 -262144 -1 -1 0 1;
-#X obj 399 279 hsl 128 15 0 1 0 0 empty empty function-read-offset
+#X obj 410 279 hsl 128 15 0 1 0 0 empty empty function-read-offset
 -2 -8 0 10 -262144 -1 -1 0 1;
 #X obj 104 133 sfplay~;
-#X obj 106 395 fftease/pvwarp~, f 63;
+#X obj 106 395 fftease/pvwarp~, f 56;
 #X obj 106 437 ./gain.dsp~;
 #X obj 51 35 ./icon;
-#X obj 271 31 fftease/pvwarp~;
-#X text 373 30 - Spectral Warp;
-#X floatatom 231 368 5 0 0 0 - - -;
-#X floatatom 189 368 5 0 0 0 - - -;
-#X floatatom 147 368 5 0 0 0 - - -;
-#X text 254 55 [pvwarp~] creates an internal frequency warping function
+#X obj 261 48 fftease/pvwarp~;
+#X text 378 47 - Spectral Warp;
+#X floatatom 235 368 5 0 0 0 - - -;
+#X floatatom 192 368 5 0 0 0 - - -;
+#X floatatom 149 368 5 0 0 0 - - -;
+#X text 244 83 [pvwarp~] creates an internal frequency warping function
 either according to specification or with the autofunc message. Try
-it on vocal sounds.;
-#X text 149 350 cf1;
-#X text 190 350 bw1;
-#X text 229 350 warp1;
-#X floatatom 356 368 5 0 0 0 - - -;
-#X floatatom 314 368 5 0 0 0 - - -;
-#X floatatom 272 368 5 0 0 0 - - -;
-#X text 274 350 cf2;
-#X text 314 350 bw2;
-#X text 355 350 warp2;
+it on vocal sounds., f 50;
+#X text 151 350 cf1;
+#X text 193 350 bw1;
+#X text 233 350 warp1;
+#X floatatom 365 368 5 0 0 0 - - -;
+#X floatatom 322 368 5 0 0 0 - - -;
+#X floatatom 278 368 5 0 0 0 - - -;
+#X text 280 350 cf2;
+#X text 322 350 bw2;
+#X text 361 349 warp2;
 #X msg 118 230 bottomfreq \$1;
 #X obj 121 190 hsl 128 15 20 500 0 0 empty empty empty -2 -8 0 10 -228856
 -1 -1 0 1;
