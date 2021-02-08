@@ -18,7 +18,7 @@ Christopher Penrose in 1999, and has been maintained by Eric Lyon since
 - disarrain~ an interpolating version of disarray~
 - disarray~ a spectral redistribution object
 - drown~ a noise reduction (or increase) object
-- enrich~ oscillator resynthesis with a user-designed waveform
+- enrich~ an oscillator resynthesis with a user-designed waveform
 - ether~ another spectral compositing object
 - leaker~ a sieve-based cross fader
 - mindwarp~ a spectral formant warping object
@@ -30,13 +30,13 @@ Christopher Penrose in 1999, and has been maintained by Eric Lyon since
 - pvharm~ a harmonizer
 - pvoc~ an additive synthesis phase vocoder
 - pvtuner~ a spectrum quantizer for tuning to arbitrary scales
-- pvwarpb~ a non-linear frequency warper with a user-accessible warp array
 - pvwarp~ a non-linear frequency warper
+- pvwarpb~ a non-linear frequency warper with a user-accessible warp array
 - reanimator~ an audio texture mapper
 - resent~ similar to residency~ but with independent bin control
 - residency~ a spectral sampler useful for time scaling
 - residency_buffer~ a spectral sampler that writes analysis data to a Pd array
-- schmear~ spreads spectral energy over several bins
+- schmear~ a spectral smear object
 - scrape~ a noise reduction (or increase) object with frequency control
 - shapee~ a frequency shaping object
 - swinger~ a phase swapping object
