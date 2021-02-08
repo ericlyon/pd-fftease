@@ -35,7 +35,7 @@ Christopher Penrose in 1999, and has been maintained by Eric Lyon since
 - reanimator~ an audio texture mapper
 - resent~ similar to residency~ but with independent bin control
 - residency~ a spectral sampler useful for time scaling
-- residency_buffer~ a spectral sampler that writes to an MSP buffer
+- residency_buffer~ a spectral sampler that writes analysis data to a Pd array
 - schmear~ spreads spectral energy over several bins
 - scrape~ a noise reduction (or increase) object with frequency control
 - shapee~ a frequency shaping object
