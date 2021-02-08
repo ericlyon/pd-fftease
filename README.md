@@ -5,6 +5,45 @@ processing in Max. The collection was designed by Eric Lyon and
 Christopher Penrose in 1999, and has been maintained by Eric Lyon since
 2003. 
 
+**List of Objects**
+
+- bthresher~ similar to thresher~ but with more control
+- burrow~ a cross-referenced filtering object
+- cavoc~ an 8-rule cellular automata that generates spectra
+- cavoc27~ a 27-rule cellular automata object
+- centerring~ a spectral modulation object
+- codepend~ a classic block convolution object
+- cross~ a cross synthesis object with gating
+- dentist~ a partial knockout object
+- disarrain~ an interpolating version of disarray~
+- disarray~ a spectral redistribution object
+- drown~ a noise reduction (or increase) object
+- enrich~ oscillator resynthesis with a user-designed waveform
+- ether~ another spectral compositing object
+- leaker~ a sieve-based cross fader
+- mindwarp~ a spectral formant warping object
+- morphine~ a morphing object
+- multyq~ a four band filter
+- pileup~ spectral accumulation object
+- pvcompand~ a spectral compressor/expander object
+- pvgrain~ a spectrum analyzer for granular resynthesis
+- pvharm~ a harmonizer
+- pvoc~ an additive synthesis phase vocoder
+- pvtuner~ a spectrum quantizer for tuning to arbitrary scales
+- pvwarpb~ a non-linear frequency warper with a user-accessible warp array
+- pvwarp~ a non-linear frequency warper
+- reanimator~ an audio texture mapper
+- resent~ similar to residency~ but with independent bin control
+- residency~ a spectral sampler useful for time scaling
+- residency_buffer~ a spectral sampler that writes to an MSP buffer
+- schmear~ spreads spectral energy over several bins
+- scrape~ a noise reduction (or increase) object with frequency control
+- shapee~ a frequency shaping object
+- swinger~ a phase swapping object
+- taint~ a cross synthesis object
+- thresher~ an amplitude/frequency sensitive gating object
+- vacancy~ a spectral compositing object
+- xsyn~ a cross synthesis with compression object
 
 **Compilation and Installation** 
 
@@ -48,4 +87,4 @@ Happy sonic explorations!
 Eric Lyon  
 ericlyon@vt.edu  
 Blacksburg, Virginia  
-January, 2021
+February 8, 2021
