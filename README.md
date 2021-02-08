@@ -24,7 +24,7 @@ Christopher Penrose in 1999, and has been maintained by Eric Lyon since
 - mindwarp~ a spectral formant warping object
 - morphine~ a morphing object
 - multyq~ a four band filter
-- pileup~ spectral accumulation object
+- pileup~ a spectral accumulation object
 - pvcompand~ a spectral compressor/expander object
 - pvgrain~ a spectrum analyzer for granular resynthesis
 - pvharm~ a harmonizer
