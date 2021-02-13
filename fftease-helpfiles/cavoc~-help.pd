@@ -1,5 +1,5 @@
-#N canvas 670 118 689 351 12;
-#N canvas 711 106 900 665 more-messages 0;
+#N canvas 84 684 689 351 12;
+#N canvas 107 416 900 665 more-messages 0;
 #X msg 431 484 retune 0.5 1.5;
 #X msg 253 313 bottomfreq \$1;
 #X msg 399 313 topfreq \$1;
@@ -10,64 +10,71 @@
 1;
 #X msg 109 68 external_trigger \$1;
 #X msg 408 367 hold_time \$1;
-#X floatatom 408 342 5 100 1000 0 - - -;
+#X floatatom 408 342 5 10 1000 0 - - -;
 #X floatatom 222 212 5 0.01 0.25 0 - - -;
 #X msg 222 234 density \$1;
 #X msg 420 424 oscbank \$1;
 #X obj 420 397 tgl 17 0 empty empty empty 17 7 0 10 -228856 -1 -1 0
 1;
 #X obj 225 190 hsl 128 15 0.01 0.5 1 0 empty empty empty -2 -8 0 10
--228856 -1 -1 0 1;
+-228856 -1 -1 500 1;
 #X obj 176 149 bng 18 250 50 0 empty empty empty 17 7 0 10 -228856
 -1 -1;
-#X obj 109 38 tgl 17 0 empty empty empty 17 7 0 10 -228856 -1 -1 0
+#X obj 109 38 tgl 17 0 empty empty empty 17 7 0 10 -228856 -1 -1 1
 1;
 #X msg 419 460 retune 0.95 1.05;
-#X text 546 459 <= reset phase "tunings" with minimum and maximum factors
-(useful in oscillator bank mode), f 46;
 #N canvas 754 288 275 142 random-metro 0;
 #X obj 62 17 inlet;
 #X obj 62 48 metro;
 #X obj 62 90 outlet;
-#X obj 115 58 expr random(50 \, 501);
+#X obj 115 58 expr random(20 \, 300);
 #X connect 0 0 1 0;
-#X connect 1 0 3 0;
 #X connect 1 0 2 0;
+#X connect 1 0 3 0;
 #X connect 3 0 1 1;
 #X restore 176 120 pd random-metro;
-#X obj 176 96 tgl 17 0 empty empty empty 17 7 0 10 -228856 -1 -1 0
+#X obj 176 96 tgl 17 0 empty empty empty 17 7 0 10 -228856 -1 -1 1
 1;
 #X text 204 145 trigger with bangs if external_trigger is on, f 22
 ;
 #X obj 402 262 hsl 128 15 100 10000 1 0 empty empty empty -2 -8 0 10
--228856 -1 -1 0 1;
+-228856 -1 -1 7100 1;
 #X obj 256 262 hsl 128 15 100 10000 1 0 empty empty empty -2 -8 0 10
--228856 -1 -1 0 1;
+-228856 -1 -1 5200 1;
 #X obj 252 577 outlet;
-#X connect 0 0 24 0;
-#X connect 1 0 24 0;
-#X connect 2 0 24 0;
+#X text 451 344 time interval (ms) for internal clock;
+#X text 132 37 turn off internal clock \, and trigger changes with
+"bang";
+#X text 206 99 an example of an external clock;
+#X text 546 458 <= reset phase "tunings" with minimum and maximum transposition
+factors, f 46;
+#X text 357 189 density of spectral fill (bins initialized to be non-zero)
+;
+#X text 547 262 control frequency range;
+#X connect 0 0 23 0;
+#X connect 1 0 23 0;
+#X connect 2 0 23 0;
 #X connect 3 0 2 0;
 #X connect 4 0 1 0;
-#X connect 5 0 24 0;
+#X connect 5 0 23 0;
 #X connect 6 0 5 0;
-#X connect 7 0 24 0;
-#X connect 8 0 24 0;
+#X connect 7 0 23 0;
+#X connect 8 0 23 0;
 #X connect 9 0 8 0;
 #X connect 10 0 11 0;
-#X connect 11 0 24 0;
-#X connect 12 0 24 0;
+#X connect 11 0 23 0;
+#X connect 12 0 23 0;
 #X connect 13 0 12 0;
 #X connect 14 0 10 0;
-#X connect 15 0 24 0;
+#X connect 15 0 23 0;
 #X connect 16 0 7 0;
-#X connect 17 0 24 0;
-#X connect 19 0 15 0;
-#X connect 20 0 19 0;
-#X connect 22 0 3 0;
-#X connect 23 0 4 0;
-#X restore 113 178 pd more-messages;
-#N canvas 805 281 419 376 rules 0;
+#X connect 17 0 23 0;
+#X connect 18 0 15 0;
+#X connect 19 0 18 0;
+#X connect 21 0 3 0;
+#X connect 22 0 4 0;
+#X restore 88 195 pd more-messages;
+#N canvas 4 547 419 376 rules 0;
 #X msg 74 65 rule 0 1 0 1 0 0 1 1;
 #X msg 57 41 rule 0 1 1 0 1 0 0 1;
 #X msg 87 88 rule 0 0 0 0 1 1 1 1;
@@ -87,18 +94,20 @@
 #X connect 6 0 9 0;
 #X connect 7 0 9 0;
 #X connect 8 0 9 0;
-#X restore 93 143 pd rules;
-#X obj 54 51 ./icon;
-#X obj 93 268 ./gain.dsp~;
-#X text 278 66 [cavoc~] generates spectra with an 8 rule cellular automaton.
+#X restore 68 160 pd rules;
+#X obj 61 19 ./icon;
+#X obj 68 285 ./gain.dsp~;
+#X text 54 92 [cavoc~] generates spectra with an 8 rule cellular automaton.
 Start with very low gain.;
-#X text 378 39 - Cellular Automata-generated spectra;
-#X obj 93 218 fftease/cavoc~ 2048 4 0.2 250;
-#X obj 269 38 fftease/cavoc~;
-#X obj 456 128 fftease/cavoc27~;
-#X text 383 128 see also:;
-#X text 307 218 <= arguments: window size \, overlap \, density;
-#X text 329 233 and hold time (default: 1024 \, 8 \, 0.1 \, 500);
+#X text 337 48 - Cellular Automata-generated spectra;
+#X obj 68 235 fftease/cavoc~ 2048 4 0.2 250;
+#X text 282 232 <= arguments: window size \, overlap \, density;
+#X text 304 247 and hold time (default: 1024 \, 8 \, 0.1 \, 500);
+#X obj 325 20 cnv 15 100 30 empty empty fftease/cavoc~ 20 12 0 24 -262144
+-1 0;
+#X text 425 143 see also:;
+#X obj 405 161 cnv 15 100 20 empty empty fftease/cavoc27~ 20 12 0 14
+-262144 -1 0;
 #X connect 0 0 6 0;
 #X connect 1 0 6 0;
 #X connect 6 0 3 0;
