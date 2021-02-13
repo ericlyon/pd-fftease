@@ -6,9 +6,9 @@
 #X floatatom 381 382 5 0 0 0 - - -;
 #X text 204 308 source sound;
 #X msg 170 431 mute \$1;
-#X obj 182 26 ./icon;
+#X obj 119 31 ./icon;
 #X obj 298 598 ./gain.dsp~;
-#X text 509 43 - Cross filtering;
+#X text 436 63 - Cross filtering;
 #X obj 441 415 expr pow(10 \, $f1/20);
 #X obj 449 499 expr pow(10 \, $f1/20);
 #X obj 170 404 tgl 17 0 empty empty empty 17 7 0 10 -228856 -1 -1 0
@@ -18,7 +18,7 @@
 #X obj 298 308 noise~;
 #X msg 103 448 fftinfo;
 #X obj 384 356 hsl 128 15 100 1000 0 0 empty \$0-freq empty -2 -8 0
-10 -228856 -1 -1 7056 1;
+10 -228856 -1 -1 12700 1;
 #X text 414 355 frequency;
 #X text 598 407 below (if inverted);
 #X text 115 91 [burrow~] filters the sound in the left input by utilizing
@@ -31,7 +31,7 @@ threshold., f 81;
 #X obj 441 393 nbx 5 14 -1e+37 1e+37 0 0 \$0-dummy \$0-threshold empty
 0 -8 0 10 -228856 -1 -1 -45 256;
 #X obj 449 479 nbx 5 14 -1e+37 1e+37 0 0 \$0-dummy \$0-multiplier empty
-0 -8 0 10 -228856 -1 -1 -35 256;
+0 -8 0 10 -228856 -1 -1 -30 256;
 #X floatatom 449 522 7 0 0 0 - - -;
 #X text 500 390 <= threshold (dB) - acts above or;
 #X text 510 476 <= multiplier factor (dB);
@@ -52,7 +52,6 @@ if inverted., f 81;
 #X text 461 559 <= arguments: window size and;
 #X text 482 574 overlap (default: 1024 \, 8);
 #X text 325 345 filter sound, f 6;
-#X obj 394 41 fftease/burrow~;
 #N canvas 1429 76 277 215 init 0;
 #X msg 72 96 \; \$1-freq 600 \; \$1-threshold -45 \; \$1-multiplier
 -35;
@@ -61,6 +60,8 @@ if inverted., f 81;
 #X connect 1 0 0 0;
 #X connect 2 0 1 0;
 #X restore 225 583 pd init;
+#X obj 419 35 cnv 15 100 30 empty empty fftease/burrow~ 20 12 0 24
+-262144 -1 0;
 #X connect 0 0 12 0;
 #X connect 1 0 0 0;
 #X connect 2 0 13 0;
