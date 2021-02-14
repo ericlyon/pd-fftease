@@ -1,4 +1,4 @@
-#N canvas 784 59 546 588 12;
+#N canvas 1235 286 624 591 12;
 #X floatatom 170 334 5 0 0 0 - freq -;
 #X floatatom 214 403 5 0 0 0 - centerring-basefreq -;
 #X floatatom 256 429 5 0 0 0 - centerring-freqbandw -;
@@ -29,7 +29,7 @@ the frequency of an oscillator associated with each frequency band.
 The frequency bandwidth and constant control the deviation of a particular
 frequency band's modulation oscillator frequency., f 65;
 #X obj 63 31 ./icon;
-#X text 206 97 - Frequency independent amplitude modulation;
+#X text 259 69 - Frequency independent amplitude modulation;
 #N canvas 416 120 336 327 sawtooth 0;
 #X obj 134 136 -~ 0.5;
 #X obj 134 173 *~ 2;
@@ -46,7 +46,8 @@ frequency band's modulation oscillator frequency., f 65;
 #X text 255 403 base frequency;
 #X text 297 430 frequency bandwidth;
 #X text 341 456 frequency constant;
-#X obj 61 98 fftease/centerring~;
+#X obj 246 34 cnv 15 100 30 empty empty fftease/centerring~ 20 12 0
+24 -262144 -1 0;
 #X connect 0 0 12 0;
 #X connect 1 0 7 1;
 #X connect 2 0 7 2;
