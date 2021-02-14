@@ -71,10 +71,7 @@ static void cavoc27_noalias(t_cavoc27 *x, t_floatarg flag);
 static void cavoc27_manual(t_cavoc27 *x, t_floatarg tog);
 static void cavoc27_trigger(t_cavoc27 *x);
 static void cavoc27_freeze(t_cavoc27 *x, t_floatarg tog);
-static void cavoc27_capture_lock(t_cavoc27 *x, t_floatarg flag );
-static void cavoc27_fftsize(t_cavoc27 *x, t_floatarg f);
-static void cavoc27_overlap(t_cavoc27 *x, t_floatarg f);
-static void cavoc27_winfac(t_cavoc27 *x, t_floatarg f);
+
 
 void cavoc27_tilde_setup(void)
 {
@@ -172,7 +169,7 @@ void cavoc27_interpolate(t_cavoc27 *x, t_floatarg flag)
 void cavoc27_capture_spectrum(t_cavoc27 *x, t_floatarg flag )
 {
     x->capture_lock = (short)flag;
-    post("capture flag: %d", x->capture_lock);
+//    post("capture flag: %d", x->capture_lock);
 }
 
 void cavoc27_capture_lock(t_cavoc27 *x, t_floatarg flag )
@@ -220,6 +217,8 @@ t_fftease *fft;
     x->freeze = 0;
     x->start_breakpoint = 1.0 - x->density;
     fft->obank_flag = 0;
+//    x->manual_mode = 0; // new try
+//   x->frames_left = 0; // new try
     if(argc > 0){ fft->N = (int) atom_getfloatarg(0, argc, argv); }
     if(argc > 1){ fft->overlap = (int) atom_getfloatarg(1, argc, argv); }
     if(argc > 2){ x->density = atom_getfloatarg(2, argc, argv); }
@@ -274,7 +273,7 @@ void cavoc27_init(t_cavoc27 *x)
         return;
     }
     x->frame_duration = (float)fft->D/(float) fft->R;
-    x->hold_frames = (int) (x->hold_time/x->frame_duration);
+    x->hold_frames = (int) ( (x->hold_time/1000.0)/x->frame_duration);
     x->frames_left = x->hold_frames;
     x->trigger_value = 0;
     x->set_count = 0;
@@ -377,6 +376,7 @@ static void do_cavoc27(t_cavoc27 *x)
         if( --frames_left <= 0 ){
             trigger = 1;
         }
+        // post("frames left %d trigger %d\n", frames_left, trigger);
     }
     if(trigger && ! x->freeze){
         for( i = 0; i < fft->N+1; i++ ){
