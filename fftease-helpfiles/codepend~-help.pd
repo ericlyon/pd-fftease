@@ -1,59 +1,60 @@
-#N canvas 689 67 688 657 12;
-#X floatatom 317 420 5 0 0 0 - codepend-scalingexp -;
-#X floatatom 372 522 5 0 0 0 - - -;
-#X floatatom 372 471 5 -120 0 1 inverse-threshold - -;
-#X text 361 414 scaling exponent (lower values increase distortion)
+#N canvas 689 67 722 703 12;
+#X floatatom 317 448 5 0 0 0 - codepend-scalingexp -;
+#X floatatom 372 550 5 0 0 0 - - -;
+#X floatatom 372 499 5 -120 0 1 inverse-threshold - -;
+#X text 361 442 scaling exponent (lower values increase distortion)
 , f 27;
 #N canvas 516 425 450 300 init 0;
 #X msg 124 172 \; codepend-scalingexp 0.2 \; codepend-invertscale -36
 ;
-#X restore 110 573 pd init;
-#X msg 122 336 invert \$1;
-#X obj 122 311 tgl 17 0 empty empty empty 17 7 0 10 -228856 -1 -1 0
+#X restore 110 601 pd init;
+#X msg 122 364 invert \$1;
+#X obj 122 339 tgl 17 0 empty empty empty 17 7 0 10 -228856 -1 -1 0
 1;
-#X msg 52 316 pad \$1;
-#X floatatom 52 293 5 0 0 0 - - -;
-#X floatatom 52 237 5 0 0 0 - codepend-invertscale -;
-#X obj 262 335 tgl 17 0 empty empty empty 17 7 0 10 -228856 -1 -1 0
+#X msg 52 344 pad \$1;
+#X floatatom 52 321 5 0 0 0 - - -;
+#X floatatom 52 265 5 0 0 0 - codepend-invertscale -;
+#X obj 262 363 tgl 17 0 empty empty empty 17 7 0 10 -228856 -1 -1 0
 1;
-#X obj 207 604 ./gain.dsp~;
-#X obj 372 497 expr pow(10 \, $f1/20);
-#X obj 52 268 expr pow(10 \, $f1/20);
-#X obj 80 19 ./icon;
-#X text 426 31 - Block convolution;
-#X text 48 81 [codepend~] is a classic "block convolution" processor.
+#X obj 207 632 ./gain.dsp~;
+#X obj 372 525 expr pow(10 \, $f1/20);
+#X obj 52 296 expr pow(10 \, $f1/20);
+#X obj 52 28 ./icon;
+#X text 310 63 - Block convolution;
+#X text 48 109 [codepend~] is a classic "block convolution" processor.
 It performs a complex multiply upon the spectra of two input signals.
 Multiplication of spectra can cause significant drops in the amplitude
 of the output signal., f 78;
-#X text 48 133 The invert message causes [codepend~] to perform complex
+#X text 48 161 The invert message causes [codepend~] to perform complex
 division of the input spectra rather than multiplication. Be careful!
 This can cause huge amplitude gains. A "pad" message is provided to
 allow for empirical amplitude balancing between the normal and "invert"
 states. Experiment at low volume levels while getting a feel for this
 external., f 78;
-#X text 417 525 (lower values intensify effect but only when "invert"
+#X text 417 553 (lower values intensify effect but only when "invert"
 is turned on), f 34;
-#X text 209 236 pad only affects the gain when "invert" is turned on
+#X text 209 264 pad only affects the gain when "invert" is turned on
 \, thus it may be used to balance levels between the two states of
 [codepend~]., f 27;
-#X obj 170 371 sfplay~;
-#X obj 262 371 sfplay~;
-#X text 284 335 play both;
-#X obj 295 31 fftease/codepend~;
-#X text 96 237 <==============;
-#X obj 207 568 fftease/codepend~ 1024 8;
-#X connect 0 0 25 2;
-#X connect 1 0 25 3;
+#X obj 170 399 sfplay~;
+#X obj 262 399 sfplay~;
+#X text 284 363 play both;
+#X text 96 265 <==============;
+#X obj 207 596 fftease/codepend~ 1024 8;
+#X obj 292 32 cnv 15 100 30 empty empty fftease/codepend~ 20 12 0 24
+-262144 -1 0;
+#X connect 0 0 24 2;
+#X connect 1 0 24 3;
 #X connect 2 0 12 0;
-#X connect 5 0 25 0;
+#X connect 5 0 24 0;
 #X connect 6 0 5 0;
-#X connect 7 0 25 0;
+#X connect 7 0 24 0;
 #X connect 8 0 7 0;
 #X connect 9 0 13 0;
 #X connect 10 0 20 0;
 #X connect 10 0 21 0;
 #X connect 12 0 1 0;
 #X connect 13 0 8 0;
-#X connect 20 0 25 0;
-#X connect 21 0 25 1;
-#X connect 25 0 11 0;
+#X connect 20 0 24 0;
+#X connect 21 0 24 1;
+#X connect 24 0 11 0;
