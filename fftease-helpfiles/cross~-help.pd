@@ -1,36 +1,42 @@
-#N canvas 639 112 712 414 12;
-#X floatatom 353 267 5 0 0 0 - - -;
-#X msg 353 222 1e-06;
-#X msg 398 222 0.25;
-#X msg 440 222 0.05;
-#X obj 83 217 tgl 17 0 empty empty empty 17 7 0 10 -228856 -1 -1 1
+#N canvas 139 113 594 442 12;
+#X floatatom 312 263 5 0 0 0 - - -;
+#X msg 312 218 1e-06;
+#X msg 357 218 0.25;
+#X msg 399 218 0.05;
+#X obj 42 213 tgl 17 0 empty empty empty 17 7 0 10 -228856 -1 -1 1
 1;
-#X obj 274 172 tgl 17 0 empty empty empty 17 7 0 10 -228856 -1 -1 0
+#X obj 233 168 tgl 17 0 empty empty empty 17 7 0 10 -228856 -1 -1 0
 1;
-#X text 242 67 [cross~] uses a threshold to determine whether to perform
+#X obj 34 26 ./icon;
+#X text 276 60 - Block convolution;
+#X obj 154 384 ./gain.dsp~;
+#X obj 154 202 ./sfplay~;
+#X obj 233 203 ./sfplay~;
+#X text 254 170 play both;
+#X obj 154 345 fftease/cross~ 2048 8, f 23;
+#X msg 42 246 autonorm \$1;
+#X obj 42 183 loadbang;
+#X text 354 264 threshold of cross synthesis;
+#X obj 255 29 cnv 15 100 30 empty empty fftease/cross~ 20 12 0 24 -262144
+-1 0;
+#X text 35 95 [cross~] uses a threshold to determine whether to perform
 spectral multiplication or maintain the last calculated magnitude/phase
 pair. An autonorm option attempts to keep overall frame amplitudes
 consistent.;
-#X obj 37 57 ./icon;
-#X text 356 36 - Block convolution;
-#X obj 195 354 ./gain.dsp~;
-#X obj 250 36 fftease/cross~;
-#X obj 195 206 ./sfplay~;
-#X obj 274 207 ./sfplay~;
-#X text 295 174 play both;
-#X obj 195 315 fftease/cross~ 2048 8, f 23;
-#X msg 83 250 autonorm \$1;
-#X obj 83 187 loadbang;
-#X text 395 268 threshold of cross synthesis;
-#X connect 0 0 14 2;
+#X msg 43 318 mute \$1;
+#X obj 43 282 tgl 17 0 empty empty empty 17 7 0 10 -228856 -1 -1 0
+1;
+#X connect 0 0 12 2;
 #X connect 1 0 0 0;
 #X connect 2 0 0 0;
 #X connect 3 0 0 0;
-#X connect 4 0 15 0;
-#X connect 5 0 11 0;
-#X connect 5 0 12 0;
-#X connect 11 0 14 0;
-#X connect 12 0 14 1;
-#X connect 14 0 9 0;
-#X connect 15 0 14 0;
-#X connect 16 0 4 0;
+#X connect 4 0 13 0;
+#X connect 5 0 9 0;
+#X connect 5 0 10 0;
+#X connect 9 0 12 0;
+#X connect 10 0 12 1;
+#X connect 12 0 8 0;
+#X connect 13 0 12 0;
+#X connect 14 0 4 0;
+#X connect 18 0 12 0;
+#X connect 19 0 18 0;
