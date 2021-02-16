@@ -1,6 +1,6 @@
-#N canvas 711 60 567 388 12;
-#X obj 98 96 r fftz-dentist-msgs;
-#X obj 32 134 noise~;
+#N canvas 237 131 667 431 12;
+#X obj 98 130 r fftz-dentist-msgs;
+#X obj 46 131 noise~;
 #N canvas 404 737 450 300 showsync 0;
 #X obj 205 102 inlet~;
 #X obj 205 159 snapshot~;
@@ -16,57 +16,99 @@
 #X connect 3 0 2 0;
 #X connect 4 0 5 0;
 #X connect 5 0 3 0;
-#X restore 177 254 pd showsync;
-#X msg 142 191 scramble;
-#X obj 142 161 metro 7000;
-#X obj 142 127 tgl 15 0 empty dentist-scrambletog empty 17 7 0 10 -228856
--1 -1 1 1;
-#N canvas 1176 110 450 300 interpolation-and-control 0;
-#X msg 57 100 ramptime \$1;
-#X floatatom 57 65 5 0 0 0 - dentist-ramptime -;
-#X obj 54 212 s fftz-dentist-msgs;
+#X restore 177 288 pd showsync;
+#X msg 142 225 scramble;
+#X obj 142 195 metro 7000;
+#X obj 142 161 tgl 15 0 empty dentist-scrambletog empty 17 7 0 10 -228856
+-1 -1 0 1;
+#N canvas 1275 60 629 376 interpolation-and-control 0;
+#X msg 54 100 ramptime \$1;
+#X floatatom 54 64 5 0 0 0 - dentist-ramptime -;
+#X obj 54 289 s fftz-dentist-msgs;
 #X msg 192 107 topfreq \$1;
-#X floatatom 189 71 5 0 0 0 - dentist-topfreq -;
+#X floatatom 192 71 5 0 0 0 - dentist-topfreq -;
 #X msg 281 168 toothcount \$1;
-#X floatatom 303 126 5 0 0 0 - dentist-toothcount -;
+#X floatatom 281 133 5 0 0 0 - dentist-toothcount -;
+#X text 235 73 highest allowable frequency (Hz) for a new scramble
+;
+#X text 324 132 the number of spikes in the new filter;
+#X text 51 30 time (in ms) to interpolate from one configuration to
+the next;
 #X connect 0 0 2 0;
 #X connect 1 0 0 0;
 #X connect 3 0 2 0;
 #X connect 4 0 3 0;
 #X connect 5 0 2 0;
 #X connect 6 0 5 0;
-#X restore 324 197 pd interpolation-and-control;
+#X restore 419 223 pd interpolation-and-control;
 #N canvas 1136 112 384 290 init 0;
 #X msg 118 125 \; dentist-ramptime 7000 \; dentist-topfreq 3000 \;
 dentist-toothcount 18 \; dentist-scrambletog 1 \;;
 #X obj 118 96 loadbang;
 #X connect 1 0 0 0;
-#X restore 326 251 pd init;
-#X floatatom 177 281 5 0 0 0 - - -;
-#N canvas 1135 135 605 302 data-storage 0;
-#X obj 54 212 s fftz-dentist-msgs;
-#X msg 123 107 setstate 15 7 9 92;
+#X restore 421 277 pd init;
+#X floatatom 177 315 5 0 0 0 - - -;
+#N canvas 1274 62 1077 719 data-storage 0;
+#X obj 57 311 s fftz-dentist-msgs;
 #X msg 116 144 setstate 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18
 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40;
-#X msg 51 40 setstate 10 11 12 13 14 50 51 52 53 43;
-#X msg 94 73 setstate 7 15 40;
+#X msg 58 51 setstate 10 11 12 13 14 50 51 52 53 43;
+#X msg 66 634 showstate;
+#X msg 131 209 setstate 55 6 37 13 64 26 24 30 11 0 22 25 60 17 53
+8 34 12 5 14;
+#X msg 175 575 \; dentist-toothcount 20;
+#X obj 129 515 t b b b;
+#X msg 152 611 scramble;
+#X obj 152 670 s fftz-dentist-msgs;
+#X obj 129 468 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X obj 604 68 inlet;
+#X msg 604 178 setstate 30 13 16 22 9 25 5 10 19 1 31 26 24 7 29 32
+27 11 2 4;
+#X msg 604 100 set setstate \$1 \$2 \$3 \$4 \$5 \$6 \$7 \$8 \$9 \$10
+\$11 \$12 \$13 \$14 \$15 \$16 \$17 \$18 \$19 \$20;
+#X msg 144 258 setstate 54 25 46 4 32 12 18 53 29 50 16 17 6 52 10
+34 42 37 51 22;
+#X text 153 467 scramble \, and then store a new 20-bin filter;
+#X text 55 15 turn a group of bins on (all others will be turned off)
+using "setstate" followed by a list of bin numbers;
+#X msg 106 108 setstate 15 10 74;
+#X msg 94 74 setstate 27 31 40;
+#X text 625 143 display current internal bin state (this message can
+be used to restore the current state of the filter);
+#X text 655 61 change this message if you want more \, or fewer bins
+in the new filter (currently set for 20);
 #X connect 1 0 0 0;
 #X connect 2 0 0 0;
-#X connect 3 0 0 0;
+#X connect 3 0 8 0;
 #X connect 4 0 0 0;
-#X restore 325 226 pd data-storage;
-#X obj 98 224 fftease/dentist~ 2048 8;
-#X obj 99 324 ./gain.dsp~;
+#X connect 6 0 3 0;
+#X connect 6 1 7 0;
+#X connect 6 2 5 0;
+#X connect 7 0 8 0;
+#X connect 9 0 6 0;
+#X connect 10 0 12 0;
+#X connect 12 0 11 0;
+#X connect 13 0 0 0;
+#X connect 16 0 0 0;
+#X connect 17 0 0 0;
+#X restore 420 252 pd data-storage;
+#X obj 98 358 ./gain.dsp~;
 #X obj 38 20 ./icon;
-#X obj 254 31 fftease/dentist~;
-#X text 376 32 - Spiky filtering;
-#X text 311 105 [dentist~] punches out all but a select set of partials.
+#X text 279 59 - Spiky filtering;
+#X text 40 84 [dentist~] punches out all but a select set of partials.
 , f 31;
-#X connect 0 0 10 0;
-#X connect 1 0 10 0;
+#X obj 98 258 fftease/dentist~ 1024 8;
+#X text 222 313 show interpolation progress;
+#X text 207 226 randomize filter;
+#X obj 255 28 cnv 15 100 30 empty empty fftease/dentist~ 20 12 0 24
+-262144 -1 0;
+#X connect 0 0 14 0;
+#X connect 1 0 14 0;
 #X connect 2 0 8 0;
-#X connect 3 0 10 0;
+#X connect 3 0 14 0;
 #X connect 4 0 3 0;
 #X connect 5 0 4 0;
-#X connect 10 0 11 0;
-#X connect 10 1 2 0;
+#X connect 14 0 10 0;
+#X connect 14 1 2 0;
+#X connect 14 2 9 0;
