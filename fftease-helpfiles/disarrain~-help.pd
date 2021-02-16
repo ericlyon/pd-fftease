@@ -1,9 +1,9 @@
-#N canvas 628 60 651 518 12;
-#X obj 122 220 phasor~ 261;
-#X obj 122 248 -~ 0.5;
-#X msg 222 250 fadetime \$1;
-#X floatatom 222 228 5 0 0 0 - disarrain-fadetime -;
-#X floatatom 320 245 5 0 0 0 - disarrain-switchct -;
+#N canvas 628 60 643 647 12;
+#X obj 167 328 phasor~ 261;
+#X obj 167 356 -~ 0.5;
+#X msg 303 255 fadetime \$1;
+#X floatatom 303 233 5 0 0 0 - disarrain-fadetime -;
+#X floatatom 363 348 5 0 0 0 - disarrain-switchct -;
 #N canvas 404 737 450 300 showsync 0;
 #X obj 205 102 inlet~;
 #X obj 205 159 snapshot~;
@@ -19,60 +19,106 @@
 #X connect 3 0 2 0;
 #X connect 4 0 5 0;
 #X connect 5 0 3 0;
-#X restore 259 406 pd showsync;
-#X floatatom 259 432 5 0 0 0 - - -;
-#X msg 320 270 switch_count \$1;
-#X obj 60 299 metro 3000;
-#X obj 61 116 tgl 17 0 empty empty empty 17 7 0 10 -228856 -1 -1 0
+#X restore 260 518 pd showsync;
+#X floatatom 260 544 5 0 0 0 - - -;
+#X msg 363 373 switch_count \$1;
+#X obj 76 400 metro 3000;
+#X obj 77 194 tgl 17 0 empty empty empty 17 7 0 10 -228856 -1 -1 1
 1;
 #N canvas 309 378 450 300 init 0;
-#X obj -52 38 loadbang;
-#X msg -52 65 \; disarrain-fadetime 3000 \; disarrain-switchct 70 \;
+#X obj 32 29 loadbang;
+#X msg 32 56 \; disarrain-fadetime 3000 \; disarrain-switchct 70 \;
 disarrain-topfreq 2000;
 #X connect 0 0 1 0;
-#X restore 85 388 pd init;
-#X msg 356 296 showstate;
-#N canvas 6 61 450 300 showbins 0;
+#X restore 389 573 pd init;
+#N canvas 1380 60 632 675 showbins 0;
 #X obj 42 48 inlet;
-#X msg 42 140 43 1 37 3 46 18 26 7 8 20 45 12 23 0 14 44 31 41 11 29
-9 36 22 32 24 42 17 15 34 39 21 16 38 33 10 6 5 40 2 4 28 35 27 25
-19 30 13 47 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0;
+#X msg 42 140 45 47 48 50 4 39 20 16 40 28 59 15 43 63 41 6 7 36 5
+14;
 #X obj 42 71 list prepend set;
 #X obj 42 94 list trim;
+#X msg 42 292 setstate 40 27 39 13 8 5 41 14 34 31 10 0 9 18 17 37
+21 38 6 30 26 4 42 1 24 22 7 43 28 32 19 20 29 23 15 36 33 25 2 35
+11 3 16 12;
+#X msg 116 440 isetstate 45 47 48 50 4 39 20 16 40 28 59 15 43 63 41
+6 7 36 5 14;
+#X msg 148 489 isetstate 40 27 39 13 8 5 41 14 34 31 10 0 9 18 17 37
+21 38 6 30 26 4 42 1 24 22 7 43 28 32 19 20 29 23 15 36 33 25 2 35
+11 3 16 12;
+#X msg 88 356 setstate 16 29 23 25 4 42 22 7 32 37 10 3 12 13 31 33
+9 27 18 17 41 38 30;
+#X obj 60 612 s msg-disarrain;
+#X text 39 184 use the above data to craft the following messages \,
+in order to recall stored states;
+#X msg 266 42 showstate;
+#X text 263 20 dump current scramble to 3rd outlet;
+#X obj 266 71 s msg-disarrain;
+#X text 126 112 displays current scramble;
+#X text 39 265 instantly recall a scramble;
+#X text 102 407 recall a scramble with interpolation;
 #X connect 0 0 2 0;
 #X connect 2 0 3 0;
 #X connect 3 0 1 0;
-#X restore 352 404 pd showbins;
-#X text 83 115 turn on for interpolation;
-#X obj 61 145 t f b b;
-#X obj 107 171 s disarrain-switchct;
-#X obj 84 195 s disarrain-fadetime;
-#X floatatom 493 300 5 0 0 0 - disarrain-topfreq -;
-#X msg 493 328 topfreq \$1;
-#X obj 166 368 fftease/disarrain~, f 27;
-#X obj 165 470 ./gain.dsp~;
-#X obj 93 31 ./icon;
-#X text 308 122 [disarrain~] reorders a certain number of bins \, which
+#X connect 4 0 8 0;
+#X connect 5 0 8 0;
+#X connect 6 0 8 0;
+#X connect 7 0 8 0;
+#X connect 10 0 12 0;
+#X restore 353 516 pd showbins;
+#X obj 77 223 t f b b;
+#X obj 123 249 s disarrain-switchct;
+#X obj 100 273 s disarrain-fadetime;
+#X floatatom 324 286 5 0 0 0 - disarrain-topfreq -;
+#X msg 324 314 topfreq \$1;
+#X obj 167 480 fftease/disarrain~, f 27;
+#X obj 167 585 ./gain.dsp~;
+#X obj 43 30 ./icon;
+#X text 49 110 [disarrain~] reorders a certain number of bins \, which
 can significantly transform the timbre. The spectral reordering is
 reported from the third outlet., f 43;
-#X obj 296 47 fftease/disarrain~;
-#X text 432 47 - Spectrum scrambler;
-#X text 364 243 number of bins to switch;
+#X text 407 346 number of bins to switch;
+#X obj 301 39 cnv 15 100 30 empty empty fftease/disarrain~ 20 12 0
+24 -262144 -1 0;
+#X text 312 70 - Spectrum scrambler with interpolation;
+#X text 368 288 highest frequency (Hz) to scramble;
+#X text 344 231 interpolation time;
+#X obj 250 448 r msg-disarrain;
+#X text 442 516 <- pattern management;
+#N canvas 1178 757 450 300 utilities 0;
+#X obj 39 123 s msg-disarrain;
+#X msg 39 59 fftinfo;
+#X msg 111 58 mute \$1;
+#X obj 111 27 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 198 25 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X msg 198 56 bypass \$1;
+#X connect 1 0 0 0;
+#X connect 2 0 0 0;
+#X connect 3 0 2 0;
+#X connect 4 0 5 0;
+#X connect 5 0 0 0;
+#X restore 353 540 pd utilities;
+#X text 100 192 turn on for repeated spectral scrambles with interpolation
+;
+#X text 442 117 see also:;
+#X obj 421 141 cnv 15 100 20 empty empty fftease/disarray~ 20 12 0
+14 -262144 -1 0;
 #X connect 0 0 1 0;
-#X connect 1 0 19 0;
-#X connect 2 0 19 0;
+#X connect 1 0 17 0;
+#X connect 2 0 17 0;
 #X connect 3 0 2 0;
 #X connect 4 0 7 0;
 #X connect 5 0 6 0;
-#X connect 7 0 19 0;
-#X connect 8 0 19 0;
-#X connect 9 0 14 0;
-#X connect 11 0 19 0;
-#X connect 14 0 8 0;
-#X connect 14 1 16 0;
-#X connect 14 2 15 0;
+#X connect 7 0 17 0;
+#X connect 8 0 17 0;
+#X connect 9 0 12 0;
+#X connect 12 0 8 0;
+#X connect 12 1 14 0;
+#X connect 12 2 13 0;
+#X connect 15 0 16 0;
+#X connect 16 0 17 0;
 #X connect 17 0 18 0;
-#X connect 18 0 19 0;
-#X connect 19 0 20 0;
-#X connect 19 1 5 0;
-#X connect 19 2 12 0;
+#X connect 17 1 5 0;
+#X connect 17 2 11 0;
+#X connect 26 0 17 0;
