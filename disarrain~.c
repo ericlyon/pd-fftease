@@ -57,14 +57,14 @@ static void copy_shuffle_array(t_disarrain *x);
 static void disarrain_killfade(t_disarrain *x);
 static void disarrain_init(t_disarrain *x);
 static void disarrain_free(t_disarrain *x);
-static void disarrain_bypass(t_disarrain *x, t_floatarg toggle);
+//static void disarrain_bypass(t_disarrain *x, t_floatarg toggle);
 static void disarrain_fftinfo( t_disarrain *x );
-static void disarrain_fftsize(t_disarrain *x, t_floatarg f);
-static void disarrain_forcefade(t_disarrain *x, t_floatarg toggle);
-static void disarrain_force_switch(t_disarrain *x, t_floatarg f);
-static void disarrain_list (t_disarrain *x, t_symbol *msg, short argc, t_atom *argv);
-static void disarrain_overlap(t_disarrain *x, t_floatarg f);
-static void disarrain_winfac(t_disarrain *x, t_floatarg f);
+//static void disarrain_fftsize(t_disarrain *x, t_floatarg f);
+//static void disarrain_forcefade(t_disarrain *x, t_floatarg toggle);
+//static void disarrain_force_switch(t_disarrain *x, t_floatarg f);
+//static void disarrain_list (t_disarrain *x, t_symbol *msg, short argc, t_atom *argv);
+//static void disarrain_overlap(t_disarrain *x, t_floatarg f);
+//static void disarrain_winfac(t_disarrain *x, t_floatarg f);
 
 void disarrain_tilde_setup(void)
 {
@@ -76,6 +76,7 @@ void disarrain_tilde_setup(void)
     class_addmethod(c,(t_method)disarrain_mute,gensym("mute"),A_FLOAT,0);
     class_addmethod(c,(t_method)reset_shuffle, gensym("bang"), 0);
     class_addmethod(c,(t_method)disarrain_showstate,gensym("showstate"),0);
+    class_addmethod(c,(t_method)disarrain_fftinfo,gensym("fftinfo"),0);
     class_addmethod(c,(t_method)disarrain_setstate, gensym("setstate"), A_GIMME, 0);
     class_addmethod(c,(t_method)disarrain_isetstate, gensym("isetstate"), A_GIMME, 0);
     class_addmethod(c,(t_method)disarrain_topfreq, gensym("topfreq"), A_FLOAT, 0);
@@ -119,7 +120,9 @@ void disarrain_init(t_disarrain *x)
         x->mute = 0;
         x->bypass = 0;
         x->force_fade = 0;
-        x->interpolation_duration = 0.1; //seconds
+        if( x->interpolation_duration <= 0.0){
+            x->interpolation_duration = 1.0; //seconds
+        }
         x->shuffle_mapping = (int *) calloc( N2, sizeof(int) ) ;
         x->last_shuffle_mapping = (int *) calloc( N2, sizeof(int) ) ;
         x->shuffle_tmp = (int *) calloc( N2, sizeof(int) ) ;
@@ -173,8 +176,7 @@ void disarrain_force_switch(t_disarrain *x, t_floatarg f)
 void disarrain_fadetime (t_disarrain *x, t_floatarg f)
 {
     int frames;
-    float duration;
-
+//    float duration;
 
     if(f > 0.0){
         x->interpolation_duration = f * 0.001;
@@ -640,7 +642,7 @@ void disarrain_setstate (t_disarrain *x, t_symbol *msg, short argc, t_atom *argv
         ival = 2 *atom_getfloatarg(i,argc,argv);
 
         if ( ival < N2 && ival >= 0) {
-            x->shuffle_mapping[ i ] = ival;
+            x->last_shuffle_mapping[i] = x->shuffle_mapping[i] = ival;
         } else {
             error("%s: %d is out of range",OBJECT_NAME, ival);
         }
