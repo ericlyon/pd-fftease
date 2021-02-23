@@ -1,53 +1,59 @@
-#N canvas 578 36 849 507 12;
+#N canvas 578 36 713 569 12;
 #N canvas 0 22 450 278 (subpatch) 0;
 #X array enrich-buffer 8195 float 0;
 #X coords 0 1 8194 -1 150 80 1 0 0;
-#X restore 598 353 graph;
-#X msg 315 194 \; enrich-buffer cosinesum 8192 0 1;
-#X obj 139 379 sig~ 1;
-#X obj 239 374 sig~ 0.001;
-#X msg 315 245 \; enrich-buffer cosinesum 8192 0 0.333 0.333 0.33;
-#X text 549 200 normal resynthesis with a cosine;
-#X text 659 253 add more harmonics;
-#X msg 315 286 \; enrich-buffer cosinesum 8192 0 0 0 0 0.2 0.4 0 0
-0.4;
-#X obj 315 167 loadbang;
-#X obj 142 329 hsl 128 15 0.5 1.9999 0 0 empty enrich-tfac empty -2
+#X restore 461 387 graph;
+#X obj 131 419 sig~ 1;
+#X obj 231 414 sig~ 0.001;
+#X obj 134 369 hsl 128 15 0.5 1.9999 0 0 empty enrich-tfac empty -2
 -8 0 12 -228856 -1 -1 4234 1;
-#X floatatom 139 352 9 0 0 0 - - -;
+#X floatatom 131 392 9 0 0 0 - - -;
 #N canvas 365 262 450 300 init 0;
 #X msg 87 143 \; enrich-hfr 10000 \; enrich-tfac 1 \; enrich-lofr 0
 ;
 #X obj 101 105 loadbang;
 #X connect 1 0 0 0;
-#X restore 265 429 pd init;
-#X obj 100 280 r fftz-enrich-msgs;
-#X text 694 295 way high harmonics;
-#X obj 39 409 fftease/enrich~ enrich-buffer;
-#X obj 41 115 sfplay~;
-#X text 150 327 transpose-factor;
-#X text 297 89 [enrich~] synthesizes an oscillator bank that reads
-from a Pd array \, which can contain any user-specified waveform. Useful
+#X restore 257 469 pd init;
+#X obj 92 320 r fftz-enrich-msgs;
+#X obj 31 449 fftease/enrich~ enrich-buffer;
+#X obj 33 155 sfplay~;
+#X text 142 367 transpose-factor;
+#X text 34 94 [enrich~] synthesizes an oscillator bank that reads from
+a Pd array \, which can contain any user-specified waveform. Useful
 for distortion., f 53;
-#X obj 51 30 ./icon;
-#X text 473 44 - Additive synthesis with arbitrary waveform;
-#X text 379 379 try drawing directly into the array for lots of harmonics
+#X obj 38 25 ./icon;
+#X text 461 478 try drawing directly into the array for lots of harmonics
 , f 29;
-#X obj 39 443 ./gain.dsp~;
-#X msg 74 194 highfreq \$1;
-#X floatatom 74 168 5 0 0 0 - enrich-hfr -;
-#X floatatom 94 218 5 0 0 0 - enrich-lofr -;
-#X msg 94 244 lowfreq \$1;
-#X obj 256 43 fftease/enrich~ enrich-buffer;
-#X connect 2 0 14 1;
-#X connect 3 0 14 2;
-#X connect 8 0 1 0;
-#X connect 9 0 10 0;
-#X connect 10 0 2 0;
-#X connect 12 0 14 0;
-#X connect 14 0 21 0;
+#X obj 31 483 ./gain.dsp~;
+#X msg 66 234 highfreq \$1;
+#X floatatom 66 208 5 0 0 0 - enrich-hfr -;
+#X floatatom 86 258 5 0 0 0 - enrich-lofr -;
+#X msg 86 284 lowfreq \$1;
+#N canvas 0 23 577 247 resynthesis-waveforms 0;
+#X msg 7 45 \; enrich-buffer cosinesum 8192 0 1;
+#X msg 7 96 \; enrich-buffer cosinesum 8192 0 0.333 0.333 0.33;
+#X text 241 51 normal resynthesis with a cosine;
+#X text 351 104 add more harmonics;
+#X msg 7 137 \; enrich-buffer cosinesum 8192 0 0 0 0 0.2 0.4 0 0 0.4
+;
+#X obj 7 18 loadbang;
+#X text 386 146 way high harmonics;
+#X connect 5 0 0 0;
+#X restore 459 344 pd resynthesis-waveforms;
+#X text 108 206 highest frequency of input signal to resynthesize;
+#X text 145 260 lowest frequency of input signal to resynthesize;
+#X text 228 394 synthesis threshold;
+#X obj 340 29 cnv 15 100 30 empty empty fftease/enrich~ 20 12 0 24
+-262144 -1 0;
+#X text 357 57 - Additive synthesis with an arbitrary waveform;
+#X connect 1 0 7 1;
+#X connect 2 0 7 2;
+#X connect 3 0 4 0;
+#X connect 4 0 1 0;
+#X connect 6 0 7 0;
+#X connect 7 0 13 0;
+#X connect 8 0 7 0;
+#X connect 14 0 7 0;
 #X connect 15 0 14 0;
-#X connect 22 0 14 0;
-#X connect 23 0 22 0;
-#X connect 24 0 25 0;
-#X connect 25 0 14 0;
+#X connect 16 0 17 0;
+#X connect 17 0 7 0;
