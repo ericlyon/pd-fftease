@@ -37,13 +37,13 @@ static void disarray_mute(t_disarray *x, t_floatarg toggle);
 static void disarray_init(t_disarray *x);
 static void disarray_free(t_disarray *x);
 static void switch_count (t_disarray *x, t_floatarg i);
-static void iswitch_count(t_disarray *x, int i);
-static void disarray_bypass(t_disarray *x, t_floatarg toggle);
+// static void iswitch_count(t_disarray *x, int i);
+//static void disarray_bypass(t_disarray *x, t_floatarg toggle);
 static void disarray_fftinfo( t_disarray *x );
-static void disarray_fftsize(t_disarray *x, t_floatarg f);
-static void disarray_overlap(t_disarray *x, t_floatarg f);
-static void disarray_winfac(t_disarray *x, t_floatarg f);
-static void disarray_list (t_disarray *x, t_symbol *msg, short argc, t_atom *argv);
+//static void disarray_fftsize(t_disarray *x, t_floatarg f);
+//static void disarray_overlap(t_disarray *x, t_floatarg f);
+//static void disarray_winfac(t_disarray *x, t_floatarg f);
+//static void disarray_list (t_disarray *x, t_symbol *msg, short argc, t_atom *argv);
 
 void disarray_tilde_setup(void)
 {
@@ -54,6 +54,7 @@ void disarray_tilde_setup(void)
     class_addmethod(c,(t_method)disarray_dsp,gensym("dsp"), A_CANT, 0);
     class_addmethod(c,(t_method)disarray_mute,gensym("mute"),A_FLOAT,0);
     class_addmethod(c,(t_method)reset_shuffle, gensym("bang"), 0);
+    class_addmethod(c,(t_method)disarray_fftinfo, gensym("fftinfo"), 0);
     class_addmethod(c,(t_method)disarray_showstate,gensym("showstate"),0);
     class_addmethod(c,(t_method)disarray_setstate, gensym("setstate"), A_GIMME, 0);
     class_addmethod(c,(t_method)disarray_topfreq, gensym("topfreq"), A_FLOAT, 0);
@@ -72,9 +73,13 @@ void switch_count (t_disarray *x, t_floatarg i)
     if( i < 0 ){
         i = 0;
     }
+    /*
     if( i > x->fft->N2 ) {
         i = x->fft->N2;
     }
+    */
+    
+    // introduces potential bug of not checking for big numbers - put test into DSP
     x->shuffle_count = i;
 }
 
@@ -111,7 +116,7 @@ void disarray_init(t_disarray *x )
         x->shuffle_out = (int *) realloc(x->shuffle_out, N2 * sizeof(int));
     }
 
-    if(initialized != 2){
+// force update on DSP reset
         if( x->top_frequency < c_fundamental || x->top_frequency > 20000) {
             x->top_frequency = 20000.0 ;
         }
@@ -122,8 +127,7 @@ void disarray_init(t_disarray *x )
             curfreq += c_fundamental ;
         }
         reset_shuffle(x); // set shuffle lookup
-        x->shuffle_count = 0;
-    }
+//        x->shuffle_count = 0;
 }
 
 void disarray_topfreq (t_disarray *x, t_floatarg freq)
@@ -131,10 +135,11 @@ void disarray_topfreq (t_disarray *x, t_floatarg freq)
     t_float funda = (t_float) x->fft->R / (t_float) x->fft->N;
     t_float curfreq;
 
-    if( freq < funda || freq > 20000) {
+    if( freq < 0 || freq > 20000) {
         post("freq %f is out of range", freq);
         return;
     }
+    x->top_frequency = freq;
     if(! x->fft->initialized){
         return;
     }
@@ -218,6 +223,10 @@ static void do_disarray(t_disarray *x)
     fftease_fold(fft);
     fftease_rdft(fft,1);
     fftease_leanconvert(fft);
+    // check that shuffle count is reasonable
+    if( shuffle_count > x->fft->N2 ) {
+        shuffle_count = x->fft->N2;
+    }
     for( i = 0; i < shuffle_count ; i++){
         tmp = channel[ shuffle_in[ i ] * 2 ];
         channel[ shuffle_in[ i ] * 2]  = channel[ shuffle_out[ i ] * 2];
