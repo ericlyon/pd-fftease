@@ -1,17 +1,16 @@
 #N canvas 600 60 549 452 12;
 #X floatatom 315 339 5 0 0 0 - - -;
 #X obj 318 317 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -228856
--1 -1 12700 1;
+-1 -1 0 1;
 #X msg 96 209 upsieve;
-#X msg 117 235 downsieve;
+#X msg 115 235 downsieve;
 #X msg 126 261 randsieve;
 #X obj 115 366 fftease/leaker~, f 29;
 #X obj 136 299 ./sfplay~;
 #X obj 215 299 ./sfplay~;
 #X obj 115 400 ./gain.dsp~;
-#X obj 50 25 ./icon;
-#X obj 243 37 fftease/leaker~;
-#X text 363 37 - Spectral crossfade;
+#X obj 36 25 ./icon;
+#X text 287 54 - Spectral crossfade;
 #X text 31 91 [leaker~] combines two input sounds \, with the spectral
 contribution of each sound determined by an internally maintained sieve
 and a threshold selection value. At value 0 \, only sound 1 is heard
@@ -21,6 +20,11 @@ which may be specified as upsieve \, downsieve or randsieve., f 69
 ;
 #X text 324 290 slide to crossfade;
 #X text 222 242 select 2 sounds to crossfade;
+#X obj 267 28 cnv 15 100 30 empty empty fftease/leaker~ 20 12 0 24
+-262144 -1 0;
+#X text 360 190 see also:;
+#X obj 340 208 cnv 15 100 20 empty empty fftease/ether~ 20 12 0 14
+-262144 -1 0;
 #X connect 0 0 5 2;
 #X connect 1 0 0 0;
 #X connect 2 0 5 0;
