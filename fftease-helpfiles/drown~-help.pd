@@ -1,60 +1,62 @@
-#N canvas 527 64 841 551 12;
-#X floatatom 334 367 5 0 0 0 - - -;
-#X obj 337 343 hsl 128 15 0.01 4 1 0 empty empty empty -2 -8 0 10 -228856
+#N canvas 79 685 848 633 12;
+#X floatatom 322 464 5 0 0 0 - - -;
+#X obj 325 440 hsl 128 15 0.01 4 1 0 empty empty empty -2 -8 0 10 -228856
 -1 -1 0 1;
-#X floatatom 262 334 5 0 0 0 - - -;
-#X obj 265 304 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 12 -228856
--1 -1 0 1;
-#X msg 168 234 adaptive \$1;
-#X obj 168 205 tgl 17 0 empty empty empty 17 7 0 10 -228856 -1 -1 0
+#X floatatom 250 431 5 0 0 0 - - -;
+#X obj 253 401 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 12 -228856
+-1 -1 10500 1;
+#X msg 156 331 adaptive \$1;
+#X obj 156 302 tgl 17 0 empty empty empty 17 7 0 10 -228856 -1 -1 0
 1;
-#X msg 190 291 mute \$1;
-#X obj 190 265 tgl 17 0 empty empty empty 17 7 0 10 -228856 -1 -1 0
+#X msg 178 388 mute \$1;
+#X obj 178 362 tgl 17 0 empty empty empty 17 7 0 10 -228856 -1 -1 0
 1;
-#X obj 145 165 noise~;
-#X obj 66 165 osc~ 440;
-#X msg 78 354 fftinfo;
-#X text 44 334 Get FFT info, f 7;
-#X text 348 438 <= arguments: window size and overlap (default: 1024
-\, 8);
-#X obj 190 438 fftease/drown~ 2048 4;
-#X obj 60 66 ./icon;
-#X obj 190 481 ./gain.dsp~;
-#X text 293 302 Threshold;
-#X text 362 342 Gain factor;
-#X text 190 205 <= adaptive mode;
-#X text 215 265 <= turns off the object (saving CPU power);
-#X text 396 22 - Reduce/increase spectral noise floor;
-#X obj 126 281 +~;
-#X text 407 296 Per-bin noise floor amplitude threshold. Higher values
+#X obj 132 262 noise~;
+#X obj 54 262 osc~ 440;
+#X msg 41 456 fftinfo;
+#X text 40 435 Get FFT info;
+#X obj 178 535 fftease/drown~ 2048 4;
+#X obj 34 31 ./icon;
+#X obj 178 578 ./gain.dsp~;
+#X text 281 399 Threshold;
+#X text 350 439 Gain factor;
+#X text 178 302 <= adaptive mode;
+#X text 203 362 <= turns off the object (saving CPU power);
+#X text 527 66 - Reduce/increase spectral noise floor;
+#X obj 114 378 +~;
+#X text 395 393 Per-bin noise floor amplitude threshold. Higher values
 result in greater noise reduction., f 47;
-#X text 283 56 [drown~] changes the energy of FFT bins whose level
+#X text 33 108 [drown~] changes the energy of FFT bins whose level
 are below a given threshold (or "noise floor"). You can then perform
 noise reduction with a gain factor less than 1 \, or increase it with
 a factor greater than 1! In adaptive mode \, instead of an absolute
 value \, the threshold is determined relative to each FFT frame peak.
 , f 73;
-#X text 283 135 This example has a sine wave with white noise added
+#X text 33 187 This example has a sine wave with white noise added
 to it so you can check to remove the noise and just keep the sine wave.
 , f 73;
-#X text 324 195 (Adaptive noise reduction can be more effective than
-non-adaptive NR \, especially when the input signal has a varying amplitude
-envelope such as in white noise), f 53;
-#X text 383 365 Gain factor applied to bin amplitudes below threshold.
+#X text 371 462 Gain factor applied to bin amplitudes below threshold.
 A gain of 1 leaves the bin amplitude unchanged. Values above 1 increase
 the noise in the signal. Lower values result in more noise reduction
 and 0 completely removes that bin., f 58;
-#X obj 290 22 fftease/drown~;
-#X connect 0 0 13 2;
+#X obj 512 36 cnv 15 100 30 empty empty fftease/drown~ 20 12 0 24 -262144
+-1 0;
+#X text 336 534 <= arguments: FFT size and overlap factor (default:
+1024 \, 8);
+#X text 189 261 <= input signal is white noise + a sine wave;
+#X text 312 292 (Adaptive noise reduction can be more effective than
+non-adaptive NR \, especially when the input signal has a time-varying
+amplitude envelope), f 53;
+#X connect 0 0 12 2;
 #X connect 1 0 0 0;
-#X connect 2 0 13 1;
+#X connect 2 0 12 1;
 #X connect 3 0 2 0;
-#X connect 4 0 13 0;
+#X connect 4 0 12 0;
 #X connect 5 0 4 0;
-#X connect 6 0 13 0;
+#X connect 6 0 12 0;
 #X connect 7 0 6 0;
-#X connect 8 0 21 1;
-#X connect 9 0 21 0;
-#X connect 10 0 13 0;
-#X connect 13 0 15 0;
-#X connect 21 0 13 0;
+#X connect 8 0 20 1;
+#X connect 9 0 20 0;
+#X connect 10 0 12 0;
+#X connect 12 0 14 0;
+#X connect 20 0 12 0;
