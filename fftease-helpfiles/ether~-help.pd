@@ -1,14 +1,14 @@
-#N canvas 777 46 576 459 12;
+#N canvas 777 46 618 477 12;
 #X floatatom 352 305 5 0 512 0 - - -;
 #X msg 93 303 invert \$1;
 #X obj 93 269 tgl 17 0 empty empty empty 17 7 0 10 -228856 -1 -1 0
 1;
 #X text 391 303 composite index;
-#X obj 179 276 sfplay~;
+#X obj 180 276 sfplay~;
 #X obj 266 275 sfplay~;
 #X obj 180 397 ./gain.dsp~;
 #X obj 180 352 fftease/ether~, f 25;
-#X text 80 90 [ether~] selects portions of two input signals and creates
+#X text 56 89 [ether~] selects portions of two input signals and creates
 a composite output spectrum based upon the amplitude of the inputs.
 In a bin-by-bin comparison \, the strongest bin of the two inputs will
 be selected. Sending the inverse message will reverse this behavior
@@ -18,9 +18,13 @@ index will favor the second input. Useful values will vary according
 to the amplitude characteristics of the input signals. Try values greater
 than 0 and less than 100 But higher values may be effective depending
 upon the input signals.;
-#X obj 258 36 fftease/ether~;
 #X obj 59 22 ./icon;
-#X text 369 36 - Spectral compositing;
+#X text 334 56 - Spectral compositing;
+#X obj 319 27 cnv 15 100 30 empty empty fftease/ether~ 20 12 0 24 -262144
+-1 0;
+#X text 389 245 see also:;
+#X obj 369 263 cnv 15 100 20 empty empty fftease/leaker~ 20 12 0 14
+-262144 -1 0;
 #X connect 0 0 7 2;
 #X connect 1 0 7 0;
 #X connect 2 0 1 0;
