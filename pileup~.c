@@ -236,7 +236,8 @@ static void do_pileup(t_pileup *x)
     else if( x->mode == 2 ){
         for( i = 0; i < N; i += 2 ){
             if( fabs( channel[i] ) > last_frame[i]  ){ // fabs?
-                channel[i] = last_frame[i] * x->inverse_compensation_gain;
+                // only preserve phase in this case
+               // channel[i] = last_frame[i] * x->inverse_compensation_gain;
                 channel[i + 1] = last_frame[i + 1];
             } else {
                 last_frame[i] = fabs( channel[i] );
