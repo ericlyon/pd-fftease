@@ -1,22 +1,35 @@
-#N canvas 600 60 552 494 12;
-#X msg 134 316 mode \$1;
-#X obj 238 342 r fftz-pileup-msgs;
-#N canvas 1208 223 683 377 controls 0;
-#X obj 96 277 s fftz-pileup-msgs;
-#X msg 100 149 persistence \$1;
-#X floatatom 100 110 5 0 0 0 - pileup-pers -;
-#X msg 209 148 oscbank \$1, f 11;
-#X obj 209 114 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#N canvas 600 60 537 461 12;
+#X msg 47 291 mode \$1;
+#X obj 151 317 r fftz-pileup-msgs;
+#N canvas 1208 223 1107 615 controls 0;
+#X obj 87 559 s fftz-pileup-msgs;
+#X msg 87 149 persistence \$1;
+#X floatatom 87 110 5 0 1 0 - pileup-pers -;
+#X msg 278 160 oscbank \$1, f 11;
+#X obj 278 126 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
-#X msg 303 148 synthresh \$1;
-#X floatatom 303 118 5 0 0 0 - - -;
-#X obj 300 72 hsl 128 15 0 0.2 0 0 empty empty empty -2 -8 0 10 -262144
+#X msg 484 232 synthresh \$1;
+#X floatatom 484 207 5 0 0 0 - - -;
+#X obj 487 182 hsl 128 15 0 0.2 0 0 empty empty empty -2 -8 0 10 -262144
 -1 -1 0 1;
-#X floatatom 454 120 5 0 0 0 - - -;
-#X obj 451 74 hsl 128 15 0.5 1.999 0 0 empty pileup-transp empty -2
+#X floatatom 773 256 5 0 0 0 - - -;
+#X obj 776 233 hsl 128 15 0.5 1.999 0 0 empty pileup-transp empty -2
 -8 0 10 -262144 -1 -1 4236 1;
-#X msg 454 150 transpose \$1;
-#X msg 349 240 clear;
+#X msg 773 286 transpose \$1;
+#X msg 517 335 clear;
+#X obj 90 82 hsl 128 15 0 1 0 0 pileup-pers empty empty -2 -8 0 10
+-262144 -1 -1 12700 1;
+#X text 272 106 toggle oscillator bank resynthesis;
+#X text 85 53 spectral "feedback" factor;
+#X msg 500 484 lowfreq \$1;
+#X floatatom 500 448 5 0 5000 0 - pileup-lofreq -;
+#X floatatom 634 449 5 100 24000 0 - pileup-hifreq -;
+#X msg 634 484 highfreq \$1;
+#X text 489 407 oscillator bank only: low \, and high frequency resynthesis
+limits;
+#X text 769 211 transpose \, only works with oscbank turned on;
+#X text 478 162 synthesis threshold \, only for oscbank;
+#X text 418 304 erase previously stored spectral frame;
 #X connect 1 0 0 0;
 #X connect 2 0 1 0;
 #X connect 3 0 0 0;
@@ -28,26 +41,32 @@
 #X connect 9 0 8 0;
 #X connect 10 0 0 0;
 #X connect 11 0 0 0;
-#X restore 297 305 pd controls;
+#X connect 15 0 0 0;
+#X connect 16 0 15 0;
+#X connect 17 0 18 0;
+#X connect 18 0 0 0;
+#X restore 221 269 pd controls;
 #N canvas 568 719 450 300 init 0;
-#X msg 97 151 \; pileup-transp 1 \; pileup-pers 0.99;
 #X obj 97 107 loadbang;
-#X connect 1 0 0 0;
-#X restore 303 280 pd init;
-#X obj 134 205 vradio 17 1 0 3 empty empty empty 0 -8 0 10 -228856
--1 -1 0;
-#X text 154 203 persistent amplitude and phase;
-#X text 154 220 persistent amplitude only, f 30;
-#X text 154 238 inverse persistence, f 30;
-#X obj 207 279 ./sfplay~;
-#X obj 207 381 fftease/pileup~;
-#X obj 207 425 ./gain.dsp~;
-#X text 54 124 [pileup~] maintains amplitude/phase information in bins
+#X msg 97 151 \; pileup-transp 1 \; pileup-pers 0.99 \; pileup-lofreq
+0 \; pileup-hifreq 20000;
+#X connect 0 0 1 0;
+#X restore 241 357 pd init;
+#X obj 47 180 vradio 17 1 0 3 empty empty empty 0 -8 0 10 -228856 -1
+-1 2;
+#X text 67 178 persistent amplitude and phase;
+#X text 67 195 persistent amplitude only, f 30;
+#X text 67 213 inverse persistence, f 30;
+#X obj 120 254 ./sfplay~;
+#X obj 120 356 fftease/pileup~;
+#X obj 120 400 ./gain.dsp~;
+#X text 27 111 [pileup~] maintains amplitude/phase information in bins
 (with possible damping) until new information comes in above a given
 threshold. This is useful for various reverberant effects., f 63;
 #X obj 32 45 ./icon;
-#X obj 230 61 fftease/pileup~;
-#X text 344 62 - Spectral persistence;
+#X text 264 69 - Spectral persistence;
+#X obj 241 43 cnv 15 100 30 empty empty fftease/pileup~ 20 12 0 24
+-262144 -1 0;
 #X connect 0 0 9 0;
 #X connect 1 0 9 0;
 #X connect 4 0 0 0;
