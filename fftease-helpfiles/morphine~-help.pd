@@ -1,28 +1,37 @@
-#N canvas 600 60 608 421 12;
-#X msg 119 260 transition \$1;
-#X floatatom 119 229 5 0 0 0 - morphine-trans -;
-#X obj 418 257 hsl 128 15 0 1 0 0 empty empty morph-index -2 -8 0 12
--228856 -1 -1 0 1;
-#X floatatom 415 283 5 0 0 0 - - -;
+#N canvas 1576 64 731 434 12;
+#X msg 59 285 transition \$1;
+#X floatatom 59 254 5 -30 0 0 - morphine-trans -;
+#X obj 358 282 hsl 128 15 0 1 0 0 empty empty morph-index -2 -8 0 12
+-228856 -1 -1 7000 1;
+#X floatatom 355 308 5 0 0 0 - - -;
 #N canvas 0 22 450 300 init 0;
 #X msg 151 157 \; morphine-trans -5;
 #X obj 151 125 loadbang;
 #X connect 1 0 0 0;
-#X restore 181 333 pd init;
-#X obj 250 312 fftease/morphine~ 4096 8;
-#X text 75 98 [morphine~] performs spectral morphing \, creating a
+#X restore 118 385 pd init;
+#X obj 190 337 fftease/morphine~ 4096 8;
+#X text 31 99 [morphine~] performs spectral morphing \, creating a
 new spectrum from its two inputs. Values between 0 and 1 are the useful
 range for the morph index. The progression depends upon the exponential
 transition scaling value. Progressively smaller negative values will
 widen the transition space between the two sounds. Larger FFT sizes
 \, such as 4096 \, produce smoother results., f 65;
-#X obj 249 235 ./sfplay~;
-#X obj 332 235 ./sfplay~;
-#X obj 250 355 ./gain.dsp~;
-#X obj 73 29 ./icon;
-#X obj 272 41 fftease/morphine~;
-#X text 402 42 - Spectral morphing;
-#X text 29 222 exponential transition scaling, f 11;
+#X obj 190 260 ./sfplay~;
+#X obj 272 260 ./sfplay~;
+#X obj 190 380 ./gain.dsp~;
+#X obj 36 29 ./icon;
+#X text 395 59 - Spectral morphing;
+#X text 368 338 <= args: FFT size \, overlap factor;
+#X text 524 149 see also:;
+#X obj 504 167 cnv 15 100 20 empty empty fftease/ether~ 20 12 0 14
+-262144 -1 0;
+#X obj 504 190 cnv 15 100 20 empty empty fftease/leaker~ 20 12 0 14
+-262144 -1 0;
+#X obj 376 30 cnv 15 100 30 empty empty fftease/morphine~ 20 12 0 24
+-262144 -1 0;
+#X text 57 197 exponential transition scaling \; this parameter affects
+the "shape" of the morph-index transition \; lower values result in
+a more concave transition shape;
 #X connect 0 0 5 0;
 #X connect 1 0 0 0;
 #X connect 2 0 3 0;

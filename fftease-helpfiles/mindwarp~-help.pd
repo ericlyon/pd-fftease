@@ -3,10 +3,10 @@
 #X obj 135 50 inlet~;
 #X obj 195 50 inlet~;
 #X obj 35 50 inlet;
-#X obj 136 264 outlet~;
+#X obj 135 264 outlet~;
 #X obj 195 158 *~;
 #X obj 135 162 *~ 1;
-#X obj 36 115 expr 1-$f1;
+#X obj 35 115 expr 1-$f1;
 #X connect 0 0 5 0;
 #X connect 1 0 4 0;
 #X connect 2 0 4 1;
@@ -17,46 +17,47 @@
 #X restore 177 551 pd selector;
 #X obj 177 500 tgl 17 0 empty mindwarp-tog empty 17 7 0 10 -228856
 -1 -1 1 1;
-#X floatatom 257 385 5 0 0 0 - mindwarp-tfac -;
-#X floatatom 319 425 5 0 0 0 - mindwarp-wfac -;
-#X obj 301 385 sig~ 0.001;
-#X floatatom 388 452 5 0 0 0 - mindwarp-shapew -;
+#X floatatom 258 385 5 0 0 0 - mindwarp-tfac -;
+#X floatatom 319 425 5 0 16 0 - mindwarp-wfac -;
+#X obj 302 385 sig~ 0.001;
+#X floatatom 388 452 5 1 50 0 - mindwarp-shapew -;
 #X text 75 497 1 - mindwarp;
-#N canvas 0 22 450 300 init 0;
+#N canvas 0 23 450 300 init 0;
 #X obj 36 100 loadbang;
 #X msg 36 135 \; mindwarp-tfac 1 \; mindwarp-wfac 1 \; mindwarp-shapew
 10 \; mindwarp-tog 1 \; mindwarp-tfac&warpfac 1;
 #X connect 0 0 1 0;
 #X restore 303 536 pd init;
 #X obj 403 332 hsl 128 15 0.5 2 0 0 empty mindwarp-tfac&warpfac tfac&warpfac
--2 -8 0 10 -262144 -1 -1 2033 1;
-#X obj 401 392 s mindwarp-tfac;
+-2 -8 0 10 -262144 -1 -1 12700 1;
+#X obj 400 392 s mindwarp-tfac;
 #X obj 416 363 s mindwarp-wfac;
-#X obj 212 320 ./sfplay~;
+#X obj 214 320 ./sfplay~;
 #X obj 251 484 fftease/mindwarp~, f 20;
 #X obj 177 585 ./gain.dsp~;
-#X text 45 92 [mindwarp~] performs spectral envelope warping. It can
+#X text 45 101 [mindwarp~] performs spectral envelope warping. It can
 be used to correct for the formant shifting effects of pitch-scaling.
 The warp factor is tuned to warp spectra to compensate for directly
 corresponding pitch-scaling values., f 77;
-#X text 45 140 For example \, if you have pitch-scaled a signal by
+#X text 45 149 For example \, if you have pitch-scaled a signal by
 a factor of two \, increasing its frequency content by an octave \,
 by providing [mindwarp~] with a warp factor of 2 and the pitch-scaled
 signal \, [mindwarp~] will restore the spectral formant of the signal
 to an estimation of the shape present in the original unscaled signal.
 , f 77;
-#X text 45 215 [mindwarp~] utilizes frequency shaping to perform its
+#X text 45 224 [mindwarp~] utilizes frequency shaping to perform its
 duty. You may need to fiddle with the shape width to best catch the
 formants. It can be fun to decorrelate the warp factor from the transposition
 factor. Currently \, warp factor values are restricted to the range
 [1/16 ... 16.]., f 77;
-#X obj 213 418 fftease/pvoc~;
+#X obj 214 418 fftease/pvoc~;
 #X text 76 481 0 - raw pvoc~;
-#X obj 58 29 ./icon;
-#X obj 260 45 fftease/mindwarp~;
-#X text 387 45 - Spectral envelope warping;
+#X obj 48 26 ./icon;
+#X text 312 57 - Spectral envelope warping;
 #X text 364 423 warp factor;
 #X text 429 450 shape width;
+#X obj 291 27 cnv 15 100 30 empty empty fftease/mindwarp~ 20 12 0 24
+-262144 -1 0;
 #X connect 0 0 13 0;
 #X connect 1 0 0 0;
 #X connect 2 0 17 1;
