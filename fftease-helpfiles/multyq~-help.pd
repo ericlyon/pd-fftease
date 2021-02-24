@@ -1,41 +1,45 @@
-#N canvas 600 60 675 441 12;
-#X obj 58 223 noise~;
-#X floatatom 99 273 5 0 0 0 - multyq-f1 -;
-#X floatatom 140 273 5 0 0 0 - multyq-bw1 -;
-#X floatatom 181 272 5 0 0 0 - multyq-g1 -;
-#N canvas 609 675 450 300 init 0;
+#N canvas 600 60 635 455 12;
+#X obj 59 256 noise~;
+#X floatatom 100 306 5 0 0 0 - multyq-f1 -;
+#X floatatom 141 306 5 0 0 0 - multyq-bw1 -;
+#X floatatom 182 305 5 0 0 0 - multyq-g1 -;
+#N canvas 23 1055 450 300 init 1;
 #X msg 33 95 \; multyq-f1 565 \; multyq-bw1 0.5 \; multyq-g1 4 \; multyq-bw2
 0.45 \; multyq-bw3 0.2 \; multyq-g3 12 \;;
 #X obj 33 64 loadbang;
 #X connect 1 0 0 0;
-#X restore 443 357 pd init;
-#X obj 222 271 *~;
-#X obj 222 214 tgl 17 0 empty empty empty 17 7 0 10 -228856 -1 -1 0
+#X restore 444 390 pd init;
+#X obj 223 304 *~;
+#X obj 223 247 tgl 17 0 empty empty empty 17 7 0 10 -228856 -1 -1 1
 1;
-#X obj 276 192 osc~ 0.2;
-#X obj 276 214 *~ 1000;
-#X obj 276 236 +~ 1300;
-#X obj 304 280 * 4;
-#X floatatom 263 299 5 0 0 0 - multyq-bw2 -;
-#X text 149 213 autosweep;
-#X floatatom 510 258 5 0 0 0 - multyq-bw3 -;
-#X floatatom 552 258 5 0 0 0 - multyq-g3 -;
-#X obj 472 230 hsl 128 15 1000 10000 0 0 empty empty empty -2 -8 0
+#X obj 277 225 osc~ 0.2;
+#X obj 277 247 *~ 1000;
+#X obj 277 269 +~ 1300;
+#X obj 305 313 * 4;
+#X floatatom 264 332 5 0 0 0 - multyq-bw2 -;
+#X text 150 246 autosweep;
+#X floatatom 511 291 5 0 0 0 - multyq-bw3 -;
+#X floatatom 553 291 5 0 0 0 - multyq-g3 -;
+#X obj 473 263 hsl 128 15 1000 10000 0 0 empty empty empty -2 -8 0
 10 -228856 -1 -1 0 1;
-#X floatatom 469 259 5 0 0 0 - - -;
-#X text 473 206 sweep high end;
-#X text 325 306 room for one more;
-#X obj 58 329 fftease/multyq~ 1024 8, f 71;
-#X obj 58 374 ./gain.dsp~;
-#X text 55 103 [multyq~] is a four band equalizer. Gain values below
-0 create notches rather than peaks \, but only go as far as -1.0. Bandwidth
-is from 0 to +1. Only three bands are used in this example \, but CPU
-usage is the same regardless of how many are used. As the filter is
-FFT-based \, its performance is spotty in the low frequency range.
-, f 77;
-#X obj 95 32 ./icon;
-#X obj 317 44 fftease/multyq~, f 16;
-#X text 441 44 - Spectral EQ;
+#X floatatom 470 292 5 0 0 0 - - -;
+#X text 474 239 sweep high end;
+#X text 326 339 room for one more;
+#X obj 59 362 fftease/multyq~ 1024 8, f 71;
+#X obj 59 407 ./gain.dsp~;
+#X obj 54 35 ./icon;
+#X text 361 71 - Spectral EQ;
+#X obj 342 39 cnv 15 100 30 empty empty fftease/multyq~ 20 12 0 24
+-262144 -1 0;
+#X text 55 104 [multyq~] is a four band equalizer. The leftmost inlet
+takes input signal. After that each of the four filter regions is controlled
+with a triplet of inlets \, specifying [frequency \, bandwidth \, gain].
+Gain values below 0 create notches rather than peaks \, but only go
+as far as -1.0. Bandwidth is from 0 to +1. Only three bands are used
+in this example \, but CPU usage is the same regardless of how many
+are used. As the filter is FFT-based \, its performance is spotty in
+the low frequency range. Larger FFT sizes will increase frequency resolution
+\, at the cost of less precise time resolution., f 77;
 #X connect 0 0 19 0;
 #X connect 1 0 19 1;
 #X connect 2 0 19 2;
