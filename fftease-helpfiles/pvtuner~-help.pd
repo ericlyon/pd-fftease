@@ -1,29 +1,32 @@
-#N canvas 600 60 611 451 12;
-#X obj 151 252 r pvtuner-msgs;
-#N canvas 987 104 338 291 control 0;
+#N canvas 600 60 627 489 12;
+#X obj 92 221 r pvtuner-msgs;
+#N canvas 1241 230 613 398 control 0;
 #X obj 76 231 s pvtuner-msgs;
 #X msg 76 153 basefreq \$1;
 #X floatatom 76 121 5 0 0 0 - - -;
 #X msg 177 161 interpolation \$1;
-#X obj 177 134 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 177 134 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 76 78 mtof;
 #X floatatom 76 40 5 21 64 0 - pvtuner-scalestp -;
+#X text 169 100 turn this on to allow interpolation between the current
+scale and the previous scale;
+#X text 120 43 set the MIDI note for the base frequency of the current
+scale;
 #X connect 1 0 0 0;
 #X connect 2 0 1 0;
 #X connect 3 0 0 0;
 #X connect 4 0 3 0;
 #X connect 5 0 2 0;
 #X connect 6 0 5 0;
-#X restore 386 310 pd control;
-#X obj 166 293 sig~ 1;
-#X obj 302 303 sig~ 0;
-#X floatatom 302 277 5 0 1 0 - - -;
-#X obj 305 252 hsl 128 15 0 1 0 0 empty pvtuner-interslide empty -2
+#X restore 339 393 pd control;
+#X obj 110 336 sig~ 1;
+#X obj 337 325 sig~ 0;
+#X floatatom 337 299 5 0 1 0 - - -;
+#X obj 340 274 hsl 128 15 0 1 0 0 empty pvtuner-interslide empty -2
 -8 0 10 -228856 -1 -1 12700 1;
-#X obj 114 211 noise~;
-#X obj 219 294 sig~ 0.01;
-#N canvas 855 163 395 610 scales 0;
+#X obj 58 191 noise~;
+#N canvas 1264 213 395 610 scales 0;
 #X obj 95 550 s pvtuner-msgs;
 #X msg 118 153 minor_seventh_chord;
 #X msg 132 181 diatonic;
@@ -36,8 +39,10 @@
 981.712 1044 1167.12 1308.92 1391.96 1561.07 1745.18 1963.42 2088 2334.24
 2617.83 2783.93 3122.15 3490.35 3926.85 4176 4668.49 5235.66 5567.86
 6244.29 6980.7 7853.7;
-#X obj 69 46 inlet;
+#X obj 68 46 inlet;
 #X obj 68 210 outlet;
+#X text 121 45 any scale can be specified as a list of frequencies
+;
 #X connect 0 0 2 0;
 #X connect 1 0 0 0;
 #X restore 54 44 pd werkmeisterIII;
@@ -54,6 +59,7 @@
 #X msg 156 237 eqn 7;
 #X obj 54 19 bng 18 250 50 0 empty empty empty 17 7 0 10 -228856 -1
 -1;
+#X text 181 44 <= custom scale;
 #X connect 1 0 0 0;
 #X connect 2 0 0 0;
 #X connect 3 0 0 0;
@@ -70,29 +76,38 @@
 #X connect 14 0 0 0;
 #X connect 15 0 0 0;
 #X connect 16 0 4 0;
-#X restore 386 288 pd scales;
-#N canvas 739 94 450 300 init 0;
+#X restore 339 371 pd scales;
+#N canvas 97 594 450 300 init 0;
 #X obj 108 104 loadbang;
-#X msg 108 135 \; pvtuner-scalestp 21 \; pvtuner-interslide 1;
+#X msg 108 135 \; pvtuner-scalestp 21 \; pvtuner-interslide 1 \; pvtuner-transpose
+1 \; pvtuner-synt 0.001;
 #X connect 0 0 1 0;
-#X restore 386 332 pd init;
-#X text 299 215 Interpolate between scales \, when interpolation is
-on, f 27;
-#X obj 114 334 fftease/pvtuner~ 2048 8;
-#X obj 114 378 ./gain.dsp~;
-#X text 62 124 [pvtuner~] allows you to impose an arbitrary tuning
+#X restore 339 415 pd init;
+#X obj 58 377 fftease/pvtuner~ 2048 8;
+#X obj 58 421 ./gain.dsp~;
+#X text 42 112 [pvtuner~] allows you to impose an arbitrary tuning
 scale on any input sound. Several scales are built into the object
 \, and you can provide arbitrary tunings with a sorted list of numbers
 representing Hz values., f 71;
-#X obj 249 53 fftease/pvtuner~;
-#X text 374 52 - Frequency-quantized oscillator bank resynthesis,
-f 27;
 #X obj 43 45 ./icon;
-#X connect 0 0 11 0;
-#X connect 2 0 11 1;
-#X connect 3 0 11 3;
+#X obj 163 337 sig~ 0.001;
+#X text 334 238 Interpolate between scales \, when interpolation is
+togggled on, f 32;
+#X floatatom 110 268 5 0 0 0 - pvtuner-transpose -;
+#X text 158 290 synthesis threshold;
+#X floatatom 163 309 5 0 0 0 - pvtuner-synt -;
+#X text 107 250 transposition factor;
+#X obj 258 43 cnv 15 100 30 empty empty fftease/pvtuner~ 20 12 0 24
+-262144 -1 0;
+#X text 273 73 - Frequency-quantized oscillator bank resynthesis,
+f 61;
+#X connect 0 0 9 0;
+#X connect 2 0 9 1;
+#X connect 3 0 9 3;
 #X connect 4 0 3 0;
 #X connect 5 0 4 0;
-#X connect 6 0 11 0;
-#X connect 7 0 11 2;
-#X connect 11 0 12 0;
+#X connect 6 0 9 0;
+#X connect 9 0 10 0;
+#X connect 13 0 9 2;
+#X connect 15 0 2 0;
+#X connect 17 0 13 0;
