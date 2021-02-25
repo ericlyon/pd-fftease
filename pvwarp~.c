@@ -56,6 +56,7 @@ void pvwarp_tilde_setup(void)
     CLASS_MAINSIGNALIN(c, t_pvwarp, x_f);
     class_addmethod(c,(t_method)pvwarp_dsp,gensym("dsp"), A_CANT, 0);
     class_addmethod(c,(t_method)pvwarp_mute,gensym("mute"),A_FLOAT,0);
+    class_addmethod(c,(t_method)pvwarp_automate,gensym("automate"),A_FLOAT,0);
     class_addmethod(c,(t_method)pvwarp_bottomfreq,gensym("bottomfreq"),A_FLOAT,0);
     class_addmethod(c,(t_method)pvwarp_topfreq,gensym("topfreq"),A_FLOAT,0);
     class_addmethod(c,(t_method)pvwarp_autofunc,gensym("autofunc"),A_DEFFLOAT, A_DEFFLOAT,0);
@@ -181,6 +182,7 @@ void pvwarp_autofunc(t_pvwarp *x, t_floatarg minval, t_floatarg maxval)
         lastval = target;
         pointcount += segpoints;
     }
+    x->automate = 1;
 }
 
 void pvwarp_mute(t_pvwarp *x, t_floatarg state)
@@ -250,6 +252,12 @@ void pvwarp_init(t_pvwarp *x)
 void pvwarp_bottomfreq(t_pvwarp *x, t_floatarg f)
 {
 
+    if(!x->fft->initialized){
+        if(f >= 0 && f < 5000){
+            x->lofreq = f;
+        }
+        return;
+    }
     if( f < 0 || f > x->fft->R / 2.0 ){
         error("%s: frequency %f out of range", OBJECT_NAME, f);
         return;
@@ -260,6 +268,12 @@ void pvwarp_bottomfreq(t_pvwarp *x, t_floatarg f)
 
 void pvwarp_topfreq(t_pvwarp *x, t_floatarg f)
 {
+    if(!x->fft->initialized){
+        if(f > 0 && f < 22050){
+            x->hifreq = f;
+        }
+        return;
+    }
     if( f < x->lofreq || f > x->fft->R / 2.0 ){
         error("%s: frequency %f out of range", OBJECT_NAME, f);
         return;
@@ -346,10 +360,14 @@ t_int *pvwarp_perform(t_int *w)
     fft->P = *in8 ;
     fft->synt = *in9 ;
 
+    /*
     if( (x->please_update || x->always_update)  && ! x->automate){
         update_warp_function(x);
     }
-
+*/
+    if(!x->automate){
+        update_warp_function(x);
+    }
     if( fft->bufferStatus == EQUAL_TO_MSP_VECTOR ){
         memcpy(input, input + D, (Nw - D) * sizeof(t_float));
         memcpy(input + (Nw - D), MSPInputVector, D * sizeof(t_float));
