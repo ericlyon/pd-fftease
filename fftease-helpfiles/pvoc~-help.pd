@@ -1,26 +1,40 @@
-#N canvas 647 60 517 520 12;
-#X obj 342 390 sig~ 0.001;
-#X floatatom 263 355 5 0 0 0 - - -;
-#X obj 263 377 sig~ 1.5;
-#X msg 111 332 mute \$1;
-#X obj 111 302 tgl 17 0 empty empty empty 17 7 0 10 -228856 -1 -1 0
+#N canvas 647 60 609 556 12;
+#X obj 295 411 sig~ 0.001;
+#X floatatom 216 376 5 0 0 0 - - -;
+#X obj 216 398 sig~ 1.5;
+#X msg 64 328 mute \$1;
+#X obj 64 298 tgl 17 0 empty empty empty 17 7 0 10 -228856 -1 -1 0
 1;
-#X floatatom 342 368 5 0 0 0 - - -;
-#X obj 266 331 hsl 128 15 0.2 2 0 0 empty empty empty -2 -8 0 10 -228856
--1 -1 0 1;
-#X obj 198 297 phasor~ 220;
-#X obj 198 322 -~ 0.5;
-#X msg 164 207 lowfreq \$1;
-#X floatatom 164 176 5 0 0 0 - - -;
-#X floatatom 182 236 5 0 0 0 - - -;
-#X msg 182 267 highfreq \$1;
-#X obj 184 461 ./gain.dsp~;
-#X obj 184 420 fftease/pvoc~ 2048 8, f 23;
+#X floatatom 295 389 5 0 0 0 - - -;
+#X obj 219 327 hsl 128 15 0.2 2 0 0 empty pvoc-transpose transposition
+-2 9 0 10 -228856 -1 -1 9172 1;
+#X obj 151 293 phasor~ 220;
+#X obj 151 318 -~ 0.5;
+#X msg 117 203 lowfreq \$1;
+#X floatatom 117 172 5 0 0 0 - pvoc-lofreq -;
+#X floatatom 135 232 5 0 0 0 - pvoc-hifreq -;
+#X msg 135 263 highfreq \$1;
+#X obj 137 490 ./gain.dsp~;
+#X obj 137 441 fftease/pvoc~ 2048 8, f 23;
 #X obj 45 37 ./icon;
-#X text 348 51 - Phase vocoder;
-#X obj 247 51 fftease/pvoc~;
+#X text 343 68 - Phase vocoder;
 #X text 44 115 [pvoc~] performs phase vocoding with the option to limit
 minimum and maximum frequency to synthesize.;
+#N canvas 145 586 450 300 init 0;
+#X obj 111 46 loadbang;
+#X msg 111 86 \; pvoc-transpose 1.5 \; pvoc-lofreq 40 \; pvoc-hifreq
+5000 \; pvoc-threshold 0.001;
+#X connect 0 0 1 0;
+#X restore 341 494 pd init;
+#X text 160 170 lowest frequency to synthesize;
+#X text 179 234 highest frequency to synthesize;
+#X text 337 389 synthesis threshold;
+#X obj 321 41 cnv 15 100 30 empty empty fftease/pvoc~ 20 12 0 24 -262144
+-1 0;
+#X obj 298 362 hsl 128 15 0 1 0 0 empty pvoc-threshold threshold -2
+9 0 10 -228856 -1 -1 13 1;
+#X text 151 463 args: FFT size \, overlap factor (defaults 1024 8)
+;
 #X connect 0 0 14 2;
 #X connect 1 0 2 0;
 #X connect 2 0 14 1;
@@ -35,3 +49,4 @@ minimum and maximum frequency to synthesize.;
 #X connect 11 0 12 0;
 #X connect 12 0 14 0;
 #X connect 14 0 13 0;
+#X connect 23 0 5 0;
