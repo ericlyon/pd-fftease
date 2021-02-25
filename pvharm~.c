@@ -63,16 +63,21 @@ void pvharm_lowfreq(t_pvharm *x, t_floatarg f)
 {
     t_fftease *fft = x->fft;
     t_fftease *fft2 = x->fft2;
-    if(f > x->hifreq){
-        error("%s: minimum cannot exceed current maximum: %f",OBJECT_NAME,x->hifreq);
-        return;
+    int R = x->fft->R;
+    if(R > 0){
+        if(f > x->hifreq){
+            error("%s: minimum cannot exceed current maximum: %f",OBJECT_NAME,x->hifreq);
+            return;
+        }
+        if(f < 0 ){
+            f = 0;
+        }
+        x->lofreq = f;
+        fftease_oscbank_setbins(fft,x->lofreq, x->hifreq);
+        fftease_oscbank_setbins(fft2,x->lofreq, x->hifreq);
+    } else {
+        x->lofreq = f;
     }
-    if(f < 0 ){
-        f = 0;
-    }
-    x->lofreq = f;
-    fftease_oscbank_setbins(fft,x->lofreq, x->hifreq);
-    fftease_oscbank_setbins(fft2,x->lofreq, x->hifreq);
 }
 
 void pvharm_highfreq(t_pvharm *x, t_floatarg f)
@@ -80,16 +85,20 @@ void pvharm_highfreq(t_pvharm *x, t_floatarg f)
     t_fftease *fft = x->fft;
     t_fftease *fft2 = x->fft2;
     int R = x->fft->R;
-    if(f < x->lofreq){
-        error("%s: maximum cannot go below current minimum: %f",OBJECT_NAME,x->lofreq);
-        return;
+    if(R > 0){
+        if(f < x->lofreq){
+            error("%s: maximum cannot go below current minimum: %f",OBJECT_NAME,x->lofreq);
+            return;
+        }
+        if(f > R/2 ){
+            f = R/2;
+        }
+        x->hifreq = f;
+        fftease_oscbank_setbins(fft,x->lofreq, x->hifreq);
+        fftease_oscbank_setbins(fft2,x->lofreq, x->hifreq);
+    } else {
+        x->hifreq = f;
     }
-    if(f > R/2 ){
-        f = R/2;
-    }
-    x->hifreq = f;
-    fftease_oscbank_setbins(fft,x->lofreq, x->hifreq);
-    fftease_oscbank_setbins(fft2,x->lofreq, x->hifreq);
 }
 
 void pvharm_oscnt(t_pvharm *x)
