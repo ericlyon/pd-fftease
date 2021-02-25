@@ -1,25 +1,35 @@
-#N canvas 600 60 572 436 12;
-#X obj 71 291 *~;
-#X floatatom 89 258 5 0 0 0 - mix-in-orig -;
+#N canvas 23 475 572 436 12;
+#X obj 44 295 *~;
+#X floatatom 62 262 5 0 0 0 - mix-in-orig -;
 #N canvas 0 22 450 278 (subpatch) 0;
 #X array pvgrain-pf 46379 float 2;
 #X coords 0 1 46379 -1 200 140 1;
-#X restore 316 207 graph;
-#X obj 162 215 r pvgrain-msgs;
-#N canvas 778 105 802 276 control 0;
-#X obj 242 180 s pvgrain-msgs;
-#X msg 109 123 probability \$1;
-#X floatatom 109 90 7 0 0 0 - - -;
-#X obj 112 55 hsl 128 15 0.0001 0.1 0 0 empty pvgrain-prob empty -2
--8 0 10 -262144 -1 -1 2530 1;
-#X msg 242 123 framegrains \$1;
-#X floatatom 242 90 5 1 60 0 - pvgrain-fgr -;
-#X msg 403 127 topfreq \$1;
-#X floatatom 403 92 7 50 20000 0 - pvgrain-topf -;
-#X floatatom 537 70 5 0 0 0 - base-freq -;
-#X obj 537 99 s base-frequency;
-#X obj 547 152 hsl 128 15 0 1 0 0 mix-in-orig empty mix-in-orig -2
--8 0 10 -262144 -1 -1 0 1;
+#X restore 289 211 graph;
+#X obj 135 219 r pvgrain-msgs;
+#N canvas 778 105 684 740 control 0;
+#X obj 36 677 s pvgrain-msgs;
+#X msg 36 139 probability \$1;
+#X floatatom 36 106 7 0 0 0 - - -;
+#X obj 39 64 hsl 128 15 0.0001 0.1 0 0 empty pvgrain-prob empty -2
+-8 0 10 -262144 -1 -1 12700 1;
+#X msg 71 249 framegrains \$1;
+#X floatatom 71 217 5 1 60 0 - pvgrain-fgr -;
+#X msg 148 523 topfreq \$1;
+#X floatatom 148 488 7 50 20000 0 - pvgrain-topf -;
+#X floatatom 246 350 5 0 0 0 - base-freq -;
+#X obj 246 375 s base-frequency;
+#X obj 487 444 hsl 128 15 0 1 0 0 mix-in-orig empty mix-in-original-signal
+-2 -8 0 10 -262144 -1 -1 0 1;
+#X text 239 328 fundamental frequency of grain sample;
+#X msg 294 590 bottomfreq \$1;
+#X floatatom 294 559 5 0 0 0 - - -;
+#X text 206 489 highest grain frequency data to generate;
+#X text 338 560 lowest grain frequency to generate;
+#X text 120 193 maximum number of grains to synthesize per FFT-frame
+\; at SR = 48000 and FFT size = 1024 \, grain duration is about 0.02
+seconds;
+#X text 34 25 probability that each grain in a given FFT frame is actually
+synthesized;
 #X connect 1 0 0 0;
 #X connect 2 0 1 0;
 #X connect 3 0 2 0;
@@ -28,8 +38,10 @@
 #X connect 6 0 0 0;
 #X connect 7 0 6 0;
 #X connect 8 0 9 0;
-#X restore 165 172 pd control;
-#N canvas 857 534 404 268 init 0;
+#X connect 12 0 0 0;
+#X connect 13 0 12 0;
+#X restore 138 176 pd control;
+#N canvas 778 868 404 268 init 0;
 #X obj 86 34 loadbang;
 #X msg 113 67 \; base-freq 261 \; pvgrain-topf 4000 \; pvgrain-fgr
 20 \; pvgrain-prob 0.02;
@@ -38,7 +50,7 @@
 #X connect 0 0 1 0;
 #X connect 0 0 3 0;
 #X connect 3 0 2 0;
-#X restore 180 319 pd init;
+#X restore 153 323 pd init;
 #N canvas 610 230 689 382 playback 0;
 #X obj 51 29 inlet;
 #X obj 92 104 + 1;
@@ -118,38 +130,43 @@
 #X connect 28 0 19 0;
 #X restore 92 165 pd gate8;
 #X obj 51 60 t l b;
-#N canvas 775 197 588 642 playlet 0;
+#N canvas 1317 649 588 642 playlet 0;
 #X obj 200 43 inlet;
 #X obj 200 95 unpack f f;
-#X obj 257 130 / 261;
+#X obj 267 130 / 261;
 #X obj 65 407 line~;
 #X obj 65 444 tabread4~ pvgrain-pf;
 #X obj 65 499 *~ 0.1;
-#X floatatom 257 164 5 0 0 0 - - -;
+#X floatatom 267 164 5 0 0 0 - - -;
 #X msg 20 375 1;
 #X msg 65 279 1051;
 #X obj 65 317 /;
-#X obj 257 200 t b f;
+#X obj 267 200 t b f;
 #X obj 65 342 t f b;
-#X text 15 29 assumes 44100 SR;
 #X obj 65 545 outlet~;
 #X msg 65 374 46376 \$1;
+#X obj 299 75 r base-frequency;
+#X text 143 361 hard-coded for provided Piano sample \; change sample
+length here if using a different sample;
+#X text 100 279 <- duration of the grain sample in milliseconds;
+#X text 301 47 base frequency of grain sample;
 #X connect 0 0 1 0;
 #X connect 1 0 5 1;
 #X connect 1 1 2 0;
 #X connect 2 0 6 0;
 #X connect 3 0 4 0;
 #X connect 4 0 5 0;
-#X connect 5 0 13 0;
+#X connect 5 0 12 0;
 #X connect 6 0 10 0;
 #X connect 7 0 3 0;
 #X connect 8 0 9 0;
 #X connect 9 0 11 0;
 #X connect 10 0 8 0;
 #X connect 10 1 9 1;
-#X connect 11 0 14 0;
+#X connect 11 0 13 0;
 #X connect 11 1 7 0;
-#X connect 14 0 3 0;
+#X connect 13 0 3 0;
+#X connect 14 0 2 1;
 #X restore 92 211 pd playlet;
 #X obj 92 263 outlet~;
 #X obj 51 105 f 0;
@@ -169,6 +186,7 @@
 #X text 15 29 assumes 44100 SR;
 #X obj 65 545 outlet~;
 #X msg 65 374 46376 \$1;
+#X obj 299 75 r base-frequency;
 #X connect 0 0 1 0;
 #X connect 1 0 5 1;
 #X connect 1 1 2 0;
@@ -185,6 +203,7 @@
 #X connect 11 0 14 0;
 #X connect 11 1 7 0;
 #X connect 14 0 3 0;
+#X connect 15 0 2 1;
 #X restore 163 211 pd playlet;
 #N canvas 775 197 588 642 playlet 0;
 #X obj 200 43 inlet;
@@ -202,6 +221,7 @@
 #X text 15 29 assumes 44100 SR;
 #X obj 65 545 outlet~;
 #X msg 65 374 46376 \$1;
+#X obj 299 75 r base-frequency;
 #X connect 0 0 1 0;
 #X connect 1 0 5 1;
 #X connect 1 1 2 0;
@@ -218,6 +238,7 @@
 #X connect 11 0 14 0;
 #X connect 11 1 7 0;
 #X connect 14 0 3 0;
+#X connect 15 0 2 1;
 #X restore 238 210 pd playlet;
 #N canvas 775 197 588 642 playlet 0;
 #X obj 200 43 inlet;
@@ -235,6 +256,7 @@
 #X text 15 29 assumes 44100 SR;
 #X obj 65 545 outlet~;
 #X msg 65 374 46376 \$1;
+#X obj 299 75 r base-frequency;
 #X connect 0 0 1 0;
 #X connect 1 0 5 1;
 #X connect 1 1 2 0;
@@ -251,6 +273,7 @@
 #X connect 11 0 14 0;
 #X connect 11 1 7 0;
 #X connect 14 0 3 0;
+#X connect 15 0 2 1;
 #X restore 309 210 pd playlet;
 #N canvas 775 197 588 642 playlet 0;
 #X obj 200 43 inlet;
@@ -268,6 +291,7 @@
 #X text 15 29 assumes 44100 SR;
 #X obj 65 545 outlet~;
 #X msg 65 374 46376 \$1;
+#X obj 299 75 r base-frequency;
 #X connect 0 0 1 0;
 #X connect 1 0 5 1;
 #X connect 1 1 2 0;
@@ -284,6 +308,7 @@
 #X connect 11 0 14 0;
 #X connect 11 1 7 0;
 #X connect 14 0 3 0;
+#X connect 15 0 2 1;
 #X restore 383 209 pd playlet;
 #N canvas 775 197 588 642 playlet 0;
 #X obj 200 43 inlet;
@@ -301,6 +326,7 @@
 #X text 15 29 assumes 44100 SR;
 #X obj 65 545 outlet~;
 #X msg 65 374 46376 \$1;
+#X obj 299 75 r base-frequency;
 #X connect 0 0 1 0;
 #X connect 1 0 5 1;
 #X connect 1 1 2 0;
@@ -317,6 +343,7 @@
 #X connect 11 0 14 0;
 #X connect 11 1 7 0;
 #X connect 14 0 3 0;
+#X connect 15 0 2 1;
 #X restore 454 209 pd playlet;
 #N canvas 775 197 588 642 playlet 0;
 #X obj 200 43 inlet;
@@ -334,6 +361,7 @@
 #X text 15 29 assumes 44100 SR;
 #X obj 65 545 outlet~;
 #X msg 65 374 46376 \$1;
+#X obj 299 75 r base-frequency;
 #X connect 0 0 1 0;
 #X connect 1 0 5 1;
 #X connect 1 1 2 0;
@@ -350,6 +378,7 @@
 #X connect 11 0 14 0;
 #X connect 11 1 7 0;
 #X connect 14 0 3 0;
+#X connect 15 0 2 1;
 #X restore 529 208 pd playlet;
 #N canvas 775 197 588 642 playlet 0;
 #X obj 200 43 inlet;
@@ -367,6 +396,7 @@
 #X text 15 29 assumes 44100 SR;
 #X obj 65 545 outlet~;
 #X msg 65 374 46376 \$1;
+#X obj 299 75 r base-frequency;
 #X connect 0 0 1 0;
 #X connect 1 0 5 1;
 #X connect 1 1 2 0;
@@ -383,6 +413,7 @@
 #X connect 11 0 14 0;
 #X connect 11 1 7 0;
 #X connect 14 0 3 0;
+#X connect 15 0 2 1;
 #X restore 600 208 pd playlet;
 #X connect 0 0 4 0;
 #X connect 1 0 2 0;
@@ -407,15 +438,17 @@
 #X connect 12 0 6 0;
 #X connect 13 0 6 0;
 #X connect 14 0 6 0;
-#X restore 161 288 pd playback;
-#X obj 71 168 ./sfplay~;
-#X obj 162 251 fftease/pvgrain~;
-#X obj 71 363 ./gain.dsp~;
-#X text 65 101 [pvgrain~] tracks an input sound and outputs control
-data that can be used to play notes on a synthesizer or sampler.;
+#X restore 135 292 pd playback;
+#X obj 44 172 ./sfplay~;
+#X obj 135 255 fftease/pvgrain~;
+#X obj 44 367 ./gain.dsp~;
 #X obj 39 31 ./icon;
-#X obj 231 45 fftease/pvgrain~;
-#X text 356 47 - Spectral granulator;
+#X text 276 54 - Spectral granulator;
+#X obj 258 28 cnv 15 100 30 empty empty fftease/pvgrain~ 20 12 0 24
+-262144 -1 0;
+#X text 38 105 [pvgrain~] tracks an input sound and outputs control
+data in the form of [amplitude \, frequency] pairs that can be used
+to play notes on a synthesizer or sampler.;
 #X connect 0 0 9 0;
 #X connect 1 0 0 1;
 #X connect 3 0 8 0;
