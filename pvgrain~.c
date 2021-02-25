@@ -54,6 +54,7 @@ void pvgrain_tilde_setup(void)
     class_addmethod(c,(t_method)pvgrain_probability,gensym("probability"),A_DEFFLOAT,0);
     class_addmethod(c,(t_method)pvgrain_framegrains,gensym("framegrains"),A_DEFFLOAT,0);
     class_addmethod(c,(t_method)pvgrain_topfreq,gensym("topfreq"),A_FLOAT,0);
+    class_addmethod(c,(t_method)pvgrain_bottomfreq,gensym("bottomfreq"),A_FLOAT,0);
     class_addmethod(c,(t_method)pvgrain_basefreq,gensym("basefreq"),A_FLOAT,0);
     pvgrain_class = c;
     fftease_announce(OBJECT_NAME);
@@ -84,25 +85,35 @@ void pvgrain_topfreq (t_pvgrain *x, t_floatarg top)
     int R = x->fft->R;
     t_fftease *fft = x->fft;
 
-    if( top < 50. )
+    if( top < 50. ){
         top = 50.;
-    if( top > R / 2 )
-        top = R / 2;
-    x->topfreq = top ;
-    fftease_oscbank_setbins(fft,x->bottomfreq, x->topfreq);
+    }
+    if(R > 0){
+        if( top > R / 2 ){
+            top = R / 2;
+        }
+        x->topfreq = top;
+        fftease_oscbank_setbins(fft,x->bottomfreq, x->topfreq);
+    } else {
+        x->topfreq = top;
+    }
+    // post("topfreq set to %f",x->topfreq);
 }
 
 void pvgrain_bottomfreq (t_pvgrain *x, t_floatarg f)
 {
     int R = x->fft->R;
     t_fftease *fft = x->fft;
-    if( f >= x->topfreq || f >= R/2){
-        post("%f is too high a bottom freq",f);
-        return;
+    if(R > 0){
+        if( f >= x->topfreq || f >= R/2){
+            post("pvgrain~: %f is too high a bottom freq",f);
+            return;
+        }
+        x->bottomfreq = f;
+        fftease_oscbank_setbins(fft,x->bottomfreq, x->topfreq);
+    } else {
+        x->bottomfreq = f;
     }
-
-    x->bottomfreq = f;
-    fftease_oscbank_setbins(fft,x->bottomfreq, x->topfreq);
 }
 
 void pvgrain_probability (t_pvgrain *x, t_floatarg prob)
@@ -112,16 +123,22 @@ void pvgrain_probability (t_pvgrain *x, t_floatarg prob)
     if( prob > 1. )
         prob = 1.;
     x->grain_probability = prob ;
+    // post("probability set to %f",x->grain_probability);
 }
 
 void pvgrain_framegrains (t_pvgrain *x, t_floatarg grains)
 {
     int N2 = x->fft->N2;
-    if( grains < 1 )
+    if( grains < 1 ){
         grains = 1;
-    if( grains > N2 - 1 )
-        grains = N2 - 1;
-    x->grains_per_frame = grains ;
+    }
+    if(N2 > 0){
+        if( grains > N2 - 1 ){
+            grains = N2 - 1;
+        }
+    }
+    x->grains_per_frame = grains;
+   // post("grains-per-frame set to %d",x->grains_per_frame);
 }
 
 void pvgrain_tick(t_pvgrain *x)
@@ -185,6 +202,7 @@ void pvgrain_free(t_pvgrain *x)
     }
     fftease_free(x->fft);
     free(x->fft);
+    clock_free(x->m_clock);
 }
 
 static void do_pvgrain(t_pvgrain *x)
