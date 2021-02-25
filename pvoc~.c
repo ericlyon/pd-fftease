@@ -43,8 +43,12 @@ void pvoc_tilde_setup(void)
 
 void pvoc_lowfreq(t_pvoc *x, t_floatarg f)
 {
-    if(!x->fft->initialized)
+    if(!x->fft->initialized){
+        if(f >= 0 && f < 5000){
+            x->lofreq = f;
+        }
         return;
+    }
     if(f < 0 ){
         f = 0;
     }
@@ -54,8 +58,12 @@ void pvoc_lowfreq(t_pvoc *x, t_floatarg f)
 
 void pvoc_highfreq(t_pvoc *x, t_floatarg f)
 {
-    if(!x->fft->initialized)
+    if(!x->fft->initialized){
+        if(f > 0 && f < 22050){
+            x->hifreq = f;
+        }
         return;
+    }
     if(f < 0 ){
         f = 0;
     }
