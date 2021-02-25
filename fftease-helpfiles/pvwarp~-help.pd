@@ -1,58 +1,84 @@
-#N canvas 692 38 689 510 12;
-#X obj 495 368 sig~ 0.0001;
-#X floatatom 451 343 5 0 0 0 - - -;
-#X floatatom 408 343 5 0 0 0 - - -;
-#X msg 146 320 autofunc 0.1 2;
-#X obj 454 319 hsl 128 15 0.25 2 0 0 empty empty Transposition -2 -8
-0 10 -262144 -1 -1 0 1;
-#X obj 410 279 hsl 128 15 0 1 0 0 empty empty function-read-offset
+#N canvas 692 38 663 842 12;
+#X floatatom 396 636 5 0 0 0 - - -;
+#X floatatom 353 636 5 0 0 0 - - -;
+#X msg 112 431 autofunc 0.1 2;
+#X obj 399 511 hsl 128 15 0.25 2 0 0 empty pvwarp-transpose Transposition
+-2 -8 0 10 -262144 -1 -1 5443 1;
+#X obj 356 471 hsl 128 15 0 1 0 0 empty empty function-read-offset
 -2 -8 0 10 -262144 -1 -1 0 1;
-#X obj 104 133 sfplay~;
-#X obj 106 395 fftease/pvwarp~, f 56;
-#X obj 106 437 ./gain.dsp~;
+#X obj 51 194 sfplay~;
+#X obj 51 743 fftease/pvwarp~, f 56;
+#X obj 51 785 ./gain.dsp~;
 #X obj 51 35 ./icon;
-#X obj 261 48 fftease/pvwarp~;
-#X text 378 47 - Spectral Warp;
-#X floatatom 235 368 5 0 0 0 - - -;
-#X floatatom 192 368 5 0 0 0 - - -;
-#X floatatom 149 368 5 0 0 0 - - -;
-#X text 244 83 [pvwarp~] creates an internal frequency warping function
-either according to specification or with the autofunc message. Try
-it on vocal sounds., f 50;
-#X text 151 350 cf1;
-#X text 193 350 bw1;
-#X text 233 350 warp1;
-#X floatatom 365 368 5 0 0 0 - - -;
-#X floatatom 322 368 5 0 0 0 - - -;
-#X floatatom 278 368 5 0 0 0 - - -;
-#X text 280 350 cf2;
-#X text 322 350 bw2;
-#X text 361 349 warp2;
-#X msg 118 230 bottomfreq \$1;
-#X obj 121 190 hsl 128 15 20 500 0 0 empty empty empty -2 -8 0 10 -228856
--1 -1 0 1;
-#X obj 139 257 hsl 128 15 1000 2000 0 0 empty empty empty -2 -8 0 10
--228856 -1 -1 0 1;
-#X msg 136 294 topfreq \$1;
-#X floatatom 118 210 5 0 0 0 - - -;
-#X floatatom 136 276 5 0 0 0 - - -;
-#X connect 0 0 7 9;
-#X connect 1 0 7 8;
-#X connect 2 0 7 7;
-#X connect 3 0 7 0;
+#X text 389 65 - Spectral Warp;
+#X floatatom 180 661 5 0 0 0 - pvwarp-w1 -;
+#X floatatom 137 661 5 0 0 0 - pvwarp-bw1 -;
+#X floatatom 94 661 5 0 0 0 - pvwarp-cf1 -;
+#X text 96 643 cf1;
+#X text 138 643 bw1;
+#X text 178 643 warp1;
+#X floatatom 310 661 5 0 0 0 - pvwarp-w2 -;
+#X floatatom 267 661 5 0 0 0 - pvwarp-bw2 -;
+#X floatatom 223 661 5 0 0 0 - pvwarp-cf2 -;
+#X text 225 643 cf2;
+#X text 267 643 bw2;
+#X text 306 642 warp2;
+#X msg 76 291 bottomfreq \$1;
+#X obj 79 251 hsl 128 15 0 500 0 0 empty pvwarp-lofreq empty -2 -8
+0 10 -228856 -1 -1 1270 1;
+#X obj 97 318 hsl 128 15 1000 5000 0 0 empty pvwarp-hifreq empty -2
+-8 0 10 -228856 -1 -1 12700 1;
+#X msg 94 357 topfreq \$1;
+#X floatatom 76 271 5 0 0 0 - - -;
+#X floatatom 94 337 5 0 0 0 - - -;
+#X obj 367 39 cnv 15 100 30 empty empty fftease/pvwarp~ 20 12 0 24
+-262144 -1 0;
+#X text 409 211 see also:;
+#X obj 388 235 cnv 15 100 20 empty empty fftease/pvwarpb~ 20 12 0 14
+-262144 -1 0;
+#N canvas 691 941 450 300 init 0;
+#X obj 59 21 loadbang;
+#X msg 60 76 \; pvwarp-transpose 1 \; pvwarp-hifreq 5000 \; pvwarp-lofreq
+0 \; pvwarp-cf1 665 \; pvwarp-bw1 0.45 \; pvwarp-w1 0.25 \; pvwarp-cf2
+1500 \; pvwarp-bw2 0.25 \; pvwarp-w2 1.7;
+#X connect 0 0 1 0;
+#X restore 338 786 pd init;
+#X text 437 643 synthesis threshold;
+#X obj 440 661 sig~ 0.001;
+#X msg 113 581 automate 0;
+#X msg 111 501 autofunc 1 1;
+#X text 112 482 flatten warp function;
+#X text 117 273 lowest frequency to synthesize;
+#X text 137 340 highest frequency to synthesize;
+#X text 196 575 turn off the warp function \, and return control to
+the two "bumps" controlled by inlets 2 - 7;
+#X text 46 89 [pvwarp~] creates an internal frequency warping function
+either according to specification or with the autofunc message. You
+can also manually control warping with two "bumps" defined by [center
+freq \, bandwidth factor \, warp factor] triplets \, using inlets 2-7.
+Try this external on vocal sounds., f 50;
+#X text 108 386 build a random warp function (args: minimum and maximum
+transpose factors) \; this internally turns on the "automate" state
+;
+#X connect 0 0 6 8;
+#X connect 1 0 6 7;
+#X connect 2 0 6 0;
+#X connect 3 0 0 0;
 #X connect 4 0 1 0;
-#X connect 5 0 2 0;
+#X connect 5 0 6 0;
 #X connect 6 0 7 0;
-#X connect 7 0 8 0;
-#X connect 12 0 7 3;
-#X connect 13 0 7 2;
-#X connect 14 0 7 1;
-#X connect 19 0 7 6;
-#X connect 20 0 7 5;
-#X connect 21 0 7 4;
-#X connect 25 0 7 0;
-#X connect 26 0 29 0;
-#X connect 27 0 30 0;
-#X connect 28 0 7 0;
-#X connect 29 0 25 0;
-#X connect 30 0 28 0;
+#X connect 10 0 6 3;
+#X connect 11 0 6 2;
+#X connect 12 0 6 1;
+#X connect 16 0 6 6;
+#X connect 17 0 6 5;
+#X connect 18 0 6 4;
+#X connect 22 0 6 0;
+#X connect 23 0 26 0;
+#X connect 24 0 27 0;
+#X connect 25 0 6 0;
+#X connect 26 0 22 0;
+#X connect 27 0 25 0;
+#X connect 33 0 6 9;
+#X connect 34 0 6 0;
+#X connect 35 0 6 0;
