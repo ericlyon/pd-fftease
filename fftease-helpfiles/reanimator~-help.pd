@@ -1,6 +1,6 @@
-#N canvas 600 60 620 491 12;
-#X floatatom 361 365 5 0 0 0 - - -;
-#X floatatom 264 365 5 0 0 0 - - -;
+#N canvas 600 60 744 533 12;
+#X floatatom 279 403 5 0 0 0 - - -;
+#X floatatom 172 423 5 0 0 0 - - -;
 #N canvas 404 737 450 300 showframe 0;
 #X obj 205 102 inlet~;
 #X obj 205 159 snapshot~;
@@ -16,8 +16,8 @@
 #X connect 3 0 2 0;
 #X connect 4 0 5 0;
 #X connect 5 0 3 0;
-#X restore 264 331 pd showframe;
-#X msg 197 256 analyze;
+#X restore 172 370 pd showframe;
+#X msg 80 259 analyze;
 #N canvas 404 737 450 300 show-analysis-progress 0;
 #X obj 205 102 inlet~;
 #X obj 205 159 snapshot~;
@@ -33,22 +33,90 @@
 #X connect 3 0 2 0;
 #X connect 4 0 5 0;
 #X connect 5 0 3 0;
-#X restore 361 331 pd show-analysis-progress;
-#X text 73 108 [reanimator~] first analyzes a "texture" sound \, and
+#X restore 279 369 pd show-analysis-progress;
+#X text 50 95 [reanimator~] first analyzes a "texture" sound \, and
 then resynthesizes a "driver" sound by finding the spectral frame in
 the texture sound that is closest to the current driver frame.;
-#X obj 169 292 fftease/reanimator~ 2000, f 28;
-#X obj 169 416 ./gain.dsp~;
-#X obj 362 198 ./sfplay~;
-#X obj 169 192 ./sfplay~;
+#X obj 65 455 ./gain.dsp~;
+#X obj 378 205 ./sfplay~;
+#X obj 65 202 ./sfplay~;
 #X obj 38 33 ./icon;
-#X obj 229 46 fftease/reanimator~ 0, f 22;
-#X text 398 47 - Audio texture mapping;
+#X text 394 59 - Audio texture mapping;
+#X text 378 177 texture sound;
+#X text 62 178 driver sound;
+#X text 288 329 <= args: analysis buffer size (ms) \, FFT size \, overlap
+factor;
+#X text 141 257 <= with texture sound playing \, hit this to capture
+analysis;
+#X obj 65 331 fftease/reanimator~ 5000 1024 8;
+#X text 324 403 analysis progress sync signal;
+#X obj 90 302 r reanimator-msgs;
+#X obj 374 33 cnv 15 100 30 empty empty fftease/reanimator~ 20 12 0
+24 -262144 -1 0;
+#N canvas 1344 194 899 801 more-controls 0;
+#X obj 82 740 s reanimator-msgs;
+#X msg 82 128 topbin \$1;
+#X floatatom 82 85 5 0 0 0 - reanimator-topbin -;
+#X msg 227 208 oscbank \$1;
+#X obj 227 173 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X text 251 176 turn on the oscillator bank;
+#X msg 280 266 transpose \$1;
+#X floatatom 280 238 5 0 0 0 - reanimator-transpose -;
+#X text 318 236 transpose (only works with oscillator bank);
+#X msg 277 340 synthresh \$1;
+#X text 280 362 synthesis threshold (only works with oscillator bank)
+;
+#X floatatom 277 305 5 0 0 0 - reanimator-synthresh -;
+#X msg 352 542 resume;
+#X msg 290 423 freeze_and_march 0;
+#X msg 292 448 freeze_and_march -0.2;
+#X text 348 521 resume normal speed;
+#X msg 291 475 freeze_and_march 10;
+#X text 287 392 set increment (playback speed) to argument \; zero
+freezes the sound;
+#X msg 383 626 inverse \$1;
+#X obj 383 593 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X text 403 593 toggle on to look for the "worst" match for each frame
+;
+#X msg 345 698 mute \$1;
+#X obj 345 669 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X text 371 672 turn off object and save CPU cycles;
+#X text 122 69 highest bin to take into account when looking for a
+matching spectrum \; lower values often work better than very high
+ones;
+#X connect 1 0 0 0;
 #X connect 2 0 1 0;
-#X connect 3 0 6 0;
+#X connect 3 0 0 0;
+#X connect 4 0 3 0;
+#X connect 6 0 0 0;
+#X connect 7 0 6 0;
+#X connect 9 0 0 0;
+#X connect 11 0 9 0;
+#X connect 12 0 0 0;
+#X connect 13 0 0 0;
+#X connect 14 0 0 0;
+#X connect 16 0 0 0;
+#X connect 18 0 0 0;
+#X connect 19 0 18 0;
+#X connect 21 0 0 0;
+#X connect 22 0 21 0;
+#X restore 306 459 pd more-controls;
+#N canvas 759 864 450 300 init 0;
+#X obj 39 25 loadbang;
+#X msg 39 69 \; reanimator-topbin 40 \; reanimator-transpose 1 \; reanimator-synthresh
+0.001;
+#X connect 0 0 1 0;
+#X restore 444 459 pd init;
+#X text 211 422 current matched frame from the texture analysis;
+#X connect 2 0 1 0;
+#X connect 3 0 15 0;
 #X connect 4 0 0 0;
-#X connect 6 0 7 0;
-#X connect 6 1 2 0;
-#X connect 6 2 4 0;
-#X connect 8 0 6 1;
-#X connect 9 0 6 0;
+#X connect 7 0 15 1;
+#X connect 8 0 15 0;
+#X connect 15 0 6 0;
+#X connect 15 1 2 0;
+#X connect 15 2 4 0;
+#X connect 17 0 15 0;
