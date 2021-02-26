@@ -48,9 +48,9 @@ static void pvwarpb_bottomfreq(t_pvwarpb *x, t_floatarg f);
 static void pvwarpb_topfreq(t_pvwarpb *x, t_floatarg f);
 static void pvwarpb_attachbuf(t_pvwarpb *x);
 static void pvwarpb_redraw(t_pvwarpb *x);
-static void pvwarpb_automate(t_pvwarpb *x, t_floatarg state);
-static void pvwarpb_setbuf(t_pvwarpb *x, t_symbol *wavename);
-static void pvwarpb_verbose(t_pvwarpb *x, t_floatarg state);
+//static void pvwarpb_automate(t_pvwarpb *x, t_floatarg state);
+//static void pvwarpb_setbuf(t_pvwarpb *x, t_symbol *wavename);
+//static void pvwarpb_verbose(t_pvwarpb *x, t_floatarg state);
 
 void pvwarpb_tilde_setup(void)
 {
@@ -304,6 +304,12 @@ void pvwarpb_init(t_pvwarpb *x)
 
 void pvwarpb_bottomfreq(t_pvwarpb *x, t_floatarg f)
 {
+    if(!x->fft->initialized){
+        if(f >= 0 && f < 5000){
+            x->lofreq = f;
+        }
+        return;
+    }
     if( f < 0 || f > x->fft->R / 2.0 ){
         error("%s: frequency %f out of range", OBJECT_NAME, f);
         return;
@@ -314,6 +320,12 @@ void pvwarpb_bottomfreq(t_pvwarpb *x, t_floatarg f)
 
 void pvwarpb_topfreq(t_pvwarpb *x, t_floatarg f)
 {
+    if(!x->fft->initialized){
+        if(f > 0 && f < 22050){
+            x->hifreq = f;
+        }
+        return;
+    }
     if( f < x->lofreq || f > x->fft->R / 2.0 ){
         error("%s: frequency %f out of range", OBJECT_NAME, f);
         return;
