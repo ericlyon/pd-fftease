@@ -1,15 +1,13 @@
-#N canvas 450 69 852 551 12;
+#N canvas 410 704 855 609 12;
 #N canvas 0 22 450 278 (subpatch) 0;
-#X array analysis-array1 1.76744e+06 float 2;
-#X coords 0 32767 1.76744e+06 -32768 200 140 1 0 0;
-#X restore 594 229 graph;
+#X array analysis-array1 1.92375e+06 float 2;
+#X coords 0 32767 1.92375e+06 -32768 100 70 1 0 0;
+#X restore 589 306 graph;
 #X floatatom 280 313 5 0 0 0 - - -;
-#X floatatom 421 305 5 0 0 0 - - -;
-#X obj 424 274 hsl 128 15 0 1 0 0 empty empty position -2 -8 0 10 -262144
--1 -1 0 1;
-#X msg 72 228 calcbuf 5000;
-#X msg 422 441 set \$1;
-#X msg 422 467 1.76745e+06;
+#X floatatom 422 305 5 0 0 0 - - -;
+#X obj 425 274 hsl 128 15 0 1 0 0 empty empty position -2 -8 0 10 -262144
+-1 -1 6000 1;
+#X msg 73 211 calcbuf 5000;
 #N canvas 404 737 450 300 showsync 0;
 #X obj 205 102 inlet~;
 #X obj 205 159 snapshot~;
@@ -31,33 +29,47 @@
 #X obj 422 337 sig~ 0;
 #X text 527 377 warning: do not write into this array \, as you will
 create extremely loud glitches if you do so., f 38;
-#X text 108 97 residency_buffer~ is like residency~ except that it
-uses a Pd array rather than an internal buffer. This makes it more
-complicated to work with \, but potentially more efficient than residency~.
-Any number of units may access the same array (or different ones).
-The array name is the obbligatory first argument. Do NOT attempt to
-play the recorded buffer with tabread~ or other time-domain audio objects
-unless you have some idea of what you are doing (and turn the volume
-way down before attempting this)., f 91;
-#X text 510 468 required array size;
 #X obj 138 377 fftease/residency_buffer~ analysis-array1;
 #X obj 138 289 ./sfplay~;
 #X obj 138 493 ./gain.dsp~;
-#X obj 87 26 ./icon;
-#X text 600 42 - Spectral sample buffer;
-#X text 172 205 Find out required size of storage buffer for a desired
-number of milliseconds. Then size the buffer to at least the recommended
-size., f 28;
-#X obj 298 41 fftease/residency_buffer~ analysis-array1;
-#X connect 1 0 9 0;
-#X connect 2 0 10 0;
+#X obj 38 21 ./icon;
+#X text 413 47 - Spectral sample buffer;
+#X floatatom 422 439 12 0 0 0 - - -;
+#X obj 422 483 array size analysis-array1;
+#X text 178 199 Report the required size of storage buffer for a desired
+number of milliseconds. This will automatically resize the array in
+this patch. (DACs must be on first.), f 28;
+#X msg 12 343 acquire_sample;
+#X text 447 463 array size is set in samples here;
+#X text 280 294 speed;
+#X text 7 322 record sample;
+#X text 33 87 residency_buffer~ is like residency~ except that it uses
+a Pd array rather than an internal buffer. This makes it more complicated
+to work with \, but potentially more efficient than residency~. Any
+number of units may access the same array (or different ones). The
+array name is the obligatory first argument. Do NOT attempt to play
+the recorded buffer with tabread~ or other time-domain audio objects
+unless you have some idea of what you are doing (and turn the volume
+way down before attempting this). Multiple copies of this object accessing
+the same array is the killer app here., f 91;
+#X obj 390 20 cnv 15 100 30 empty empty fftease/residency_buffer~ 20
+12 0 24 -262144 -1 0;
+#X text 592 189 see also:;
+#X obj 571 213 cnv 15 100 20 empty empty fftease/residency~ 20 12 0
+14 -262144 -1 0;
+#X obj 571 238 cnv 15 100 20 empty empty fftease/resent~ 20 12 0 14
+-262144 -1 0;
+#X text 150 437 current phase in buffer (0 - 1);
+#X connect 1 0 7 0;
+#X connect 2 0 8 0;
 #X connect 3 0 2 0;
-#X connect 4 0 14 0;
+#X connect 4 0 10 0;
 #X connect 5 0 6 0;
-#X connect 7 0 8 0;
-#X connect 9 0 14 1;
-#X connect 10 0 14 2;
-#X connect 14 0 16 0;
-#X connect 14 1 7 0;
-#X connect 14 2 5 0;
-#X connect 15 0 14 0;
+#X connect 7 0 10 1;
+#X connect 8 0 10 2;
+#X connect 10 0 12 0;
+#X connect 10 1 5 0;
+#X connect 10 2 15 0;
+#X connect 11 0 10 0;
+#X connect 15 0 16 0;
+#X connect 18 0 10 0;
