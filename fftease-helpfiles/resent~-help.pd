@@ -1,4 +1,4 @@
-#N canvas 605 33 588 499 12;
+#N canvas 605 33 731 486 12;
 #N canvas 404 737 450 300 showsync 0;
 #X obj 205 102 inlet~;
 #X obj 205 159 snapshot~;
@@ -14,28 +14,32 @@
 #X connect 3 0 2 0;
 #X connect 4 0 5 0;
 #X connect 5 0 3 0;
-#X restore 308 376 pd showsync;
-#X floatatom 308 401 5 0 0 0 - - -;
-#X msg 103 205 acquire_sample;
-#X obj 188 296 r resent-msgs;
-#N canvas 1044 90 450 300 speed-and-phase 0;
-#X obj 124 236 s resent-msgs;
+#X restore 238 368 pd showsync;
+#X floatatom 238 393 5 0 0 0 - - -;
+#X msg 51 171 acquire_sample;
+#X obj 118 288 r resent-msgs;
+#N canvas 1044 90 773 411 speed-and-phase 0;
+#X obj 133 352 s resent-msgs;
 #X msg 23 139 setspeed \$1;
 #X floatatom 23 113 5 0 0 0 - - -;
 #X obj 26 84 hsl 128 15 -2 2 0 0 empty empty empty -2 -8 0 10 -262144
+-1 -1 7500 1;
+#X msg 411 294 addphase \$1;
+#X floatatom 411 272 5 0 0 0 - - -;
+#X obj 414 243 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -262144
+-1 -1 1300 1;
+#X floatatom 133 203 5 0 0 0 - - -;
+#X obj 136 174 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -262144
 -1 -1 0 1;
-#X msg 267 189 addphase \$1;
-#X floatatom 267 167 5 0 0 0 - - -;
-#X obj 270 138 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -262144
--1 -1 0 1;
-#X floatatom 122 168 5 0 0 0 - - -;
-#X obj 125 139 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -262144
--1 -1 0 1;
-#X msg 122 190 setphase \$1;
-#X msg 234 81 setspeed_and_phase \$1 \$2;
-#X msg 237 31 1 0;
-#X msg 278 32 0 0;
-#X msg 324 31 -1 1;
+#X msg 133 225 setphase \$1;
+#X msg 368 139 setspeed_and_phase \$1 \$2;
+#X msg 368 89 1 0;
+#X msg 412 89 0 0;
+#X msg 458 89 -1 1;
+#X text 129 150 set location in sample;
+#X text 411 219 set phase relative to current location;
+#X text 20 67 change the global speed;
+#X text 509 87 set speeds and phases globally;
 #X connect 1 0 0 0;
 #X connect 2 0 1 0;
 #X connect 3 0 2 0;
@@ -49,18 +53,21 @@
 #X connect 11 0 10 0;
 #X connect 12 0 10 0;
 #X connect 13 0 10 0;
-#X restore 304 248 pd speed-and-phase;
-#N canvas 133 590 450 300 oscbank 0;
-#X obj 124 236 s resent-msgs;
+#X restore 234 240 pd speed-and-phase;
+#N canvas 133 590 624 316 oscbank 0;
+#X obj 103 241 s resent-msgs;
 #X msg 103 144 oscbank \$1;
 #X obj 103 96 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #X msg 190 140 transpose \$1;
-#X floatatom 192 110 5 0 0 0 - - -;
-#X obj 197 66 hsl 128 15 0.1 2 0 0 empty empty empty -2 -8 0 10 -262144
--1 -1 0 1;
+#X floatatom 190 106 5 0 0 0 - - -;
+#X obj 193 73 hsl 128 15 0.1 2 0 0 empty empty empty -2 -8 0 10 -262144
+-1 -1 1200 1;
 #X msg 312 184 synthresh \$1;
-#X msg 309 145 0.001;
+#X msg 312 146 0.001;
+#X text 30 77 toggle oscbank;
+#X text 182 43 transposition (oscbank only);
+#X text 307 117 synthesis threshold (oscbank only);
 #X connect 1 0 0 0;
 #X connect 2 0 1 0;
 #X connect 3 0 0 0;
@@ -68,10 +75,10 @@
 #X connect 5 0 4 0;
 #X connect 6 0 0 0;
 #X connect 7 0 6 0;
-#X restore 303 277 pd oscbank;
+#X restore 233 269 pd oscbank;
 #N canvas 775 566 719 379 individual-bin-control 0;
 #X obj 34 343 s resent-msgs;
-#X msg 115 152 linespeed 0 -1 511 1;
+#X msg 151 105 linespeed 0 -1 511 1;
 #X msg 183 184 randspeed 0.5 0.9;
 #X msg 245 217 randphase 0 1;
 #X msg 340 311 setspeed_and_phase \$1 \$2;
@@ -79,15 +86,18 @@
 #X text 369 274 first freeze sound to hear effects;
 #X msg 32 174 bin \$1 \$2;
 #X obj 32 126 pack f f;
-#X floatatom 87 69 5 0 0 0 - - -;
-#X floatatom 26 44 5 0 511 0 - - -;
-#X text 128 69 speed;
+#X floatatom 85 68 5 0 0 0 - - -;
+#X floatatom 32 44 5 0 511 0 - - -;
+#X text 129 69 speed;
 #X text 70 47 bin number;
-#X text 108 119 terminal value limited by FFT size / 2;
-#X text 255 151 linear distribution of speeds. (we assume here an FFT
+#X text 304 103 linear distribution of speeds. (we assume here an FFT
 size of 1024.);
-#X text 310 183 likewise for phase;
-#X text 339 217 randomly set all speeds within min/max parameters;
+#X text 308 148 likewise for phase;
+#X text 320 183 randomly set all speeds within min/max parameters;
+#X text 30 23 set individual bin speeds with [bin \, speed] pairs;
+#X text 227 48 (highest bin limited by FFT size / 2);
+#X msg 159 149 linephase 0 0 511 1;
+#X text 348 222 randomize all phases;
 #X connect 1 0 0 0;
 #X connect 2 0 0 0;
 #X connect 3 0 0 0;
@@ -97,20 +107,31 @@ size of 1024.);
 #X connect 8 0 7 0;
 #X connect 9 0 8 1;
 #X connect 10 0 8 0;
-#X restore 304 220 pd individual-bin-control;
-#X obj 171 337 fftease/resent~ 6000;
-#X obj 171 237 ./sfplay~;
-#X text 103 106 [resent~] follows the model of residency~ but allows
+#X connect 18 0 0 0;
+#X restore 234 212 pd individual-bin-control;
+#X obj 101 229 ./sfplay~;
+#X text 46 94 [resent~] follows the model of residency~ but allows
 independent control over each bin. It is recommended that you familiarize
 yourself with residency~ before working with the more complicated resent~
 , f 52;
-#X obj 171 436 ./gain.dsp~;
+#X obj 101 428 ./gain.dsp~;
 #X obj 48 33 ./icon;
-#X text 378 49 - Spectral sample buffer;
-#X obj 244 49 fftease/resent~ 0;
+#X text 410 67 - Spectral sample buffer;
+#X text 301 330 <= args: sample duration in ms \, FFT size \, overlap
+factor;
+#X obj 388 33 cnv 15 100 30 empty empty fftease/resent~ 20 12 0 24
+-262144 -1 0;
+#X text 452 232 see also:;
+#X obj 431 256 cnv 15 100 20 empty empty fftease/residency~ 20 12 0
+14 -262144 -1 0;
+#X obj 431 281 cnv 15 100 20 empty empty fftease/residency_buffer~
+20 12 0 14 -262144 -1 0;
+#X text 276 394 show location into sample or recording progress;
+#X obj 101 329 fftease/resent~ 6000 1024 8;
+#X text 161 170 capture input signal;
 #X connect 0 0 1 0;
-#X connect 2 0 7 0;
-#X connect 3 0 7 0;
-#X connect 7 0 10 0;
-#X connect 7 1 0 0;
-#X connect 8 0 7 0;
+#X connect 2 0 18 0;
+#X connect 3 0 18 0;
+#X connect 7 0 18 0;
+#X connect 18 0 9 0;
+#X connect 18 1 0 0;
