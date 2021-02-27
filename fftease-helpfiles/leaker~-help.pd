@@ -18,12 +18,14 @@ and at value 1 \, only sound 2 is heard. At intermediate values \,
 parts of each spectrum are aggregated according to the sieve structure
 which may be specified as upsieve \, downsieve or randsieve., f 69
 ;
-#X text 324 290 slide to crossfade;
-#X text 222 242 select 2 sounds to crossfade;
+#X text 313 298 slide to crossfade;
+#X text 148 280 select 2 sounds to crossfade;
 #X obj 267 28 cnv 15 100 30 empty empty fftease/leaker~ 20 12 0 24
 -262144 -1 0;
 #X text 360 190 see also:;
 #X obj 340 208 cnv 15 100 20 empty empty fftease/ether~ 20 12 0 14
+-262144 -1 0;
+#X obj 340 230 cnv 15 100 20 empty empty fftease/vacancy~ 20 12 0 14
 -262144 -1 0;
 #X connect 0 0 5 2;
 #X connect 1 0 0 0;
