@@ -1,27 +1,31 @@
-#N canvas 600 60 590 465 12;
-#X floatatom 321 227 5 0 0 1 knee scrape-knee -;
-#X floatatom 322 251 5 0 0 1 cutoff scrape-cutoff -;
-#X floatatom 322 277 5 0 0 1 thresh1 scrape-t1 -;
-#X floatatom 323 300 5 0 0 1 thresh2 scrape-t2 -;
-#X floatatom 323 325 5 0 0 1 weak-bin-multiplier scrape-wbm -;
+#N canvas 600 60 600 441 12;
+#X floatatom 290 204 5 0 0 1 knee scrape-knee -;
+#X floatatom 291 228 5 0 0 1 cutoff scrape-cutoff -;
+#X floatatom 291 254 5 0 0 1 thresh1 scrape-t1 -;
+#X floatatom 292 277 5 0 0 1 thresh2 scrape-t2 -;
+#X floatatom 292 302 5 0 0 1 weak-bin-multiplier scrape-wbm -;
 #N canvas 1271 554 450 300 init 0;
 #X msg 72 99 \; scrape-knee 1000 \; scrape-cutoff 4000 \; scrape-t1
 0.001 \; scrape-t2 0.05 \; scrape-wbm 0.1;
 #X obj 72 65 loadbang;
 #X connect 1 0 0 0;
-#X restore 348 359 pd init;
-#X text 88 109 scrape~ is like drown~ except that it only operates
+#X restore 317 336 pd init;
+#X text 47 103 scrape~ is like drown~ except that it only operates
 between the frequencies specified by knee and cutoff to the Nyquist.
 Between knee and cutoff is a transition range to gradually increase
 the noise reduction. This is good if you just want to scrape some noise
 off the upper frequency range without affecting lower parts of the
 spectrum (much).;
-#X obj 95 360 fftease/scrape~, f 33;
-#X obj 95 280 ./sfplay~;
-#X obj 95 395 ./gain.dsp~;
+#X obj 64 337 fftease/scrape~, f 33;
+#X obj 64 257 ./sfplay~;
+#X obj 64 372 ./gain.dsp~;
 #X obj 49 36 ./icon;
-#X obj 252 49 fftease/scrape~;
-#X text 370 50 - Shaped noise reduction;
+#X text 343 71 - Shaped noise reduction;
+#X obj 321 38 cnv 15 100 30 empty empty fftease/scrape~ 20 12 0 24
+-262144 -1 0;
+#X text 429 205 see also:;
+#X obj 409 223 cnv 15 100 20 empty empty fftease/drown~ 20 12 0 14
+-262144 -1 0;
 #X connect 0 0 7 1;
 #X connect 1 0 7 2;
 #X connect 2 0 7 3;

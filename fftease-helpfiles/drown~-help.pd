@@ -4,7 +4,7 @@
 -1 -1 0 1;
 #X floatatom 250 431 5 0 0 0 - - -;
 #X obj 253 401 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 12 -228856
--1 -1 10500 1;
+-1 -1 0 1;
 #X msg 156 331 adaptive \$1;
 #X obj 156 302 tgl 17 0 empty empty empty 17 7 0 10 -228856 -1 -1 0
 1;
@@ -21,7 +21,6 @@
 #X text 281 399 Threshold;
 #X text 350 439 Gain factor;
 #X text 178 302 <= adaptive mode;
-#X text 203 362 <= turns off the object (saving CPU power);
 #X text 527 66 - Reduce/increase spectral noise floor;
 #X obj 114 378 +~;
 #X text 395 393 Per-bin noise floor amplitude threshold. Higher values
@@ -47,6 +46,10 @@ and 0 completely removes that bin., f 58;
 #X text 312 292 (Adaptive noise reduction can be more effective than
 non-adaptive NR \, especially when the input signal has a time-varying
 amplitude envelope), f 53;
+#X text 613 211 see also:;
+#X obj 593 229 cnv 15 100 20 empty empty fftease/scrape~ 20 12 0 14
+-262144 -1 0;
+#X text 203 362 <= turns off the object (saving CPU cycles);
 #X connect 0 0 12 2;
 #X connect 1 0 0 0;
 #X connect 2 0 12 1;
@@ -55,8 +58,8 @@ amplitude envelope), f 53;
 #X connect 5 0 4 0;
 #X connect 6 0 12 0;
 #X connect 7 0 6 0;
-#X connect 8 0 20 1;
-#X connect 9 0 20 0;
+#X connect 8 0 19 1;
+#X connect 9 0 19 0;
 #X connect 10 0 12 0;
 #X connect 12 0 14 0;
-#X connect 20 0 12 0;
+#X connect 19 0 12 0;
