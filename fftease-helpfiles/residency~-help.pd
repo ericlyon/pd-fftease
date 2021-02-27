@@ -1,4 +1,4 @@
-#N canvas 600 60 614 395 12;
+#N canvas 600 60 774 373 12;
 #N canvas 404 737 450 300 showsync 0;
 #X obj 205 102 inlet~;
 #X obj 205 159 snapshot~;
@@ -14,28 +14,66 @@
 #X connect 3 0 2 0;
 #X connect 4 0 5 0;
 #X connect 5 0 3 0;
-#X restore 368 292 pd showsync;
-#X floatatom 368 317 5 0 0 0 - - -;
-#X floatatom 234 215 5 0 0 0 - - -;
-#X floatatom 313 221 5 0 0 0 - - -;
-#X msg 83 161 acquire_sample;
-#X obj 316 193 hsl 128 15 0 1 0 0 empty empty position -2 -8 0 10 -262144
--1 -1 0 1;
-#X text 232 192 speed;
-#X obj 155 255 fftease/residency~ 5000;
-#X obj 154 300 ./gain.dsp~;
+#X restore 362 292 pd showsync;
+#X floatatom 362 317 5 0 0 0 - - -;
+#X floatatom 258 216 5 0 0 0 - - -;
+#X floatatom 362 216 5 0 0 0 - - -;
+#X msg 108 165 acquire_sample;
+#X obj 365 188 hsl 128 15 0 1 0 0 empty empty position -2 -8 0 10 -262144
+-1 -1 1400 1;
+#X text 256 193 speed;
+#X obj 155 300 ./gain.dsp~;
 #X obj 154 195 ./sfplay~;
 #X text 42 97 [residency~] samples input to an internal buffer \, after
 which the sound can be resynthesized with arbitrary speed and pitch.
 , f 71;
 #X obj 40 24 ./icon;
-#X obj 242 36 fftease/residency~ 0;
-#X text 393 37 -Spectral sample buffer;
+#X text 419 56 -Spectral sample buffer;
+#X obj 155 255 fftease/residency~ 5000 1024 8;
+#X text 383 253 <= args: size in ms \, FFT size \, overlap factor;
+#X text 404 318 phase in internal buffer (0 - 1);
+#N canvas 133 590 829 320 oscbank 0;
+#X msg 103 144 oscbank \$1;
+#X obj 103 96 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+1;
+#X msg 190 140 transpose \$1;
+#X floatatom 190 106 5 0 0 0 - - -;
+#X obj 193 73 hsl 128 15 0.1 2 0 0 empty residency-transpose empty
+-2 -8 0 10 -262144 -1 -1 6016 1;
+#X msg 426 117 synthresh \$1;
+#X text 69 72 toggle oscbank;
+#X text 182 43 transposition (oscbank only);
+#X text 421 50 synthesis threshold (oscbank only);
+#X obj 103 241 s residency-msgs;
+#X floatatom 426 82 5 0 0 0 - residency-synt -;
+#X connect 0 0 9 0;
+#X connect 1 0 0 0;
+#X connect 2 0 9 0;
+#X connect 3 0 2 0;
+#X connect 4 0 3 0;
+#X connect 5 0 9 0;
+#X connect 10 0 5 0;
+#X restore 51 272 pd oscbank;
+#X obj 57 140 r residency-msgs;
+#N canvas 1047 610 450 300 init 0;
+#X obj 95 59 loadbang;
+#X msg 95 97 \; residency-transpose 1 \; residency-synt 0.001;
 #X connect 0 0 1 0;
-#X connect 2 0 7 1;
-#X connect 3 0 7 2;
-#X connect 4 0 7 0;
+#X restore 51 297 pd init;
+#X obj 399 27 cnv 15 100 30 empty empty fftease/residency~ 20 12 0
+24 -262144 -1 0;
+#X text 212 165 record sample;
+#X text 534 150 see also:;
+#X obj 513 174 cnv 15 100 20 empty empty fftease/resent~ 20 12 0 14
+-262144 -1 0;
+#X obj 513 199 cnv 15 100 20 empty empty fftease/residency_buffer~
+20 12 0 14 -262144 -1 0;
+#X connect 0 0 1 0;
+#X connect 2 0 12 1;
+#X connect 3 0 12 2;
+#X connect 4 0 12 0;
 #X connect 5 0 3 0;
-#X connect 7 0 8 0;
-#X connect 7 1 0 0;
-#X connect 9 0 7 0;
+#X connect 8 0 12 0;
+#X connect 12 0 7 0;
+#X connect 12 1 0 0;
+#X connect 16 0 12 0;
