@@ -1,17 +1,23 @@
-#N canvas 600 60 622 447 12;
-#X floatatom 373 297 5 1 511 2 shape-width - -;
-#X text 111 107 shapee~ shapes the frequency evolution of one signal
+#N canvas 600 60 537 435 12;
+#X floatatom 261 290 5 1 511 2 shape-width shapee-width -;
+#X text 28 97 shapee~ shapes the frequency evolution of one signal
 with that of another. The shape width controls the amount of the frequency
 shaping effect., f 56;
-#X obj 173 246 ./sfplay~;
-#X obj 273 246 ./sfplay~;
-#X obj 173 333 fftease/shapee~, f 29;
-#X obj 173 377 ./gain.dsp~;
-#X obj 94 37 ./icon;
-#X obj 311 47 fftease/shapee~;
-#X text 430 46 - Frequency shaping;
-#X text 170 184 frequency reference source, f 10;
-#X text 274 186 formant reference source, f 9;
+#X obj 61 241 ./sfplay~;
+#X obj 161 241 ./sfplay~;
+#X obj 61 328 fftease/shapee~, f 29;
+#X obj 61 372 ./gain.dsp~;
+#X obj 23 26 ./icon;
+#X text 295 54 - Frequency shaping;
+#X text 58 179 frequency reference source, f 10;
+#X text 162 181 formant reference source, f 9;
+#X obj 273 28 cnv 15 100 30 empty empty fftease/shapee~ 20 12 0 24
+-262144 -1 0;
+#N canvas 1228 59 289 179 init 0;
+#X obj 14 43 loadbang;
+#X msg 14 75 \; shapee-width 8;
+#X connect 0 0 1 0;
+#X restore 266 374 pd init;
 #X connect 0 0 4 2;
 #X connect 2 0 4 0;
 #X connect 3 0 4 1;
