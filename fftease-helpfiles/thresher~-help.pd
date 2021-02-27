@@ -1,50 +1,47 @@
-#N canvas 778 70 745 467 12;
+#N canvas 918 658 707 455 12;
 #X floatatom 289 323 6 0 0 0 - - -;
 #X floatatom 368 323 6 0 0 0 - - -;
-#N canvas 649 312 208 179 init 0;
-#X msg 51 95 \; \$1-thresh 0.075 \; \$1-damp 0.95;
-#X obj 51 67 f \$0;
+#N canvas 649 312 260 202 init 0;
 #X obj 51 39 loadbang;
-#X connect 1 0 0 0;
-#X connect 2 0 1 0;
+#X msg 51 97 \; thresher-thresh 0.17 \; thresher-damp 0.99 \; thresher-synt
+0.001 \; thresher-transpose 0;
+#X connect 0 0 1 0;
 #X restore 136 381 pd init;
 #X obj 210 395 ./gain.dsp~;
-#X obj 371 298 hsl 128 15 0.5 1 0 0 \$0-dummy \$0-damp empty -2 -8
-0 10 -228856 -1 -1 11430 1;
-#X obj 292 267 hsl 128 15 0 0.5 0 0 \$0-dummy \$0-thresh empty -2 -8
-0 10 -228856 -1 -1 1905 1;
-#X text 390 297 damping factor;
+#X obj 371 297 hsl 128 15 0.5 1 0 0 empty thresher-damp empty -2 -8
+0 10 -228856 -1 -1 12446 1;
+#X obj 292 266 hsl 128 15 0 0.5 0 0 empty thresher-thresh empty -2
+-8 0 10 -228856 -1 -1 4318 1;
+#X text 389 297 damping factor;
 #X text 316 266 threshold;
 #X msg 127 243 mute \$1;
 #X obj 127 212 tgl 17 0 empty empty empty 17 7 0 10 -228856 -1 -1 0
 1;
-#X obj 28 55 ./icon;
-#X text 507 150 see also:;
-#X text 377 32 - Damped bin-level feedback;
-#X obj 584 150 bthresher~;
-#X text 243 65 [thresher~] sustains the amplitude and frequency in
-lower-energy FFT bins. The extent of this effect is controlled by the
-threshold parameter: at 0 all frames pass \, at higher values more
-frames are sustained. The feedback damping factor controls the decay
-time. A value of 1 results in an infinite freeze., f 66;
+#X obj 28 27 ./icon;
+#X text 397 60 - Damped bin-level feedback;
+#X text 30 90 [thresher~] sustains the amplitude and frequency in lower-energy
+FFT bins. The extent of this effect is controlled by the threshold
+parameter: at 0 all frames pass \, at higher values more frames are
+sustained. The feedback damping factor controls the decay time. A value
+of 1 results in an infinite freeze., f 66;
 #N canvas 937 252 509 414 oscbank 0;
 #X msg 79 64 oscbank \$1;
 #X msg 144 289 transpose \$1;
-#X obj 147 187 hsl 128 15 -1200 1200 0 0 empty empty empty -2 -8 0
-10 -228856 -1 -1 0 1;
+#X obj 147 187 hsl 128 15 -1200 1200 0 0 empty thresher-transpose transpose
+-2 10 0 10 -228856 -1 -1 3250 1;
 #X msg 116 147 synthresh \$1;
 #X floatatom 116 122 5 0 0 0 - - -;
-#X obj 79 39 tgl 17 0 empty empty empty 17 7 0 10 -228856 -1 -1 0 1
+#X obj 79 39 tgl 17 0 empty empty empty 17 7 0 10 -228856 -1 -1 1 1
 ;
-#X obj 119 100 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -228856
--1 -1 0 1;
+#X obj 119 100 hsl 128 15 0 1 0 0 empty thresher-synt synthesis_threshold
+-2 10 0 10 -228856 -1 -1 13 1;
 #X obj 144 235 expr pow(2 \, ($f1/1200));
 #X floatatom 144 210 7 0 0 0 - - -;
 #X floatatom 144 263 7 0 0 0 - - -;
 #X text 198 211 cents;
 #X text 202 264 ratio;
-#X obj 116 331 outlet;
-#X text 108 39 comment;
+#X obj 79 331 outlet;
+#X text 108 39 toggle oscbank: careful - raises volume;
 #X connect 0 0 12 0;
 #X connect 1 0 12 0;
 #X connect 2 0 8 0;
@@ -62,14 +59,18 @@ time. A value of 1 results in an infinite freeze., f 66;
 ;
 #X msg 81 303 fftinfo;
 #X obj 210 355 fftease/thresher~ 512 4;
-#X obj 249 32 fftease/thresher~;
-#X connect 0 0 20 1;
-#X connect 1 0 20 2;
+#X text 464 185 see also:;
+#X obj 443 209 cnv 15 100 20 empty empty fftease/bthresher~ 20 12 0
+14 -262144 -1 0;
+#X obj 379 28 cnv 15 100 30 empty empty fftease/thresher~ 20 12 0 24
+-262144 -1 0;
+#X connect 0 0 18 1;
+#X connect 1 0 18 2;
 #X connect 4 0 1 0;
 #X connect 5 0 0 0;
-#X connect 8 0 20 0;
+#X connect 8 0 18 0;
 #X connect 9 0 8 0;
-#X connect 15 0 20 0;
-#X connect 16 0 20 0;
-#X connect 19 0 20 0;
-#X connect 20 0 3 0;
+#X connect 13 0 18 0;
+#X connect 14 0 18 0;
+#X connect 17 0 18 0;
+#X connect 18 0 3 0;
