@@ -1,13 +1,13 @@
-#N canvas 777 46 618 477 12;
-#X floatatom 352 305 5 0 512 0 - - -;
-#X msg 93 303 invert \$1;
-#X obj 93 269 tgl 17 0 empty empty empty 17 7 0 10 -228856 -1 -1 0
+#N canvas 777 46 598 510 12;
+#X floatatom 325 330 5 0 512 0 - - -;
+#X msg 66 328 invert \$1;
+#X obj 66 294 tgl 17 0 empty empty empty 17 7 0 10 -228856 -1 -1 0
 1;
-#X text 391 303 composite index;
-#X obj 180 276 sfplay~;
-#X obj 266 275 sfplay~;
-#X obj 180 397 ./gain.dsp~;
-#X obj 180 352 fftease/ether~, f 25;
+#X text 320 309 composite index;
+#X obj 153 301 sfplay~;
+#X obj 239 300 sfplay~;
+#X obj 153 422 ./gain.dsp~;
+#X obj 153 377 fftease/ether~, f 25;
 #X text 56 89 [ether~] selects portions of two input signals and creates
 a composite output spectrum based upon the amplitude of the inputs.
 In a bin-by-bin comparison \, the strongest bin of the two inputs will
@@ -23,7 +23,9 @@ upon the input signals.;
 #X obj 319 27 cnv 15 100 30 empty empty fftease/ether~ 20 12 0 24 -262144
 -1 0;
 #X text 389 245 see also:;
-#X obj 369 263 cnv 15 100 20 empty empty fftease/leaker~ 20 12 0 14
+#X obj 369 263 cnv 15 100 20 empty empty fftease/ether~ 20 12 0 14
+-262144 -1 0;
+#X obj 369 284 cnv 15 100 20 empty empty fftease/leaker~ 20 12 0 14
 -262144 -1 0;
 #X connect 0 0 7 2;
 #X connect 1 0 7 0;

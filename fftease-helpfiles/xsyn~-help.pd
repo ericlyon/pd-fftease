@@ -1,13 +1,18 @@
 #N canvas 709 57 534 358 12;
-#X obj 166 295 ./gain.dsp~;
-#X obj 166 175 ./sfplay~;
-#X obj 261 176 ./sfplay~;
-#X obj 166 249 fftease/xsyn~, f 14;
-#X text 77 109 [xsyn~] filters the first input with the second input
-\, creating a spectral cross synthesis effect.;
+#X obj 87 286 ./gain.dsp~;
+#X obj 87 166 ./sfplay~;
+#X obj 182 167 ./sfplay~;
+#X obj 87 240 fftease/xsyn~, f 14;
 #X obj 54 29 ./icon;
-#X obj 262 46 fftease/xsyn~;
-#X text 367 46 - Cross synthesis;
+#X text 309 54 - Cross synthesis;
+#X obj 267 28 cnv 15 100 30 empty empty fftease/xsyn~ 20 12 0 24 -262144
+-1 0;
+#X text 301 214 see also:;
+#X obj 280 238 cnv 15 100 20 empty empty fftease/swinger~ 20 12 0 14
+-262144 -1 0;
+#X text 49 100 [xsyn~] filters the first input with the second input
+\, creating a spectral cross synthesis effect. The leftmost sound will
+provide the phase information (pitch material).;
 #X connect 1 0 3 0;
 #X connect 2 0 3 1;
 #X connect 3 0 0 0;
