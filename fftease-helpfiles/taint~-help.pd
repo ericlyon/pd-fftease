@@ -1,9 +1,9 @@
-#N canvas 628 275 727 591 12;
+#N canvas 399 109 727 591 12;
 #X obj 294 443 expr pow(10 \, $f1/20);
 #X floatatom 294 415 5 -180 0 0 - taint-invthresh -;
 #X floatatom 239 360 5 0 0 0 - - -;
 #X obj 34 366 r taint-msgs;
-#N canvas 1019 575 472 261 control 0;
+#N canvas 707 297 472 261 control 0;
 #X obj 30 216 s taint-msgs;
 #X floatatom 29 64 5 0 0 0 - taint-pad -;
 #X obj 29 93 expr pow(10 \, $f1/20);
@@ -23,7 +23,7 @@ taint~;
 #X connect 5 0 0 0;
 #X connect 6 0 5 0;
 #X restore 471 476 pd control;
-#N canvas 1133 181 311 217 init 0;
+#N canvas 782 253 311 217 init 0;
 #X obj 72 59 loadbang;
 #X msg 72 93 \; taint-pad -36 \; taint-scaleexp 0.2 \; taint-invthresh
 -40;
@@ -31,8 +31,8 @@ taint~;
 #X restore 472 511 pd init;
 #X text 340 408 inverse threshold (lower values intensify effect but
 only when "invert" is turned on), f 44;
-#X obj 242 328 hsl 128 15 0.05 1 0 0 empty empty empty -2 -8 0 10 -262144
--1 -1 0 1;
+#X obj 242 328 hsl 128 15 0.05 1 0 0 empty taint-scaleexp empty -2
+-8 0 10 -262144 -1 -1 2005 1;
 #X obj 129 471 fftease/taint~, f 24;
 #X obj 129 208 ./sfplay~;
 #X obj 184 262 ./sfplay~;
