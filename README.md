@@ -1,7 +1,7 @@
 **About FFTease 3.0**
 
 FFTease is a collection of objects designed to facilitate spectral sound
-processing in Max. The collection was designed by Eric Lyon and
+processing in Max and Pd. The collection was designed by Eric Lyon and
 Christopher Penrose in 1999, and has been maintained by Eric Lyon since
 2003. 
 
@@ -45,15 +45,18 @@ Christopher Penrose in 1999, and has been maintained by Eric Lyon since
 - vacancy~ a spectral compositing object
 - xsyn~ a cross synthesis with compression object
 
+
 **Compilation and Installation** 
 
 
-This distribution comes with pre-compiled externals for Linux, macOS,
-and Windows. These externals should reside in a folder called "fftease"
-and be referenced in Pd patches prepended by "fftease/" to avoid name clashes
-with other third-party externals. On macOS, the fftease folder should
-be placed in the user folder "~/Documents/Pd/" to make the externals
-available to Pd.
+All necessary files are contained in the folder "fftease," compiled for
+various flavors of Linux, macOS, and Windows. Download the appropriate
+package and move the folder "fftease" to a location accessible by Pd. On
+macOS, that location is typically "~/Documents/Pd/externals/".
+Alternatively, FFTease can be installed via Deken. Under the Pd menu
+item Help -> Find externals, search for "fftease" and then install it.
+You could also compile FFTease directly from the code in this
+repository. 
 
 
 **Performance Considerations**
@@ -69,14 +72,6 @@ default FFT size is 1024, and the default overlap factor is 8. The
 maximum FFT size is 1073741824. 
 
 
-**For Coders**
-
-
-Full source code is included, so that intrepid coders can extend FFTease. 
-The FFTease code is distributed under the MIT license to facilitate deployment 
-to any combination of free, open-source, commercial, or closed-source projects.
-
-
 **Acknowledgements**
 
 
@@ -87,4 +82,4 @@ Happy sonic explorations!
 Eric Lyon  
 ericlyon@vt.edu  
 Blacksburg, Virginia  
-February 8, 2021
+February 28, 2021
