@@ -1,4 +1,4 @@
-#N canvas 709 57 534 358 12;
+#N canvas 600 60 534 358 12;
 #X obj 87 286 ./gain.dsp~;
 #X obj 87 166 ./sfplay~;
 #X obj 182 167 ./sfplay~;

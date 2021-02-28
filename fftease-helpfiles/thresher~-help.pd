@@ -1,7 +1,7 @@
-#N canvas 918 658 707 455 12;
+#N canvas 600 60 707 455 12;
 #X floatatom 289 323 6 0 0 0 - - -;
 #X floatatom 368 323 6 0 0 0 - - -;
-#N canvas 649 312 260 202 init 0;
+#N canvas 650 70 314 277 init 0;
 #X obj 51 39 loadbang;
 #X msg 51 97 \; thresher-thresh 0.17 \; thresher-damp 0.99 \; thresher-synt
 0.001 \; thresher-transpose 0;
@@ -24,14 +24,14 @@ FFT bins. The extent of this effect is controlled by the threshold
 parameter: at 0 all frames pass \, at higher values more frames are
 sustained. The feedback damping factor controls the decay time. A value
 of 1 results in an infinite freeze., f 66;
-#N canvas 937 252 509 414 oscbank 0;
+#N canvas 650 70 509 414 oscbank 0;
 #X msg 79 64 oscbank \$1;
 #X msg 144 289 transpose \$1;
 #X obj 147 187 hsl 128 15 -1200 1200 0 0 empty thresher-transpose transpose
--2 10 0 10 -228856 -1 -1 3250 1;
+-2 10 0 10 -228856 -1 -1 6350 1;
 #X msg 116 147 synthresh \$1;
 #X floatatom 116 122 5 0 0 0 - - -;
-#X obj 79 39 tgl 17 0 empty empty empty 17 7 0 10 -228856 -1 -1 1 1
+#X obj 79 39 tgl 17 0 empty empty empty 17 7 0 10 -228856 -1 -1 0 1
 ;
 #X obj 119 100 hsl 128 15 0 1 0 0 empty thresher-synt synthesis_threshold
 -2 10 0 10 -228856 -1 -1 13 1;

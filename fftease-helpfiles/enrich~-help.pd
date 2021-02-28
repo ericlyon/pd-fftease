@@ -1,4 +1,4 @@
-#N canvas 578 36 713 569 12;
+#N canvas 600 60 713 569 12;
 #N canvas 0 22 450 278 (subpatch) 0;
 #X array enrich-buffer 8195 float 0;
 #X coords 0 1 8194 -1 150 80 1 0 0;

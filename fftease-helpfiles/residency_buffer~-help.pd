@@ -1,14 +1,14 @@
-#N canvas 410 704 855 609 12;
+#N canvas 414 37 855 609 12;
 #N canvas 0 22 450 278 (subpatch) 0;
-#X array analysis-array1 1.92375e+06 float 2;
-#X coords 0 32767 1.92375e+06 -32768 100 70 1 0 0;
+#X array analysis-array1 1.92375e+006 float 2;
+#X coords 0 32767 1.92375e+006 -32768 100 70 1 0 0;
 #X restore 589 306 graph;
 #X floatatom 280 313 5 0 0 0 - - -;
 #X floatatom 422 305 5 0 0 0 - - -;
 #X obj 425 274 hsl 128 15 0 1 0 0 empty empty position -2 -8 0 10 -262144
--1 -1 6000 1;
+-1 -1 0 1;
 #X msg 73 211 calcbuf 5000;
-#N canvas 404 737 450 300 showsync 0;
+#N canvas 158 177 450 300 showsync 0;
 #X obj 205 102 inlet~;
 #X obj 205 159 snapshot~;
 #X obj 325 121 metro 50;

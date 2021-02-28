@@ -1,4 +1,4 @@
-#N canvas 32 334 628 653 12;
+#N canvas 600 60 628 653 12;
 #X floatatom 234 493 5 0 0 0 - - -;
 #X obj 237 467 hsl 128 15 0.25 1 0 0 empty \$0-damping empty -2 -8
 0 10 -228856 -1 -1 11853 1;
@@ -16,7 +16,7 @@ more complicated [bthresher~]., f 74;
 #X text 283 426 threshold factor for all bins, f 19;
 #X text 284 487 damping factor for all bins, f 14;
 #X obj 62 190 noise~;
-#N canvas 1429 76 277 215 init 0;
+#N canvas 897 222 309 224 init 0;
 #X obj 24 55 f \$0;
 #X obj 24 27 loadbang;
 #X msg 24 82 \; \$1-threshold 0.75 \; \$1-damping 0.95 \; \$1-maxhold
@@ -26,7 +26,7 @@ more complicated [bthresher~]., f 74;
 #X restore 431 243 pd init;
 #X obj 57 22 ./icon bthresher~;
 #X text 296 52 - Bin level feedback;
-#N canvas 883 607 390 253 random_control 0;
+#N canvas 705 264 390 253 random_control 0;
 #X obj 37 49 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
 -1;
 #X obj 37 79 t b b;
@@ -42,7 +42,7 @@ more complicated [bthresher~]., f 74;
 #X connect 3 0 5 0;
 #X restore 431 315 pd random_control;
 #X obj 118 398 r bthresher~_msgs;
-#N canvas 715 534 555 327 global_control 0;
+#N canvas 523 234 587 327 global_control 0;
 #X obj 37 245 s bthresher~_msgs;
 #X floatatom 37 67 5 1 200000 0 - #0-maxhold -;
 #X msg 37 95 max_hold \$1;
@@ -61,7 +61,7 @@ more complicated [bthresher~]., f 74;
 #X connect 7 0 0 0;
 #X restore 431 278 pd global_control;
 #X obj 62 533 fftease/bthresher~ 1024 8;
-#N canvas 564 455 709 407 single-bin-control 0;
+#N canvas 543 274 709 407 single-bin-control 0;
 #X obj 37 349 s bthresher~_msgs;
 #X obj 37 187 pack f f f;
 #X floatatom 37 61 5 0 511 0 - - -;
@@ -258,7 +258,7 @@ factor \, threshold], f 73;
 #X restore 431 352 pd single-bin-control;
 #X text 245 532 <= arguments: FFT size and;
 #X text 266 548 overlap factor (default: 1024 \, 8);
-#N canvas 641 650 632 212 utilities 0;
+#N canvas 539 348 632 212 utilities 0;
 #X obj 27 158 s bthresher~_msgs;
 #X msg 27 65 mute \$1;
 #X obj 27 31 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0 1
@@ -272,7 +272,7 @@ and sample rate, f 61;
 #X connect 2 0 1 0;
 #X connect 4 0 0 0;
 #X restore 431 426 pd utilities;
-#N canvas 524 378 750 484 oscbank 0;
+#N canvas 492 223 750 484 oscbank 0;
 #X obj 38 392 s bthresher~_msgs;
 #X msg 38 72 oscbank \$1;
 #X obj 38 38 tgl 17 0 empty empty empty 17 7 0 10 -228856 -1 -1 0 1
@@ -301,7 +301,7 @@ of the object;
 #X connect 8 0 9 0;
 #X connect 9 0 7 0;
 #X restore 431 389 pd oscbank;
-#N canvas 517 408 929 843 capture-current-thresher-state 0;
+#N canvas 306 195 929 761 capture-current-thresher-state 0;
 #X obj 108 71 inlet;
 #N canvas 0 23 908 1185 build-data-message 0;
 #X obj 72 57 inlet;

@@ -1,11 +1,11 @@
 #N canvas 600 60 627 489 12;
 #X obj 92 221 r pvtuner-msgs;
-#N canvas 1241 230 613 398 control 0;
+#N canvas 276 201 613 398 control 0;
 #X obj 76 231 s pvtuner-msgs;
 #X msg 76 153 basefreq \$1;
 #X floatatom 76 121 5 0 0 0 - - -;
 #X msg 177 161 interpolation \$1;
-#X obj 177 134 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+#X obj 177 134 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #X obj 76 78 mtof;
 #X floatatom 76 40 5 21 64 0 - pvtuner-scalestp -;
@@ -26,7 +26,7 @@ scale;
 #X obj 340 274 hsl 128 15 0 1 0 0 empty pvtuner-interslide empty -2
 -8 0 10 -228856 -1 -1 12700 1;
 #X obj 58 191 noise~;
-#N canvas 1264 213 395 610 scales 0;
+#N canvas 248 95 395 610 scales 0;
 #X obj 95 550 s pvtuner-msgs;
 #X msg 118 153 minor_seventh_chord;
 #X msg 132 181 diatonic;
@@ -77,7 +77,7 @@ scale;
 #X connect 15 0 0 0;
 #X connect 16 0 4 0;
 #X restore 339 371 pd scales;
-#N canvas 97 594 450 300 init 0;
+#N canvas 301 393 450 300 init 0;
 #X obj 108 104 loadbang;
 #X msg 108 135 \; pvtuner-scalestp 21 \; pvtuner-interslide 1 \; pvtuner-transpose
 1 \; pvtuner-synt 0.001;

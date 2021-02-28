@@ -1,4 +1,4 @@
-#N canvas 712 146 639 452 12;
+#N canvas 600 60 639 452 12;
 #N canvas 25 82 621 482 rules 0;
 #X msg 34 61 rule 1 0 1 0 0 0 1 0 0 1 2 1 0 2 0 2 0 0 1 0 2 0 2 1 2
 1 1;
@@ -30,7 +30,7 @@ bin (either 0 \, 1 \, or 2).;
 #X msg 119 206 manual \$1;
 #X obj 87 84 metro 250;
 #X obj 87 52 tgl 17 0 \$0-dummy \$0-metro-tog empty 17 7 0 10 -228856
--1 -1 0 1;
+-1 -1 1 1;
 #X floatatom 147 53 5 0 0 0 - - -;
 #X obj 119 174 tgl 17 0 \$0-dummy \$0-triggertog empty 17 7 0 10 -228856
 -1 -1 0 1;
@@ -48,7 +48,7 @@ bin (either 0 \, 1 \, or 2).;
 #X connect 5 0 1 0;
 #X connect 7 0 0 0;
 #X restore 157 225 pd triggering;
-#N canvas 467 193 247 209 init 0;
+#N canvas 467 193 247 190 init 0;
 #X obj 62 69 f \$0;
 #X obj 62 41 loadbang;
 #X msg 62 94 \; \$1-metro-tog 1 \; \$1-infreq 133 \; \$1-holdtime 250
@@ -56,7 +56,7 @@ bin (either 0 \, 1 \, or 2).;
 #X connect 0 0 2 0;
 #X connect 1 0 0 0;
 #X restore 217 331 pd init;
-#N canvas 728 32 957 558 more-msgs 0;
+#N canvas 264 104 957 558 more-msgs 0;
 #X msg 34 140 density \$1;
 #X floatatom 34 106 5 0 0 0 - - -;
 #X msg 154 162 oscbank \$1;
@@ -66,7 +66,7 @@ bin (either 0 \, 1 \, or 2).;
 #X msg 587 352 transpose \$1;
 #X floatatom 587 323 5 0 0 0 - - -;
 #X obj 590 298 hsl 128 15 0.5 2 0 0 empty empty empty -2 -8 0 10 -228856
--1 -1 5000 1;
+-1 -1 0 1;
 #X msg 353 364 retune 0.5 2;
 #X msg 528 447 freeze \$1;
 #X msg 281 300 hold_time \$1;
@@ -140,8 +140,8 @@ to a just major triad;
 #X text 315 56 - Cellular Automata-generated spectra;
 #X text 42 107 [cavoc27~] generates spectra with a 27 rule cellular
 automaton. Start with very low gain.;
-#X obj 68 166 nbx 5 14 -1e+37 1e+37 0 0 \$0-dummy \$0-infreq empty
-0 -8 0 10 -228856 -1 -1 127 256;
+#X obj 68 166 nbx 5 14 -1e+037 1e+037 0 0 \$0-dummy \$0-infreq empty
+0 -8 0 10 -228856 -1 -1 133 256;
 #X text 168 160 turn on to capture input spectra as tuning source;
 #X obj 317 25 cnv 15 100 30 empty empty fftease/cavoc27~ 20 12 0 24
 -262144 -1 0;

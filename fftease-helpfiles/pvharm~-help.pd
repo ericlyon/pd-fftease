@@ -1,17 +1,17 @@
-#N canvas 625 58 524 398 12;
+#N canvas 600 60 648 398 12;
 #X obj 180 182 phasor~ 261;
 #X obj 180 209 -~ 0.5;
 #X floatatom 230 281 5 0 0 0 - pvharm-t1 -;
 #X floatatom 280 280 5 0 0 0 - pvharm-t2 -;
 #X obj 331 279 sig~ 0.001;
-#N canvas 28 497 269 209 init 0;
+#N canvas 405 302 269 190 init 0;
 #X obj 65 55 loadbang;
 #X msg 66 95 \; pvharm-t1 1.25 \; pvharm-t2 1.5 \; pvharm-basefreq
 261 \; pvharm-hifreq 4000 \; pvharm-osclim 300;
 #X connect 0 0 1 0;
 #X restore 385 347 pd init;
 #X obj 201 236 r pvharm-msgs;
-#N canvas 826 102 789 262 control 0;
+#N canvas 436 152 789 262 control 0;
 #X obj 73 216 s pvharm-msgs;
 #X msg 73 135 lowfreq \$1;
 #X floatatom 73 53 5 0 0 0 - - -;

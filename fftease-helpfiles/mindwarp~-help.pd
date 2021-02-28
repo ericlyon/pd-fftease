@@ -1,4 +1,4 @@
-#N canvas 579 23 621 652 12;
+#N canvas 600 60 621 652 12;
 #N canvas 936 204 312 312 selector 0;
 #X obj 135 50 inlet~;
 #X obj 195 50 inlet~;
@@ -22,14 +22,14 @@
 #X obj 302 385 sig~ 0.001;
 #X floatatom 388 452 5 1 50 0 - mindwarp-shapew -;
 #X text 75 497 1 - mindwarp;
-#N canvas 0 23 450 300 init 0;
+#N canvas 456 230 450 300 init 0;
 #X obj 36 100 loadbang;
 #X msg 36 135 \; mindwarp-tfac 1 \; mindwarp-wfac 1 \; mindwarp-shapew
 10 \; mindwarp-tog 1 \; mindwarp-tfac&warpfac 1;
 #X connect 0 0 1 0;
 #X restore 303 536 pd init;
 #X obj 403 332 hsl 128 15 0.5 2 0 0 empty mindwarp-tfac&warpfac tfac&warpfac
--2 -8 0 10 -262144 -1 -1 12700 1;
+-2 -8 0 10 -262144 -1 -1 4233 1;
 #X obj 400 392 s mindwarp-tfac;
 #X obj 416 363 s mindwarp-wfac;
 #X obj 214 320 ./sfplay~;

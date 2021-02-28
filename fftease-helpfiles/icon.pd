@@ -1,4 +1,4 @@
-#N canvas 1047 86 416 319 12;
+#N canvas 600 60 416 319 12;
 #X obj 101 101 cnv 15 175 40 empty \$0-header FFTease\ 3.0 7 19 1 27
 -191407 -4160 0;
 #X obj 110 228 s \$0-header;

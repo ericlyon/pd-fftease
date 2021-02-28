@@ -1,4 +1,4 @@
-#N canvas 563 63 719 510 12;
+#N canvas 455 70 762 510 12;
 #N canvas 495 165 450 278 (subpatch) 0;
 #X array pvwarpb-array 512 float 1;
 #A 0 1.28362 1.28387 1.28412 1.28436 1.28461 1.28486 1.28511 1.28536
@@ -70,7 +70,7 @@
 #X obj 274 327 sig~ 1;
 #X floatatom 191 270 5 0 0 0 - - -;
 #X obj 194 235 hsl 128 15 0 1 0 0 empty empty function-read-offset
--2 9 0 10 -228856 -1 -1 2100 1;
+-2 9 0 10 -228856 -1 -1 0 1;
 #X obj 277 275 hsl 128 15 0.2 2 0 0 empty pvwarpb-transpose transposition
 -2 9 0 10 -228856 -1 -1 5644 1;
 #X obj 108 366 fftease/pvwarpb~ pvwarpb-array, f 36;
@@ -88,14 +88,14 @@ be redrawn by hand if desired.;
 #X text 486 180 see also:;
 #X obj 468 199 cnv 15 100 20 empty empty fftease/pvwarp~ 20 12 0 14
 -262144 -1 0;
-#N canvas 1270 888 355 208 init 0;
+#N canvas 650 70 355 208 init 0;
 #X obj 39 22 loadbang;
 #X msg 39 81 \; pvwarpb-transpose 1 \; pvwarpb-bottomfreq 0 \; pvwarpb-topfreq
 8000;
 #X connect 0 0 1 0;
 #X restore 310 429 pd init;
 #X obj 87 185 r pvwarpb-msgs;
-#N canvas 455 836 709 307 controls 0;
+#N canvas 557 86 709 307 controls 0;
 #X obj 44 254 s pvwarpb-msgs;
 #X msg 159 106 topfreq \$1;
 #X floatatom 159 78 5 0 0 0 - - -;
@@ -118,8 +118,8 @@ be redrawn by hand if desired.;
 #X connect 9 0 3 0;
 #X connect 10 0 2 0;
 #X restore 310 402 pd controls;
-#X text 458 420 you can also modify the warp function by drawing into
-the pvwarpb-array;
+#X text 455 420 you can also modify the warp function by drawing into
+the pvwarpb-array, f 37;
 #X connect 1 0 6 3;
 #X connect 2 0 6 2;
 #X connect 3 0 6 1;

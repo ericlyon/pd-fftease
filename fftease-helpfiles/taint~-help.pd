@@ -1,9 +1,9 @@
-#N canvas 399 109 727 591 12;
+#N canvas 600 60 727 591 12;
 #X obj 294 443 expr pow(10 \, $f1/20);
 #X floatatom 294 415 5 -180 0 0 - taint-invthresh -;
 #X floatatom 239 360 5 0 0 0 - - -;
 #X obj 34 366 r taint-msgs;
-#N canvas 707 297 472 261 control 0;
+#N canvas 650 70 472 261 control 0;
 #X obj 30 216 s taint-msgs;
 #X floatatom 29 64 5 0 0 0 - taint-pad -;
 #X obj 29 93 expr pow(10 \, $f1/20);
@@ -23,7 +23,7 @@ taint~;
 #X connect 5 0 0 0;
 #X connect 6 0 5 0;
 #X restore 471 476 pd control;
-#N canvas 782 253 311 217 init 0;
+#N canvas 650 70 311 217 init 0;
 #X obj 72 59 loadbang;
 #X msg 72 93 \; taint-pad -36 \; taint-scaleexp 0.2 \; taint-invthresh
 -40;
