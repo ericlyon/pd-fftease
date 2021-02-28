@@ -1,7 +1,7 @@
 #N canvas 600 60 744 533 12;
 #X floatatom 279 403 5 0 0 0 - - -;
 #X floatatom 172 423 5 0 0 0 - - -;
-#N canvas 404 737 450 300 showframe 0;
+#N canvas 650 70 450 300 showframe 0;
 #X obj 205 102 inlet~;
 #X obj 205 159 snapshot~;
 #X obj 325 121 metro 50;
@@ -18,7 +18,7 @@
 #X connect 5 0 3 0;
 #X restore 172 370 pd showframe;
 #X msg 80 259 analyze;
-#N canvas 404 737 450 300 show-analysis-progress 0;
+#N canvas 650 70 450 300 show-analysis-progress 0;
 #X obj 205 102 inlet~;
 #X obj 205 159 snapshot~;
 #X obj 325 121 metro 50;
@@ -53,7 +53,7 @@ analysis;
 #X obj 90 302 r reanimator-msgs;
 #X obj 374 33 cnv 15 100 30 empty empty fftease/reanimator~ 20 12 0
 24 -262144 -1 0;
-#N canvas 1344 194 899 801 more-controls 0;
+#N canvas 650 70 899 801 more-controls 0;
 #X obj 82 740 s reanimator-msgs;
 #X msg 82 128 topbin \$1;
 #X floatatom 82 85 5 0 0 0 - reanimator-topbin -;
@@ -104,7 +104,7 @@ ones;
 #X connect 21 0 0 0;
 #X connect 22 0 21 0;
 #X restore 306 459 pd more-controls;
-#N canvas 759 864 450 300 init 0;
+#N canvas 650 70 450 300 init 0;
 #X obj 39 25 loadbang;
 #X msg 39 69 \; reanimator-topbin 40 \; reanimator-transpose 1 \; reanimator-synthresh
 0.001;

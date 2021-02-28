@@ -1,4 +1,4 @@
-#N canvas 647 60 609 556 12;
+#N canvas 600 60 609 556 12;
 #X obj 295 411 sig~ 0.001;
 #X floatatom 216 376 5 0 0 0 - - -;
 #X obj 216 398 sig~ 1.5;
@@ -20,7 +20,7 @@
 #X text 343 68 - Phase vocoder;
 #X text 44 115 [pvoc~] performs phase vocoding with the option to limit
 minimum and maximum frequency to synthesize.;
-#N canvas 145 586 450 300 init 0;
+#N canvas 299 399 450 300 init 0;
 #X obj 111 46 loadbang;
 #X msg 111 86 \; pvoc-transpose 1.5 \; pvoc-lofreq 40 \; pvoc-hifreq
 5000 \; pvoc-threshold 0.001;

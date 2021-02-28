@@ -1,5 +1,5 @@
-#N canvas 84 684 689 351 12;
-#N canvas 107 416 900 665 more-messages 0;
+#N canvas 600 60 689 351 12;
+#N canvas 162 45 900 665 more-messages 0;
 #X msg 431 484 retune 0.5 1.5;
 #X msg 253 313 bottomfreq \$1;
 #X msg 399 313 topfreq \$1;
@@ -17,10 +17,10 @@
 #X obj 420 397 tgl 17 0 empty empty empty 17 7 0 10 -228856 -1 -1 0
 1;
 #X obj 225 190 hsl 128 15 0.01 0.5 1 0 empty empty empty -2 -8 0 10
--228856 -1 -1 500 1;
+-228856 -1 -1 0 1;
 #X obj 176 149 bng 18 250 50 0 empty empty empty 17 7 0 10 -228856
 -1 -1;
-#X obj 109 38 tgl 17 0 empty empty empty 17 7 0 10 -228856 -1 -1 1
+#X obj 109 38 tgl 17 0 empty empty empty 17 7 0 10 -228856 -1 -1 0
 1;
 #X msg 419 460 retune 0.95 1.05;
 #N canvas 754 288 275 142 random-metro 0;
@@ -33,14 +33,14 @@
 #X connect 1 0 3 0;
 #X connect 3 0 1 1;
 #X restore 176 120 pd random-metro;
-#X obj 176 96 tgl 17 0 empty empty empty 17 7 0 10 -228856 -1 -1 1
+#X obj 176 96 tgl 17 0 empty empty empty 17 7 0 10 -228856 -1 -1 0
 1;
 #X text 204 145 trigger with bangs if external_trigger is on, f 22
 ;
 #X obj 402 262 hsl 128 15 100 10000 1 0 empty empty empty -2 -8 0 10
--228856 -1 -1 7100 1;
+-228856 -1 -1 0 1;
 #X obj 256 262 hsl 128 15 100 10000 1 0 empty empty empty -2 -8 0 10
--228856 -1 -1 5200 1;
+-228856 -1 -1 0 1;
 #X obj 252 577 outlet;
 #X text 451 344 time interval (ms) for internal clock;
 #X text 132 37 turn off internal clock \, and trigger changes with
@@ -74,7 +74,7 @@ factors, f 46;
 #X connect 21 0 3 0;
 #X connect 22 0 4 0;
 #X restore 88 195 pd more-messages;
-#N canvas 4 547 419 376 rules 0;
+#N canvas 279 285 419 376 rules 0;
 #X msg 74 65 rule 0 1 0 1 0 0 1 1;
 #X msg 57 41 rule 0 1 1 0 1 0 0 1;
 #X msg 87 88 rule 0 0 0 0 1 1 1 1;

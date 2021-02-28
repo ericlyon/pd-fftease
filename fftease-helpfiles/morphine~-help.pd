@@ -1,10 +1,10 @@
-#N canvas 1576 64 731 434 12;
+#N canvas 600 60 731 434 12;
 #X msg 59 285 transition \$1;
 #X floatatom 59 254 5 -30 0 0 - morphine-trans -;
 #X obj 358 282 hsl 128 15 0 1 0 0 empty empty morph-index -2 -8 0 12
--228856 -1 -1 7000 1;
+-228856 -1 -1 0 1;
 #X floatatom 355 308 5 0 0 0 - - -;
-#N canvas 0 22 450 300 init 0;
+#N canvas 492 206 450 300 init 0;
 #X msg 151 157 \; morphine-trans -5;
 #X obj 151 125 loadbang;
 #X connect 1 0 0 0;

@@ -4,7 +4,7 @@
 #X floatatom 291 254 5 0 0 1 thresh1 scrape-t1 -;
 #X floatatom 292 277 5 0 0 1 thresh2 scrape-t2 -;
 #X floatatom 292 302 5 0 0 1 weak-bin-multiplier scrape-wbm -;
-#N canvas 1271 554 450 300 init 0;
+#N canvas 650 70 450 300 init 0;
 #X msg 72 99 \; scrape-knee 1000 \; scrape-cutoff 4000 \; scrape-t1
 0.001 \; scrape-t2 0.05 \; scrape-wbm 0.1;
 #X obj 72 65 loadbang;

@@ -1,4 +1,4 @@
-#N canvas 536 59 876 544 12;
+#N canvas 600 60 876 544 12;
 #X obj 181 220 phasor~ 261;
 #X obj 181 247 -~ 0.5;
 #X msg 240 286 switch_count \$1;
@@ -8,7 +8,7 @@
 #X msg 403 447 68 23 20 16 53 18 14 32 5 58 50 8 33 28 3 29 52 62 70
 35 13 48 42 69 26 12 37 39 17 0;
 #X msg 255 323 showstate;
-#N canvas 398 725 450 300 init 0;
+#N canvas 650 70 450 300 init 0;
 #X msg 130 129 \; disarray-swcnt 30 \; disarray-topf 3000 \;;
 #X obj 167 74 loadbang;
 #X connect 1 0 0 0;
@@ -26,7 +26,7 @@ reported from the second outlet.;
 #X text 454 49 - Spectrum scrambler;
 #X obj 182 451 ./gain.dsp~;
 #X text 60 279 force new scramble, f 10;
-#N canvas 1178 757 450 300 utilities 0;
+#N canvas 650 70 450 300 utilities 0;
 #X msg 39 59 fftinfo;
 #X msg 111 58 mute \$1;
 #X obj 111 27 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
@@ -42,7 +42,7 @@ reported from the second outlet.;
 #X text 526 144 see also:;
 #X obj 505 168 cnv 15 100 20 empty empty fftease/disarrain~ 20 12 0
 14 -262144 -1 0;
-#N canvas 698 532 620 269 mapping-presets 0;
+#N canvas 650 70 620 269 mapping-presets 0;
 #X msg 48 56 setstate 68 23 20 16 53 18 14 32 5 58 50 8 33 28 3 29
 52 62 70 35 13 48 42 69 26 12 37 39 17 0;
 #X msg 74 92 setstate 40 108 102 115 104 49 10 21 89 45 84 22 4 28

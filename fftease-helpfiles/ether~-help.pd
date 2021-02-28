@@ -1,4 +1,4 @@
-#N canvas 777 46 598 510 12;
+#N canvas 600 60 598 510 12;
 #X floatatom 325 330 5 0 512 0 - - -;
 #X msg 66 328 invert \$1;
 #X obj 66 294 tgl 17 0 empty empty empty 17 7 0 10 -228856 -1 -1 0

@@ -1,4 +1,4 @@
-#N canvas 692 38 663 842 12;
+#N canvas 547 24 663 687 12;
 #X floatatom 396 636 5 0 0 0 - - -;
 #X floatatom 353 636 5 0 0 0 - - -;
 #X msg 112 431 autofunc 0.1 2;
@@ -25,7 +25,7 @@
 #X text 306 642 warp2;
 #X msg 76 291 bottomfreq \$1;
 #X obj 79 251 hsl 128 15 0 500 0 0 empty pvwarp-lofreq empty -2 -8
-0 10 -228856 -1 -1 1270 1;
+0 10 -228856 -1 -1 0 1;
 #X obj 97 318 hsl 128 15 1000 5000 0 0 empty pvwarp-hifreq empty -2
 -8 0 10 -228856 -1 -1 12700 1;
 #X msg 94 357 topfreq \$1;
@@ -36,7 +36,7 @@
 #X text 409 211 see also:;
 #X obj 388 235 cnv 15 100 20 empty empty fftease/pvwarpb~ 20 12 0 14
 -262144 -1 0;
-#N canvas 691 941 450 300 init 0;
+#N canvas 650 70 450 300 init 0;
 #X obj 59 21 loadbang;
 #X msg 60 76 \; pvwarp-transpose 1 \; pvwarp-hifreq 5000 \; pvwarp-lofreq
 0 \; pvwarp-cf1 665 \; pvwarp-bw1 0.45 \; pvwarp-w1 0.25 \; pvwarp-cf2

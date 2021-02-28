@@ -13,7 +13,7 @@ shaping effect., f 56;
 #X text 162 181 formant reference source, f 9;
 #X obj 273 28 cnv 15 100 30 empty empty fftease/shapee~ 20 12 0 24
 -262144 -1 0;
-#N canvas 1228 59 289 179 init 0;
+#N canvas 650 70 289 179 init 0;
 #X obj 14 43 loadbang;
 #X msg 14 75 \; shapee-width 8;
 #X connect 0 0 1 0;

@@ -1,6 +1,6 @@
-#N canvas 1186 61 558 490 12;
+#N canvas 600 60 558 490 12;
 #X floatatom 360 356 5 0 0 0 - - -;
-#N canvas 1360 274 450 300 control 0;
+#N canvas 650 70 450 300 control 0;
 #X msg 35 141 rms \$1;
 #X obj 35 38 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1 1
 ;

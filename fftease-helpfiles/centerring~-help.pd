@@ -1,4 +1,4 @@
-#N canvas 1235 286 624 591 12;
+#N canvas 600 60 624 591 12;
 #X floatatom 170 334 5 0 0 0 - freq -;
 #X floatatom 214 403 5 0 0 0 - centerring-basefreq -;
 #X floatatom 256 429 5 0 0 0 - centerring-freqbandw -;

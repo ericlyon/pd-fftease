@@ -1,4 +1,4 @@
-#N canvas 878 80 496 310 12;
+#N canvas 600 60 496 310 12;
 #X obj 76 245 dac~;
 #X obj 156 106 hsl 128 15 0 1 0 0 dummy \$0-main-gain Gain 48 8 0 11
 -228856 -1 -1 0 1;

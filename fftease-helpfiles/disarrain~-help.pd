@@ -1,10 +1,10 @@
-#N canvas 628 60 643 647 12;
+#N canvas 600 60 643 647 12;
 #X obj 167 328 phasor~ 261;
 #X obj 167 356 -~ 0.5;
 #X msg 303 255 fadetime \$1;
 #X floatatom 303 233 5 0 0 0 - disarrain-fadetime -;
 #X floatatom 363 348 5 0 0 0 - disarrain-switchct -;
-#N canvas 404 737 450 300 showsync 0;
+#N canvas 650 70 450 300 showsync 0;
 #X obj 205 102 inlet~;
 #X obj 205 159 snapshot~;
 #X obj 325 121 metro 50;
@@ -25,13 +25,13 @@
 #X obj 76 400 metro 3000;
 #X obj 77 194 tgl 17 0 empty empty empty 17 7 0 10 -228856 -1 -1 1
 1;
-#N canvas 309 378 450 300 init 0;
+#N canvas 650 70 450 300 init 0;
 #X obj 32 29 loadbang;
 #X msg 32 56 \; disarrain-fadetime 3000 \; disarrain-switchct 70 \;
 disarrain-topfreq 2000;
 #X connect 0 0 1 0;
 #X restore 389 573 pd init;
-#N canvas 1380 60 632 675 showbins 0;
+#N canvas 650 70 632 675 showbins 0;
 #X obj 42 48 inlet;
 #X msg 42 140 45 47 48 50 4 39 20 16 40 28 59 15 43 63 41 6 7 36 5
 14;
@@ -84,7 +84,7 @@ reported from the third outlet., f 43;
 #X text 344 231 interpolation time;
 #X obj 250 448 r msg-disarrain;
 #X text 442 516 <- pattern management;
-#N canvas 1178 757 450 300 utilities 0;
+#N canvas 650 70 450 300 utilities 0;
 #X obj 39 123 s msg-disarrain;
 #X msg 39 59 fftinfo;
 #X msg 111 58 mute \$1;

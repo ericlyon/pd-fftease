@@ -1,7 +1,7 @@
 #N canvas 600 60 537 461 12;
 #X msg 47 291 mode \$1;
 #X obj 151 317 r fftz-pileup-msgs;
-#N canvas 1208 223 1107 615 controls 0;
+#N canvas 137 73 1107 615 controls 0;
 #X obj 87 559 s fftz-pileup-msgs;
 #X msg 87 149 persistence \$1;
 #X floatatom 87 110 5 0 1 0 - pileup-pers -;
@@ -18,7 +18,7 @@
 #X msg 773 286 transpose \$1;
 #X msg 517 335 clear;
 #X obj 90 82 hsl 128 15 0 1 0 0 pileup-pers empty empty -2 -8 0 10
--262144 -1 -1 12700 1;
+-262144 -1 -1 0 1;
 #X text 272 106 toggle oscillator bank resynthesis;
 #X text 85 53 spectral "feedback" factor;
 #X msg 500 484 lowfreq \$1;
@@ -46,7 +46,7 @@ limits;
 #X connect 17 0 18 0;
 #X connect 18 0 0 0;
 #X restore 221 269 pd controls;
-#N canvas 568 719 450 300 init 0;
+#N canvas 385 287 450 300 init 0;
 #X obj 97 107 loadbang;
 #X msg 97 151 \; pileup-transp 1 \; pileup-pers 0.99 \; pileup-lofreq
 0 \; pileup-hifreq 20000;

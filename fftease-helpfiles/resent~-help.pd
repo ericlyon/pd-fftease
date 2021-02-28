@@ -1,5 +1,5 @@
-#N canvas 605 33 731 486 12;
-#N canvas 404 737 450 300 showsync 0;
+#N canvas 600 60 731 486 12;
+#N canvas 650 70 450 300 showsync 0;
 #X obj 205 102 inlet~;
 #X obj 205 159 snapshot~;
 #X obj 325 121 metro 50;
@@ -18,7 +18,7 @@
 #X floatatom 238 393 5 0 0 0 - - -;
 #X msg 51 171 acquire_sample;
 #X obj 118 288 r resent-msgs;
-#N canvas 1044 90 773 411 speed-and-phase 0;
+#N canvas 650 70 773 411 speed-and-phase 0;
 #X obj 133 352 s resent-msgs;
 #X msg 23 139 setspeed \$1;
 #X floatatom 23 113 5 0 0 0 - - -;
@@ -54,7 +54,7 @@
 #X connect 12 0 10 0;
 #X connect 13 0 10 0;
 #X restore 234 240 pd speed-and-phase;
-#N canvas 133 590 624 316 oscbank 0;
+#N canvas 650 70 624 316 oscbank 0;
 #X obj 103 241 s resent-msgs;
 #X msg 103 144 oscbank \$1;
 #X obj 103 96 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
@@ -76,7 +76,7 @@
 #X connect 6 0 0 0;
 #X connect 7 0 6 0;
 #X restore 233 269 pd oscbank;
-#N canvas 775 566 719 379 individual-bin-control 0;
+#N canvas 650 70 719 379 individual-bin-control 0;
 #X obj 34 343 s resent-msgs;
 #X msg 151 105 linespeed 0 -1 511 1;
 #X msg 183 184 randspeed 0.5 0.9;

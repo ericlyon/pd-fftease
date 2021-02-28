@@ -3,14 +3,14 @@
 #X floatatom 100 306 5 0 0 0 - multyq-f1 -;
 #X floatatom 141 306 5 0 0 0 - multyq-bw1 -;
 #X floatatom 182 305 5 0 0 0 - multyq-g1 -;
-#N canvas 23 1055 450 300 init 1;
+#N canvas 650 70 450 300 init 0;
 #X msg 33 95 \; multyq-f1 565 \; multyq-bw1 0.5 \; multyq-g1 4 \; multyq-bw2
 0.45 \; multyq-bw3 0.2 \; multyq-g3 12 \;;
 #X obj 33 64 loadbang;
 #X connect 1 0 0 0;
 #X restore 444 390 pd init;
 #X obj 223 304 *~;
-#X obj 223 247 tgl 17 0 empty empty empty 17 7 0 10 -228856 -1 -1 1
+#X obj 223 247 tgl 17 0 empty empty empty 17 7 0 10 -228856 -1 -1 0
 1;
 #X obj 277 225 osc~ 0.2;
 #X obj 277 247 *~ 1000;
