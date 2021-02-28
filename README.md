@@ -1,5 +1,7 @@
 # Welcome to FFTease!
 
+**About FFTease**
+
 FFTease is a collection of objects designed to facilitate spectral sound
 processing in Max and Pd. The collection was designed by Eric Lyon and
 Christopher Penrose in 1999, and has been maintained by Eric Lyon since
