@@ -1,4 +1,4 @@
-**About FFTease 3.0**
+**About FFTease**
 
 FFTease is a collection of objects designed to facilitate spectral sound
 processing in Max and Pd. The collection was designed by Eric Lyon and
