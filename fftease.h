@@ -1,4 +1,4 @@
-/* FFTease 3.0 for Pd */
+/* FFTease for Pd */
 
 #include <stdio.h>
 #include <math.h>
@@ -11,7 +11,7 @@
 #define MAX_Nw MAX_N
 
 #ifndef FFTEASE_VERSION
-# define FFTEASE_VERSION "3.0"
+# define FFTEASE_VERSION "3.0.1"
 #endif
 #ifndef FFTEASE_COMPILE_DATE
 # define FFTEASE_COMPILE_DATE __DATE__
