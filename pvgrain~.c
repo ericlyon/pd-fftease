@@ -199,10 +199,11 @@ void pvgrain_free(t_pvgrain *x)
     if(x->fft->initialized){
         free(x->binsort);
         free(x->listdata);
+        clock_free(x->m_clock);
     }
     fftease_free(x->fft);
     free(x->fft);
-    clock_free(x->m_clock);
+    
 }
 
 static void do_pvgrain(t_pvgrain *x)
