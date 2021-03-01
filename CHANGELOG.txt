@@ -1,0 +1,25 @@
+FFTease Changelog
+
+Version 3.0.1
+
+All the help files are updated. Several of the externals had an initialization bug that prevented them from being correctly initialized, if parameters were sent to them prior to the DACs being turned on. The following objects received this update:
+
+- burrow~
+- disarrain~
+- disarray~
+- pvharm~
+- pvoc~
+- pvwarpb~
+- pvwarp~
+- shapee~
+
+Some other externals may still have this issue.
+
+- pileup~ had a bug fixed where its “invert” mode previously did not work correctly.
+
+- shapee~ had a crashing bug fixed where previously the shape width put some internal indexes out of range. 
+
+
+Version 3.0.0
+
+This is a major cleanup and update from the original Pd version of FFTease, first written in 2006. The new version updates array access, provides help files, and implements a few bug fixes.
