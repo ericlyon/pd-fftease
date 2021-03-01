@@ -40,10 +40,10 @@ void shapee_tilde_setup(void)
 
 void *shapee_new(t_symbol *s, int argc, t_atom *argv)
 {
-
+    
     t_fftease *fft, *fft2;
     t_shapee *x = (t_shapee *)pd_new(shapee_class);
-
+    
     inlet_new(&x->x_obj, &x->x_obj.ob_pd,gensym("signal"), gensym("signal"));
     inlet_new(&x->x_obj, &x->x_obj.ob_pd,gensym("signal"), gensym("signal"));
     outlet_new(&x->x_obj, gensym("signal"));
@@ -60,7 +60,7 @@ void *shapee_new(t_symbol *s, int argc, t_atom *argv)
     fft2->N = FFTEASE_DEFAULT_FFTSIZE;
     fft2->overlap = FFTEASE_DEFAULT_OVERLAP;
     fft2->winfac = FFTEASE_DEFAULT_WINFAC;
-
+    
     fft2->R = fft->R = sys_getsr();
     fft2->MSPVectorSize = fft->MSPVectorSize = sys_getblksize();
     x->shapeWidth = 2.0;
@@ -74,7 +74,7 @@ void shapee_init(t_shapee *x)
     t_fftease *fft = x->fft;
     t_fftease *fft2 = x->fft2;
     short initialized = fft->initialized;
-
+    
     fftease_init(fft);
     fftease_init(fft2);
     if(!initialized){
@@ -93,7 +93,7 @@ static void do_shapee(t_shapee *x)
     t_fftease *fft2 = x->fft2;
     int
     i,j,
-
+    
     R,
     N,
     N2,
@@ -101,8 +101,8 @@ static void do_shapee(t_shapee *x)
     Nw,
     remainingWidth,
     even, odd;
-
-
+    
+    
     t_float
     a1, b1,
     a2, b2,
@@ -110,10 +110,10 @@ static void do_shapee(t_shapee *x)
     *bufferTwo,
     *channelOne,
     *channelTwo;
-
-
-int shapeWidth = (int) x->shapeWidth;
-
+    
+    
+    int shapeWidth = (int) x->shapeWidth;
+    
     bufferOne = fft->buffer;
     bufferTwo = fft2->buffer;
     R = fft->R;
@@ -121,122 +121,134 @@ int shapeWidth = (int) x->shapeWidth;
     N2 = fft->N2;
     D = fft->D;
     Nw = fft->Nw;
-
+    
     channelOne = fft->channel;
     channelTwo = fft2->channel;
-
-
-
+    
     if(shapeWidth < 1 || shapeWidth > N2)
         shapeWidth = 1;
-
+    
     /* apply hamming window and fold our window buffer into the fft buffer */
-
+    
     fftease_fold(fft);
     fftease_fold(fft2);
-
+    
     /* do an fft */
-
+    
     fftease_rdft(fft,FFT_FORWARD);
     fftease_rdft(fft2,FFT_FORWARD);
-
+    
     /* convert to polar coordinates from complex values */
-
+    
     for ( i = 0; i <= N2; i++ ) {
         odd = ( even = i<<1 ) + 1;
-
+        
         a1 = ( i == N2 ? *(bufferOne+1) : *(bufferOne+even) );
         b1 = ( i == 0 || i == N2 ? 0. : *(bufferOne+odd) );
-
+        
         a2 = ( i == N2 ? *(bufferTwo+1) : *(bufferTwo+even) );
         b2 = ( i == 0 || i == N2 ? 0. : *(bufferTwo+odd) );
-
+        
         /* replace signal one's phases with those of signal two */
-
+        
         *(channelOne+even) = hypot( a1, b1 );
         *(channelOne+odd) = -atan2( b1, a1 );
-
+        
         *(channelTwo+even) = hypot( a2, b2 );
         *(channelTwo+odd) = -atan2( b2, a2 );
     }
-
+    
     /* constrain our shapeWidth value */
-
+    
     if ( shapeWidth > N2 )
         shapeWidth = N2;
-
+    
     if ( shapeWidth < 1 )
         shapeWidth = 1;
-
-
+    
+    
     /* lets just shape the entire signal by the shape width */
-
+    
     for ( i=0; i < N; i += shapeWidth << 1 ) {
-
+        
         float       amplSum = 0.,
         freqSum = 0.,
         factor;
-
+        
         for ( j = 0; j < shapeWidth << 1; j += 2 ) {
-
-            amplSum += *(channelTwo+i+j);
-            freqSum += *(channelOne+i+j);
+            if( i+j >= N+2 ){
+                // post("shapee~: index out of range ");
+            } else {
+                amplSum += *(channelTwo+i+j);
+                freqSum += *(channelOne+i+j);
+            }
         }
         if(freqSum <= 0.001){
             freqSum = 1.0;
         }
-        if (amplSum < 0.000000001)
+        if (amplSum < 0.000000001){
             factor = 0.000000001;
-
-        else
+        } else {
             factor = amplSum / freqSum;
-
-        for ( j = 0; j < shapeWidth * 2; j += 2 )
-            *(channelOne+i+j) *= factor;
+        }
+        for ( j = 0; j < shapeWidth * 2; j += 2 ){
+            if( i+j >= N+2 ){
+                //  post("shapee~: index out of range ");
+            } else {
+                *(channelOne+i+j) *= factor;
+            }
+        }
     }
-
+    
     /* copy remaining magnitudes */
-
+    
     if ( (remainingWidth = N2 % shapeWidth) ) {
-
+        
         int         bindex = (N2 - remainingWidth) << 1;
-
-
+        
+        
         float       amplSum = 0.,
         freqSum = 0.,
         factor;
-
+        
         for ( j = 0; j < remainingWidth * 2; j += 2 ) {
-
-            amplSum += *(channelTwo+bindex+j);
-            freqSum += *(channelOne+bindex+j);
+            if( bindex+j >= N+2 ){
+                //  post("shapee~: index out of range ")
+            } else {
+                amplSum += *(channelTwo+bindex+j);
+                freqSum += *(channelOne+bindex+j);
+            }
         }
         if(freqSum <= 0.00001){
             freqSum = 1.0;
         }
-        if (amplSum < 0.000000001)
+        if (amplSum < 0.000000001){
             factor = 0.000000001;
-
-        else
+        } else{
             factor = amplSum / freqSum;
-
-        for ( j = 0; j < remainingWidth * 2; j += 2 )
-            *(channelOne+bindex+j) *= factor;
+        }
+        for ( j = 0; j < remainingWidth * 2; j += 2 ){
+            if( bindex+j >= N+2 ){
+                // post("shapee~: index out of range ");
+            } else {
+                *(channelOne+bindex+j) *= factor;
+            }
+        }
     }
-
-
+    
+    
     /* convert from polar to cartesian */
-
+    
     for ( i = 0; i <= N2; i++ ) {
-
+        
         odd = ( even = i<<1 ) + 1;
-
+        
         *(bufferOne+even) = *(channelOne+even) * cos( *(channelOne+odd) );
-
+        
         if ( i != N2 )
             *(bufferOne+odd) = (*(channelOne+even)) * -sin( *(channelOne+odd) );
     }
-
+    
     fftease_rdft(fft,FFT_INVERSE);
     fftease_overlapadd(fft);
 }
@@ -251,10 +263,10 @@ t_int *shapee_perform(t_int *w)
     t_float *MSPInputVector2 = (t_float *)(w[3]);
     t_float *inShape = (t_float *)(w[4]);
     t_float *MSPOutputVector = (t_float *)(w[5]);
-
+    
     t_fftease *fft = x->fft;
     t_fftease *fft2 = x->fft2;
-
+    
     int MSPVectorSize = fft->MSPVectorSize;
     int operationRepeat = fft->operationRepeat;
     int operationCount = fft->operationCount;
@@ -267,22 +279,22 @@ t_int *shapee_perform(t_int *w)
     int D = fft->D;
     int Nw = fft->Nw;
     t_float mult = fft->mult;
-
+    
     if(x->mute){
         for(i=0; i < MSPVectorSize; i++){ MSPOutputVector[i] = 0.0; }
         return w+6;
     }
-
+    
     x->shapeWidth =   *inShape;
-
+    
     if( fft->bufferStatus == EQUAL_TO_MSP_VECTOR ){
         memcpy(inputOne, inputOne + D, (Nw - D) * sizeof(t_float));
         memcpy(inputOne + (Nw - D), MSPInputVector1, D * sizeof(t_float));
         memcpy(inputTwo, inputTwo + D, (Nw - D) * sizeof(t_float));
         memcpy(inputTwo + (Nw - D), MSPInputVector2, D * sizeof(t_float));
-
+        
         do_shapee(x);
-
+        
         for ( j = 0; j < D; j++ ){ *MSPOutputVector++ = output[j] * mult; }
         memcpy(output, output + D, (Nw-D) * sizeof(t_float));
         for(j = (Nw-D); j < Nw; j++){ output[j] = 0.0; }
@@ -293,9 +305,9 @@ t_int *shapee_perform(t_int *w)
             memcpy(inputOne + (Nw-D), MSPInputVector1 + (D*i), D * sizeof(t_float));
             memcpy(inputTwo, inputTwo + D, (Nw - D) * sizeof(t_float));
             memcpy(inputTwo + (Nw-D), MSPInputVector2 + (D*i), D * sizeof(t_float));
-
+            
             do_shapee(x);
-
+            
             for ( j = 0; j < D; j++ ){ *MSPOutputVector++ = output[j] * mult; }
             memcpy(output, output + D, (Nw-D) * sizeof(t_float));
             for(j = (Nw-D); j < Nw; j++){ output[j] = 0.0; }
@@ -305,17 +317,17 @@ t_int *shapee_perform(t_int *w)
         memcpy(internalInputVector1 + (operationCount * MSPVectorSize), MSPInputVector1, MSPVectorSize * sizeof(t_float));
         memcpy(internalInputVector2 + (operationCount * MSPVectorSize), MSPInputVector2, MSPVectorSize * sizeof(t_float));
         memcpy(MSPOutputVector, internalOutputVector + (operationCount * MSPVectorSize), MSPVectorSize * sizeof(t_float));
-
+        
         operationCount = (operationCount + 1) % operationRepeat;
-
+        
         if( operationCount == 0 ) {
             memcpy(inputOne, inputOne + D, (Nw - D) * sizeof(t_float));
             memcpy(inputOne + (Nw - D), internalInputVector1, D * sizeof(t_float));
             memcpy(inputTwo, inputTwo + D, (Nw - D) * sizeof(t_float));
             memcpy(inputTwo + (Nw - D), internalInputVector2, D * sizeof(t_float));
-
+            
             do_shapee(x);
-
+            
             for ( j = 0; j < D; j++ ){ internalOutputVector[j] = output[j] * mult; }
             memcpy(output, output + D, (Nw - D) * sizeof(t_float));
             for(j = (Nw-D); j < Nw; j++){ output[j] = 0.0; }
@@ -338,16 +350,16 @@ void shapee_dsp(t_shapee *x, t_signal **sp)
     int reset_required = 0;
     int maxvectorsize = sp[0]->s_n;
     int samplerate = sp[0]->s_sr;
-
+    
     t_fftease *fft = x->fft;
     t_fftease *fft2 = x->fft2;
-
+    
     if(fft->R != samplerate || fft->MSPVectorSize != maxvectorsize || fft->initialized == 0){
         reset_required = 1;
     }
     if(!samplerate)
         return;
-
+    
     if(fft->MSPVectorSize != maxvectorsize){
         fft->MSPVectorSize = maxvectorsize;
         fftease_set_fft_buffers(fft);
