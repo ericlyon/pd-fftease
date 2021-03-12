@@ -72,6 +72,7 @@ class.sources = \
 datafiles = \
 	$(wildcard fftease-helpfiles/*.pd) \
 	LICENSE.txt \
+	CHANGELOG.txt \
 	README.md \
 	fftease-meta.pd \
 	lyonpotpourri-meta.pd \
