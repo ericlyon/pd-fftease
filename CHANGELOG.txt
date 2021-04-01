@@ -1,5 +1,9 @@
 FFTease Changelog
 
+Version 3.0.2 (not yet released)
+
+Fixed a memory allocation bug in disarrain~ that could cause crashes on 64-bit Pd.
+
 Version 3.0.1
 
 All the help files are updated. Several of the externals had an initialization bug that prevented them from being correctly initialized, if parameters were sent to them prior to the DACs being turned on. The following objects received this update:

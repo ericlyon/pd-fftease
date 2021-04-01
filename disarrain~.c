@@ -123,12 +123,12 @@ void disarrain_init(t_disarrain *x)
         if( x->interpolation_duration <= 0.0){
             x->interpolation_duration = 1.0; //seconds
         }
-        x->shuffle_mapping = (int *) calloc( N2, sizeof(int) ) ;
-        x->last_shuffle_mapping = (int *) calloc( N2, sizeof(int) ) ;
-        x->shuffle_tmp = (int *) calloc( N2, sizeof(int) ) ;
-        x->list_data = (t_atom *) calloc((N+2), sizeof(t_atom) ) ;
-        x->last_channel = (t_float *) calloc((N+2), sizeof(float));
-        x->composite_channel = (t_float *) calloc((N+2), sizeof(float));
+        x->shuffle_mapping = (int *) calloc(N2, sizeof(int));
+        x->last_shuffle_mapping = (int *) calloc(N2, sizeof(int));
+        x->shuffle_tmp = (int *) calloc(N2, sizeof(int)) ;
+        x->list_data = (t_atom *) calloc((N+2), sizeof(t_atom)) ;
+        x->last_channel = (t_float *) calloc((N+2), sizeof(t_float));
+        x->composite_channel = (t_float *) calloc((N+2), sizeof(t_float));
         x->reset_flag = 0;
         x->new_shuffle_count = 0;
     } else {
