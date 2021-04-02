@@ -13,7 +13,9 @@ Enabled instantation of the following objects when required parameters are not p
 - residency~
 - residency_buffer~
 
-Removed spurious lyonpotpourri-meta.pd reference from the Makefile
+Removed spurious lyonpotpourri-meta.pd reference from the Makefile.
+
+Updated FFTease icon with garish color scheme. Mulling over split-level model based on icon used in LyonPotpourri.
 
 Version 3.0.1
 
