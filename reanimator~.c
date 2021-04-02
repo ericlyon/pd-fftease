@@ -133,10 +133,14 @@ void *reanimator_new(t_symbol *msg, short argc, t_atom *argv)
     fft = x->fft;
     fft->initialized = 0;
     x->sample_len = 1000.0;
-    if(argc > 0){ x->sample_len = atom_getfloatarg(0, argc, argv); }
-    else { post("%s: must include duration argument",OBJECT_NAME); return NULL; }
-    x->sample_len *= .001; /* convert to seconds */
-
+    if(argc > 0){
+        x->sample_len = atom_getfloatarg(0, argc, argv);
+        x->sample_len *= .001; /* convert to seconds */
+    }
+    else {
+        post("%s: no duration given, using a default of 5000 ms",OBJECT_NAME);
+        x->sample_len = 5.0;
+    }
     fft->N = FFTEASE_DEFAULT_FFTSIZE;
     fft->overlap = FFTEASE_DEFAULT_OVERLAP;
     fft->winfac = FFTEASE_DEFAULT_WINFAC;

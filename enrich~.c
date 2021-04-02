@@ -37,12 +37,12 @@ static void enrich_highfreq(t_enrich *x, t_floatarg f);
 static void enrich_dolowfreq(t_enrich *x);
 static void enrich_dohighfreq(t_enrich *x);
 static void enrich_attachbuf(t_enrich *x);
-static void enrich_binstats(t_enrich *x);
-static void enrich_fftinfo(t_enrich *x);
-static void enrich_fftsize(t_enrich *x, t_floatarg f);
-static void enrich_overlap(t_enrich *x, t_floatarg f);
-static void enrich_setbuf(t_enrich *x, t_symbol *newbufname);
-static void enrich_winfac(t_enrich *x, t_floatarg f);
+//static void enrich_binstats(t_enrich *x);
+//static void enrich_fftinfo(t_enrich *x);
+//static void enrich_fftsize(t_enrich *x, t_floatarg f);
+//static void enrich_overlap(t_enrich *x, t_floatarg f);
+//static void enrich_setbuf(t_enrich *x, t_symbol *newbufname);
+//static void enrich_winfac(t_enrich *x, t_floatarg f);
 
 void enrich_tilde_setup(void)
 {
@@ -207,7 +207,10 @@ void *enrich_new(t_symbol *s, int argc, t_atom *argv)
     fft->overlap = FFTEASE_DEFAULT_OVERLAP;
     fft->winfac = FFTEASE_DEFAULT_WINFAC;
     if(argc > 0){ x->buffername = atom_getsymbolarg(0, argc, argv); }
-    else { post("%s: Must specify array name", OBJECT_NAME); return NULL; }
+    else {
+        pd_error(x,"%s: you must provide a valid buffer name",OBJECT_NAME);
+        x->buffername = &s_;
+    }
     if(argc > 1){ fft->N = (int) atom_getfloatarg(1, argc, argv); }
     if(argc > 2){ fft->overlap = (int) atom_getfloatarg(2, argc, argv); }
     x->b_errorstatus = 0;

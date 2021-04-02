@@ -75,7 +75,6 @@ datafiles = \
 	CHANGELOG.txt \
 	README.md \
 	fftease-meta.pd \
-	lyonpotpourri-meta.pd \
 	smap.pd \
 	collect.pl \
 	$(empty)

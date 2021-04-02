@@ -124,7 +124,10 @@ void *residency_buffer_new(t_symbol *msg, short argc, t_atom *argv)
     fft->winfac = FFTEASE_DEFAULT_WINFAC;
     x->b_errorstatus = 0;
     if(argc > 0){ x->buffername = atom_getsymbolarg(0, argc, argv); }
-    else { post("%s: Must specify array name", OBJECT_NAME); return NULL; }
+    else {
+        pd_error(x,"%s: you must provide a valid buffer name",OBJECT_NAME);
+        x->buffername = &s_;
+    }
     if(argc > 1){ fft->N = (int) atom_getfloatarg(1, argc, argv); }
     if(argc > 2){ fft->overlap = (int) atom_getfloatarg(2, argc, argv); }
     return x;

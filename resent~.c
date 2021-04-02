@@ -60,8 +60,8 @@ t_float fftease_randf(t_float min, t_float max);
 static void resent_transpose(t_resent *x, t_floatarg tf);
 static void resent_synthresh(t_resent *x, t_floatarg thresh);
 static void resent_oscbank(t_resent *x, t_floatarg flag);
-static void resent_assist (t_resent *x, void *b, long msg, long arg, char *dst);
-static void resent_tick(t_resent *x);
+// static void resent_assist (t_resent *x, void *b, long msg, long arg, char *dst);
+// static void resent_tick(t_resent *x);
 
 void resent_tilde_setup(void)
 {
@@ -347,7 +347,10 @@ t_fftease *fft;
     fft->overlap = FFTEASE_DEFAULT_OVERLAP;
     fft->winfac = FFTEASE_DEFAULT_WINFAC;
     if(argc > 0){ x->duration = atom_getfloatarg(0, argc, argv) / 1000.0; }
-    else { post("%s: must give duration argument",OBJECT_NAME); return NULL; }
+    else {
+        post("%s: no duration given, using a default of 5000 ms",OBJECT_NAME);
+        x->duration = 5.0;
+    }
     if(argc > 1){ fft->N = (int) atom_getfloatarg(1, argc, argv); }
     if(argc > 2){ fft->overlap = (int) atom_getfloatarg(2, argc, argv); }
     return x;
