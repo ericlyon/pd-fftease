@@ -66,6 +66,7 @@ class.sources = \
 	thresher~.c \
 	vacancy~.c \
 	xsyn~.c \
+	loopsea~.c \
 	$(empty)
 
 # extra files

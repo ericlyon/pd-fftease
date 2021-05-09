@@ -145,6 +145,7 @@ void fftease_set_fft_buffers(t_fftease *fft);
 void fftease_fftinfo(t_fftease *fft, char *object_name);
 int fftease_msp_sanity_check(t_fftease *fft, char *oname);
 t_float fftease_randf(t_float min, t_float max);
+int fftease_randi(int min, int max);
 void fftease_noalias(t_fftease* fft, short flag);
 void fftease_oscbank_setbins(t_fftease *fft, t_float lowfreq, t_float highfreq);
 void fftease_limited_oscbank(t_fftease *fft, int osclimit, t_float framethresh);

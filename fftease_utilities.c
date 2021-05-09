@@ -273,3 +273,10 @@ t_float fftease_randf(t_float min, t_float max)
     randv = (t_float) (rand() % 32768) / 32768.0 ;
     return min + (max-min) * randv;
 }
+
+int fftease_randi(int min, int max)
+{
+    int randv;
+    // random values inclusive of min and max
+    return min + (rand() % (1 + (max - min)));
+}

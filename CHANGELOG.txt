@@ -17,6 +17,9 @@ Removed spurious lyonpotpourri-meta.pd reference from the Makefile.
 
 Updated FFTease icon with garish color scheme. Mulling over split-level model based on icon used in LyonPotpourri.
 
+Introduced new object: loopsea~. Status: currently seems to work; help file not yet in finished form; code uploaded to at least get current version on the record. 
+
+
 Version 3.0.1
 
 All the help files are updated. Several of the externals had an initialization bug that prevented them from being correctly initialized, if parameters were sent to them prior to the DACs being turned on. The following objects received this update:
