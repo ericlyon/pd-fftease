@@ -19,6 +19,8 @@ Updated FFTease icon with garish color scheme. Mulling over split-level model ba
 
 Introduced new object: loopsea~. Status: currently seems to work; help file not yet in finished form; code uploaded to at least get current version on the record. 
 
+Fixed bugs in pvtuner~ related to the "basefreq" method.
+
 
 Version 3.0.1
 
