@@ -23,6 +23,7 @@ Christopher Penrose in 1999, and has been maintained by Eric Lyon since
 - enrich~ an oscillator resynthesis with a user-designed waveform
 - ether~ another spectral compositing object
 - leaker~ a sieve-based cross fader
+- loopsea~ spectrally stratified independent looping
 - mindwarp~ a spectral formant warping object
 - morphine~ a morphing object
 - multyq~ a four band filter
