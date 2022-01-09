@@ -101,7 +101,7 @@ void enrich_highfreq(t_enrich *x, t_floatarg f)
     float curfreq;
 
     if(f < x->lofreq){
-        error("current minimum is %f",x->lofreq);
+        pd_error(0, "current minimum is %f",x->lofreq);
         return;
     }
     if(f > fft->R/2 ){
@@ -122,7 +122,7 @@ void enrich_lowfreq(t_enrich *x, t_floatarg f)
     float curfreq;
 
     if(f > x->hifreq){
-        error("current maximum is %f",x->lofreq);
+        pd_error(0, "current maximum is %f",x->lofreq);
         return;
     }
     if(f < 0 ){

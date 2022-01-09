@@ -211,7 +211,7 @@ void dentist_init(t_dentist *x)
     x->max_bin = 1;
 
     if(!x->funda){
-        error("%s: zero sampling rate!",OBJECT_NAME);
+        pd_error(0, "%s: zero sampling rate!",OBJECT_NAME);
         return;
     }
     x->max_bin = (int) (x->topfreq / x->funda);
@@ -438,7 +438,7 @@ void dentist_toothcount(t_dentist *x, t_floatarg newcount)
         return;
     }
     if(nc < 0 || nc > x->fft->N2){
-        error("dentist~: %d out of range",nc);
+        pd_error(0, "dentist~: %d out of range",nc);
         return;
     }
 

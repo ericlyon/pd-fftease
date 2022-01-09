@@ -244,7 +244,7 @@ static void do_pvgrain(t_pvgrain *x)
         print_grain = 1;
         dice = fftease_randf(0.,1.);
         if( dice < 0.0 || dice > 1.0 ){
-            error("dice %f out of range", dice);
+            pd_error(0, "dice %f out of range", dice);
         }
         if( selection_probability < 1.0 ){
             if( dice > selection_probability) {

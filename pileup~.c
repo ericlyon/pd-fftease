@@ -69,7 +69,7 @@ void pileup_highfreq(t_pileup *x, t_floatarg f)
     t_fftease *fft = x->fft;
 
     if(f < x->lo_freq){
-        error("current minimum is %f",x->lo_freq);
+        pd_error(0, "current minimum is %f",x->lo_freq);
         return;
     }
     if(f > fft->R/2 ){
@@ -90,7 +90,7 @@ void pileup_lowfreq(t_pileup *x, t_floatarg f)
     t_fftease *fft = x->fft;
 
     if(f > x->hi_freq){
-        error("current maximum is %f",x->lo_freq);
+        pd_error(0, "current maximum is %f",x->lo_freq);
         return;
     }
     if(f < 0 ){

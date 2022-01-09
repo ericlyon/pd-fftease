@@ -121,7 +121,7 @@ void update_thresholds( t_pvcompand *x ) {
             nowamp += x->gstep ;
             ++(x->count);
             if(x->count >= N){
-                error("count exceeds %d",N);
+                pd_error(0, "count exceeds %d",N);
                 x->count = N - 1;
                 break;
             }
@@ -133,7 +133,7 @@ void update_thresholds( t_pvcompand *x ) {
             nowamp -= x->gstep ;
             ++(x->count);
             if(x->count >= N){
-                error("count exceeds %d",N);
+                pd_error(0, "count exceeds %d",N);
                 x->count = N - 1;
                 break;
             }

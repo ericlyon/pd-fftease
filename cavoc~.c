@@ -134,7 +134,7 @@ void cavoc_mute (t_cavoc *x, t_floatarg toggle)
 void cavoc_retune(t_cavoc *x, t_floatarg min, t_floatarg max)
 {
     if( max <= 0 || min <= 0 || min > max ){
-        error("bad values for min and max multipliers");
+        pd_error(0, "bad values for min and max multipliers");
         return;
     }
     if( min < .1 )
@@ -162,7 +162,7 @@ void cavoc_rule (t_cavoc *x, t_symbol *msg, short argc, t_atom *argv)
     int i;
     short *rule = x->rule;
     if( argc != 8 ){
-        error("the rule must be size 8");
+        pd_error(0, "the rule must be size 8");
         return;
     }
 
@@ -213,7 +213,7 @@ void cavoc_init(t_cavoc *x)
     fft->hi_bin = fft->N2 - 1;
 
     if(! fft->R ){
-        error("zero sampling rate!");
+        pd_error(0, "zero sampling rate!");
         return;
     }
     x->frame_duration = (float)fft->D/(float) fft->R;
@@ -281,7 +281,7 @@ void cavoc_topfreq(t_cavoc *x, t_floatarg tf)
 {
     t_fftease *fft = x->fft;
     if(tf < 100 || tf > fft->R / 2.0){
-        error("%s: top frequency out of range: %f",OBJECT_NAME,  tf);
+        pd_error(0, "%s: top frequency out of range: %f",OBJECT_NAME,  tf);
         return;
     }
     x->topfreq = (float) tf;
@@ -291,7 +291,7 @@ void cavoc_topfreq(t_cavoc *x, t_floatarg tf)
 void cavoc_bottomfreq(t_cavoc *x, t_floatarg bf)
 {
     if(bf < 0 && bf > x->topfreq){
-        error("%s: bottom frequency out of range: %f",OBJECT_NAME,  bf);
+        pd_error(0, "%s: bottom frequency out of range: %f",OBJECT_NAME,  bf);
         return;
     }
     x->bottomfreq = (float) bf;

@@ -222,7 +222,7 @@ void pvtuner_toptune(t_pvtuner *x, t_floatarg f)
     curfreq = 0;
 
     if( f < 0 || f > x->fft->R / 2.0 ){
-        error("frequency %f out of range", f);
+        pd_error(0, "frequency %f out of range", f);
         return;
     }
     while( curfreq < f ) {
@@ -232,7 +232,7 @@ void pvtuner_toptune(t_pvtuner *x, t_floatarg f)
     if( tbin > fft->lo_bin && tbin <= fft->hi_bin ){
         x->hi_tune_bin = tbin;
     } else {
-        error("pvtuner~: bin %d out of range", tbin);
+        pd_error(0, "pvtuner~: bin %d out of range", tbin);
     }
 
 }
@@ -246,7 +246,7 @@ void pvtuner_list (t_pvtuner *x, t_symbol *msg, short argc, t_atom *argv)
     int i = 0;
 
     if( ! atom_getfloatarg(i,argc,argv) ){
-        error("either zero length scale or 0.0 (prohibited) is first value");
+        pd_error(0, "either zero length scale or 0.0 (prohibited) is first value");
         return;
     }
     pvtuner_copy_scale(x);
@@ -278,7 +278,7 @@ void pvtuner_frequency_range(t_pvtuner *x, t_floatarg lo, t_floatarg hi)
 
 
     if( lo >= hi ){
-        error("low frequency must be lower than high frequency");
+        pd_error(0, "low frequency must be lower than high frequency");
         return;
     }
     x->curfreq = 0;
@@ -524,7 +524,7 @@ void pvtuner_update_imported( t_pvtuner *x ){
     int i;
 
     if( pitchgrid[0] <= 0.0){
-        error("%s: illegal first value of scale: %f",OBJECT_NAME,pitchgrid[0]);
+        pd_error(0, "%s: illegal first value of scale: %f",OBJECT_NAME,pitchgrid[0]);
         return;
     }
 

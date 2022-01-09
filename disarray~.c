@@ -361,7 +361,7 @@ void disarray_setstate (t_disarray *x, t_symbol *msg, short argc, t_atom *argv) 
         if ( ival < x->fft->N2 && ival >= 0) {
             x->shuffle_out[ i ] = ival;
         } else {
-            error("%s: %d is out of range",OBJECT_NAME, ival);
+            pd_error(0, "%s: %d is out of range",OBJECT_NAME, ival);
         }
     }
 }

@@ -217,7 +217,7 @@ void residency_init(t_residency *x)
         for(i=0;i < x->framecount; i++){
             x->loveboat[i] = (t_float *) calloc((fft->N + 2), sizeof(t_float));
             if(x->loveboat[i] == NULL){
-                error("%s: memory error",OBJECT_NAME);
+                pd_error(0, "%s: memory error",OBJECT_NAME);
                 return;
             }
         }
@@ -236,7 +236,7 @@ void residency_init(t_residency *x)
             for(i=0;i < x->framecount; i++){
                 x->loveboat[i] = (t_float *) calloc((fft->N + 2), sizeof(t_float));
                 if(x->loveboat[i] == NULL){
-                    error("%s: memory error",OBJECT_NAME);
+                    pd_error(0, "%s: memory error",OBJECT_NAME);
                     return;
                 }
             }
@@ -251,7 +251,7 @@ void residency_init(t_residency *x)
         x->failed_init = 0;
     }
     if (fft->D <= 0.0 || fft->R <= 0.0){
-        error("%s: bad decimation size or bad sampling rate - cannot proceed",OBJECT_NAME);
+        pd_error(0, "%s: bad decimation size or bad sampling rate - cannot proceed",OBJECT_NAME);
         post("D: %d R: %d",fft->D, fft->R);
         return;
     }

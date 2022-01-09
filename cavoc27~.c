@@ -135,7 +135,7 @@ void cavoc27_retune(t_cavoc27 *x, t_floatarg min, t_floatarg max)
     t_float *tmpchannel = x->tmpchannel;
     t_float *last_frame = x->last_frame;
     if( max <= 0 || min <= 0 || min > max ){
-        error("bad values for min and max multipliers");
+        pd_error(0, "bad values for min and max multipliers");
         return;
     }
     if( min < .1 )
@@ -182,7 +182,7 @@ void cavoc27_rule (t_cavoc27 *x, t_symbol *msg, short argc, t_atom *argv)
     int i;
     short *rule = x->rule;
     if( argc != 27 ){
-        error("the rule must be size 18");
+        pd_error(0, "the rule must be size 18");
         return;
     }
 
@@ -269,7 +269,7 @@ void cavoc27_init(t_cavoc27 *x)
     short initialized = fft->initialized;
     fftease_init(fft);
     if(! fft->R ){
-        error("cavoc27~: zero sampling rate!");
+        pd_error(0, "cavoc27~: zero sampling rate!");
         return;
     }
     x->frame_duration = (float)fft->D/(float) fft->R;
@@ -601,7 +601,7 @@ void cavoc27_hold_time(t_cavoc27 *x, t_floatarg hold_time)
         return;
     }
     if(! x->frame_duration){
-        error("%s: zero frame duration",OBJECT_NAME);
+        pd_error(0, "%s: zero frame duration",OBJECT_NAME);
         return;
     }
     x->hold_frames = (int) ( (x->hold_time/1000.0) / x->frame_duration);

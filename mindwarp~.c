@@ -135,13 +135,13 @@ static void do_mindwarp(t_mindwarp *x)
 
     warpFactor = x->warpFactor;
     if(warpFactor <= 0){
-        error("bad warp, resetting");
+        pd_error(0, "bad warp, resetting");
         warpFactor = 1.0;
     }
 
     newLength = (int) ((t_float) N2 / warpFactor);
     if(newLength <= 0){
-        error("bad length: resetting");
+        pd_error(0, "bad length: resetting");
         newLength = 1.0;
     }
 
@@ -216,7 +216,7 @@ static void do_mindwarp(t_mindwarp *x)
 
             // this can happen, crashing external; now fixed.
         if( freqSum <= 0 ) {
-                //      error("bad freq sum, resetting");
+                //      pd_error(0, "bad freq sum, resetting");
             freqSum = 1.0;
         }
         else
@@ -291,7 +291,7 @@ t_int *mindwarp_perform(t_int *w)
 
     if(x->warpFactor <= 0.0625){
         x->warpFactor = 1.0;
-    //     error("%s: zero warp factor is illegal",OBJECT_NAME);
+    //     pd_error(0, "%s: zero warp factor is illegal",OBJECT_NAME);
     }
     if( fft->bufferStatus == EQUAL_TO_MSP_VECTOR ){
         memcpy(input, input + D, (Nw - D) * sizeof(t_float));

@@ -66,7 +66,7 @@ void pvharm_lowfreq(t_pvharm *x, t_floatarg f)
     int R = x->fft->R;
     if(R > 0){
         if(f > x->hifreq){
-            error("%s: minimum cannot exceed current maximum: %f",OBJECT_NAME,x->hifreq);
+            pd_error(0, "%s: minimum cannot exceed current maximum: %f",OBJECT_NAME,x->hifreq);
             return;
         }
         if(f < 0 ){
@@ -87,7 +87,7 @@ void pvharm_highfreq(t_pvharm *x, t_floatarg f)
     int R = x->fft->R;
     if(R > 0){
         if(f < x->lofreq){
-            error("%s: maximum cannot go below current minimum: %f",OBJECT_NAME,x->lofreq);
+            pd_error(0, "%s: maximum cannot go below current minimum: %f",OBJECT_NAME,x->lofreq);
             return;
         }
         if(f > R/2 ){
