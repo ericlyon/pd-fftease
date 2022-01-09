@@ -259,7 +259,7 @@ void pvwarp_bottomfreq(t_pvwarp *x, t_floatarg f)
         return;
     }
     if( f < 0 || f > x->fft->R / 2.0 ){
-        error("%s: frequency %f out of range", OBJECT_NAME, f);
+        pd_error(0, "%s: frequency %f out of range", OBJECT_NAME, f);
         return;
     }
     x->lofreq = f;
@@ -275,7 +275,7 @@ void pvwarp_topfreq(t_pvwarp *x, t_floatarg f)
         return;
     }
     if( f < x->lofreq || f > x->fft->R / 2.0 ){
-        error("%s: frequency %f out of range", OBJECT_NAME, f);
+        pd_error(0, "%s: frequency %f out of range", OBJECT_NAME, f);
         return;
     }
     x->hifreq = f;

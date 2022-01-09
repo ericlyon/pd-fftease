@@ -226,7 +226,7 @@ void loopsea_init(t_loopsea *x)
         for(i=0; i < x->framecount; i++){
             x->loveboat[i] = (t_float *) calloc((fft->N+2), sizeof(t_float));
             if(x->loveboat[i] == NULL){
-                error("%s: Insufficient Memory!",OBJECT_NAME);
+                pd_error(0, "%s: Insufficient Memory!",OBJECT_NAME);
                 return;
             }
         }
@@ -246,7 +246,7 @@ void loopsea_init(t_loopsea *x)
         for(i=0; i < x->framecount; i++){
             x->loveboat[i] = (t_float *) calloc((fft->N+2), sizeof(t_float));
             if(x->loveboat[i] == NULL){
-                error("%s: Insufficient Memory!",OBJECT_NAME);
+                pd_error(0, "%s: Insufficient Memory!",OBJECT_NAME);
                 return;
             }
         }
@@ -503,12 +503,12 @@ void loopsea_linephase(t_loopsea *x, t_symbol *msg, short argc, t_atom *argv)
     phase2 = atom_getfloatarg(3, argc, argv) * x->framecount;
 
     if( bin1 > fft->N2 || bin2 > fft->N2 ){
-        error("too high bin number");
+        pd_error(0, "too high bin number");
         return;
     }
     bindiff = bin2 - bin1;
     if( bindiff < 1 ){
-        error("make bin2 higher than bin 1, bye now");
+        pd_error(0, "make bin2 higher than bin 1, bye now");
         return;
     }
     for( i = bin1; i < bin2; i++ ){
@@ -665,12 +665,12 @@ void loopsea_linespeed(t_loopsea *x, t_symbol *msg, short argc, t_atom *argv)
     speed2 = atom_getfloatarg(3, argc, argv);
 
     if( bin1 > fft->N2 || bin2 > fft->N2 ){
-        error("too high bin number");
+        pd_error(0, "too high bin number");
         return;
     }
     bindiff = bin2 - bin1;
     if( bindiff < 1 ){
-        error("make bin2 higher than bin 1, bye now");
+        pd_error(0, "make bin2 higher than bin 1, bye now");
         return;
     }
     for( i = bin1; i < bin2; i++ ){

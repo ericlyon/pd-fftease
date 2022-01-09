@@ -187,13 +187,13 @@ void disarrain_fadetime (t_disarrain *x, t_floatarg f)
         return;
     }
     if(x->frame_duration <= 0.0){
-        // error("%s: frame duration %f is too low", OBJECT_NAME, x->frame_duration);
+        // pd_error(0, "%s: frame duration %f is too low", OBJECT_NAME, x->frame_duration);
         return;
     }
     // duration = f * .001;
     frames = x->interpolation_duration / x->frame_duration;
     if( frames <= 1){
-        error("%s: fadetime too short",OBJECT_NAME);
+        pd_error(0, "%s: fadetime too short",OBJECT_NAME);
         return;
     }
     x->interpolation_frames = frames;
@@ -330,7 +330,7 @@ static void do_disarrain(t_disarrain *x)
             p1 = rand() % max;
             p2 = rand() % max;
             if(p1 < 0 || p1 > max || p2 < 0 || p2 > max){
-                error("disarrain~: bad remaps: %d %d against %d", p1, p2, max);
+                pd_error(0, "disarrain~: bad remaps: %d %d against %d", p1, p2, max);
             } else {
                 temp = shuffle_tmp[p1];
                 shuffle_tmp[ p1 ] = shuffle_tmp[ p2 ];
@@ -625,7 +625,7 @@ void disarrain_isetstate (t_disarrain *x, t_symbol *msg, short argc, t_atom *arg
         if ( ival < N2 && ival >= 0) {
             x->shuffle_mapping[ i ] = ival;
         }else {
-            error("%s: %d is out of range",OBJECT_NAME, ival);
+            pd_error(0, "%s: %d is out of range",OBJECT_NAME, ival);
         }
     }
 
@@ -644,7 +644,7 @@ void disarrain_setstate (t_disarrain *x, t_symbol *msg, short argc, t_atom *argv
         if ( ival < N2 && ival >= 0) {
             x->last_shuffle_mapping[i] = x->shuffle_mapping[i] = ival;
         } else {
-            error("%s: %d is out of range",OBJECT_NAME, ival);
+            pd_error(0, "%s: %d is out of range",OBJECT_NAME, ival);
         }
     }
     return;

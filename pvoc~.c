@@ -68,7 +68,7 @@ void pvoc_highfreq(t_pvoc *x, t_floatarg f)
         f = 0;
     }
     if(f < x->lofreq){
-        error("%s: maximum cannot go below current minimum: %f",OBJECT_NAME,x->lofreq);
+        pd_error(0, "%s: maximum cannot go below current minimum: %f",OBJECT_NAME,x->lofreq);
         return;
     }
     if(f > x->fft->R/2 ){

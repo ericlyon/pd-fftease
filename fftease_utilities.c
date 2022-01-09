@@ -53,7 +53,7 @@ int fftease_overlap( int overlap )
         target *= 2;
     }
     if( target != overlap ){
-        error("fftease_overlap: %d is not a legal overlap factor",overlap);
+        pd_error(0, "fftease_overlap: %d is not a legal overlap factor",overlap);
         return 1;
     }
     return overlap;
@@ -66,7 +66,7 @@ int fftease_winfac( int winfac)
         target *= 2;
     }
     if( target != winfac ){
-        // error("%d is not a legal window factor", winfac);
+        // pd_error(0, "%d is not a legal window factor", winfac);
         return 1;
     }
     return winfac;
