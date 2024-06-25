@@ -199,7 +199,7 @@ void reanimator_init(t_reanimator *x )
 
 static void do_reanimator(t_reanimator *x)
 {
-    t_float ampsum, new_ampsum, rescale;
+    t_float ampsum, rescale;
     t_float min_difsum, difsum;
     int
     i,j;
@@ -247,7 +247,7 @@ static void do_reanimator(t_reanimator *x)
             fftease_convert(fft);
             sync = (float) framecount / (float) total_frames;
 
-            new_ampsum = ampsum = 0;
+            ampsum = 0;
             for(i = 0; i < N; i += 2 ){
                 ampsum += channel[i];
             }

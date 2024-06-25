@@ -80,7 +80,6 @@ void residency_buffer_free( t_residency_buffer *x )
 
 void residency_buffer_calcbuf(t_residency_buffer *x, t_floatarg desired_duration)
 {
-    t_float ms_calc;
     t_float seconds;
     t_float frames;
     t_float samples;
@@ -98,7 +97,6 @@ void residency_buffer_calcbuf(t_residency_buffer *x, t_floatarg desired_duration
     seconds = desired_duration / 1000.0;
     frames = seconds / tadv;
     samples = frames * (t_float) (fft->N + 2);
-    ms_calc = (samples / fft->R) * 1000.0;
     post("desired duration in ms: %f",desired_duration);
     post("you need %.0f samples in buffer to get %.0f frames or %f secs",
          samples, frames, seconds);

@@ -506,12 +506,10 @@ void interpolate_frames_to_channel(t_disarrain *x)
     int shuffle_count = x->shuffle_count;
     int *last_shuffle_mapping = x->last_shuffle_mapping;
     int last_shuffle_count = x->last_shuffle_count;
-    int local_max_bins;
     int N = x->fft->N;
 
     ival = (t_float)frame_countdown/(t_float)interpolation_frames;
 
-    local_max_bins = (shuffle_count > last_shuffle_count)? shuffle_count : last_shuffle_count;
     for(j = 0; j < N; j+=2){
         last_channel[j] = channel[j];
     }

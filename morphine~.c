@@ -133,8 +133,7 @@ static void do_morphine(t_morphine *x)
     t_fftease *fft2 = x->fft2;
     int i;
     int lookupIndex,even, odd;
-    t_float mult,
-    morphIndex,
+    t_float morphIndex,
     exponScale,
     a1, b1,
     a2, b2;
@@ -146,7 +145,6 @@ static void do_morphine(t_morphine *x)
     int N2 = fft->N2;
     t_pickme *picks = x->picks;
     t_pickme *mirror = x->mirror;
-    mult = fft->mult;
     morphIndex = x->morphIndex;
     exponScale = x->exponScale;
 

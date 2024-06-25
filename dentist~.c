@@ -545,11 +545,9 @@ void dentist_showstate (t_dentist *x) {
     t_atom *list_data = x->list_data;
 
     short i, count;
-    float data;
 
     count = 0;
     for(i = 0; i < x->tooth_count; i++ ) {
-        data = x->active_bins[i];
         SETFLOAT(list_data+count,(t_float)x->active_bins[i]);
         ++count;
     }

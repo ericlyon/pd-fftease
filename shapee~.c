@@ -93,12 +93,8 @@ static void do_shapee(t_shapee *x)
     t_fftease *fft2 = x->fft2;
     int
     i,j,
-    
-    R,
     N,
     N2,
-    D,
-    Nw,
     remainingWidth,
     even, odd;
     
@@ -116,11 +112,8 @@ static void do_shapee(t_shapee *x)
     
     bufferOne = fft->buffer;
     bufferTwo = fft2->buffer;
-    R = fft->R;
     N = fft->N;
     N2 = fft->N2;
-    D = fft->D;
-    Nw = fft->Nw;
     
     channelOne = fft->channel;
     channelTwo = fft2->channel;

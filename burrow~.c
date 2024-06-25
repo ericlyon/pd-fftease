@@ -152,29 +152,15 @@ t_int *burrow_perform(t_int *w)
         mult *= FFTEASE_OSCBANK_SCALAR;
 
     int
-    i,j,
-    invert = 0,
-    threshold = 1.,
-    multiplier = 1.;
+    i,j;
     t_float
     *inputOne,
-    *inputTwo,
-    *bufferOne,
-    *bufferTwo,
-    *channelOne,
-    *channelTwo;
+    *inputTwo;
 
     /* dereference structure  */
 
     inputOne = fft->input;
     inputTwo = fft2->input;
-    bufferOne = fft->buffer;
-    bufferTwo = fft2->buffer;
-    channelOne = fft->channel;
-    channelTwo = fft2->channel;
-    multiplier = x->multiplier;
-    threshold = x->threshold;
-    invert = x->invert;
 
     mult = fft->mult;
     x->threshold = *flt_threshold;

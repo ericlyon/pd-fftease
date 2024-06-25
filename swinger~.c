@@ -86,12 +86,7 @@ static void do_swinger(t_swinger *x)
     int
     i,
 
-    R,
-    N,
     N2,
-    D,
-    Nw,
-
     even, odd;
 
     t_float
@@ -99,18 +94,11 @@ static void do_swinger(t_swinger *x)
     a2, b2,
     *bufferOne,
     *bufferTwo,
-    *channelOne,
-    *channelTwo;
+    *channelOne;
     bufferOne = fft->buffer;
     bufferTwo = fft2->buffer;
-    R = fft->R;
-    N = fft->N;
     N2 = fft->N2;
-    D = fft->D;
-    Nw = fft->Nw;
     channelOne = fft->channel;
-    channelTwo = fft2->channel;
-
 
     /* apply hamming window and fold our window buffer into the fft buffer */
 

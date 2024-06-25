@@ -106,13 +106,9 @@ void *centerring_new(t_symbol *s, int argc, t_atom *argv)
 void centerring_init(t_centerring *x)
 {
     t_fftease *fft = x->fft;
-    int Nw;
-    int N;
     int N2;
     short initialized= fft->initialized;
     fftease_init(fft);
-    Nw = fft->Nw;
-    N = fft->N;
     N2 = fft->N2;
     if(! fftease_msp_sanity_check(fft,OBJECT_NAME)){
         post("failed sanity check!");
