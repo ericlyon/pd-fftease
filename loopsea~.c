@@ -201,7 +201,7 @@ void loopsea_init(t_loopsea *x)
 
     x->current_frame = x->framecount = 0;
     x->fpos = x->last_fpos = 0;
-    x->tadv = (float)fft->D/(float)fft->R;
+    x->tadv = (t_float)fft->D/(t_float)fft->R;
     if(x->duration < 0.1){
         x->duration = 0.1;
     }
@@ -493,9 +493,9 @@ void loopsea_linephase(t_loopsea *x, t_symbol *msg, short argc, t_atom *argv)
 {
     t_fftease *fft = x->fft;
     int bin1, bin2;
-    float phase1, phase2, bindiff;
+    t_float phase1, phase2, bindiff;
     int i;
-    float m1, m2;
+    t_float m1, m2;
 
     bin1 = (int) atom_getfloatarg(0, argc, argv);
     phase1 = atom_getfloatarg(1, argc, argv) * x->framecount;
@@ -512,7 +512,7 @@ void loopsea_linephase(t_loopsea *x, t_symbol *msg, short argc, t_atom *argv)
         return;
     }
     for( i = bin1; i < bin2; i++ ){
-        m2 = (float) i / bindiff;
+        m2 = (t_float) i / bindiff;
         m1 = 1. - m2;
         x->frame_phase[i] = m1 * phase1 + m2 * phase2;
     }
@@ -522,7 +522,7 @@ void loopsea_randphase(t_loopsea *x, t_symbol *msg, short argc, t_atom *argv)
 {
     t_fftease *fft = x->fft;
 
-    float minphase, maxphase;
+    t_float minphase, maxphase;
     int i;
     int framecount = x->framecount;
 
@@ -536,7 +536,7 @@ void loopsea_randphase(t_loopsea *x, t_symbol *msg, short argc, t_atom *argv)
         maxphase = 1.0;
 
     for( i = 0; i < fft->N2; i++ ){
-        x->frame_phase[i] = (int) (fftease_randf( minphase, maxphase ) * (float) (framecount - 1) ) ;
+        x->frame_phase[i] = (int) (fftease_randf( minphase, maxphase ) * (t_float) (framecount - 1) ) ;
     }
 }
 
@@ -544,7 +544,7 @@ void loopsea_randspeed(t_loopsea *x, t_symbol *msg, short argc, t_atom *argv)
 {
     t_fftease *fft = x->fft;
 
-    float minspeed, maxspeed;
+    t_float minspeed, maxspeed;
     int i;
 
 
@@ -608,7 +608,7 @@ void loopsea_randtransp(t_loopsea *x, t_symbol *msg, short argc, t_atom *argv)
 {
     t_fftease *fft = x->fft;
 
-    float minincr, maxincr;
+    t_float minincr, maxincr;
     int i;
 
     minincr = atom_getfloatarg(0, argc, argv);
@@ -628,7 +628,7 @@ void loopsea_transp_choose(t_loopsea *x, t_symbol *msg, short argc, t_atom *argv
 {
     t_fftease *fft = x->fft;
 
-//    float minincr, maxincr;
+//    t_float minincr, maxincr;
     int i, randex;
     int interval_count = x->interval_count;
     t_float *interval_bank = x->interval_bank;
@@ -655,9 +655,9 @@ void loopsea_linespeed(t_loopsea *x, t_symbol *msg, short argc, t_atom *argv)
 {
     t_fftease *fft = x->fft;
     int bin1, bin2;
-    float speed1, speed2, bindiff;
+    t_float speed1, speed2, bindiff;
     int i;
-    float m1, m2;
+    t_float m1, m2;
 
     bin1 = (int) atom_getfloatarg(0, argc, argv);
     speed1 = atom_getfloatarg(1, argc, argv);
@@ -674,7 +674,7 @@ void loopsea_linespeed(t_loopsea *x, t_symbol *msg, short argc, t_atom *argv)
         return;
     }
     for( i = bin1; i < bin2; i++ ){
-        m2 = (float) i / bindiff;
+        m2 = (t_float) i / bindiff;
         m1 = 1. - m2;
         x->frame_incr[i] = m1 * speed1 + m2 * speed2;
     }

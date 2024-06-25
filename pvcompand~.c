@@ -32,7 +32,7 @@ static void *pvcompand_new(t_symbol *s, int argc, t_atom *argv);
 static void update_thresholds(t_pvcompand *x);
 static void pvcompand_normalize(t_pvcompand *x, t_floatarg val);
 static void pvcompand_free(t_pvcompand *x);
-static float pvcompand_ampdb(float db);
+static t_float pvcompand_ampdb(t_float db);
 static void pvcompand_init(t_pvcompand *x);
 static void pvcompand_mute(t_pvcompand *x, t_floatarg f);
 
@@ -291,9 +291,9 @@ t_int *pvcompand_perform(t_int *w)
     return w+5;
 }
 
-float pvcompand_ampdb(float db)
+t_float pvcompand_ampdb(t_float db)
 {
-    float amp;
+    t_float amp;
     amp = pow((t_float)10.0, (t_float)(db/20.0)) ;
     return(amp);
 }

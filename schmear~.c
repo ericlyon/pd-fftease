@@ -84,7 +84,7 @@ void schmear_schmimp(t_schmear *x, t_symbol *msg, short argc, t_atom *argv)
 
 void schmear_threshold(t_schmear *x, t_floatarg t)
 {
-    x->threshold = (float)t;
+    x->threshold = (t_float)t;
 }
 
 void *schmear_new(t_symbol *s, int argc, t_atom *argv)

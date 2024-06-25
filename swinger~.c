@@ -9,7 +9,7 @@ static t_class *swinger_class;
 typedef struct _swinger
 {
     t_object x_obj;
-    float x_f;
+    t_float x_f;
     t_fftease *fft;
     t_fftease *fft2;
     short mute;

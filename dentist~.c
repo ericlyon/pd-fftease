@@ -9,7 +9,7 @@ static t_class *dentist_class;
 typedef struct _dentist
 {
     t_object x_obj;
-    float x_f;
+    t_float x_f;
     t_fftease *fft;
     short *bin_selection;
     short *last_bin_selection;
@@ -156,8 +156,8 @@ void *dentist_new(t_symbol *msg, short argc, t_atom *argv)
 
 void dentist_topfreq(t_dentist *x, t_floatarg f)
 {
-    float funda = x->funda;
-    float curfreq;
+    t_float funda = x->funda;
+    t_float curfreq;
     t_fftease *fft = x->fft;
     if(f < 50 || f > fft->R/2.0)
         return;
@@ -235,7 +235,7 @@ static void do_dentist(t_dentist *x)
     short *bin_selection = x->bin_selection;
     short *last_bin_selection = x->last_bin_selection;
     int N2 = fft->N2;
-    float sync = x->sync;
+    t_float sync = x->sync;
 
     fftease_fold(fft);
     fftease_rdft(fft,1);
@@ -243,7 +243,7 @@ static void do_dentist(t_dentist *x)
 
     if(frames_left > 0 && ramp_frames > 0) {
         // INTERPOLATE ACCORDING TO POSITION IN RAMP
-        oldfrac = (float) frames_left / (float) ramp_frames ;
+        oldfrac = (t_float) frames_left / (t_float) ramp_frames ;
         sync = newfrac = 1.0 - oldfrac;
         for( i = 0; i < N2 ; i++){
             if( (! bin_selection[i]) && (! last_bin_selection[i]) ){

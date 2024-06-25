@@ -78,12 +78,12 @@ void reanimator_tilde_setup(void)
 
 void reanimator_transpose(t_reanimator *x, t_floatarg tf)
 {
-    x->fft->P = (float) tf;
+    x->fft->P = (t_float) tf;
 }
 
 void reanimator_synthresh(t_reanimator *x, t_floatarg thresh)
 {
-    x->fft->synt = (float) thresh;
+    x->fft->synt = (t_float) thresh;
 }
 
 void reanimator_oscbank(t_reanimator *x, t_floatarg flag)
@@ -161,7 +161,7 @@ void reanimator_init(t_reanimator *x )
         return;
     }
     // sanity check here
-    x->tadv = (float)fft->D/(float)fft->R;
+    x->tadv = (t_float)fft->D/(t_float)fft->R;
     x->current_frame = framecount = 0;
     x->fpos = x->last_fpos = 0;
     x->total_frames =  x->sample_len / x->tadv;
@@ -208,7 +208,7 @@ static void do_reanimator(t_reanimator *x)
     int framecount = x->framecount;
     int total_frames = x->total_frames;
 
-    float threshold = x->threshold;
+    t_float threshold = x->threshold;
     int top_comparator_bin = x->top_comparator_bin ;
 
     t_float **framebank = x->framebank;
@@ -223,7 +223,7 @@ static void do_reanimator(t_reanimator *x)
     int matchframe = x->matchframe;
     int N = fft->N;
     int D = fft->D;
-    float rescale_inv;
+    t_float rescale_inv;
     /***********************************/
 
     if(total_frames <= 0)
@@ -245,7 +245,7 @@ static void do_reanimator(t_reanimator *x)
             fftease_fold(fft);
             fftease_rdft(fft,FFT_FORWARD);
             fftease_convert(fft);
-            sync = (float) framecount / (float) total_frames;
+            sync = (t_float) framecount / (t_float) total_frames;
 
             ampsum = 0;
             for(i = 0; i < N; i += 2 ){
@@ -276,7 +276,7 @@ static void do_reanimator(t_reanimator *x)
         if( fpos > 1 )
             fpos = 1;
         if( fpos != last_fpos ){
-            fframe =  fpos * (float) framecount ;
+            fframe =  fpos * (t_float) framecount ;
             last_fpos = fpos;
         }
 
@@ -445,9 +445,9 @@ t_int *reanimator_perform(t_int *w)
         for( i = 0; i < operationRepeat; i++ ){
             memcpy(input, input + D, (Nw - D) * sizeof(t_float));
             if(x->readme){
-                memcpy(input + (Nw - D), texture + (D * i), D * sizeof(float));
+                memcpy(input + (Nw - D), texture + (D * i), D * sizeof(t_float));
             } else {
-                memcpy(input + (Nw - D), driver + (D * i), D * sizeof(float));
+                memcpy(input + (Nw - D), driver + (D * i), D * sizeof(t_float));
             }
             do_reanimator(x);
             for ( j = 0; j < D; j++ ){ *MSPOutputVector++ = output[j] * mult; }
@@ -457,13 +457,13 @@ t_int *reanimator_perform(t_int *w)
     }
     else if( fft->bufferStatus == BIGGER_THAN_MSP_VECTOR ) {
         if(x->readme){
-            memcpy(internalInputVector + (operationCount * MSPVectorSize), texture, MSPVectorSize * sizeof(float));
+            memcpy(internalInputVector + (operationCount * MSPVectorSize), texture, MSPVectorSize * sizeof(t_float));
 
         } else {
 
-            memcpy(internalInputVector + (operationCount * MSPVectorSize), driver, MSPVectorSize * sizeof(float));
+            memcpy(internalInputVector + (operationCount * MSPVectorSize), driver, MSPVectorSize * sizeof(t_float));
         }
-        memcpy(MSPOutputVector, internalOutputVector + (operationCount * MSPVectorSize), MSPVectorSize * sizeof(float));
+        memcpy(MSPOutputVector, internalOutputVector + (operationCount * MSPVectorSize), MSPVectorSize * sizeof(t_float));
 
         operationCount = (operationCount + 1) % operationRepeat;
 

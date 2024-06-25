@@ -129,7 +129,7 @@ static void do_vacancy(t_vacancy *x)
     i,
 
     even, odd;
-    float
+    t_float
     useme,
     rms = 0.,
     a1, b1,

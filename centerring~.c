@@ -13,7 +13,7 @@ typedef struct _centerring
 {
 
     t_object x_obj;
-    float x_f;
+    t_float x_f;
     t_fftease *fft;
     int bufferLength;
     int recalc;
@@ -115,7 +115,7 @@ void centerring_init(t_centerring *x)
         return;
     }
 
-    x->frameR = (float) fft->R / (float) fft->D;
+    x->frameR = (t_float) fft->R / (t_float) fft->D;
 
     if(!initialized){
         x->mute = 0;
@@ -179,7 +179,7 @@ void centerring_randphases( t_centerring *x ) {
     int i;
 
     for (i=0; i < x->fft->N2; i++)
-        *((x->ringPhases)+i) = fftease_prand(&(x->seed)) * (float) (x->bufferLength);
+        *((x->ringPhases)+i) = fftease_prand(&(x->seed)) * (t_float) (x->bufferLength);
 
 }
 
@@ -258,7 +258,7 @@ t_int *centerring_perform(t_int *w)
     int D = fft->D;
     int Nw = fft->Nw;
     t_float *output = fft->output;
-    float mult = fft->mult ;
+    t_float mult = fft->mult ;
     int MSPVectorSize = fft->MSPVectorSize;
     t_float *internalInputVector = fft->internalInputVector;
     t_float *internalOutputVector = fft->internalOutputVector;

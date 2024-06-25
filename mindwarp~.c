@@ -11,7 +11,7 @@ static t_class *mindwarp_class;
 typedef struct _mindwarp
 {
     t_object x_obj;
-    float x_f;
+    t_float x_f;
     t_fftease *fft;
     t_float warpFactor;
     t_float shapeWidth;
@@ -122,7 +122,7 @@ static void do_mindwarp(t_mindwarp *x)
         shapeWidth = (int) x->shapeWidth,
         remainingWidth,
         newLength;
-    float
+    t_float
         cutoff = N2 * .9,
         filterMult = .00001,
         interpIncr,

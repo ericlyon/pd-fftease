@@ -10,7 +10,7 @@ static t_class *disarray_class;
 typedef struct _disarray
 {
     t_object x_obj;
-    float x_f;
+    t_float x_f;
     t_fftease *fft;
     t_float top_frequency;
     int *shuffle_in;

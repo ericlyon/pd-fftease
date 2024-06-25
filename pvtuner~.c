@@ -47,8 +47,8 @@ typedef struct _pvtuner
     t_float topfreq;
     t_float curfreq;
     // TUNING
-    float *pitchgrid;
-    float pbase;
+    t_float *pitchgrid;
+    t_float pbase;
     int scale_steps;
     short current_scale;
     short mute;
@@ -184,8 +184,8 @@ void pvtuner_init(t_pvtuner *x)
 
     if(!x->fft->initialized){
         x->mute = 0;
-        mem = (MAXTONES+1)*sizeof(float);
-        x->pitchgrid = (float *) calloc(mem,1);
+        mem = (MAXTONES+1)*sizeof(t_float);
+        x->pitchgrid = (t_float *) calloc(mem,1);
         x->pbase = BASE_FREQ;
         x->this_scale = (t_pvtuner_scale *) calloc(1,sizeof(t_pvtuner_scale));
         x->last_scale = (t_pvtuner_scale *) calloc(1,sizeof(t_pvtuner_scale));
@@ -200,7 +200,7 @@ void pvtuner_init(t_pvtuner *x)
     fftease_init(fft);
     if( x->fft->D && x->fft->R ){
         /*
-        x->interpolation_frames = x->interpolation_dur / ((float)x->fft->D / (float)x->fft->R);
+        x->interpolation_frames = x->interpolation_dur / ((t_float)x->fft->D / (t_float)x->fft->R);
         post("interpolation frames: %d", x->interpolation_frames);
         */
     } else {
@@ -384,7 +384,7 @@ t_int *pvtuner_perform(t_int *w)
     t_float *internalOutputVector = fft->internalOutputVector;
 
     if (x->mute) {
-        memset(MSPOutputVector, 0.0, MSPVectorSize * sizeof(float));
+        memset(MSPOutputVector, 0.0, MSPVectorSize * sizeof(t_float));
         return w+7;
     }
 
@@ -552,7 +552,7 @@ void pvtuner_diatonic( t_pvtuner *x ){
     s->scale_steps = 7;
     for( i = 1; i < 10; i++ ){
         for( j = 0; j < octsteps; j++ ){
-            s->pitchgrid[ i * octsteps + j] = s->pitchgrid[j] * pow(2.0,(float)i);
+            s->pitchgrid[ i * octsteps + j] = s->pitchgrid[j] * pow(2.0,(t_float)i);
         }
     }
     s->current_scale = DIATONIC ;
@@ -580,7 +580,7 @@ void pvtuner_minor( t_pvtuner *x ){
     pitchgrid[6] = x->pbase * (9./5.);
     for( i = 1; i < 10; i++ ){
         for( j = 0; j < octsteps; j++ ){
-            pitchgrid[ i * octsteps + j] = pitchgrid[j] * pow(2.0,(float)i);
+            pitchgrid[ i * octsteps + j] = pitchgrid[j] * pow(2.0,(t_float)i);
         }
     }
     s->current_scale = MINOR;
@@ -605,7 +605,7 @@ void pvtuner_pentatonic( t_pvtuner *x ){
     pitchgrid[4] = x->pbase * (27./16.);
     for( i = 1; i < 10; i++ ){
         for( j = 0; j < octsteps; j++ ){
-            pitchgrid[ i * octsteps + j] = pitchgrid[j] * pow(2.0,(float)i);
+            pitchgrid[ i * octsteps + j] = pitchgrid[j] * pow(2.0,(t_float)i);
         }
     }
     s->current_scale = PENTATONIC;
@@ -629,12 +629,12 @@ void pvtuner_eq12( t_pvtuner *x ){
     // now refill this scale
     pitchgrid[0] = pbase;
     for( i = 0; i < octsteps; i++ ){
-        expon = (float) i / (float) octsteps;
+        expon = (t_float) i / (t_float) octsteps;
         pitchgrid[i] = pbase * pow(2.0,expon);
     }
     for( i = 1; i < 10; i++ ){
         for( j = 0; j < octsteps; j++ ){
-            pitchgrid[ i * octsteps + j] = pitchgrid[j] * pow(2.0,(float)i);
+            pitchgrid[ i * octsteps + j] = pitchgrid[j] * pow(2.0,(t_float)i);
         }
     }
     s->current_scale = EQ12;
@@ -661,7 +661,7 @@ void pvtuner_major_added_sixth( t_pvtuner *x ){
 
     for( i = 1; i < 10; i++ ){
         for( j = 0; j < octsteps; j++ ){
-            pitchgrid[ i * octsteps + j] = pitchgrid[j] * pow(2.0,(float)i);
+            pitchgrid[ i * octsteps + j] = pitchgrid[j] * pow(2.0,(t_float)i);
         }
     }
     s->current_scale = MAJOR_ADDED_SIXTH;
@@ -673,7 +673,7 @@ void pvtuner_major_added_sixth( t_pvtuner *x ){
 
 void pvtuner_minor_added_sixth( t_pvtuner *x ){
     int i, j;
-    // float *pitchgrid = x->pitchgrid;
+    // t_float *pitchgrid = x->pitchgrid;
     t_float pbase = x->pbase;
     t_pvtuner_scale *s = x->this_scale;
     t_float *pitchgrid = x->this_scale->pitchgrid;
@@ -690,7 +690,7 @@ void pvtuner_minor_added_sixth( t_pvtuner *x ){
 
     for( i = 1; i < 10; i++ ){
         for( j = 0; j < octsteps; j++ ){
-            pitchgrid[ i * octsteps + j] = pitchgrid[j] * pow(2.0,(float)i);
+            pitchgrid[ i * octsteps + j] = pitchgrid[j] * pow(2.0,(t_float)i);
         }
     }
     s->current_scale = MINOR_ADDED_SIXTH;
@@ -718,7 +718,7 @@ void pvtuner_major_seventh_chord( t_pvtuner *x ){
 
     for( i = 1; i < 10; i++ ){
         for( j = 0; j < scale_steps; j++ ){
-            pitchgrid[ i * scale_steps + j] = pitchgrid[j] * pow(2.0,(float)i);
+            pitchgrid[ i * scale_steps + j] = pitchgrid[j] * pow(2.0,(t_float)i);
         }
     }
     s->current_scale = MAJOR_SEVENTH_CHORD;
@@ -746,7 +746,7 @@ void pvtuner_minor_seventh_chord( t_pvtuner *x ){
 
     for( i = 1; i < 10; i++ ){
         for( j = 0; j < scale_steps; j++ ){
-            pitchgrid[ i * scale_steps + j] = pitchgrid[j] * pow(2.0,(float)i);
+            pitchgrid[ i * scale_steps + j] = pitchgrid[j] * pow(2.0,(t_float)i);
         }
     }
     s->current_scale = MINOR_SEVENTH_CHORD;
@@ -774,7 +774,7 @@ void pvtuner_dominant_seventh_chord( t_pvtuner *x ){
 
     for( i = 1; i < 10; i++ ){
         for( j = 0; j < scale_steps; j++ ){
-            pitchgrid[ i * scale_steps + j] = pitchgrid[j] * pow(2.0,(float)i);
+            pitchgrid[ i * scale_steps + j] = pitchgrid[j] * pow(2.0,(t_float)i);
         }
     }
     s->current_scale = DOMINANT_SEVENTH_CHORD;
@@ -841,7 +841,7 @@ void pvtuner_eq8( t_pvtuner *x ){
 
     for( i = 1; i < 10; i++ ){
         for( j = 0; j < octsteps; j++ ){
-            pitchgrid[ i * octsteps + j] = pitchgrid[j] * pow(2.0,(float)i);
+            pitchgrid[ i * octsteps + j] = pitchgrid[j] * pow(2.0,(t_float)i);
         }
     }
     s->current_scale = EQ8;
@@ -871,7 +871,7 @@ void pvtuner_pentaclust( t_pvtuner *x ){
 
     for( i = 1; i < 10; i++ ){
         for( j = 0; j < scale_steps; j++ ){
-            pitchgrid[ i * scale_steps + j] = pitchgrid[j] * pow(2.0,(float)i);
+            pitchgrid[ i * scale_steps + j] = pitchgrid[j] * pow(2.0,(t_float)i);
         }
     }
     s->current_scale = PENTACLUST;
@@ -904,7 +904,7 @@ void pvtuner_quarterclust( t_pvtuner *x ){
 
     for( i = 1; i < 10; i++ ){
         for( j = 0; j < scale_steps; j++ ){
-            pitchgrid[ i * scale_steps + j] = pitchgrid[j] * pow(2.0,(float)i);
+            pitchgrid[ i * scale_steps + j] = pitchgrid[j] * pow(2.0,(t_float)i);
         }
     }
     s->current_scale = QUARTERCLUST;
@@ -934,7 +934,7 @@ void pvtuner_eq5( t_pvtuner *x ){
 
     for( i = 1; i < 10; i++ ){
         for( j = 0; j < scale_steps; j++ ){
-            pitchgrid[ i * scale_steps + j] = pitchgrid[j] * pow(2.0,(float)i);
+            pitchgrid[ i * scale_steps + j] = pitchgrid[j] * pow(2.0,(t_float)i);
         }
     }
     s->current_scale = EQ5;
@@ -963,7 +963,7 @@ void pvtuner_pelog( t_pvtuner *x ){
 
     for( i = 1; i < 10; i++ ){
         for( j = 0; j < scale_steps; j++ ){
-            pitchgrid[ i * scale_steps + j] = pitchgrid[j] * pow(2.0,(float)i);
+            pitchgrid[ i * scale_steps + j] = pitchgrid[j] * pow(2.0,(t_float)i);
         }
     }
     s->current_scale = PELOG;
@@ -994,7 +994,7 @@ void pvtuner_slendro( t_pvtuner *x ){
 
     for( i = 1; i < 10; i++ ){
         for( j = 0; j < scale_steps; j++ ){
-            pitchgrid[ i * scale_steps + j] = pitchgrid[j] * pow(2.0,(float)i);
+            pitchgrid[ i * scale_steps + j] = pitchgrid[j] * pow(2.0,(t_float)i);
         }
     }
     s->current_scale = SLENDRO;
@@ -1023,7 +1023,7 @@ void pvtuner_eastern( t_pvtuner *x ){
 
     for( i = 1; i < 10; i++ ){
         for( j = 0; j < x->scale_steps; j++ ){
-            pitchgrid[ i * octsteps + j] = pitchgrid[j] * pow(2.0,(float)i);
+            pitchgrid[ i * octsteps + j] = pitchgrid[j] * pow(2.0,(t_float)i);
         }
     }
     s->current_scale = EASTERN ;

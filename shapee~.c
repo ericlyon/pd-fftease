@@ -9,7 +9,7 @@ static t_class *shapee_class;
 typedef struct _shapee
 {
     t_object x_obj;
-    float x_f;
+    t_float x_f;
     t_fftease *fft,*fft2;
     int widthConnected;
     t_float shapeWidth;
@@ -164,7 +164,7 @@ static void do_shapee(t_shapee *x)
 
     for ( i=0; i < N; i += shapeWidth << 1 ) {
 
-        float       amplSum = 0.,
+        t_float       amplSum = 0.,
         freqSum = 0.,
         factor;
 
@@ -200,7 +200,7 @@ static void do_shapee(t_shapee *x)
         int         bindex = (N2 - remainingWidth) << 1;
 
 
-        float       amplSum = 0.,
+        t_float       amplSum = 0.,
         freqSum = 0.,
         factor;
 

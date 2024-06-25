@@ -342,7 +342,7 @@ t_int *residency_buffer_perform(t_int *w)
     int Nw = fft->Nw;
     t_float *input = fft->input;
     t_float *output = fft->output;
-    float mult = fft->mult;
+    t_float mult = fft->mult;
 
 
     if( fft->obank_flag )
@@ -438,12 +438,12 @@ void residency_buffer_playthrough(t_residency_buffer *x, t_floatarg toggle)
 
 void residency_buffer_transpose(t_residency_buffer *x, t_floatarg tf)
 {
-    x->fft->P = (float) tf;
+    x->fft->P = (t_float) tf;
 }
 
 void residency_buffer_synthresh(t_residency_buffer *x, t_floatarg thresh)
 {
-    x->fft->synt = (float) thresh;
+    x->fft->synt = (t_float) thresh;
 }
 
 void residency_buffer_oscbank(t_residency_buffer *x, t_floatarg flag)

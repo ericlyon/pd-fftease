@@ -11,7 +11,7 @@ static t_class *cavoc27_class;
 typedef struct _cavoc27
 {
     t_object x_obj;
-    float x_f;
+    t_float x_f;
     t_fftease *fft;
     t_float *ichannel; //for interpolation
     t_float *tmpchannel; // for spectrum capture
@@ -101,7 +101,7 @@ void cavoc27_tilde_setup(void)
 void cavoc27_rand_set_rule(t_cavoc27 *x)
 {
     int i;
-    float rval;
+    t_float rval;
     for( i = 0; i < 27; i++ ){
         rval = fftease_randf(0.0,1.0);
         if( rval < .333 )
@@ -143,7 +143,7 @@ void cavoc27_retune(t_cavoc27 *x, t_floatarg min, t_floatarg max)
     if( max > 2.0 )
         max = 2.0;
     for( i = 1; i < fft->N + 1; i += 2 ){
-         last_frame[i] = tmpchannel[i] = fft->c_fundamental * (float) (i / 2) * fftease_randf(min, max);
+         last_frame[i] = tmpchannel[i] = fft->c_fundamental * (t_float) (i / 2) * fftease_randf(min, max);
     }
 
 }
@@ -151,7 +151,7 @@ void cavoc27_retune(t_cavoc27 *x, t_floatarg min, t_floatarg max)
 void cavoc27_transpose (t_cavoc27 *x, t_floatarg pfac)
 {
     t_fftease *fft = x->fft;
-    fft->P = (float) pfac;
+    fft->P = (t_float) pfac;
     fft->pitch_increment = fft->P*fft->L/fft->R;
 }
 
@@ -272,7 +272,7 @@ void cavoc27_init(t_cavoc27 *x)
         pd_error(0, "cavoc27~: zero sampling rate!");
         return;
     }
-    x->frame_duration = (float)fft->D/(float) fft->R;
+    x->frame_duration = (t_float)fft->D/(t_float) fft->R;
     x->hold_frames = (int) ( (x->hold_time/1000.0)/x->frame_duration);
     x->frames_left = x->hold_frames;
     x->trigger_value = 0;
@@ -313,7 +313,7 @@ void cavoc27_init(t_cavoc27 *x)
 void cavoc27_rand_set_spectrum(t_cavoc27 *x)
 {
     int i;
-    float rval;
+    t_float rval;
     t_fftease *fft = x->fft;
     t_float *channel = x->tmpchannel;
     //set spectrum
@@ -331,7 +331,7 @@ void cavoc27_rand_set_spectrum(t_cavoc27 *x)
         } else {
             channel[ i * 2 ] = 0;
         }
-        channel[ i * 2 + 1 ] = fft->c_fundamental * (float) i * fftease_randf(.9,1.1);
+        channel[ i * 2 + 1 ] = fft->c_fundamental * (t_float) i * fftease_randf(.9,1.1);
     }
 }
 
@@ -402,7 +402,7 @@ static void do_cavoc27(t_cavoc27 *x)
         x->external_trigger = trigger = 0 ;
     }
     if( interpolate_flag && ! x->freeze){
-        frak = 1.0 - ((float) frames_left / (float) hold_frames);
+        frak = 1.0 - ((t_float) frames_left / (t_float) hold_frames);
 
         for( i = 0; i <N+2; i += 2 ){
             ichannel[i] = last_frame[i] + frak * ( tmpchannel[i] - last_frame[i] );

@@ -9,7 +9,7 @@ static t_class *cavoc_class;
 typedef struct _cavoc
 {
     t_object x_obj;
-    float x_f;
+    t_float x_f;
     t_fftease *fft;
     t_float frame_duration;
     int max_bin;
@@ -44,7 +44,7 @@ static void cavoc_dsp(t_cavoc *x, t_signal **sp);
 static t_int *cavoc_perform(t_int *w);
 static void cavoc_free( t_cavoc *x );
 static int cavoc_apply_rule( short left, short right, short center, short *rule);
-static float cavoc_randf(float min, float max);
+static t_float cavoc_randf(t_float min, t_float max);
 static void cavoc_rule (t_cavoc *x, t_symbol *msg, short argc, t_atom *argv);
 static void cavoc_retune (t_cavoc *x, t_floatarg min, t_floatarg max);
 static void cavoc_mute (t_cavoc *x, t_floatarg toggle);
@@ -55,7 +55,7 @@ static void cavoc_topfreq(t_cavoc *x, t_floatarg tf);
 static void cavoc_oscbank(t_cavoc *x, t_floatarg flag);
 static void cavoc_density(t_cavoc *x, t_floatarg f);
 static void cavoc_hold_time(t_cavoc *x, t_floatarg f);
-static void build_spectrum(t_cavoc *x, float min, float max);
+static void build_spectrum(t_cavoc *x, t_float min, t_float max);
 static void cavoc_bottomfreq(t_cavoc *x, t_floatarg bf);
 static void cavoc_fftinfo( t_cavoc *x );
 
@@ -141,7 +141,7 @@ void cavoc_retune(t_cavoc *x, t_floatarg min, t_floatarg max)
         min = 0.1;
     if( max > 2.0 )
         max = 2.0;
-    build_spectrum(x, (float)min, (float)max);
+    build_spectrum(x, (t_float)min, (t_float)max);
 }
 
 
@@ -216,7 +216,7 @@ void cavoc_init(t_cavoc *x)
         pd_error(0, "zero sampling rate!");
         return;
     }
-    x->frame_duration = (float)fft->D/(float) fft->R;
+    x->frame_duration = (t_float)fft->D/(t_float) fft->R;
     if(x->hold_time <= 0.0)
         x->hold_time = 150;
     x->hold_frames = (int) ((x->hold_time * 0.001) / x->frame_duration) ;
@@ -254,10 +254,10 @@ void cavoc_init(t_cavoc *x)
 }
 
 
-void build_spectrum(t_cavoc *x, float min, float max)
+void build_spectrum(t_cavoc *x, t_float min, t_float max)
 {
 t_fftease *fft = x->fft;
-float basefreq;
+t_float basefreq;
 int i;
     x->set_count = 0;
     for(i = 0; i < fft->N2 + 1; i++){
@@ -267,7 +267,7 @@ int i;
         } else {
             x->amps[i] = 0;
         }
-        basefreq = x->bottomfreq + (( (x->topfreq - x->bottomfreq) / (float) fft->N2 ) * (float) i );
+        basefreq = x->bottomfreq + (( (x->topfreq - x->bottomfreq) / (t_float) fft->N2 ) * (t_float) i );
         x->freqs[i] = basefreq * cavoc_randf(min,max);
     }
     for( i = 0; i < fft->N2 + 1; i++ ){
@@ -284,7 +284,7 @@ void cavoc_topfreq(t_cavoc *x, t_floatarg tf)
         pd_error(0, "%s: top frequency out of range: %f",OBJECT_NAME,  tf);
         return;
     }
-    x->topfreq = (float) tf;
+    x->topfreq = (t_float) tf;
     build_spectrum(x, 0.9, 1.1);
 }
 
@@ -294,7 +294,7 @@ void cavoc_bottomfreq(t_cavoc *x, t_floatarg bf)
         pd_error(0, "%s: bottom frequency out of range: %f",OBJECT_NAME,  bf);
         return;
     }
-    x->bottomfreq = (float) bf;
+    x->bottomfreq = (t_float) bf;
     build_spectrum(x, 0.9, 1.1);
 }
 
@@ -369,7 +369,7 @@ t_int *cavoc_perform(t_int *w)
     int D = fft->D;
     int Nw = fft->Nw;
     t_float *output = fft->output;
-    float mult = fft->mult ;
+    t_float mult = fft->mult ;
     int operationRepeat = fft->operationRepeat;
     int operationCount = fft->operationCount;
     t_float *internalOutputVector = fft->internalOutputVector;
@@ -401,7 +401,7 @@ t_int *cavoc_perform(t_int *w)
         }
     }
     else if( fft->bufferStatus == BIGGER_THAN_MSP_VECTOR ) {
-        memcpy(MSPOutputVector, internalOutputVector + (operationCount * MSPVectorSize), MSPVectorSize * sizeof(float));
+        memcpy(MSPOutputVector, internalOutputVector + (operationCount * MSPVectorSize), MSPVectorSize * sizeof(t_float));
         operationCount = (operationCount + 1) % operationRepeat;
         if( operationCount == 0 ) {
             do_cavoc(x);
@@ -440,10 +440,10 @@ int cavoc_apply_rule(short left, short right, short center, short *rule){
     return 0;
 }
 
-float cavoc_randf(float min, float max)
+t_float cavoc_randf(t_float min, t_float max)
 {
-    float randv;
-    randv = (float) (rand() % 32768) / 32768.0 ;
+    t_float randv;
+    randv = (t_float) (rand() % 32768) / 32768.0 ;
     return (min + ((max-min) * randv))  ;
 }
 

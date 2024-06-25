@@ -8,7 +8,7 @@ static t_class *morphine_class;
 
 typedef struct _pickme {
     int     bin;
-    float   value;
+    t_float   value;
 } t_pickme;
 
 typedef struct _morphine
@@ -205,20 +205,20 @@ static void do_morphine(t_morphine *x)
     /* calculate our morphIndex from an exponential function based on exponScale */
 
     if (exponScale == 0.)
-        lookupIndex = (int) (( (float) N2 ) * morphIndex);
+        lookupIndex = (int) (( (t_float) N2 ) * morphIndex);
 
     else {
 
         if ( morphIndex < .5 ) {
 
-            lookupIndex = (int) ( ((float) N2) * ((
+            lookupIndex = (int) ( ((t_float) N2) * ((
                                                    (1. - exp( exponScale * morphIndex * 2. )) /
                                                    (1. - exp( exponScale )) ) * .5) );
         }
 
         else {
 
-            lookupIndex = (int) ( ((float) N2) * ( .5 +
+            lookupIndex = (int) ( ((t_float) N2) * ( .5 +
                                                   (( (1. - exp( -exponScale * (morphIndex - .5) * 2. )) /
                                                     (1. - exp( -exponScale )) ) * .5) ) );
         }

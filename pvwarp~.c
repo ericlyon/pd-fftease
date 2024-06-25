@@ -41,7 +41,7 @@ static void *pvwarp_new(t_symbol *s, int argc, t_atom *argv);
 static void pvwarp_mute(t_pvwarp *x, t_floatarg state);
 static void pvwarp_autofunc(t_pvwarp *x, t_floatarg minval, t_floatarg maxval);
 static void pvwarp_free( t_pvwarp *x );
-static int freq_to_bin( float target, float fundamental );
+static int freq_to_bin( t_float target, t_float fundamental );
 static void update_warp_function( t_pvwarp *x ) ;
 static void pvwarp_init(t_pvwarp *x);
 static void pvwarp_bottomfreq(t_pvwarp *x, t_floatarg f);
@@ -109,12 +109,12 @@ void update_warp_function( t_pvwarp *x )
     diff = warpfac1 - 1.0 ;
     bin_extent = hibin - midbin ;
     for( i = midbin, j = 0; i < hibin; i++, j++ ){
-        deviation = diff * ((float)(bin_extent - j) / (float) bin_extent );
+        deviation = diff * ((t_float)(bin_extent - j) / (t_float) bin_extent );
         warpfunc[ i ] += deviation ;
     }
     bin_extent = midbin - lobin ;
     for( i = midbin, j = 0; i > lobin; i--, j++ ){
-        deviation = diff * ((float)(bin_extent - j) / (float) bin_extent );
+        deviation = diff * ((t_float)(bin_extent - j) / (t_float) bin_extent );
         warpfunc[ i ] += deviation ;
     }
 
@@ -136,12 +136,12 @@ void update_warp_function( t_pvwarp *x )
     diff = warpfac2 - 1.0 ;
     bin_extent = hibin - midbin ;
     for( i = midbin, j = 0; i < hibin; i++, j++ ){
-        deviation = diff * ((float)(bin_extent - j) / (float) bin_extent );
+        deviation = diff * ((t_float)(bin_extent - j) / (t_float) bin_extent );
         warpfunc[ i ] += deviation ;
     }
     bin_extent = midbin - lobin ;
     for( i = midbin, j = 0; i > lobin; i--, j++ ){
-        deviation = diff * ((float)(bin_extent - j) / (float) bin_extent );
+        deviation = diff * ((t_float)(bin_extent - j) / (t_float) bin_extent );
         warpfunc[ i ] += deviation ;
     }
 
@@ -157,8 +157,8 @@ void pvwarp_autofunc(t_pvwarp *x, t_floatarg minval, t_floatarg maxval)
     int N2 = x->fft->N2;
     t_float *warpfunc = x->warpfunc;
 
-    minpoints = 0.05 * (float) N2;
-    maxpoints = 0.25 * (float) N2;
+    minpoints = 0.05 * (t_float) N2;
+    maxpoints = 0.25 * (t_float) N2;
     if( minval > 1000.0 || minval < .001 ){
         minval = 0.5;
     }
@@ -175,7 +175,7 @@ void pvwarp_autofunc(t_pvwarp *x, t_floatarg minval, t_floatarg maxval)
             segpoints = N2 - pointcount;
         }
         for( i = 0; i < segpoints; i++ ){
-            m2 = (float)i / (float) segpoints ;
+            m2 = (t_float)i / (t_float) segpoints ;
             m1 = 1.0 - m2;
             warpfunc[ pointcount + i ] = m1 * lastval + m2 * target;
         }
@@ -356,7 +356,7 @@ t_int *pvwarp_perform(t_int *w)
     } else if (f > 1.0 ){
         f = 1.0;
     }
-    x->funcoff = (int) (f * (float) (N2 - 1));
+    x->funcoff = (int) (f * (t_float) (N2 - 1));
     fft->P = *in8 ;
     fft->synt = *in9 ;
 
@@ -411,9 +411,9 @@ t_int *pvwarp_perform(t_int *w)
 }
 
 
-int freq_to_bin( float target, float fundamental ){
-    float lastf = 0.0;
-    float testf = 0.0;
+int freq_to_bin( t_float target, t_float fundamental ){
+    t_float lastf = 0.0;
+    t_float testf = 0.0;
     int thebin = 0;
     while( testf < target ){
         ++thebin;

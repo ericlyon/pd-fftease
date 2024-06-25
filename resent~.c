@@ -160,7 +160,7 @@ void resent_setphase( t_resent *x,  t_floatarg phase)
         phase = 0. ;
     if( phase > 1. )
         phase = 1.;
-    scaled_phase = phase * (float) x->framecount ;
+    scaled_phase = phase * (t_float) x->framecount ;
     for( i = 0; i < fft->N2; i++ ){
         x->frame_phase[i] = scaled_phase ;
     }
@@ -181,7 +181,7 @@ void resent_addphase( t_resent *x,  t_floatarg phase )
         phase = 0. ;
     if( phase > 1. )
         phase = 1.;
-    scaled_phase = phase * (float) framecount ;
+    scaled_phase = phase * (t_float) framecount ;
     for( i = 0; i < fft->N2; i++ ){
         frame_phase[i] += scaled_phase ;
         while( frame_phase[i] < 0 )
@@ -283,7 +283,7 @@ void resent_init(t_resent *x)
 
     x->current_frame = x->framecount = 0;
     x->fpos = x->last_fpos = 0;
-    x->tadv = (float)fft->D/(float)fft->R;
+    x->tadv = (t_float)fft->D/(t_float)fft->R;
     if(x->duration < 0.1){
         x->duration = 0.1;
     }
@@ -550,9 +550,9 @@ void resent_linephase(t_resent *x, t_symbol *msg, short argc, t_atom *argv)
 {
     t_fftease *fft = x->fft;
     int bin1, bin2;
-    float phase1, phase2, bindiff;
+    t_float phase1, phase2, bindiff;
     int i;
-    float m1, m2;
+    t_float m1, m2;
 
     bin1 = (int) atom_getfloatarg(0, argc, argv);
     phase1 = atom_getfloatarg(1, argc, argv) * x->framecount;
@@ -569,7 +569,7 @@ void resent_linephase(t_resent *x, t_symbol *msg, short argc, t_atom *argv)
         return;
     }
     for( i = bin1; i < bin2; i++ ){
-        m2 = (float) i / bindiff;
+        m2 = (t_float) i / bindiff;
         m1 = 1. - m2;
         x->frame_phase[i] = m1 * phase1 + m2 * phase2;
     }
@@ -579,7 +579,7 @@ void resent_randphase(t_resent *x, t_symbol *msg, short argc, t_atom *argv)
 {
     t_fftease *fft = x->fft;
 
-    float minphase, maxphase;
+    t_float minphase, maxphase;
     int i;
     int framecount = x->framecount;
 
@@ -593,7 +593,7 @@ void resent_randphase(t_resent *x, t_symbol *msg, short argc, t_atom *argv)
         maxphase = 1.0;
 
     for( i = 0; i < fft->N2; i++ ){
-        x->frame_phase[i] = (int) (fftease_randf( minphase, maxphase ) * (float) (framecount - 1) ) ;
+        x->frame_phase[i] = (int) (fftease_randf( minphase, maxphase ) * (t_float) (framecount - 1) ) ;
     }
 }
 
@@ -601,7 +601,7 @@ void resent_randspeed(t_resent *x, t_symbol *msg, short argc, t_atom *argv)
 {
     t_fftease *fft = x->fft;
 
-    float minspeed, maxspeed;
+    t_float minspeed, maxspeed;
     int i;
 
 
@@ -617,9 +617,9 @@ void resent_linespeed(t_resent *x, t_symbol *msg, short argc, t_atom *argv)
 {
     t_fftease *fft = x->fft;
     int bin1, bin2;
-    float speed1, speed2, bindiff;
+    t_float speed1, speed2, bindiff;
     int i;
-    float m1, m2;
+    t_float m1, m2;
 
     bin1 = (int) atom_getfloatarg(0, argc, argv);
     speed1 = atom_getfloatarg(1, argc, argv);
@@ -636,7 +636,7 @@ void resent_linespeed(t_resent *x, t_symbol *msg, short argc, t_atom *argv)
         return;
     }
     for( i = bin1; i < bin2; i++ ){
-        m2 = (float) i / bindiff;
+        m2 = (t_float) i / bindiff;
         m1 = 1. - m2;
         x->frame_incr[i] = m1 * speed1 + m2 * speed2;
     }
