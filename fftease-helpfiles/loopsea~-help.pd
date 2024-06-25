@@ -66,7 +66,7 @@
 #X connect 23 0 21 0;
 #X connect 24 0 11 0;
 #X restore 234 240 pd speed-and-phase;
-#N canvas 942 775 672 504 oscbank 1;
+#N canvas 942 775 672 504 oscbank 0;
 #X msg 103 144 oscbank \$1;
 #X obj 103 96 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
@@ -143,7 +143,7 @@ factor;
 #X text 18 94 [loopsea~] sets a loop for each bin in a stored series
 of FFT frames., f 71;
 #X obj 300 520 vu 15 80 empty empty -1 -8 0 10 -66577 -1 0 0;
-#N canvas 1084 1068 450 300 init 1;
+#N canvas 1084 1068 450 300 init 0;
 #X obj 150 35 loadbang;
 #X msg 150 85 \; loopsea-transpose 1 \; loopsea-gain-boost 1;
 #X connect 0 0 1 0;
