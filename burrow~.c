@@ -113,11 +113,11 @@ void *burrow_new(t_symbol *s, int argc, t_atom *argv)
     fft2->N = FFTEASE_DEFAULT_FFTSIZE;
     fft2->overlap = FFTEASE_DEFAULT_OVERLAP;
     fft2->winfac = FFTEASE_DEFAULT_WINFAC;
-    
+
     // additional initializations (which may be reset when DACs are turned on)
     fft2->MSPVectorSize = fft->MSPVectorSize = sys_getblksize();
     fft2->R = fft->R = sys_getsr();
-    
+
     x->mute = 0;
     x->invert = 0;
     if(argc > 0){ fft->N = fft2->N = (int) atom_getfloatarg(0, argc, argv); }

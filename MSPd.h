@@ -11,5 +11,3 @@
 #ifndef TWOPI
 #define TWOPI 6.2831853072
 #endif
-
-

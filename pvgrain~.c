@@ -203,7 +203,7 @@ void pvgrain_free(t_pvgrain *x)
     }
     fftease_free(x->fft);
     free(x->fft);
-    
+
 }
 
 static void do_pvgrain(t_pvgrain *x)

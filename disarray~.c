@@ -78,7 +78,7 @@ void switch_count (t_disarray *x, t_floatarg i)
         i = x->fft->N2;
     }
     */
-    
+
     // introduces potential bug of not checking for big numbers - put test into DSP
     x->shuffle_count = i;
 }

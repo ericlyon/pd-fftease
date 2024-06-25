@@ -147,11 +147,11 @@ static void do_mindwarp(t_mindwarp *x)
 
     interpIncr = (t_float) N2 / (t_float) newLength;
     interpPhase = 0.;
-    
+
     // copy from incoming FFT channel to a larger channel, allowing for spectral spread
-    
+
     memcpy(channelOne, fft->channel, (N+2) * sizeof(t_float));
-    
+
     // zero pad the larger channel
 
     for(i = N + 2; i < (2 * N) + 2; i++){
@@ -249,7 +249,7 @@ static void do_mindwarp(t_mindwarp *x)
     }
 
     // copy from temporary channel back to working FFT channel
-    
+
     memcpy(fft->channel, channelOne, (N+2) * sizeof(t_float));
 
 

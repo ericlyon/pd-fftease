@@ -161,7 +161,7 @@ void loopsea_setloops(t_loopsea *x, t_floatarg minloop, t_floatarg maxloop)
     long *end_frames = x->end_frames;
     t_fftease *fft = x->fft;
     t_float *frame_phase = x->frame_phase;
-    
+
     // convert ms. to frames for min and max loop size
 
     minframes = (minloop/1000.0) / x->tadv;
@@ -238,7 +238,7 @@ void loopsea_init(t_loopsea *x)
         x->tbank = (t_float *) realloc(x->tbank, fft->N2 * sizeof(t_float));
         x->start_frames = (long *) realloc(x->start_frames, fft->N2 * sizeof(long));
         x->end_frames = (long *) realloc(x->end_frames, fft->N2 * sizeof(long));
-        
+
         for(i = 0; i < x->last_framecount; i++){
             free(x->loveboat[i]) ;
         }
@@ -341,7 +341,7 @@ static void do_loopsea(t_loopsea *x)
             }
             //possible bug if increment is less than 0.0
             iphase2 = (iphase1 + 1) % framecount;
-            
+
             // only interpolate if the fraction is greater than epsilon 0.0001
             if(frak < 0.0001 ){
                 channel[amp] = x->loveboat[iphase1][amp];
@@ -425,7 +425,7 @@ t_int *loopsea_perform(t_int *w)
         x->restart_loops_flag = 0;
     }
 
-    
+
     if( fft->bufferStatus == EQUAL_TO_MSP_VECTOR ){
         memcpy(input, input + D, (Nw - D) * sizeof(t_float));
         memcpy(input + (Nw - D), MSPInputVector, D * sizeof(t_float));

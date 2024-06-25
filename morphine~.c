@@ -87,7 +87,7 @@ void quicksort(t_pickme *a,int first,int last)
         pivot=first;
         i=first;
         j=last;
-        
+
         while(i<j){
             while(a[i].value <= a[pivot].value && i < last)
                 i++;
