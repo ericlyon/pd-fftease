@@ -9,7 +9,7 @@ static t_class *leaker_class;
 typedef struct _leaker
 {
     t_object x_obj;
-    float x_f;
+    t_float x_f;
     t_fftease *fft;
     t_fftease *fft2;
     int *sieve;
@@ -215,7 +215,7 @@ t_int *leaker_perform(t_int *w)
     t_float mult = fft->mult;
     int N2 = fft->N2;
 
-    x->fade_value = *fade_value * (float) N2;
+    x->fade_value = *fade_value * (t_float) N2;
 
     if(x->mute){
         for(i=0; i < MSPVectorSize; i++){ MSPOutputVector[i] = 0.0; }

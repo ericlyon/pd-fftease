@@ -9,7 +9,7 @@ static t_class *disarrain_class;
 typedef struct _disarrain
 {
     t_object x_obj;
-    float x_f;
+    t_float x_f;
     t_fftease *fft;
     t_float *last_channel;
     t_float *composite_channel;
@@ -28,7 +28,7 @@ typedef struct _disarrain
     int interpolation_frames; // number of frames to interpolate
     int frame_countdown; // keep track of position in interpolation
     int perform_method;// 0 for lean, 1 for full conversion
-    float ival;
+    t_float ival;
     short lock;// lock for switching mapping arrays, but not used now
     short force_fade; // new fadetime set regardless of situation
     short force_switch;// binds new distribution to change of bin count
@@ -155,7 +155,7 @@ void disarrain_init(t_disarrain *x)
     }
     reset_shuffle(x); // set shuffle lookup
     copy_shuffle_array(x);// copy it to the last lookup (for interpolation)
-    x->frame_duration = (float) D / (float) R;
+    x->frame_duration = (t_float) D / (t_float) R;
     x->interpolation_frames = x->interpolation_duration / x->frame_duration;
     x->frame_countdown = 0;
     x->shuffle_count = 0;
@@ -176,7 +176,7 @@ void disarrain_force_switch(t_disarrain *x, t_floatarg f)
 void disarrain_fadetime (t_disarrain *x, t_floatarg f)
 {
     int frames;
-//    float duration;
+//    t_float duration;
 
     if(f > 0.0){
         x->interpolation_duration = f * 0.001;
@@ -277,7 +277,7 @@ static void do_disarrain(t_disarrain *x)
     int     i,j;
     int max = x->max_bin;
     int temp, p1, p2;
-    float tmp;
+    t_float tmp;
     int *shuffle_mapping = x->shuffle_mapping;
     int shuffle_count = x->shuffle_count;
     int *last_shuffle_mapping = x->last_shuffle_mapping;
@@ -285,7 +285,7 @@ static void do_disarrain(t_disarrain *x)
     int last_shuffle_count = x->last_shuffle_count;
     int frame_countdown = x->frame_countdown; // will read from variable
     int interpolation_frames = x->interpolation_frames;
-    float ival = x->ival;
+    t_float ival = x->ival;
     int new_shuffle_count = x->new_shuffle_count;
 
 
@@ -366,7 +366,7 @@ static void do_disarrain(t_disarrain *x)
     }
     // test only
     else if( frame_countdown > 0 ){
-        ival = (float)frame_countdown/(float)interpolation_frames;
+        ival = (t_float)frame_countdown/(t_float)interpolation_frames;
         // copy current frame to lastframe
         for(j = 0; j < N; j+=2){
             last_channel[j] = channel[j];
@@ -495,8 +495,8 @@ t_int *disarrain_perform(t_int *w)
 
 void interpolate_frames_to_channel(t_disarrain *x)
 {
-    float ival;
-    float tmp;
+    t_float ival;
+    t_float tmp;
     int i,j;
     int frame_countdown = x->frame_countdown;
     int interpolation_frames = x->interpolation_frames;
@@ -506,12 +506,10 @@ void interpolate_frames_to_channel(t_disarrain *x)
     int shuffle_count = x->shuffle_count;
     int *last_shuffle_mapping = x->last_shuffle_mapping;
     int last_shuffle_count = x->last_shuffle_count;
-    int local_max_bins;
     int N = x->fft->N;
 
     ival = (t_float)frame_countdown/(t_float)interpolation_frames;
 
-    local_max_bins = (shuffle_count > last_shuffle_count)? shuffle_count : last_shuffle_count;
     for(j = 0; j < N; j+=2){
         last_channel[j] = channel[j];
     }

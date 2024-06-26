@@ -12,7 +12,7 @@ static t_class *ether_class;
 typedef struct _ether
 {
     t_object x_obj;
-    float x_f;
+    t_float x_f;
     t_fftease *fft;
     t_fftease *fft2;
     int invert;
@@ -104,7 +104,7 @@ static void do_ether(t_ether *x)
     t_fftease *fft2 = x->fft2;
     int i;
     int N2 = fft->N2;
-    float a1, b1, a2, b2;
+    t_float a1, b1, a2, b2;
     int even, odd;
     int invert = x->invert;
     t_float threshMult = x->threshMult;

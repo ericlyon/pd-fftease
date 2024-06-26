@@ -8,7 +8,7 @@ static t_class *morphine_class;
 
 typedef struct _pickme {
     int     bin;
-    float   value;
+    t_float   value;
 } t_pickme;
 
 typedef struct _morphine
@@ -87,7 +87,7 @@ void quicksort(t_pickme *a,int first,int last)
         pivot=first;
         i=first;
         j=last;
-        
+
         while(i<j){
             while(a[i].value <= a[pivot].value && i < last)
                 i++;
@@ -133,8 +133,7 @@ static void do_morphine(t_morphine *x)
     t_fftease *fft2 = x->fft2;
     int i;
     int lookupIndex,even, odd;
-    t_float mult,
-    morphIndex,
+    t_float morphIndex,
     exponScale,
     a1, b1,
     a2, b2;
@@ -146,7 +145,6 @@ static void do_morphine(t_morphine *x)
     int N2 = fft->N2;
     t_pickme *picks = x->picks;
     t_pickme *mirror = x->mirror;
-    mult = fft->mult;
     morphIndex = x->morphIndex;
     exponScale = x->exponScale;
 
@@ -207,20 +205,20 @@ static void do_morphine(t_morphine *x)
     /* calculate our morphIndex from an exponential function based on exponScale */
 
     if (exponScale == 0.)
-        lookupIndex = (int) (( (float) N2 ) * morphIndex);
+        lookupIndex = (int) (( (t_float) N2 ) * morphIndex);
 
     else {
 
         if ( morphIndex < .5 ) {
 
-            lookupIndex = (int) ( ((float) N2) * ((
+            lookupIndex = (int) ( ((t_float) N2) * ((
                                                    (1. - exp( exponScale * morphIndex * 2. )) /
                                                    (1. - exp( exponScale )) ) * .5) );
         }
 
         else {
 
-            lookupIndex = (int) ( ((float) N2) * ( .5 +
+            lookupIndex = (int) ( ((t_float) N2) * ( .5 +
                                                   (( (1. - exp( -exponScale * (morphIndex - .5) * 2. )) /
                                                     (1. - exp( -exponScale )) ) * .5) ) );
         }

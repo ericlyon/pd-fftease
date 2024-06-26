@@ -9,7 +9,7 @@ static t_class *pvoc_class;
 typedef struct _pvoc
 {
     t_object x_obj;
-    float x_f;
+    t_float x_f;
     t_fftease *fft;
     t_float lofreq;
     t_float hifreq;
@@ -96,7 +96,7 @@ void pvoc_free(t_pvoc *x ){
 
 void pvoc_init(t_pvoc *x)
 {
-    float curfreq;
+    t_float curfreq;
     t_fftease *fft = x->fft;
 
     if(fft->initialized == -1){

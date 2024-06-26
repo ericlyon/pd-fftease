@@ -21,7 +21,7 @@ typedef struct _residency
     t_float last_fpos;
     t_float tadv;
     short acquire_stop; // flag to stop recording immediately
-    float force_pos; // force to this position on receiving message
+    t_float force_pos; // force to this position on receiving message
     int read_me;
     int frames_read;
     short mute;
@@ -88,7 +88,7 @@ void residency_meminfo( t_residency *x )
 {
     t_fftease *fft = x->fft;
     post("%d frames in buffer", x->framecount);
-    post("frame_duration: %f, actual time in buffer: %f", x->tadv, (float)(x->framecount) * x->tadv);
+    post("frame_duration: %f, actual time in buffer: %f", x->tadv, (t_float)(x->framecount) * x->tadv);
     post("main storage chunk: %.2f MB", (x->framecount * (fft->N + 2) * sizeof(t_float)) / 1000000.0 );
 }
 
@@ -307,12 +307,12 @@ static void do_residency(t_residency *x)
 
         if(force_pos >= 0.0 && force_pos < 1.0){
             //  post("forcing frame to %f", force_pos);
-            fframe =  force_pos * (float) framecount;
+            fframe =  force_pos * (t_float) framecount;
             last_fpos = fpos = force_pos;
             x->force_pos = -1.0;
         }
         else if(fpos != last_fpos){
-            fframe =  fpos * (float) framecount;
+            fframe =  fpos * (t_float) framecount;
             last_fpos = fpos;
         }
         fframe += fincr;
@@ -324,7 +324,7 @@ static void do_residency(t_residency *x)
             fframe += framecount;
         }
         if(x->framecount > 0) {
-            x->sync = fframe/(float)x->framecount;
+            x->sync = fframe/(t_float)x->framecount;
         }
         if(x->interpolation_attr == 1){
             index1 = floor(fframe);

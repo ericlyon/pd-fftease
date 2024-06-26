@@ -9,7 +9,7 @@ static t_class *codepend_class;
 typedef struct _codepend
 {
     t_object x_obj;
-    float x_f;
+    t_float x_f;
     t_fftease *fft;
     t_fftease *fft2; // for cross synthesis use
     t_float threshold;
@@ -79,7 +79,7 @@ void codepend_invert(t_codepend *x, t_floatarg toggle)
     x->invert_countdown = x->fft->overlap; // delay effect for "overlap" vectors
 
     if(x->invert_nextstate){ // lower gain immediately; delay going to invert
-        x->fft->mult = (1. / (float) x->fft->N) * x->invert_pad;
+        x->fft->mult = (1. / (t_float) x->fft->N) * x->invert_pad;
     } else {
         x->invert = 0; //immediately turn off invert; delay raising gain
     }
@@ -146,14 +146,14 @@ static void do_codepend(t_codepend *x)
     t_fftease *fft2 = x->fft2;
     int i;
     int N2 = fft->N2;
-    float a1, b1, a2, b2, threshold = 0.1;
+    t_float a1, b1, a2, b2, threshold = 0.1;
     int even, odd;
     int invert = x->invert;
     t_float exponent = x->exponent;
     t_float *bufferOne = fft->buffer;
     t_float *bufferTwo = fft2->buffer;
     t_float *channelOne = fft->channel;
-    //  float *channelTwo = fft2->channel;
+    //  t_float *channelTwo = fft2->channel;
 
     if(x->invert_countdown > 0){
 
@@ -165,7 +165,7 @@ static void do_codepend(t_codepend *x)
             if(x->invert_nextstate){ // moving to invert (gain is already down)
                 x->invert = x->invert_nextstate;
             } else { // invert is already off - now reset gain
-                x->fft->mult = 1. / (float) x->fft->N;
+                x->fft->mult = 1. / (t_float) x->fft->N;
             }
         }
     }
@@ -182,7 +182,7 @@ static void do_codepend(t_codepend *x)
 
         for ( i = 0; i <= N2; i++ ) {
 
-            float mag_1, mag_2;
+            t_float mag_1, mag_2;
 
             odd = ( even = i<<1 ) + 1;
 
@@ -220,7 +220,7 @@ static void do_codepend(t_codepend *x)
 
         for ( i = 0; i <= N2; i++ ) {
 
-            float f_real, f_imag;
+            t_float f_real, f_imag;
 
             odd = ( even = i<<1 ) + 1;
 
@@ -286,7 +286,7 @@ t_int *codepend_perform(t_int *w)
     t_float *output = fft->output;
     int D = fft->D;
     int Nw = fft->Nw;
-    float mult = fft->mult;
+    t_float mult = fft->mult;
 
     if(x->mute){
         for(i=0; i < MSPVectorSize; i++){ MSPOutputVector[i] = 0.0; }

@@ -11,7 +11,7 @@ static t_class *enrich_class;
 typedef struct _enrich
 {
     t_object x_obj;
-    float x_f;
+    t_float x_f;
     t_fftease *fft;
     t_symbol *buffername;
     t_float lofreq;
@@ -98,7 +98,7 @@ void enrich_highfreq(t_enrich *x, t_floatarg f)
 {
     t_fftease *fft = x->fft;
 
-    float curfreq;
+    t_float curfreq;
 
     if(f < x->lofreq){
         pd_error(0, "current minimum is %f",x->lofreq);
@@ -119,7 +119,7 @@ void enrich_highfreq(t_enrich *x, t_floatarg f)
 void enrich_lowfreq(t_enrich *x, t_floatarg f)
 {
     t_fftease *fft = x->fft;
-    float curfreq;
+    t_float curfreq;
 
     if(f > x->hifreq){
         pd_error(0, "current maximum is %f",x->lofreq);

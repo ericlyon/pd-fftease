@@ -39,7 +39,7 @@ static void multyq_mute(t_multyq *x, t_floatarg state);
 static void update_filter_function(t_multyq *x);
 static void multyq_init(t_multyq *x);
 static void multyq_free(t_multyq *x);
-static void filtyQ( float *S, float *C, float *filtfunc, int N2 );
+static void filtyQ( t_float *S, t_float *C, t_float *filtfunc, int N2 );
 
 void multyq_tilde_setup(void)
 {
@@ -119,7 +119,7 @@ void multyq_init(t_multyq *x)
         x->bw4 = .15;
         x->mute = 0;
         for (i = 0; i < x->rcoslen; i++){
-            x->rcos[i] =  .5 - .5 * cos(((float)i/(float)x->rcoslen) * TWOPI);
+            x->rcos[i] =  .5 - .5 * cos(((t_float)i/(t_float)x->rcoslen) * TWOPI);
         }
     } else {
         x->freqs = (t_float *) realloc(x->freqs, fft->N2 * sizeof( t_float ));
@@ -269,7 +269,7 @@ void update_filter_function(t_multyq *x)
     t_float lo, hi ;
     t_float ploc, gainer;
     int i;
-    t_float nyquist = (float)x->fft->R / 2.0;
+    t_float nyquist = (t_float)x->fft->R / 2.0;
     t_float *filt = x->filt;
     t_float *rcos = x->rcos;
     t_float *freqs = x->freqs;
@@ -397,7 +397,7 @@ void update_filter_function(t_multyq *x)
     }
 }
 
-void filtyQ( float *S, float *C, float *filtfunc, int N2 )
+void filtyQ( t_float *S, t_float *C, t_float *filtfunc, int N2 )
 {
     int real, imag, amp, phase;
     t_float a, b;

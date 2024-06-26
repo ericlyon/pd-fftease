@@ -9,7 +9,7 @@ static t_class *drown_class;
 typedef struct _drown
 {
     t_object x_obj;
-    float x_f;
+    t_float x_f;
     t_fftease *fft;
     t_float drownmult;
     short mute;
