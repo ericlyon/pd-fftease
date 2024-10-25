@@ -1,0 +1,191 @@
+name: build-artifacts
+
+on: [push]
+
+env:
+  PD_VERSION: 0.55-1
+
+jobs:
+  
+# ===============================================================
+# ===============================================================
+# ===============================================================
+  Linux-amd64-Build:
+    runs-on: ubuntu-22.04
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Download pd-Sources 
+      run: | 
+        git clone https://github.com/pure-data/pure-data.git
+        cd pure-data
+        git checkout tags/$PD_VERSION
+ 
+    - name: Build 
+      run: | 
+        make PDDIR=./pure-data/ PDLIBDIR=./out extension=l_amd64 install
+       
+    - name: Upload Zip
+      uses: actions/upload-artifact@v4
+      with:
+        name: pd-fftease-linux-amd64
+        path: ./out/*
+        
+# ===============================================================
+# ===============================================================
+# ===============================================================
+  Linux-i386-Build:
+    runs-on: ubuntu-22.04
+    steps:
+    - uses: actions/checkout@v4
+    - name: install mutiarch
+      run: |
+        sudo apt install gcc-multilib -y
+        sudo dpkg --add-architecture i386
+
+    - name: Download pd-Sources 
+      run: | 
+        git clone https://github.com/pure-data/pure-data.git
+        cd pure-data
+        git checkout tags/$PD_VERSION
+ 
+    - name: Build 
+      run: | 
+        make CFLAGS=-m32 LDFLAGS=-m32 PDDIR=./pure-data/ PDLIBDIR=./out extension=l_i386 install
+       
+    - name: Upload Zip
+      uses: actions/upload-artifact@v4
+      with:
+        name: pd-fftease-linux-i386
+        path: ./out/*
+        
+# ===============================================================
+# ===============================================================
+# ===============================================================
+  Linux-arm-Builds:
+    runs-on: ubuntu-22.04
+    steps:
+    - uses: actions/checkout@v4
+    - name: install arm-mutiarch
+      run: |
+        sudo apt update
+        sudo apt install g++-arm-linux-gnueabihf g++-aarch64-linux-gnu -y
+
+    - name: Download pd-Sources 
+      run: | 
+        git clone https://github.com/pure-data/pure-data.git
+        cd pure-data
+        git checkout tags/$PD_VERSION
+ 
+    - name: Build 
+      run: | 
+        make CC=arm-linux-gnueabihf-gcc PDDIR=./pure-data/ PDLIBDIR=./out extension=l_arm install
+        make CC=aarch64-linux-gnu-gcc PDDIR=./pure-data/ PDLIBDIR=./out extension=l_arm64 install
+    
+    - name: Upload Zip
+      uses: actions/upload-artifact@v4
+      with:
+        name: pd-fftease-linux-arm-mutiarch
+        path: ./out/*
+
+# # # # ===============================================================
+# # # # ===============================================================
+# # # # ===============================================================
+
+  Windows-amd64-Build:
+     runs-on: windows-latest
+     timeout-minutes: 25
+     steps:
+     - uses: actions/checkout@v4
+
+     - if: runner.os == 'Windows'
+       name: "Install mingw"
+       uses: msys2/setup-msys2@v2
+       with:
+           install: make mingw-w64-x86_64-gcc unzip curl
+           update: false
+
+     - if: runner.os == 'Windows'
+       name: Get Pd
+       shell: msys2 {0}
+       run: | 
+         curl -L -o pure-data.zip http://msp.ucsd.edu/Software/pd-$PD_VERSION.msw.zip
+         unzip pure-data.zip
+         rm pure-data.zip
+         rename  pd-$PD_VERSION pd pd-$PD_VERSION
+
+     - if: runner.os == 'Windows'
+       name: Build pd-fftease
+       shell: msys2 {0}
+       run: |
+         make PDDIR=./pd PDLIBDIR=./out extension=m_amd64 install
+        
+     - name: Upload Zip
+       uses: actions/upload-artifact@v4
+       with:
+         name: pd-fftease-windows-amd64
+         path: ./out/*
+         
+# # # # ===============================================================
+# # # # ===============================================================
+# # # # ===============================================================
+
+  Windows-i386-Build:
+     runs-on: windows-latest
+     timeout-minutes: 25
+     steps:
+     - uses: actions/checkout@v4
+
+     - if: runner.os == 'Windows'
+       name: "Install mingw"
+       uses: msys2/setup-msys2@v2
+       with:
+           install: make mingw-w64-i686-gcc unzip curl
+           msystem: MINGW32
+           update: false
+
+     - if: runner.os == 'Windows'
+       name: Get Pd
+       shell: msys2 {0}
+       run: | 
+         curl -L -o pure-data.zip http://msp.ucsd.edu/Software/pd-$PD_VERSION-i386.msw.zip
+         unzip pure-data.zip
+         rm pure-data.zip
+         rename  pd-$PD_VERSION-i386 pd pd-$PD_VERSION-i386
+
+     - if: runner.os == 'Windows'
+       name: Build pd-fftease
+       shell: msys2 {0}
+       run: |
+         make PDDIR=./pd PDLIBDIR=./out extension=m_i386 install
+        
+     - name: Upload Zip
+       uses: actions/upload-artifact@v4
+       with:
+         name: pd-fftease-windows-i386
+         path: ./out/*
+
+# # ===============================================================
+# # ===============================================================
+# # ===============================================================
+  macOS-Universal:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Download pd-Sources 
+      run: | 
+        git clone https://github.com/pure-data/pure-data.git
+        cd pure-data
+        git checkout tags/$PD_VERSION
+       
+    - name: Build pd-fftease
+      run: |
+        make PDDIR=./pure-data/ PDLIBDIR=./out arch="x86_64 arm64" extension=d_fat install
+        
+    - name: Upload Zip
+      uses: actions/upload-artifact@v4
+      with:
+        name:  pd-fftease-macOS-universal
+        path: ./out/*
+        
